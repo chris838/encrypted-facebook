@@ -1,14 +1,14 @@
 /**
- * XULSchoolChrome namespace.
+ * EncryptedFacebookChrome namespace.
  */
-if ("undefined" == typeof(XULSchoolChrome)) {
-  var XULSchoolChrome = {};
+if ("undefined" == typeof(EncryptedFacebookChrome)) {
+  var EncryptedFacebookChrome = {};
 };
 
 /**
  * Controls the browser overlay for the Hello World extension.
  */
-XULSchoolChrome.BrowserOverlay = {
+EncryptedFacebookChrome.BrowserOverlay = {
   /**
    * Says 'Hello' to the user.
    */
