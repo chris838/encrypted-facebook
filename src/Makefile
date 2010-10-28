@@ -1,11 +1,11 @@
 # The name of the extension.
-extension_name := xulschoolhello
+extension_name := encryptedfacebook
 
 # The UUID of the extension.
-extension_uuid := helloworld@xulschool.com
+extension_uuid := encrypted_facebook@chris.com
 
 # The name of the profile dir where the extension can be installed.
-profile_dir := xulschool-dev
+profile_dir := xjs156rv.dev
 
 # The zip application to be used.
 ZIP := zip
@@ -14,7 +14,7 @@ ZIP := zip
 bin_dir := ../bin
 
 # The target XPI file.
-xpi_file := $(bin_dir)/$(extension_name)2.xpi
+xpi_file := $(bin_dir)/$(extension_name).xpi
 
 # The type of operating system this make command is running on.
 os_type := $(patsubst darwin%,darwin,$(shell echo $(OSTYPE)))
