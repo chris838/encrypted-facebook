@@ -1,5 +1,7 @@
-content   xulschoolhello              jar:chrome/xulschoolhello.jar!/content/
-skin      xulschoolhello  classic/1.0 jar:chrome/xulschoolhello.jar!/skin/
-locale    xulschoolhello  en-US       jar:chrome/xulschoolhello.jar!/locale/en-US/
+content   encryptedfacebook                 chrome/content/
+skin      encryptedfacebook   classic/1.0   chrome/skin/
+locale    encryptedfacebook   en-US         chrome/locale/en-US/
 
-overlay chrome://browser/content/browser.xul  chrome://xulschoolhello/content/browserOverlay.xul
+
+overlay   chrome://browser/content/browser.xul   chrome://encryptedfacebook/content/ff-overlay.xul
+style chrome://global/content/customizeToolbar.xul chrome://encryptedfacebook/skin/overlay.css

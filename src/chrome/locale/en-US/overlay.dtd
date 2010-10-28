@@ -1,0 +1,8 @@
+<!ENTITY encryptedfacebook.label "Your localized menuitem">
+<!ENTITY encryptedfacebookContext.label "Your Menuitem">
+<!ENTITY encryptedfacebookContext.accesskey "Y">
+<!ENTITY encryptedfacebookToolbarButton.label "Your Toolbar Button">
+<!ENTITY encryptedfacebookToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY encryptedfacebookSidebar.label "Your Sidebar">
+<!ENTITY encryptedfacebookToolbar.name  "example">
+<!ENTITY encryptedfacebookToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &encryptedfacebookToolbar.name;">

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://encryptedfacebook/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://encryptedfacebook/locale/overlay.dtd">
+<overlay id="encryptedfacebook-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  <script src="ff-overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="encryptedfacebook-strings" src="chrome://encryptedfacebook/locale/overlay.properties"/>
+  </stringbundleset>
+
+  <popup id="contentAreaContextMenu">
+    <menuitem id="context-encryptedfacebook" label="&encryptedfacebookContext.label;"
+              accesskey="&encryptedfacebookContext.accesskey;"
+              insertafter="context-stop"
+              oncommand="encryptedfacebook.onMenuItemCommand(event)"/>
+  </popup>
+
+  <toolbarpalette id="BrowserToolbarPalette">
+  <toolbarbutton id="encryptedfacebook-toolbar-button" class="toolbarbutton-1 chromeclass-toolbar-additional"
+    label="&encryptedfacebookToolbarButton.label;" tooltiptext="&encryptedfacebookToolbarButton.tooltip;"
+    oncommand="encryptedfacebook.onToolbarButtonCommand()"/>
+  </toolbarpalette>
+
+
+
+</overlay>
