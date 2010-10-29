@@ -17,6 +17,50 @@
     <stringbundle id="encryptedfacebook-string-bundle"
       src="chrome://encryptedfacebook/locale/browserOverlay.properties" />
   </stringbundleset>
+  
+  <window id="main-window">
+    <toolbox id="navigator-toolbox">
+      <toolbar id="ef-Toolbar" toolbarname="Encrypted Facebook Toolbar">
+        <toolbarbutton id="ef-Login"
+                       class="button"
+                       label="Login"
+                       tooltiptext="Login to Facebook"
+                       oncommand="fbLib.FacebookLogin()"
+        />
+        
+        <textbox  id="ef-SubmissionBox"
+                  type="timed" timeout="5000" flex="10"
+                  emptytext="empty"
+                  tooltiptext="Enter text to be submitted"
+                  spellcheck="true"
+        />
+              
+        <toolbarbutton id="ef-SubmitStatus"
+                       class="button"
+                       label="Update Status"
+                       tooltiptext="Submit as a status update"
+        />
+        
+        <toolbarbutton id="ef-SubmitPost"
+                       class="button"
+                       label="Wall Post"
+                       tooltiptext="Post a message on a friends wall"
+        />
+        
+        <toolbarbutton id="ef-SubmitPrivate"
+                       class="button"
+                       label="Message"
+                       tooltiptext="Send as a private message"
+        />
+            
+        <toolbarbutton id="ef-SubmitBio"
+                       class="button"
+                       label="Bio"
+                       tooltiptext="Update Bio"
+        />
+      </toolbar>
+    </toolbox>
+  </window>
 
   <menupopup id="menu_ToolsPopup">
     <menu id="xs-hw-hello-menu" label="&encryptedfacebook.hello.label;"
@@ -30,4 +74,5 @@
       </menupopup>
     </menu>
   </menupopup>
+  
 </overlay>
