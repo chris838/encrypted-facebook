@@ -1,92 +1,62 @@
-# The name of the extension.
-extension_name := encryptedfacebook
+# Makefile for compiling .xpt files and building the .xpi.
+# This requires a Unix-like environment. On Windows, you
+# can install cygwin or MozillaBuild (https://wiki.mozilla.org/MozillaBuild)
+#
+# Usage: optionally set the MOZSDKDIR environment variable pointing to the
+# Gecko SDK if you want to rebuild the .xpt files.
+# Run "make" to build the .xpi.
 
-# The UUID of the extension.
-extension_uuid := encrypted_facebook@chris.com
-
-# The name of the profile dir where the extension can be installed.
-profile_dir := xjs156rv.dev
-
-# The zip application to be used.
-ZIP := zip
-
-# The target location of the build and build files.
-bin_dir := ../bin
-
-# The target XPI file.
-xpi_file := $(bin_dir)/$(extension_name).xpi
-
-# The type of operating system this make command is running on.
-os_type := $(patsubst darwin%,darwin,$(shell echo $(OSTYPE)))
-
-# The location of the extension profile.
-ifeq ($(os_type), darwin)
-  profile_location := \
-    ~/Library/Application\ Support/Firefox/Profiles/$(profile_dir)/extensions/$(extension_uuid)
-else
-  ifeq ($(os_type), linux-gnu)
-    profile_location := \
-      ~/.mozilla/firefox/$(profile_dir)/extensions/$(extension_uuid)
-  else
-    profile_location := \
-      "$(subst \,\\,$(APPDATA))\\Mozilla\\Firefox\\Profiles\\$(profile_dir)\\extensions\\$(extension_uuid)"
-  endif
+sdkdir ?= ${MOZSDKDIR}
+ifeq ($(nocompile),)
+ifeq ($(sdkdir),)
+  nocompile := 1
+  warn_nocompile := 1
+endif
 endif
 
-# The temporary location where the extension tree will be copied and built.
-build_dir := $(bin_dir)/build
+IDLC=${MOZSDKDIR}/bin/xpidl
+INC=${MOZSDKDIR}/idl
+XPTS=components/facebook.xpt
 
-# The install.rdf file.
-install_rdf := install.rdf
+all: xpi
 
-# The chrome.manifest file.
-chrome_manifest := chrome.manifest
+xpt: $(XPTS)
 
-# This builds the extension XPI file.
-.PHONY: all
-all: $(xpi_file)
+components/%.xpt: idl/%.idl
+ifneq ($(warn_nocompile),)
 	@echo
-	@echo "Build finished successfully."
-	@echo
+	@echo "WARNING: the MOZSDKDIR environment variable was not set. .xpt files won't be compiled."
+	@echo "    If this is intentional, you should pass the nocompile=1 variable on the command line to skip this warning:"
+	@echo "    If you change the idl, set the MOZSDKDIR environment variable to point to the location of the Gecko SDK."
+	@echo "    For instance: export MOZSDKDIR=/foo/bar/baz"
+endif
+ifeq ($(nocompile),)
+	$(IDLC) -m typelib -w -v -I $(INC) -e $(@) $(<)
+endif
 
-# This cleans all temporary files and directories created by 'make'.
-.PHONY: clean
+appname := facebook
+xpi_name := $(appname).xpi
+# Set this to 1, for using a .jar file for chrome files.
+# Note that the manifest does not support this yet.
+use_chrome_jar := 0
+ifeq ($(use_chrome_jar),1)
+chrome_files := chrome/$(appname).jar
+else
+chrome_files := chrome
+endif
+
+xpi_files := $(chrome_files) license.txt defaults components \
+             install.rdf chrome.manifest
+
+chrome/$(appname).jar:
+	rm -f chrome/faceook.jar
+	cd chrome; zip -9 -r $(appname).jar * -x \*.svn/*; cd ..
+
+xpi: xpt $(xpi_files)
+	rm -f $(xpi_name)
+	zip -9 -r $(xpi_name) $(xpi_files) -x \*.svn/*
+
 clean:
-	@rm -rf $(build_dir)
-	@rm -f $(xpi_file)
-	@echo "Cleanup is done."
+	rm -f $(xpi_name) chrome/$(appname).jar
 
-# The includes are added after the targets because we want this file to contain
-# the default (first) target.
-include chrome/Makefile.in
-
-# The sources for the XPI file. Uses variables defined in the included
-# Makefiles.
-xpi_built := $(build_dir)/$(install_rdf) \
-             $(build_dir)/$(chrome_manifest) \
-             $(chrome_jar_file)
-
-xpi_built_no_dir := $(subst $(build_dir)/,,$(xpi_built))
-
-# This builds everything except for the actual XPI, and then it copies it to the
-# specified profile directory, allowing a quick update that requires no install.
-.PHONY: install
-install: $(build_dir) $(xpi_built)
-	@echo "Installing in profile folder: $(profile_location)"
-	@cp -Rf $(build_dir)/* $(profile_location)
-	@echo "Installing in profile folder. Done!"
-	@echo
-
-$(xpi_file): $(build_dir) $(xpi_built)
-	@echo "Creating XPI file."
-	@cd $(build_dir); $(ZIP) ../$(xpi_file) $(xpi_built_no_dir)
-	@echo "Creating XPI file. Done!"
-
-$(build_dir)/%: %
-	@cp -f $< $@
-
-$(build_dir):
-	@if [ ! -x $(build_dir) ]; \
-  then \
-    mkdir $(build_dir); \
-  fi
+.PHONY: all xpi
