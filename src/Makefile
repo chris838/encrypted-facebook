@@ -45,7 +45,7 @@ else
 chrome_files := chrome
 endif
 
-xpi_files := $(chrome_files) license.txt defaults components \
+xpi_files := $(chrome_files) defaults components \
              install.rdf chrome.manifest
 
 chrome/$(appname).jar:
