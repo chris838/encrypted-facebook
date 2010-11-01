@@ -34,7 +34,7 @@ ifeq ($(nocompile),)
 	$(IDLC) -m typelib -w -v -I $(INC) -e $(@) $(<)
 endif
 
-appname := facebook
+appname := efb
 xpi_name := $(appname).xpi
 # Set this to 1, for using a .jar file for chrome files.
 # Note that the manifest does not support this yet.
