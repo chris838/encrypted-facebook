@@ -1,0 +1,3 @@
+<!ENTITY efb.hello.label            "Hello World!">
+<!ENTITY efb.helloMenu.accesskey    "l">
+<!ENTITY efb.helloItem.accesskey    "H">

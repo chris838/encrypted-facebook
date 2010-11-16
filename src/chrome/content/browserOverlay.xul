@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://efb/skin/browserOverlay.css" ?>
+
+<!DOCTYPE overlay SYSTEM
+  "chrome://efb/locale/browserOverlay.dtd">
+
+<overlay id="efb-browser-overlay"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript"
+    src="chrome://efb/content/browserOverlay.js" />
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="efb-string-bundle"
+      src="chrome://efb/locale/browserOverlay.properties" />
+  </stringbundleset>
+
+  <!-- Toolbar elements -->
+  <toolbarpalette id="BrowserToolbarPalette">
+    <toolbarbutton id="efb-login"
+      class="button" 
+      label="Login"
+      tooltiptext="Login to Facebook"
+      oncommand="window.alert('login mofo');" />
+    <textbox id="efb-text" value="Enter text here"/>
+    <toolbarbutton id="efb-status"
+      class="button" 
+      label="Change Status"
+      tooltiptext="Change your status"
+      oncommand="window.alert('login mofo2');" />
+  </toolbarpalette>
+
+  <window id="main-window">
+    <toolbox id="navigator-toolbox">
+      <toolbar id="efb-toolbar" toolbarname="Encrypted Facebook"
+        customizable="false"
+        defaultset="efb-login,efb-text,efb-status"
+        insertbefore="PersonalToolbar" />
+    </toolbox>
+  </window>
+
+
+  <!-- Menu items -->
+  <menupopup id="menu_ToolsPopup">
+    <menu id="xs-hw-hello-menu" label="&efb.hello.label;"
+      accesskey="&efb.helloMenu.accesskey;"
+      insertafter="javascriptConsole,devToolsSeparator">
+      <menupopup>
+        <menuitem id="efb-hello-menu-item"
+          label="&efb.hello.label;"
+          accesskey="&efb.helloItem.accesskey;"
+          oncommand="EFB.BrowserOverlay.sayHello(event);" />
+      </menupopup>
+    </menu>
+  </menupopup>
+</overlay>
