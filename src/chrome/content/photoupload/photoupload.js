@@ -709,7 +709,7 @@ var OverviewPanel = {
   }
 };
 
-var PhotoDNDObserverLegacy = {
+var PhotoDNDObserverFF30 = {
   getSupportedFlavours : function () {
     var flavours = new FlavourSet();
     flavours.appendFlavour("text/x-moz-url");
@@ -836,133 +836,51 @@ var PhotoDNDObserverLegacy = {
   }
 };
 
-/*** Drag Drop Observer for new API ***/
+
+/*
 var PhotoDNDObserver = {
   checkDrag : function (event) {
       return event.dataTransfer.types.contains("text/x-moz-url") || 
         event.dataTransfer.types.contains("application/x-moz-file");
   },
 
-  _getFilesFromDragSession: function (dt, pos)
+  _getFileFromDragSession: function (dt, pos)
   {
-      var theseFiles = [];
       var types = dt.mozTypesAt(pos);
-
-      var isValidImageFile = function(f)
-      {
-          var ext = f.path.substring(f.path.lastIndexOf(".")+1);
-
-          return (validImageFileSuffixes.indexOf(ext.toLowerCase()) != -1);
-      };
 
       for (var i=0; i<types.length; i++)
       {
           if (types[i] == "application/x-moz-file")
           {
-              var tmpfile = dt.mozGetDataAt("application/x-moz-file", pos).QueryInterface(Ci.nsIFile);
-
-              if (tmpfile.isDirectory())
-              {
-                  LOG("Dropped a directory; iterating");
-
-                  var getFilesInDirectory = function(dir)
-                  {
-                      var files = [];
-                      var entries = dir.directoryEntries;
-
-                      while (entries.hasMoreElements())
-                      {
-                          var entry = entries.getNext();
-                          entry.QueryInterface(Components.interfaces.nsIFile);
-
-                          if (entry.isDirectory())
-                          {
-                              files = files.concat(getFilesInDirectory(entry));
-                          }
-                          else
-                          {
-                              if (isValidImageFile(entry))
-                                  files.push(entry);
-                          }
-                      }
-
-                      return files;
-                  };
-
-                  theseFiles = getFilesInDirectory(tmpfile);
-              }
-              else if (isValidImageFile(tmpfile))
-              {
-                  LOG("Dropped a valid image file");
-                  theseFiles.push(tmpfile);
-              }
-              else
-              {
-                  LOG("Unsupported file type dropped");
-              }
+alert('have file');
+              return dt.mozGetDataAt("application/x-moz-file", pos);
           }
           else if (types[i] == "text/x-moz-url")
           {
-              try
-              {
-                  var tmpfile = Components.classes["@mozilla.org/file/directory_service;1"].
-                      getService(Components.interfaces.nsIProperties).
-                      get("TmpD", Components.interfaces.nsIFile);
-                  tmpfile.append("facebookphoto.jpg");
-                  tmpfile.createUnique(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0666);
-
-                  var wbp = Components.classes['@mozilla.org/embedding/browser/nsWebBrowserPersist;1']
-                      .createInstance(Components.interfaces.nsIWebBrowserPersist);
-                  wbp.persistFlags &= ~Components.interfaces.nsIWebBrowserPersist.PERSIST_FLAGS_NO_CONVERSION; // don't save gzipped
-                  wbp.progressListener = {
-                    onProgressChange: function(aWebProgress, aRequest, aCurSelfProgress, aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress) {
-                        //
-                    },
-                    onStateChange: function(aWebProgress, aRequest, aFlag, aStatus) {
-                        if(aFlag & Components.interfaces.nsIWebProgressListener.STATE_STOP)  
-                        {
-                            PhotoSet._notifyChanged(CHANGE_UPDATE);
-                        }
-                    }
-                  };
-
-                  var urldatabits = dt.mozGetDataAt("text/x-moz-url", pos).split(/\n/);
-                  LOG("Downloading image from: " + urldatabits[0]);
-                  var urlObj = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService).newURI(urldatabits[0], null, null);
-                  wbp.saveURI(urlObj, null, null, null, null, tmpfile);
-
-                  theseFiles.push(tmpfile);
-              }
-              catch (e)
-              {
-                  LOG("Error downloading image: " + e);
-              }
+alert('TODO');
+              // TODO
           }
           else
           {
-              LOG("Unsupported drop type: " + types[i]);
+              // unsupported
           }
       }
-
-      return theseFiles;
   },
 
   onDrop: function (event) {
-    LOG("In drop handler");
     event.preventDefault(); event.stopPropagation();
 
     var files = [];
     for (var i = 0; i < event.dataTransfer.mozItemCount; ++i) {
-        var theseFiles = PhotoDNDObserver._getFilesFromDragSession(event.dataTransfer, i);
-        if (theseFiles)
-        {
-            theseFiles.forEach(function(file) { files.push(file); });
-        }
+      var file = PhotoDNDObserver._getFileFromDragSession(event.dataTransfer, i);
+      if (file)
+        files.push(file);
     }
 
     PhotoSet.add([new Photo(f) for each (f in files)]);
   }
 };
+*/
 
 const NEW_ALBUM = 0;
 const EXISTING_ALBUM = 1;
@@ -1000,21 +918,10 @@ var PhotoUpload = {
     return ios.newURI(spec, null, null);
   },
 
-  usesLegacyDND: function() {
-     var appInfo = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
-     var versionChecker = Cc["@mozilla.org/xpcom/version-comparator;1"].getService(Ci.nsIVersionComparator);
-     return (versionChecker.compare(appInfo.version, "4.0b1") < 0);
-  },
-
   init: function() {
     var self = this;
 
-    if (PhotoUpload.usesLegacyDND())
-    {
-        LOG("Switching to legacy DND");
-        document.getElementById("picBox").setAttribute("ondragdrop", "nsDragAndDrop.drop(event, PhotoDNDObserverLegacy)");
-        document.getElementById("overviewPanel").removeAttribute("ondrop");
-    }
+    //window.addEventListener("dragdrop", function(event) { PhotoDNDObserverFF30.onDrop(event); }, false);
 
     OverviewPanel.init();
     PhotoSet.addChangedListener(this.photosChanged, PhotoUpload);

@@ -34,7 +34,7 @@ ifeq ($(nocompile),)
 	$(IDLC) -m typelib -w -v -I $(INC) -e $(@) $(<)
 endif
 
-appname := efb
+appname := facebook
 xpi_name := $(appname).xpi
 # Set this to 1, for using a .jar file for chrome files.
 # Note that the manifest does not support this yet.
@@ -45,7 +45,7 @@ else
 chrome_files := chrome
 endif
 
-xpi_files := $(chrome_files) defaults components \
+xpi_files := $(chrome_files) license.txt defaults components \
              install.rdf chrome.manifest
 
 chrome/$(appname).jar:

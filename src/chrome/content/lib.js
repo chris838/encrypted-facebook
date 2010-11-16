@@ -82,7 +82,7 @@ var fbLib = {
 
     SetFacebookStatus: function(status) {
         if (fbSvc.canSetStatus) {
-            fbSvc.setStatus(status.value);
+            fbSvc.setStatus(status);
             status.blur();
         } else {
             var authorizeUrl = "http://www.facebook.com/authorize.php?api_key="+fbSvc.apiKey

@@ -52,7 +52,7 @@
       <toolbarbutton id="facebook-photoupload"
                      class="facebook-icon-photoupload button"
                      tooltiptext="&toolbar.button.upload.tooltip;"
-                     oncommand="facebook.photoupload();"/>
+                     oncommand="if (!fbSvc.loggedIn) fbLib.FacebookLogin(); facebook.photoupload()"/>
 
       <toolbarbutton id="facebook-notification-poke"
                      class="facebook-icon-poke facebook-notification button"
@@ -168,10 +168,10 @@
                        onclick="checkForMiddleClick(this, event);"
                        oncommand="if (this.label!='') fbLib.OpenFBUrl('profile.php', this.getAttribute('userid'), event)" />
         <textbox id="facebook-toolbar-status"
-                 type="timed" timeout="5000" flex="10"
+                 type="timed" timeout="5000" flex="5"
                  onfocus="facebook.onStatusBoxFocus(this);"
                  onblur="facebook.onStatusBoxBlur(this);"
-                 oncommand="return fbLib.SetFacebookStatus(this);"
+                 oncommand="return fbLib.SetFacebookStatus(this.value);"
                  emptytext="&toolbar.status.emptytext.label;"
                  tooltiptext="&toolbar.status.emptytext.tooltip;"
                  spellcheck="true"
@@ -184,6 +184,18 @@
                        tooltiptext="&toolbar.login.label;"
                        oncommand="fbLib.FacebookLogin()" />
       </toolbaritem>
+      
+      <!-- Encrypted Facebook Items -->
+      <textbox id="efb-text"
+                 type="timed" timeout="5000"
+                 oncommand="return fbLib.SetFacebookStatus(this.value);" />
+      <toolbarbutton id="efb-login"
+                       class="button"
+                       label="Login"
+                       oncommand="fbLib.FacebookLogin()" />
+      
+
+      
     </toolbarpalette>
     <toolbar id="facebook-toolbar"
              class="chromeclass-toolbar-additional"
@@ -194,7 +206,7 @@
              context="toolbar-context-menu"
              toolbarname="&toolbar.facebook.name;"
              crop="end"
-            defaultset="facebook-searchbox,facebook-share,facebook-login-info">
+            defaultset="efb-text,efb-login,facebook-sidebar-toggle,separator,facebook-searchbox,facebook-link-menu,separator,facebook-home,separator,facebook-notification-poke,facebook-notification-reqs,facebook-notification-msgs,facebook-notification-event-invs,facebook-notification-group-invs,facebook-notification-separator,facebook-share,facebook-photoupload,spring,facebook-login-info">
     </toolbar>
     <popupset>
         <popup position="after_start"
