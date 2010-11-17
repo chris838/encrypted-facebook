@@ -10,8 +10,8 @@
 <overlay id="efb-browser-overlay"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/x-javascript"
-    src="chrome://efb/content/browserOverlay.js" />
+  <script type="application/x-javascript" src="chrome://efb/content/efb.js" />
+  <script type="application/x-javascript" src="chrome://efb/content/pagecept.js" />
 
   <stringbundleset id="stringbundleset">
     <stringbundle id="efb-string-bundle"
@@ -22,38 +22,29 @@
   <toolbarpalette id="BrowserToolbarPalette">
     <toolbarbutton id="efb-login"
       class="button" 
-      label="Login"
-      tooltiptext="Login to Facebook"
-      oncommand="window.alert('login mofo');" />
+      label="Log in"
+      tooltiptext="Log in to Facebook"
+      oncommand="eFB.login(event);" />
+    <toolbarbutton id="efb-logout"
+      class="button" 
+      label="Log out"
+      tooltiptext="Log out of Facebook"
+      oncommand="eFB.logout(event);" />
     <textbox id="efb-text" value="Enter text here"/>
     <toolbarbutton id="efb-status"
       class="button" 
       label="Change Status"
       tooltiptext="Change your status"
-      oncommand="window.alert('login mofo2');" />
+      oncommand="eFB.submitStatus(event);" />
   </toolbarpalette>
 
   <window id="main-window">
     <toolbox id="navigator-toolbox">
       <toolbar id="efb-toolbar" toolbarname="Encrypted Facebook"
         customizable="false"
-        defaultset="efb-login,efb-text,efb-status"
+        defaultset="efb-login,efb-logout,efb-text,efb-status"
         insertbefore="PersonalToolbar" />
     </toolbox>
   </window>
 
-
-  <!-- Menu items -->
-  <menupopup id="menu_ToolsPopup">
-    <menu id="xs-hw-hello-menu" label="&efb.hello.label;"
-      accesskey="&efb.helloMenu.accesskey;"
-      insertafter="javascriptConsole,devToolsSeparator">
-      <menupopup>
-        <menuitem id="efb-hello-menu-item"
-          label="&efb.hello.label;"
-          accesskey="&efb.helloItem.accesskey;"
-          oncommand="EFB.BrowserOverlay.sayHello(event);" />
-      </menupopup>
-    </menu>
-  </menupopup>
 </overlay>
