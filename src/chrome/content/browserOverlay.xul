@@ -31,18 +31,18 @@
       tooltiptext="Log out of Facebook"
       oncommand="eFB.logout(event);" />
     <textbox id="efb-text" value="Enter text here"/>
-    <toolbarbutton id="efb-status"
+    <toolbarbutton id="efb-submit"
       class="button" 
-      label="Change Status"
-      tooltiptext="Change your status"
-      oncommand="eFB.submitStatus(event);" />
+      label="Create Note Link"
+      tooltiptext="Creates a note, whose content can be linked to in a post or comment."
+      oncommand="eFB.submit(event);" />
   </toolbarpalette>
 
   <window id="main-window">
     <toolbox id="navigator-toolbox">
       <toolbar id="efb-toolbar" toolbarname="Encrypted Facebook"
         customizable="false"
-        defaultset="efb-login,efb-logout,efb-text,efb-status"
+        defaultset="efb-login,efb-logout,efb-text,efb-submit"
         insertbefore="PersonalToolbar" />
     </toolbox>
   </window>
