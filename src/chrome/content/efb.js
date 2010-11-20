@@ -64,8 +64,8 @@ eFB = {
             // The variables we will submit
             var plaintext = document.getElementById("efb-text").value;
             //
-            var msg = "Sample post thing";//encodeURIComponent( plaintext ); // No encrytion yet
-            var subject_tag = encodeURIComponent( "<ˠ>" );
+            var msg = encodeURIComponent( plaintext ); // No encrytion yet
+            var subject_tag = encodeURIComponent( "ˠ" );
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
                             "&message=" + msg +
                             "&subject=" + subject_tag;
@@ -82,11 +82,9 @@ eFB = {
             http.onreadystatechange = function() {//Call a function when the state changes.
                     if(http.readyState == 4) {
                         if (http.status == 200) {
-                            //var id = parseInt( eval( '(' + http.responseText + ')' ).id );
-                            var id = plaintext;
-                            window.alert(id);
-                            window.alert( eFB.hexToBase128(id) );
-                            window.alert( eFB.base128ToHex( eFB.hexToBase128(id) ) );
+                            var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
+                            var tag = "ɷ" + eFB.hexToBase128(id) + "ʚ";
+                            window.alert( tag );
                         } else {
                             window.alert("Error sending request, " + http.responseText);
                         }
@@ -129,7 +127,7 @@ eFB = {
     },
 
     /**
-    * Takes a hexadecimal string and returns a UTF-8 Base 128 representation.
+    * Takes a hex string and returns a UTF-8 Base 128 representation.
     * This means that only 1 bit of overhead is required for every 7 bits.
     * 
     **/
@@ -145,9 +143,7 @@ eFB = {
             y = x.substr( x.length-7 );
             
             // Calculate the 4 UTF8 characters corresponding to the 7 hex digits of y
-            window.alert("about to base: " + y);
             r = eFB.intToBase128( parseInt(y,16) ) + r;
-            window.alert("we got: " + eFB.intToBase128( parseInt(y,16) ));
             
             // Remove the last 7 characters from x
             x = x.substring(0, x.length-7);
@@ -170,7 +166,7 @@ eFB = {
             
             // Take the first character of x
             y = x.charAt( 0 );
-            
+
             // Shift our current result 7 places to the left
             // and XOR in the last 7 bits of y
             r = r << 7;
@@ -195,17 +191,17 @@ eFB = {
         // Repeat until no more characters remain
         while (x.length > 0) {
             
-            // Take the last 8 UTF8 characters. If less than 8,
+            // Take the last 4 UTF8 characters. If less than 4,
             // pad with null characters (charCode = 0)
-            while (x.length < 8) x = x + String.fromCharCode(0);
-            y = x.substr( x.length-8 );
+            while (x.length < 4) x = String.fromCharCode(0) + x;
+            y = x.substr( x.length-4 );
             
             // Calculate the 7 hex digits corresponding to
-            // the 8 UTF8 characters
+            // the 4 UTF8 characters
             r = eFB.base128ToInt( y ).toString(16) + r;
             
-            // Remove the last 8 characters
-            x = x.substr(0, x.length-8);
+            // Remove the last 4 characters
+            x = x.substr(0, x.length-4);
             
         }
         
