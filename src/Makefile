@@ -26,10 +26,10 @@ ifeq ($(os_type), darwin)
 else
   ifeq ($(os_type), linux-gnu)
     profile_location := \
-      ~/.mozilla/firefox/$(profile_dir)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
   else
     profile_location := \
-      ~/.mozilla/firefox/$(profile_dir)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
   endif
 endif
 # "$(subst \,\\,$(APPDATA))\\Mozilla\\Firefox\\Profiles\\$(profile_dir)\\extensions\\$(extension_uuid)"
