@@ -67,7 +67,7 @@ var onPageLoad2 = function(event) {
         var rx=/facebook\.com\//; // TODO - watch out for malicious code injections
         if (rx.test(url)) {
             
-            window.alert( doc.body.innerHTML );
+            //window.alert( doc.body.innerHTML );
             
         }  
     }  

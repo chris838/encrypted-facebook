@@ -83,6 +83,9 @@ eFB = {
                     if(http.readyState == 4) {
                         if (http.status == 200) {
                             var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
+                            
+                            MyComponentTestGo();
+                            
                             var tag = "ɷ" + eFB.hexToBase128(id) + "ʚ";
                             window.alert( tag );
                         } else {
@@ -115,12 +118,15 @@ eFB = {
             // integer.
             y = x & 127;
             
-            // We can map y to a byte between 1000 000 and 1111 1111
+            // We can map y to a byte between 0000 000 and 0111 1111
             r = String.fromCharCode(y) + r;
             
             // Then we shift x seven bits to the right
             x = x >> 7;
         }
+        
+        // Check we haven't dropped any leading zero bytes
+        while (r.length < 4) r = String.fromCharCode(0) + r;
         
         return r;
         
@@ -154,12 +160,14 @@ eFB = {
     },
 
     /**
-    * Takes a Base 128 UTF-8 string and returns an integer
+    * Takes a 4 character Base 128 UTF-8 string and returns an integer
+    * The integer is returned as a string type, in hex format,
+    * to prevent losing leading zeros.
     * 
     **/
     base128ToInt : function( x ) {
         
-        var y = ""; var r = 0;
+        var y = ""; var r = 0; var r2 = "";
         
         // Repeat until no more characters remain
         while (x.length > 0) {
@@ -177,7 +185,11 @@ eFB = {
             
         }
         
-        return r;
+        // Must pad out to 7 digits
+        r2 = r.toString(16);
+        while (r2.length < 7) r2 = '0' + r2;
+        
+        return r2;
     },
     
     /**
@@ -198,7 +210,7 @@ eFB = {
             
             // Calculate the 7 hex digits corresponding to
             // the 4 UTF8 characters
-            r = eFB.base128ToInt( y ).toString(16) + r;
+            r = eFB.base128ToInt( y ) + r;
             
             // Remove the last 4 characters
             x = x.substr(0, x.length-4);
@@ -206,6 +218,21 @@ eFB = {
         }
         
         return r;
+    },
+    
+    MyComponentTestGo : function() {
+        window.alert("Testing XPCOM C++ Component...");
+	try {
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+		const cid = "@cl.cam.ac.uk/XPCOM/eFBComponent;1";
+		obj = Components.classes[cid].createInstance();
+		obj = obj.QueryInterface(Components.interfaces.IeFBComponent);
+	} catch (err) {
+		alert(err);
+		return;
+	}
+	var res = obj.Add(3, 4);
+	window.alert('Performing 3+4. Returned ' + res + '.');
     }
 
 };
