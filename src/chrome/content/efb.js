@@ -25,7 +25,7 @@ eFB = {
                             "client_id=" + api_id + "&" +
                             "redirect_uri=http://www.facebook.com/connect/login_success.html&" +
                             "type=user_agent&" +
-                            "scope=publish_stream,offline_access,user_about_me,friends_about_me&" +
+                            "scope=publish_stream,offline_access,user_about_me,friends_about_me,user_notes&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=350,height=250,resizable=0");
         } else {
@@ -64,12 +64,12 @@ eFB = {
             // The variables we will submit
             var plaintext = document.getElementById("efb-text").value;
             //
-            var msg = encodeURIComponent( plaintext ); // No encrytion yet
+            var msg = encodeURIComponent( eFB.lib_binToUTF8(plaintext,plaintext.length).readString() ); // No encrytion yet
             var subject_tag = encodeURIComponent( "ˠ" );
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
                             "&message=" + msg +
                             "&subject=" + subject_tag;
-            
+
             // Create a new note
             var http = new XMLHttpRequest();
             var url = "https://graph.facebook.com/me/notes";
@@ -82,11 +82,9 @@ eFB = {
             http.onreadystatechange = function() {//Call a function when the state changes.
                     if(http.readyState == 4) {
                         if (http.status == 200) {
+                            // Generate a tag to link to the note
                             var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
-                            
-                            MyComponentTestGo();
-                            
-                            var tag = "ɷ" + eFB.hexToBase128(id) + "ʚ";
+                            var tag = eFB.generateTag( id );
                             window.alert( tag );
                         } else {
                             window.alert("Error sending request, " + http.responseText);
@@ -94,146 +92,150 @@ eFB = {
                     }
             }
             http.send(params);
- 
            
         } else {
             window.alert("You aren't logged in to Facebook");
             return;
         }
     },
+    
+    // Open the C/C++ extension components
+    loadLibs : function( callback ) {
 
-    /**
-    * Takes an integer x and returns a UTF-8 Base 128 representation.
-    * This means that only 1 bit of overhead is required for every 7 bits.
-    * 
-    **/
-    intToBase128 : function( x ) {
-                
-        var y = 0; var r = "";
-        
-        // Repeat until no more bits left to encode
-        while (x > 0) {
-        
-            // We take 7 bits from the (least significant) end of the
-            // integer.
-            y = x & 127;
+        var MY_ID = "efb@cl.cam.ac.uk";  
+        Components.utils.import("resource://gre/modules/AddonManager.jsm");
+        AddonManager.getAddonByID(MY_ID, function(addon) {
+            Components.utils.import("resource://gre/modules/ctypes.jsm");
+            var lib = ctypes.open( addon.getResourceURI( "components/libtest.so" ).path );
             
-            // We can map y to a byte between 0000 000 and 0111 1111
-            r = String.fromCharCode(y) + r;
+            eFB.init_lib= lib.declare("init_lib",
+                                     ctypes.default_abi,
+                                     ctypes.int32_t // return type
+            );
+            eFB.lib_binToUTF8= lib.declare("lib_binToUTF8",
+                                     ctypes.default_abi,
+                                     ctypes.char.ptr, // return type
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.uint32_t  //parameter 2
+            );
+            eFB.lib_UTF8ToBin= lib.declare("lib_UTF8ToBin",
+                                     ctypes.default_abi,
+                                     ctypes.char.ptr, // return type
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.uint32_t  //parameter 2
+            );
+            eFB.close_lib = lib.declare("close_lib",
+                                     ctypes.default_abi,
+                                     ctypes.int32_t // return type
+            );
+
+            callback();
+        } );
+    },
+    
+    init_lib : function() {},
+    lib_binToUTF8: function() {},
+    lib_UTF8ToBin: function() {},
+    close_lib: function() {},
+    
+    generateTag : function(id) {
+        return "ᐊ" + id + "ᐅ";
+    },
+    
+    retrieveFromTag : function(doc, tag) {
+
+        // extract ID from tag
+        var id = parseInt( tag.substring(1, tag.length-1), 16);
+        
+        if (eFB.cache[ id ] == undefined) {
+        
+            // Begin request for note
+            var params = "access_token=" + eFB.prefs.getCharPref("token");
+            var http = new XMLHttpRequest();
+            var url = "https://graph.facebook.com/" + id.toString(10) + "?" + params;
+            http.open("GET", url, true);
+    
+            http.onreadystatechange = function() {//Call a function when the state changes.
+                if (http.readyState == 4) {
+                    if (http.status == 200) {
+                        
+                        // Decode the actual text from the note body
+                        var obj = eval( '(' + http.responseText + ')' );
+                        var note = obj.message;
+                        var id = parseInt( obj.id, 10 );
+                        // decode note
+                        note = eFB.lib_UTF8ToBin(note,note.length).readString();
+                        
+                        // Copy the list of docs (if any) we need to refresh
+                        var doclist = [];
+                        if ( eFB.cache[ id ] != undefined & eFB.cache[ id ].Status == "PENDING" ) {
+                            doclist = [].concat( eFB.cache[ id ].Docs );
+                        }
+                        
+                        // save to cache for later use
+                        eFB.cache[ id ] = note;
+                        
+                        // Add in a random delay to mimic exagerated network latency
+                        setTimeout( function() {
+                            // cycle through documents that need updating and replace tags
+                            for (var i=0; i < doclist.length; i++) eFB.replaceTags( doclist[i], id );
+                        }
+                        , Math.floor(Math.random()*4000));
+                        
+                    } else {
+                        
+                        // Need to reset cache since HTTP reqest was unsuccesful
+                        // TODO - cycle through and wipe any pending statuses
+                        window.alert("Error sending request, " + http.responseText);
+                    }
+                }
+            }
             
-            // Then we shift x seven bits to the right
-            x = x >> 7;
+            // Set the cache to pending, add window to list that needs to have HTML updated
+            eFB.cache[ id ] = { Status : "PENDING", Docs : [ doc ] };
+            
+            // Now send the request
+            http.send(null);
+            
+            // Return a temporary tag, for now
+            return "<span style='color: #f00;' class='note_pending_"+ id + "'>Loading. please wait...<\/span>";
+        
+        } else if ( eFB.cache[ id ].Status == "PENDING" ) {
+            
+            // If pending request, add window to doclist list so that it have its HTML
+            // updated when the the HTTP request returns.
+            var doclist = eFB.cache[ id ].Docs;
+            if (doclist.indexOf( doc ) != -1 ) doclist.push( doc );
+            return "<span style='color: #f00;' class='note_pending_"+ id + "'>Loading. please wait...<\/span>";
+        
+        } else {
+            return "<span style='color: #0f0;' class='note_"+ id + "'>"+ eFB.cache[ id ] +"<\/span>";
         }
-        
-        // Check we haven't dropped any leading zero bytes
-        while (r.length < 4) r = String.fromCharCode(0) + r;
-        
-        return r;
-        
     },
 
     /**
-    * Takes a hex string and returns a UTF-8 Base 128 representation.
-    * This means that only 1 bit of overhead is required for every 7 bits.
-    * 
+     * Parse a document's HTML, finding occurences of pending tag request
+     * and process appropriately.
+     * 
     **/
-    hexToBase128 : function( x ) {
+    replaceTags : function(doc, id) {
                 
-        var y = ""; var r = "";
-        
-        // Repeat until no more bits left to encode
-        while (x.length > 0) {
-        
-            // Take the last hex 7 digits. If less than 7, pad with '0'
-            while (x.length < 7) x = '0' + x;
-            y = x.substr( x.length-7 );
-            
-            // Calculate the 4 UTF8 characters corresponding to the 7 hex digits of y
-            r = eFB.intToBase128( parseInt(y,16) ) + r;
-            
-            // Remove the last 7 characters from x
-            x = x.substring(0, x.length-7);
+        var toReplace = doc.getElementsByClassName( "note_pending_" + id );
+        for (var i=0; i < toReplace.length; i++) {
+            toReplace[i].innerHTML = eFB.cache[ id ];
+            toReplace[i].setAttribute( "style", "color: #0f0;");
+            toReplace[i].setAttribute( "class", "note_" + id);
         }
-        
-        return r;
-        
-    },
 
-    /**
-    * Takes a 4 character Base 128 UTF-8 string and returns an integer
-    * The integer is returned as a string type, in hex format,
-    * to prevent losing leading zeros.
-    * 
-    **/
-    base128ToInt : function( x ) {
-        
-        var y = ""; var r = 0; var r2 = "";
-        
-        // Repeat until no more characters remain
-        while (x.length > 0) {
-            
-            // Take the first character of x
-            y = x.charAt( 0 );
-
-            // Shift our current result 7 places to the left
-            // and XOR in the last 7 bits of y
-            r = r << 7;
-            r = r ^ y.charCodeAt(0);
-            
-            // Remove the first character of x
-            x = x.substr(1, x.length-1);
-            
-        }
-        
-        // Must pad out to 7 digits
-        r2 = r.toString(16);
-        while (r2.length < 7) r2 = '0' + r2;
-        
-        return r2;
     },
     
     /**
-    * Takes a Base 128 UTF-8 string and returns a hex string
-    * 
+     * We maintain a cache of previously retrieved and decrypted notes
+     * 
     **/
-    base128ToHex : function( x ) {
-        
-        var y = ""; var r = "";
-        
-        // Repeat until no more characters remain
-        while (x.length > 0) {
-            
-            // Take the last 4 UTF8 characters. If less than 4,
-            // pad with null characters (charCode = 0)
-            while (x.length < 4) x = String.fromCharCode(0) + x;
-            y = x.substr( x.length-4 );
-            
-            // Calculate the 7 hex digits corresponding to
-            // the 4 UTF8 characters
-            r = eFB.base128ToInt( y ) + r;
-            
-            // Remove the last 4 characters
-            x = x.substr(0, x.length-4);
-            
-        }
-        
-        return r;
-    },
-    
-    MyComponentTestGo : function() {
-        window.alert("Testing XPCOM C++ Component...");
-	try {
-		netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-		const cid = "@cl.cam.ac.uk/XPCOM/eFBComponent;1";
-		obj = Components.classes[cid].createInstance();
-		obj = obj.QueryInterface(Components.interfaces.IeFBComponent);
-	} catch (err) {
-		alert(err);
-		return;
-	}
-	var res = obj.Add(3, 4);
-	window.alert('Performing 3+4. Returned ' + res + '.');
-    }
+    cache : {}
 
 };
 
+// Load the C/C++ binary library functions
+eFB.loadLibs( function() {eFB.init_lib();} );

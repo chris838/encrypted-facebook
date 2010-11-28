@@ -33,3 +33,38 @@ $(components_target_dir): $(build_dir)
   then \
     mkdir $(components_target_dir); \
   fi
+
+#--------------------------------------------------------------eFB make stuff here
+
+# The source .cpp files files.
+#components_c_sources := $(wildcard $(components_dir)/*.cpp)
+
+# The target .so files.
+#components_so := \
+#  $(addprefix $(components_target_dir)/,$(addsuffix .so,$(basename $(notdir $(components_c_sources)))))
+
+# For compiling .o into shared object .so files
+#$(components_target_dir)/%.so : $(components_target_dir)/%.o $(components_target_dir)
+#	gcc -shared -o $@ $<
+#	rm $<
+	
+# For compiling .cpp into object .o files
+#$(components_target_dir)/%.o : $(components_dir)/%.cpp $(components_target_dir)
+#	gcc -fPIC -o $@ -c $<
+
+
+
+components_so := $(components_target_dir)/libtest.so
+
+$(components_target_dir)/c_client_test.o : $(components_dir)/c_client_test.c $(components_target_dir)
+	@gcc -Wall -std=c89 -pedantic -Werror -o $(components_target_dir)/c_client_test.o -c $(components_dir)/c_client_test.c
+
+$(components_target_dir)/%.o : $(components_dir)/%.cpp $(components_target_dir)
+	@g++ -Wall -std=c++98 -pedantic -fPIC -c $< -o $@
+
+$(components_target_dir)/libtest.so : $(components_target_dir)/c_client_test.o $(components_target_dir)/base_class.o $(components_target_dir)/c_wrapper.o $(components_target_dir)
+	@gcc -shared -Wl,-soname,$(components_target_dir)/libtest.so -o $(components_target_dir)/libtest.so \
+	$(components_target_dir)/base_class.o $(components_target_dir)/c_wrapper.o $(components_target_dir)/c_client_test.o
+	@rm $(components_target_dir)/*.o
+	@echo "Created shared library libtest.so"
+

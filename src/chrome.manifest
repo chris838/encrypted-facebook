@@ -1,6 +1,6 @@
 content   efb              jar:chrome/efb.jar!/content/
 skin      efb  classic/1.0 jar:chrome/efb.jar!/skin/
 locale    efb  en-US       jar:chrome/efb.jar!/locale/en-US/
-resource  efb              modules/
+binary-component    components/add.so
 
 overlay chrome://browser/content/browser.xul  chrome://efb/content/browserOverlay.xul
