@@ -39,6 +39,11 @@
         label="Create Note Link"
         tooltiptext="Creates a note, whose content can be linked to in a post or comment."
         oncommand="eFB.submit(event);" />
+      <toolbarbutton id="efb-picture"
+        class="button" 
+        label="Upload picture"
+        tooltiptext="Encrypts then uploads a picture to Facebook."
+        oncommand="eFB.encodeForUpload('sfsdf');" />
     </toolbar>
   </toolbox>
 

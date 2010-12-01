@@ -62,9 +62,12 @@ eFB = {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
             
             // The variables we will submit
-            var plaintext = document.getElementById("efb-text").value;
+            //var plaintext = document.getElementById("efb-text").value;
             //
-            var msg = encodeURIComponent( eFB.lib_binToUTF8(plaintext,plaintext.length).readString() ); // No encrytion yet
+            //var msg = encodeURIComponent( eFB.lib_binToUTF8(plaintext,plaintext.length).readString() ); // No encrytion yet
+            
+            var msg = encodeURIComponent( eFB.encodeForUpload("") );
+            
             var subject_tag = encodeURIComponent( "ˠ" );
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
                             "&message=" + msg +
@@ -137,6 +140,40 @@ eFB = {
     lib_binToUTF8: function() {},
     lib_UTF8ToBin: function() {},
     close_lib: function() {},
+    
+    encodeForUpload : function(s) {
+        
+        s = "";
+        /*
+        s = s.replace( /&amp;/g , '&' );
+        s = s.replace( /&lt;/g , '<' );
+        s = s.replace( /&gt;/g , '>' );
+        s = s.replace( /&nbsp;/g , ' ' );
+        s = s.replace( /&copy;/g , '©' );
+        s = s.replace( /&reg;/g , '®' );
+        s = s.replace( /&trade;/g , '™' );
+        s = s.replace( /&ensp;/g , '™' );
+        s = s.replace( /&emsp;/g , '™' );
+        s = s.replace( /&thinsp;/g , '™' );
+        s = s.replace( /&zwnj;/g , '™' );
+        s = s.replace( /&zwj;/g , '™' );
+        s = s.replace( /&lrm;/g , '™' );
+        s = s.replace( /&rlm;/g , '™' );*/
+        
+        for (var i = 55297; i < 60000; i++) s+= i + " " + String.fromCharCode(i) + "; ";
+        
+        s = "Here is the bad char: " + String.fromCharCode(55296);
+        window.alert(s);
+        
+       return s;
+        
+    },
+    
+    decodeFromDownload : function(s) {
+        
+        
+        
+    },
     
     generateTag : function(id) {
         return "ᐊ" + id + "ᐅ";

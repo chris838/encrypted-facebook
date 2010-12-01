@@ -53,9 +53,14 @@ var onPageLoad2 = function(event) {
     var doc = event.originalTarget;  
     
     if (doc instanceof HTMLDocument) {  
-       // is this an inner frame?  
-       if (!doc.defaultView.frameElement) {     
-                
+        // is this an inner frame?  
+        if (doc.defaultView.frameElement) {  
+        // Frame within a tab was loaded.  
+        // Find the root document:  
+        while (doc.defaultView.frameElement) {  
+            doc = doc.defaultView.frameElement.ownerDocument;  
+        }  
+               
             // Check the URL for the dummy Facebook succesful login page
             var url = doc.defaultView.location.href;
             var rx=/facebook\.com\//; // TODO - watch out for malicious code injections
@@ -66,7 +71,7 @@ var onPageLoad2 = function(event) {
                 
                 // Find any tags, and call retrieve function on them
                 text = text.replace(
-                    /ᐊ[0-9,a-f]*ᐅ/g, function(x) { return eFB.retrieveFromTag(doc,x); }
+                    /ᐊ[0-9,a-f]*ᐅ/, function(x) { return eFB.retrieveFromTag(doc,x); }
                 );
                 
                 // Write back changes, but ONLY if there are any
