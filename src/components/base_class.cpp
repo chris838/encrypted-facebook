@@ -13,37 +13,45 @@ void base::UTF8Encode2BytesUnicode(
 {
    for(unsigned int i=0; i < input.size(); i++)
    {
-      // 00000000 (null char)
-      if(input[i] == 0x00)
-      {
-        // output two bytes for null char, 0x7f 0x7e
-         output.push_back((byte) 0x7f);
-         output.push_back((byte) 0x7e);
-      }
-      // 01111111 (need to deal with to avoid confusion with null)
-      else if(input[i] == 0x7f)
-      {
-        // outputs two bytes, 0x7f 0x7f
-         output.push_back((byte) 0x7f);
-         output.push_back((byte) 0x7f);
-      }
+      // First we add an offset of 0x00b0
+      // so no dealing with control or null characters
+      unsigned int in = ((unsigned int) input[i]) + 0x00b0;
+      
       // 0xxxxxxx
-      else if(input[i] < 0x80)
+      if(in < 0x80)
       {
-         output.push_back((byte)input[i]);
+         output.push_back((byte)in);
       }
       // 110xxxxx 10xxxxxx
-      else if(input[i] < 0x800)
+      else if(in < 0x800)
       {
-         output.push_back((byte)(MASK2BYTES | (input[i] >> 6)));
-         output.push_back((byte)(MASKBYTE | (input[i] & MASKBITS)));
+         output.push_back((byte)(MASK2BYTES | (in >> 6)));
+         output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
+      }
+      else if ( (in >= 0xd800) & (in <= 0xdfff) )
+      {  
+        // this character range is not valid (they are surrogate pair codes)
+        // so we shift 1 bit to the left and use those code points instead
+         output.push_back((byte)(MASK4BYTES | (in >> 17)));
+         output.push_back((byte)(MASKBYTE   | (in >> 11 & MASKBITS)));
+         output.push_back((byte)(MASKBYTE   | (in >> 5 & MASKBITS)));
+         output.push_back((byte)(MASKBYTE   | (in << 1 & MASKBITS)));
+        
       }
       // 1110xxxx 10xxxxxx 10xxxxxx
-      else if(input[i] < 0x10000)
+      else if(in < 0x10000)
       {
-         output.push_back((byte)(MASK3BYTES | (input[i] >> 12)));
-         output.push_back((byte)(MASKBYTE | (input[i] >> 6 & MASKBITS)));
-         output.push_back((byte)(MASKBYTE | (input[i] & MASKBITS)));
+         output.push_back((byte)(MASK3BYTES | (in >> 12)));
+         output.push_back((byte)(MASKBYTE | (in >> 6 & MASKBITS)));
+         output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
+      }
+      // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+      else if(in < 0x10ffff)
+      {
+         output.push_back((byte)(MASK4BYTES | (in >> 18)));
+         output.push_back((byte)(MASKBYTE | (in >> 12 & MASKBITS)));
+         output.push_back((byte)(MASKBYTE | (in >> 6 & MASKBITS)));
+         output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
       }
    }
 }
@@ -55,10 +63,27 @@ void base::UTF8Decode2BytesUnicode(
 {
    for(unsigned int i=0; i < input.size();)
    {
-      Unicode2Bytes ch;
+      unsigned int ch;
 
+      // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+      if((input[i] & MASK4BYTES) == MASK4BYTES)
+      {
+        if (input[i] > 0xf2) // this is a surrogate character
+        {                   
+          ch = ((input[i+0] & 0x07)     << 17) |
+               ((input[i+1] & MASKBITS) << 11) |
+               ((input[i+2] & MASKBITS) <<  5) |
+               ((input[i+3] & MASKBITS) >>  1);
+        } else {
+          ch = ((input[i+0] & 0x07)     << 18) |
+               ((input[i+1] & MASKBITS) << 12) |
+               ((input[i+2] & MASKBITS) <<  6) |
+               ((input[i+3] & MASKBITS));
+        }
+         i += 4;
+      }
       // 1110xxxx 10xxxxxx 10xxxxxx
-      if((input[i] & MASK3BYTES) == MASK3BYTES)
+      else if((input[i] & MASK3BYTES) == MASK3BYTES)
       {
          ch = ((input[i] & 0x0F) << 12) | (
                (input[i+1] & MASKBITS) << 6)
@@ -71,22 +96,15 @@ void base::UTF8Decode2BytesUnicode(
          ch = ((input[i] & 0x1F) << 6) | (input[i+1] & MASKBITS);
          i += 2;
       }
-      // 01111111 [01111111 OR 01111110]
-      // Needs special treatment - could be 0x7f or a null char 0x00
-      else if(input[i] == 0x7f)
-      {
-        if (input[i+1] == 0x7f) ch = input[i];
-        else if (input[i+1] == 0x7e) ch = (Unicode2Bytes) 0x0000;
-        i += 2;
-      }
       // 0xxxxxxx
       else if(input[i] < MASKBYTE)
       {
          ch = input[i];
          i += 1;
       }
-
-      output.push_back(ch);
+      
+      // subtract 0xb0 offest
+      output.push_back( (Unicode2Bytes) (ch - 0xb0) );
    }
 }
 

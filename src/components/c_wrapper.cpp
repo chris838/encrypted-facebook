@@ -36,7 +36,7 @@ const char* binToUTF8( const base* This, const char str[] , unsigned const int l
   for (i=0; i<out.size(); i++) s[i] = (char) out[i];
   s[i] = '\0';
   
-  /* Write out to a log file
+  /* Write out to a log file */
   ofstream myfile;
   myfile.open ("/home/chris/Desktop/log.txt");
   myfile << "Original input: " << str << " length: " << len << '\n';
@@ -45,7 +45,7 @@ const char* binToUTF8( const base* This, const char str[] , unsigned const int l
   myfile << "Output\n";
   for (unsigned int i = 0; i < out.size(); i++) myfile << (int) out[i] << '\n';
   myfile << "Final output: " << s << "\n";
-  myfile.close(); */
+  myfile.close(); 
   
   return (char*) s;
 }
@@ -81,7 +81,7 @@ const char* UTF8ToBin( const base* This, const char str[] , unsigned const int l
   }
   s[2*i] = '\0';
    
-  /* Write out to a log file
+  /* Write out to a log file */
   ofstream myfile;
   myfile.open ("/home/chris/Desktop/log2.txt");
   myfile << "Original input: " << str << '\n';
@@ -90,7 +90,7 @@ const char* UTF8ToBin( const base* This, const char str[] , unsigned const int l
   myfile << "Output\n";
   for (unsigned int i = 0; i < out.size(); i++) myfile << (int) out[i] << '\n';
   myfile << "Final output: " << s << "\n";
-  myfile.close(); */
+  myfile.close(); 
   
   return s;
 }

@@ -65,9 +65,9 @@ eFB = {
             //var plaintext = document.getElementById("efb-text").value;
             //
             //var msg = encodeURIComponent( eFB.lib_binToUTF8(plaintext,plaintext.length).readString() ); // No encrytion yet
-            
-            var msg = encodeURIComponent( eFB.encodeForUpload("") );
-            
+   
+            var msg = eFB.encodeForUpload("");
+
             var subject_tag = encodeURIComponent( "ˠ" );
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
                             "&message=" + msg +
@@ -78,7 +78,7 @@ eFB = {
             var url = "https://graph.facebook.com/me/notes";
             http.open("POST", url, true);
             // Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
             http.setRequestHeader("Content-length", params.length);
             http.setRequestHeader("Connection", "close");
             //
@@ -144,28 +144,8 @@ eFB = {
     encodeForUpload : function(s) {
         
         s = "";
-        /*
-        s = s.replace( /&amp;/g , '&' );
-        s = s.replace( /&lt;/g , '<' );
-        s = s.replace( /&gt;/g , '>' );
-        s = s.replace( /&nbsp;/g , ' ' );
-        s = s.replace( /&copy;/g , '©' );
-        s = s.replace( /&reg;/g , '®' );
-        s = s.replace( /&trade;/g , '™' );
-        s = s.replace( /&ensp;/g , '™' );
-        s = s.replace( /&emsp;/g , '™' );
-        s = s.replace( /&thinsp;/g , '™' );
-        s = s.replace( /&zwnj;/g , '™' );
-        s = s.replace( /&zwj;/g , '™' );
-        s = s.replace( /&lrm;/g , '™' );
-        s = s.replace( /&rlm;/g , '™' );*/
-        
-        for (var i = 55297; i < 60000; i++) s+= i + " " + String.fromCharCode(i) + "; ";
-        
-        s = "Here is the bad char: " + String.fromCharCode(55296);
-        window.alert(s);
-        
-       return s;
+        for (var i = 0xb0; i < (65536 + 0xb0); i++) s+= String.fromCharCode(i);        
+        return s;
         
     },
     
