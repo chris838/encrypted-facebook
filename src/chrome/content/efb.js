@@ -25,7 +25,7 @@ eFB = {
                             "client_id=" + api_id + "&" +
                             "redirect_uri=http://www.facebook.com/connect/login_success.html&" +
                             "type=user_agent&" +
-                            "scope=publish_stream,offline_access,user_about_me,friends_about_me,user_notes&" +
+                            "scope=publish_stream,offline_access,user_about_me,friends_about_me,user_notes,user_photos&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=350,height=250,resizable=0");
         } else {

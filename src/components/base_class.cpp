@@ -108,6 +108,12 @@ void base::UTF8Decode2BytesUnicode(
    }
 }
 
+void base::EncryptPhoto(
+  std::string       & id
+) const
+{
+  
+}
 
 
 base::~base()

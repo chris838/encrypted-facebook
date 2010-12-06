@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include "CImg.h"
 
 #define         MASKBITS                0x3F
 #define         MASKBYTE                0x80
@@ -19,6 +20,7 @@
 typedef unsigned short    Unicode2Bytes;
 typedef unsigned int      Unicode4Bytes;
 typedef unsigned char     byte;
+
 
 class base
 {
@@ -33,6 +35,12 @@ class base
       std::vector< byte >           & input,
       std::vector< Unicode2Bytes >  & output
     ) const;
+    
+    void EncryptPhoto(
+      std::string                   & id
+    )
+    
+    
     
     virtual ~base() ;
     std::string str ;
