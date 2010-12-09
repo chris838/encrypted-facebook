@@ -4,7 +4,7 @@
 
 eFB = {
     /**
-    * Load the preferences XPCOM module, used to share data (i,e, the access token) across
+    * Load the preferences XPCOM module, used to share data (i.e. the access token) across
     * windows.
     */
     prefs : Components.classes["@mozilla.org/preferences-service;1"]
@@ -12,7 +12,7 @@ eFB = {
                     
 
     /**
-    * Initialises the log in process, i.e. opens the login prompt.
+    * Initialises the login process, i.e. opens the login prompt.
     * The process is completed when the login success url is detected,
     * at which point we intercept the access token.
     */ 
@@ -25,7 +25,7 @@ eFB = {
                             "client_id=" + api_id + "&" +
                             "redirect_uri=http://www.facebook.com/connect/login_success.html&" +
                             "type=user_agent&" +
-                            "scope=publish_stream,offline_access,user_about_me,friends_about_me,user_notes,user_photos&" +
+                            "scope=publish_stream,offline_access,user_about_me,friends_about_me,user_notes,user_photos,user_videos,friends_videos&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=350,height=250,resizable=0");
         } else {
@@ -62,11 +62,9 @@ eFB = {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
             
             // The variables we will submit
-            //var plaintext = document.getElementById("efb-text").value;
+            var plaintext = document.getElementById("efb-text").value;
             //
-            //var msg = encodeURIComponent( eFB.lib_binToUTF8(plaintext,plaintext.length).readString() ); // No encrytion yet
-   
-            var msg = eFB.encodeForUpload("");
+            var msg = eFB.lib_binToUTF8(plaintext,plaintext.length).readString(); // No encrytion yet
 
             var subject_tag = encodeURIComponent( "ˠ" );
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
@@ -78,7 +76,7 @@ eFB = {
             var url = "https://graph.facebook.com/me/notes";
             http.open("POST", url, true);
             // Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+            http.setRequestHeader("Content-type", "text/html; charset=utf-8");
             http.setRequestHeader("Content-length", params.length);
             http.setRequestHeader("Connection", "close");
             //
@@ -113,7 +111,9 @@ eFB = {
             
             eFB.init_lib= lib.declare("init_lib",
                                      ctypes.default_abi,
-                                     ctypes.int32_t // return type
+                                     ctypes.int32_t,  // return type
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr  // parameter 2
             );
             eFB.lib_binToUTF8= lib.declare("lib_binToUTF8",
                                      ctypes.default_abi,
@@ -127,31 +127,34 @@ eFB = {
                                      ctypes.char.ptr, // parameter 1
                                      ctypes.uint32_t  //parameter 2
             );
+            eFB.lib_EncryptPhoto= lib.declare("lib_EncryptPhoto",
+                                     ctypes.default_abi,
+                                     ctypes.uint32_t, // return type
+                                     ctypes.char.ptr // parameter 1
+            );
             eFB.close_lib = lib.declare("close_lib",
                                      ctypes.default_abi,
                                      ctypes.int32_t // return type
             );
-
-            callback();
+            
+            // Find the path for the extension and pass it to the library
+            var cache_dir   = addon.getResourceURI( "cache/" ).path;
+            var temp_dir    = addon.getResourceURI( "temp/" ).path;
+            callback( cache_dir,temp_dir );
+            
         } );
     },
     
     init_lib : function() {},
     lib_binToUTF8: function() {},
     lib_UTF8ToBin: function() {},
+    lib_EncryptPhoto: function() {},
     close_lib: function() {},
     
-    encodeForUpload : function(s) {
-        
-        s = "";
-        for (var i = 0xb0; i < (65536 + 0xb0); i++) s+= String.fromCharCode(i);        
-        return s;
-        
-    },
     
-    decodeFromDownload : function(s) {
+    generateEncryptedPhoto : function(s) {
         
-        
+        window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/photo.jpg" ) );
         
     },
     
@@ -255,4 +258,6 @@ eFB = {
 };
 
 // Load the C/C++ binary library functions
-eFB.loadLibs( function() {eFB.init_lib();} );
+// ensure that the callback function (i.e. the C/C++ library initilisation)
+// is passed the extension path.
+eFB.loadLibs( function( cache_dir,temp_dir ) {eFB.init_lib( cache_dir,temp_dir );} );

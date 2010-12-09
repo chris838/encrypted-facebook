@@ -5,9 +5,20 @@
 #error a C++ compiler is required
 #endif
 
+#define JPEG_INTERNALS
+
+#define cimg_verbosity 0     // Disable modal window in CImg exceptions.
+#define cimg_use_jpeg 1
+#include "CImg.h"
+
+#include <stdio.h>
 #include <string>
 #include <vector>
-#include "CImg.h"
+#include <fstream>
+#include <iostream>
+#include <time.h>
+#include <sstream>
+
 
 #define         MASKBITS                0x3F
 #define         MASKBYTE                0x80
@@ -24,8 +35,12 @@ typedef unsigned char     byte;
 
 class base
 {
+  const std::string cache_dir;
+  const std::string temp_dir;
+  
   public :
-    base() ;
+    
+    base(std::string cd, std::string td);
     
     void UTF8Encode2BytesUnicode(
       std::vector< Unicode2Bytes >  & input,
@@ -36,11 +51,13 @@ class base
       std::vector< Unicode2Bytes >  & output
     ) const;
     
-    void EncryptPhoto(
-      std::string                   & id
-    )
-    
-    
+    unsigned int EncryptPhoto(
+      const char*                   & pathtofile
+    ) const;
+    unsigned int WriteToDSTCoeffs(
+    ) const;
+    unsigned int ReadFromDSTCoeffs(
+    ) const;
     
     virtual ~base() ;
     std::string str ;

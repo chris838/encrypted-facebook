@@ -3,21 +3,27 @@
 
 base* b;
 
-int init_lib() {  
-  b = create_base();
+int init_lib(const char* cache_dir, const char* temp_dir) {  
+  b = create_base( cache_dir,temp_dir );
   return 1;
 }
 
-/* (after encoding) Converts a binary btye stream to valid UTF8 bytes */
+/* (after encrypting) Converts a binary btye stream to valid UTF8 bytes */
 const char* lib_binToUTF8(const char str[], unsigned int len)
 {
   return binToUTF8( b,str, len);
 }
 
-/* Converts a stream of UTF8 chars to their 2-byte code points (ready to decode) */
+/* Converts a stream of UTF8 chars to their 2-byte code points (ready to decrypt) */
 const char* lib_UTF8ToBin(const char str[], unsigned int len)
 {
   return UTF8ToBin( b,str, len);
+}
+
+/* Takes the full path to a photo and generates a (temporary) encrypted version, ready to upload */
+const unsigned int lib_EncryptPhoto(const char str[])
+{
+  return EncryptPhoto( b,str );
 }
 
 int close_lib() {

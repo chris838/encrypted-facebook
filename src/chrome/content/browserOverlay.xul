@@ -43,7 +43,7 @@
         class="button" 
         label="Upload picture"
         tooltiptext="Encrypts then uploads a picture to Facebook."
-        oncommand="eFB.encodeForUpload('sfsdf');" />
+        oncommand="eFB.generateEncryptedPhoto('assdas');" />
     </toolbar>
   </toolbox>
 

@@ -8,9 +8,9 @@
 
 using namespace std;
 
-base* create_base()
+base* create_base(const char* cache_dir, const char* temp_dir)
 {
-  return new base() ;
+  return new base( cache_dir, temp_dir ) ;
 }
 
 /* Convert stream of bytes to groups of two - each is a 16-bit unsigned short.
@@ -22,7 +22,7 @@ const char* binToUTF8( const base* This, const char str[] , unsigned const int l
   vector<unsigned char> out;
   
   /* Cycle through the chars and store them in a vector<short>
-    ***NOT*** null terminated - may contain '\0' chars */
+    the char* may or may not be null terminated */
   const unsigned short* its = (const unsigned short*) str;
   unsigned int i;
   for (i=0; 1+(2*i) < len; i++) in.push_back( its[i] );
@@ -93,6 +93,16 @@ const char* UTF8ToBin( const base* This, const char str[] , unsigned const int l
   myfile.close(); 
   
   return s;
+}
+
+/* Given the path to some local photo, created a temporary encrypted version
+ * ready to be uploaded. Return an int indicating success.
+ *
+ */
+const unsigned int EncryptPhoto( const base* This, const char pathtofile[] ) {
+  
+  return This->EncryptPhoto( pathtofile );
+  
 }
 
 void destroy_object( base* This )
