@@ -54,11 +54,11 @@ class base
     unsigned int EncryptPhoto(
       const char*                   & pathtofile
     ) const;
-    unsigned int WriteToDSTCoeffs(
+    cimg_library::CImg<unsigned char> EncodeInImage(
+      cimg_library::CImg<unsigned char>  & src,
+      std::vector<char>		         & data
     ) const;
-    unsigned int ReadFromDSTCoeffs(
-    ) const;
-    
+
     virtual ~base() ;
     std::string str ;
     // etc
