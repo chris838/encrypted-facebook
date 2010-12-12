@@ -155,7 +155,7 @@ eFB = {
     generateEncryptedPhoto : function(s) {
         
         window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/photo.jpg" ) );
-        
+    
     },
     
     generateTag : function(id) {
