@@ -18,7 +18,7 @@
 #include <iostream>
 #include <time.h>
 #include <sstream>
-
+#include <bitset>
 #include <blitz/array.h> 
 
 
@@ -59,17 +59,28 @@ class base
       const char*                   & pathtofile
     ) const;
     void EncodeInImage(
-      cimg_library::CImg<unsigned char>	 & img,
+      cimg_library::CImg<short int>	 & img,
       std::vector<char>		         & data
     ) const;
-    void EncodeInBlock(
+    void EncodeInYBlocks(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
-	unsigned int 			c,
-	unsigned char 			block_a,
-	unsigned char 			block_b,
-	unsigned char 			block_c
+	unsigned char 			a,
+	unsigned char 			b,
+	unsigned char 			c,
+	unsigned char 			d,
+	unsigned char 			e
+    ) const;
+    void EncodeInCBlocks(
+	cimg_library::CImg<short int> & img,
+	unsigned int 			y0,
+	unsigned int 			x0,
+	unsigned char 			a,
+	unsigned char 			b,
+	unsigned char 			c,
+	unsigned char 			d,
+	unsigned char 			e
     ) const;
     
   // Decoding data from an image
@@ -77,28 +88,31 @@ class base
       const char*                   & pathtofile
     ) const;
     void DecodeFromImage(
-      cimg_library::CImg<unsigned char>	 & img,
+      cimg_library::CImg<short int>	 & img,
       std::vector<char>		         & data
     ) const;
-    void DecodeFromBlock(
+    void DecodeFromYBlocks(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
-	unsigned int 			c,
+        std::vector<char>		& data
+    ) const;
+    void DecodeFromCBlocks(
+	cimg_library::CImg<short int> & img,
+	unsigned int 			y0,
+	unsigned int 			x0,
         std::vector<char>		& data
     ) const;
     
   // Wavelet transforms for image encoding/decoding
   void Haar2D_DWT(
-	cimg_library::CImg<unsigned char> & src,
-	cimg_library::CImg<short int> & dst,
+	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
 	unsigned int 			c
     ) const;
     void Haar2D_DWTi(
-	cimg_library::CImg<short int> & src,
-	cimg_library::CImg<unsigned char> & dst,
+	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
 	unsigned int 			c

@@ -124,8 +124,8 @@ const
   std::ifstream data_file;	// data file object
   const char* dst_filename = 	// output filename
   "/home/chris/Desktop/dst.bmp";	 
-  CImg<unsigned char> * src =
-  new CImg<unsigned char>(); 	// source image object
+  CImg<short int> * src =
+  new CImg<short int>(); 	// source image object
   std::vector<char>     data; 	// byte array for our data bytes we wish to transferred
 
 
@@ -154,7 +154,7 @@ const
   // !!TODO!! Encrypt the data bytes
   // !!TODO!! Add FEC encoding
   
-  // Pad out to multiple of three (since we encode 3 bytes per block)
+  // Pad out to multiple of fifteen (since we encode 15 bytes per 4-block)
   while ( data.size() % 3 != 0) data.push_back( 0x0000 );
 
 
@@ -175,83 +175,147 @@ const
 
   const char* s = "adsfsdf";
   const char*& ss = s;
-  //DecryptPhoto( ss );
+  DecryptPhoto( ss );
 
   // Return with the filename
   return 0; 
 }
 
 void base::EncodeInImage(
-   CImg<unsigned char>    & img, 
-   std::vector<char> 	  & data
+   CImg<short int>    	& img, 
+   std::vector<char> 	& data
 ) const
 {
 
   // Format the source image to 720x720, 3 channel YCbCr colour, single slice
   // (resample using Lanczos)
   img.resize(720,720,1,3,6);
-  //img.RGBtoYCbCr();
-  
-  // Create a temporary destination image
-  // (need an extra sign bit after performing forward transform)
-  CImg<short int> temp_img(720,720,1,3);
-  
-  // Loop through the image in 8x8 blocks
+  img.RGBtoYCbCr();
+  // Copy channels into different images (we need to subsample the chrominance values)
+  cimg_library::CImg<short int> img_Y, img_c;
+  img_Y = img.get_channel(0);				// intensity
+  img_c = img.get_channels(1,2).resize(360,360,1,2,6);		// chrominance
+
+  // Loop through the image in 16x16 intensity and 8x8 chrominance blocks
   unsigned int idx; int exit = false;
-  for (int block_i=0; block_i<90; block_i++) {
-      for (int block_j=0; block_j<90; block_j++) {
-	// Loop through each channel
-	for (int c=0; c<3; c++) {
+  for (int block_i=0; block_i<1; block_i++) {
+      for (int block_j=0; block_j<1; block_j++) {
 	  
+	  // Apply the transform (two iterations) to four blocks of
+	  // the intensity (Y) channel
+	  for (int k1=0; k1<2; k1++) {
+	    for (int k2=0; k2<2; k2++) {
+	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	    }
+	  }
+	  // and again to the *single* block of the two chrominance channels
+	  for (int c=0; c<2;c++) {
+	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
+	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
+	  }
 	  
-	  // Apply the transform (two iterations)
-	  Haar2D_DWT (  img , temp_img, block_i*8, block_j*8 , c);
-	  Haar2D_DWT (  img , temp_img, block_i*8, block_j*8 , c);
-	  
-	  
-	  // Write out 3 bytes of data to the approximation coefficients
-	  idx = (block_i*90) + block_j;
-	  if ( 3*idx+2 < data.size() ) {
-	    /*EncodeInBlock(temp_img,		// target image
-		     block_i*8, block_j*8, c, 	// coords of the block and channel
-		     data[3*idx],		// bytes to hide
-		     data[3*idx+1],		//
-		     data[3*idx+2]   		// 
-		     );*/
+	  // Write out 15 bytes of data to the approximation coefficients
+	  // 5 bytes to two blocks
+	  idx = 15*((block_i*90) + block_j);
+	  if ( idx+14 < data.size() ) {
+	    // 5 bytes to the first row of Y blocks
+	    EncodeInYBlocks(img_Y, 2*block_i*8, 2*block_j*8,
+		    data[idx], data[idx+1], data[idx+2], data[idx+3], data[idx+4]
+		    );
+	    // 5 bytes to the second row of Y blocks
+	    EncodeInYBlocks(img_Y, 2*block_i*8, (2*block_j+1)*8,
+		    data[idx+5], data[idx+6], data[idx+7], data[idx+8], data[idx+9]
+		    );
+	    // 5 bytes to the single block of two chrominance channels
+	    EncodeInCBlocks(img_c, block_i*8, block_j*8,
+		    data[idx+10], data[idx+11], data[idx+12], data[idx+13], data[idx+14]
+		    );
 	  } else {
 	    // Stop writing data
 	    exit = true;
-	  }  
+	  }
 	  
+	    std::cout << std::hex;
+	    std::cout << (int) img_c( 0, 0, 0 ) << ", ";
+	    std::cout << (int) img_c( 1, 0, 0 ) 	<< ", ";
+	    std::cout << (int) img_c( 0, 1, 0 ) 	<< ", ";
+	    std::cout << (int) img_c( 1, 1, 0 ) 	<< ", ";
+	    std::cout << (int) img_c( 0, 0, 1 ) 	<< ", ";
+	    std::cout << (int) img_c( 1, 0, 1 ) 	<< "\n";
+
 	  // Apply the inverse transform
-	  Haar2D_DWTi(  temp_img, img , block_i*8, block_j*8 , c);
-	  Haar2D_DWTi(  temp_img, img , block_i*8, block_j*8 , c);
+	  for (int k1=0; k1<2; k1++) {
+	    for (int k2=0; k2<2; k2++) {
+	      Haar2D_DWTi( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWTi( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	    }
+	  }
+	  // and again to the *single* block of the two chrominance channels
+	  for (int c=0; c<2;c++) {
+	    Haar2D_DWTi( img_c , block_i*8, block_j*8 , c);
+	    Haar2D_DWTi( img_c , block_i*8, block_j*8 , c);
+	  }
 	  
-	  // If we finished, break out of the loop
-	  if (exit) block_i=block_j=c=90;
-	}
+	  // If we finished, break out of the loops
+	  if (exit) block_i=block_j=45;
     }
   }
   
-  // Convert back to RGB
-  //img.YCbCrtoRGB();
+  	    std::cout << std::hex;
+	    for (int i=0; i<8; i++) {
+	      for (int j=0; j<8; j++) {
+	      std::cout << (int) img_c( i, j, 0 ) << ", ";
+	      }
+	    }
+	    std::cout << "\n";
 
+  
+  // Write back the channels
+  img_c.resize(720,720,1,2,1);
+  img.draw_image(0,0,0, 0, img_Y.get_channel(0) );
+  img.draw_image(0,0,0, 1, img_c.get_channel(0) );
+  img.draw_image(0,0,0, 2, img_c.get_channel(1) );
+  // Convert back to RGB
+  img.YCbCrtoRGB();
 }
 
-void base::EncodeInBlock(
+void base::EncodeInYBlocks(
     cimg_library::CImg<short int> & 	img,
     unsigned int 			x0,
     unsigned int 			y0,
-    unsigned int 			c,
-    unsigned char 			block_a,
-    unsigned char 			block_b,
-    unsigned char 			block_c
+    unsigned char 			a,
+    unsigned char 			b,
+    unsigned char 			c,
+    unsigned char 			d,
+    unsigned char 			e
 ) const
 {
-  img( x0, y0, c ) = block_a;
-  img( x0+1, y0, c ) = block_b;
-  img( x0, y0+1, c ) = block_c;
-  img( x0+1, y0+1, c ) = 0xff;
+  img( x0, y0, 0 ) = a;
+  img( x0+1, y0, 0 ) = b;
+  img( x0, y0+1, 0 ) = c;
+  img( x0+1, y0+1, 0 ) = d;
+  img( x0+8, y0, 0 ) = e;
+  img( x0+9, y0, 0 ) = e;
+}
+
+void base::EncodeInCBlocks(
+    cimg_library::CImg<short int> & 	img,
+    unsigned int 			x0,
+    unsigned int 			y0,
+    unsigned char 			a,
+    unsigned char 			b,
+    unsigned char 			c,
+    unsigned char 			d,
+    unsigned char 			e
+) const
+{  
+  img( x0, y0, 0 ) = a;
+  img( x0+1, y0, 0 ) = b;
+  img( x0, y0+1, 0 ) = c;
+  img( x0+1, y0+1, 0 ) = d;
+  img( x0, y0, 1 ) = e;
+  img( x0+1, y0, 1 ) = e;
 }
 
 unsigned int base::DecryptPhoto(
@@ -263,8 +327,8 @@ unsigned int base::DecryptPhoto(
   const char* src_filename =    // source image file (from which we read data bytes)
     "/home/chris/Desktop/dst.bmp";
   std::ofstream data_file;	// data file object	 
-  CImg<unsigned char> * src =
-    new CImg<unsigned char>(); 	// source image object
+  CImg<short int> * src =
+    new CImg<short int>(); 	// source image object
   std::vector<char>     data; 	// byte array for our data bytes we wish to transferred
 
 
@@ -281,6 +345,35 @@ unsigned int base::DecryptPhoto(
   // !!TODO!! Correct errors
   // !!TODO!! Decrypt
   
+{
+
+//----------------------------------------------------------------------------  
+// Calculate bit error rate
+std::ifstream data0_file;
+std::vector<char>     data0;
+data0_file.open( "/home/chris/Desktop/data.bin", ios::binary );
+if(!data0_file.is_open()) {
+  std::cout << "Error opening data0 file:" << "\n";
+  return 1;
+}
+data0_file.seekg(0, std::ios::end);
+size_t data0_size = data0_file.tellg(); // get the length of the file
+data0_file.seekg(0, std::ios::beg);
+data0.resize( data0_size );
+// read the file
+data0_file.read(&data0[0], data0_size);
+int total, errors;
+for (unsigned int i=0; i<data0.size(); i++) {
+  unsigned char error = data0[i] ^ data[i];
+  bitset<8> bs( error );
+  errors += bs.count();
+  total += 8;
+}
+std::cout << ((float) errors) / total << "\n";
+//----------------------------------------------------------------------------
+
+}
+  
   // Save data to a file
   data_file.open( data_filename, ios::binary);
   if(!data_file.is_open()) {
@@ -294,52 +387,107 @@ unsigned int base::DecryptPhoto(
 }
 
 void base::DecodeFromImage(
-    cimg_library::CImg<unsigned char>	 & img,
+    cimg_library::CImg<short int>	 & img,
     std::vector<char>		         & data
 ) const
 {
 
-  // Format the image to Y'CbCr colour
-  //img.RGBtoYCbCr();
+  // Change colour mode
+  img.RGBtoYCbCr();
+  // Copy channels into different images (we need to subsample the chrominance values)
+  cimg_library::CImg<short int> img_Y, img_c;
+  img_Y = img.get_channel(0);				// intensity
+  img_c = img.get_channels(1,2).resize(360,360,1,2,1);		// chrominance
   
-  // Create a temporary destination image
-  // (need an extra sign bit after performing forward transform)
-  CImg<short int> temp_img(720,720,1,3);
-  
-  // Loop through the image in 8x8 blocks
-  for (int block_i=0; block_i<90; block_i++) {
-      for (int block_j=0; block_j<90; block_j++) {
-	// Loop through each channel
-	for (int c=0; c<3; c++) {
+  	    std::cout << std::hex;
+	    for (int i=0; i<8; i++) {
+	      for (int j=0; j<8; j++) {
+	      std::cout << (int) img_c( i, j, 0 ) << ", ";
+	      }
+	    }
+	    std::cout << "\n";
+	    
+  // Loop through the image in 16x16 blocks (8x8 for chrominance)
+  for (int block_i=0; block_i<1; block_i++) {
+      for (int block_j=0; block_j<1; block_j++) {
+	  	    
+	  // Apply the transform (two iterations) to four blocks of
+	  // the intensity (Y) channel
+	  for (int k1=0; k1<2; k1++) {
+	    for (int k2=0; k2<2; k2++) {
+	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	    }
+	  }
+	  // and again to the *single* block of the two chrominance channels
+	  for (int c=0; c<2;c++) {
+	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
+	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
+	  }
 	  
-	  // Apply the transform (two iterations)
-	  Haar2D_DWT (  img , temp_img, block_i*8, block_j*8 , c);
-	  Haar2D_DWT (  img , temp_img, block_i*8, block_j*8 , c);
-	  
-	  // Read in 3 bytes of data from the approximation coefficients
-	  DecodeFromBlock(temp_img,		// target image
-		     block_i*8, block_j*8, c, 	// coords of the block and channel
-		     data			// vector for output bytes
-		     );
-	}
+	  	    std::cout << std::hex;
+	    std::cout << (int) img_c( 0, 0, 0 ) << ", ";
+	    std::cout << (int) img_c( 1, 0, 0 ) 	<< ", ";
+	    std::cout << (int) img_c( 0, 1, 0 ) 	<< ", ";
+	    std::cout << (int) img_c( 1, 1, 0 ) 	<< ", ";
+	    std::cout << (int) img_c( 0, 0, 1 ) 	<< ", ";
+	    std::cout << (int) img_c( 1, 0, 1 ) 	<< "\n";
+	    
+	  // Read in 15 bytes of data from the approximation coefficients
+	  // 5 bytes from the first row of Y blocks
+	  DecodeFromYBlocks( img_c, 2*block_i*8, 2*block_j*8, data);
+	  // 5 bytes from the second row of Y blocks
+	  DecodeFromYBlocks( img_c, 2*block_i*8, (2*block_j+1)*8, data);
+	  // 5 bytes from the single block of two chrominance channels
+	  DecodeFromCBlocks( img_Y, block_i*8, block_j*8, data);
     }
   }
-  
-  // Convert back to RGB
-  //img.YCbCrtoRGB();
 }
 
-void base::DecodeFromBlock(
+void base::DecodeFromYBlocks(
     cimg_library::CImg<short int> & img,
     unsigned int 			x0,
     unsigned int 			y0,
-    unsigned int 			c,
     std::vector<char>		& data
 ) const
 {
-  data.push_back( img( x0,   y0, c ) );
-  data.push_back( img( x0+1, y0, c ) );
-  data.push_back( img( x0, y0+1, c ) );
+  unsigned char p1,p2,p3,p4,p5,p6;
+  p1 = img( x0, y0, 0 );
+  p2 = img( x0+1, y0, 0 );
+  p3 = img( x0, y0+1, 0 );
+  p4 = img( x0+1, y0+1, 0 );
+  p5 = img( x0+8, y0, 0 );
+  p6 = img( x0+9, y0, 0 );
+
+  data.push_back( p1 );
+  data.push_back( p2 );
+  data.push_back( p3 );
+  data.push_back( p4 );
+  data.push_back( p5 );
+  data.push_back( p6 );
+}
+
+void base::DecodeFromCBlocks(
+    cimg_library::CImg<short int> & img,
+    unsigned int 			x0,
+    unsigned int 			y0,
+    std::vector<char>		& data
+) const
+{
+  unsigned char p1,p2,p3,p4,p5,p6;
+  p1 = img( x0, y0, 0 );
+  p2 = img( x0+1, y0, 0 );
+  p3 = img( x0, y0+1, 0 );
+  p4 = img( x0+1, y0+1, 0 );
+  p5 = img( x0, y0, 1 );
+  p6 = img( x0+1, y0, 1 );
+
+  data.push_back( p1 );
+  data.push_back( p2 );
+  data.push_back( p3 );
+  data.push_back( p4 );
+  data.push_back( p5 );
+  data.push_back( p6 );
 }
 
 int div_floor(int a, int b) {
@@ -348,8 +496,7 @@ int div_floor(int a, int b) {
 }
 
 void base::Haar2D_DWT(
-	CImg<unsigned char> & src, 
-	CImg<short int>  & dst,
+	CImg<short int> & img, 
 	unsigned int x0,
 	unsigned int y0,
 	unsigned int c
@@ -359,34 +506,36 @@ void base::Haar2D_DWT(
   // the inverse can be performed losslessly). We start at pixel (x0,y0)
   // in the image and work on the subsequent 8x8 block.
   
+  // Temp array for calculations
+  short int temp[4];
+  
   // For each column, perform the 1D (vertical) HDWT with integer lifting
   for (unsigned int x=x0; x<(x0+8); x++) {
     for (int i=0; i<4; i++) {
       // difference
-      dst(x, y0+4+i, c)  =  src(x, y0+(2*i), c) - src(x, y0+(2*i+1), c);
+      temp[i] 		=  img(x, y0+(2*i), c) - img(x, y0+(2*i+1), c);
       // average
-      dst(x, y0+i, c)	=  div_floor( src(x, y0+(2*i), c) + src(x, y0+(2*i+1), c), 2);
+      img(x, y0+i, c)	=  div_floor( img(x, y0+(2*i), c) + img(x, y0+(2*i+1), c), 2);
     }
+    for (int i=0; i<4; i++) img(x, y0+4+i, c) = temp[i];
   }
   
   // For each row, perform the 1D (horizontal) HDWT with integer lifting
-  short int temp[4];
   for (unsigned int y=y0; y<(y0+8); y++) {
     for (int i=0; i<4; i++) {
       // difference
-      temp[i] 		=  dst(x0+(2*i), y, c) - dst(x0+(2*i+1), y, c);
+      temp[i] 		=  img(x0+(2*i), y, c) - img(x0+(2*i+1), y, c);
       // average
-      dst(x0+i, y, c)	= div_floor( dst(x0+(2*i), y, c) + dst(x0+(2*i+1), y, c), 2);
+      img(x0+i, y, c)	=  div_floor( img(x0+(2*i), y, c) + img(x0+(2*i+1), y, c), 2);
     }
     // copy in difference values
-    for (int i=0; i<4; i++) dst(x0+4+i, y, c) = temp[i];
+    for (int i=0; i<4; i++) img(x0+4+i, y, c) = temp[i];
   }
   
 }
 
 void base::Haar2D_DWTi(
-	CImg<short int> & src, 
-	CImg<unsigned char>  & dst,
+	CImg<short int> & img,
 	unsigned int x0,
 	unsigned int y0,
 	unsigned int c
@@ -400,18 +549,19 @@ void base::Haar2D_DWTi(
   // For each row, perform the 1D (horizontal) inverse HDWT with integer lifting
   for (unsigned int y=y0; y<(y0+8); y++) {
     for (unsigned int i=0; i<4; i++) {
-      temp[2*i]   = src(x0+i, y, c) + div_floor(src(x0+4+i, y, c)+1,2) ; // lifting scheme here
-      temp[2*i+1] = temp[2*i] - src(x0+4+i, y, c);
+      temp[2*i]   = img(x0+i, y, c);// + div_floor(img(x0+4+i, y, c)+1,2) ; // lifting scheme here
+      temp[2*i+1] = temp[2*i];//- img(x0+4+i, y, c);
     }
-    for (int i=0; i<8; i++) src(x0+i, y, c) = temp[i];
+    for (int i=0; i<8; i++) img(x0+i, y, c) = temp[i];
   }
 
   // For each column, perform the 1D (vertical) inverse HDWT with integer lifting
   for (unsigned int x=x0; x<(x0+8); x++) {
     for (unsigned int i=0; i<4; i++) {
-      dst(x, y0+2*i, c)	  = src(x, y0+i, c) + div_floor(src(x, y0+4+i, c)+1,2) ; // lifting scheme here
-      dst(x, y0+2*i+1, c) = dst(x, y0+2*i, c) - src(x, y0+4+i, c);
+      temp[2*i]   = img(x, y0+i, c);// + div_floor(img(x, y0+4+i, c)+1,2) ; // lifting scheme here
+      temp[2*i+1] = temp[2*i];// - img(x, y0+4+i, c);
     }
+    for (int i=0; i<8; i++) img(x, y0+i, c) = temp[i];
   }
   
 }
