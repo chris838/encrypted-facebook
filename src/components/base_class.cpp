@@ -190,7 +190,7 @@ void base::EncodeInImage(
   // Format the source image to 720x720, 3 channel YCbCr colour, single slice
   // (resample using Lanczos)
   img.resize(720,720,1,3,6);
-  img.RGBtoYCbCr();
+  //img.RGBtoYCbCr();
   // Copy channels into different images (we need to subsample the chrominance values)
   cimg_library::CImg<short int> img_Y, img_c;
   img_Y = img.get_channel(0);				// intensity
@@ -198,8 +198,8 @@ void base::EncodeInImage(
 
   // Loop through the image in 16x16 intensity and 8x8 chrominance blocks
   unsigned int idx; int exit = false;
-  for (int block_i=0; block_i<1; block_i++) {
-      for (int block_j=0; block_j<1; block_j++) {
+  for (int block_i=0; block_i<45; block_i++) {
+      for (int block_j=0; block_j<45; block_j++) {
 	  
 	  // Apply the transform (two iterations) to four blocks of
 	  // the intensity (Y) channel
@@ -217,7 +217,7 @@ void base::EncodeInImage(
 	  
 	  // Write out 15 bytes of data to the approximation coefficients
 	  // 5 bytes to two blocks
-	  idx = 15*((block_i*90) + block_j);
+	  idx = 15*((block_i*45) + block_j);
 	  if ( idx+14 < data.size() ) {
 	    // 5 bytes to the first row of Y blocks
 	    EncodeInYBlocks(img_Y, 2*block_i*8, 2*block_j*8,
@@ -236,14 +236,6 @@ void base::EncodeInImage(
 	    exit = true;
 	  }
 	  
-	    std::cout << std::hex;
-	    std::cout << (int) img_c( 0, 0, 0 ) << ", ";
-	    std::cout << (int) img_c( 1, 0, 0 ) 	<< ", ";
-	    std::cout << (int) img_c( 0, 1, 0 ) 	<< ", ";
-	    std::cout << (int) img_c( 1, 1, 0 ) 	<< ", ";
-	    std::cout << (int) img_c( 0, 0, 1 ) 	<< ", ";
-	    std::cout << (int) img_c( 1, 0, 1 ) 	<< "\n";
-
 	  // Apply the inverse transform
 	  for (int k1=0; k1<2; k1++) {
 	    for (int k2=0; k2<2; k2++) {
@@ -262,22 +254,13 @@ void base::EncodeInImage(
     }
   }
   
-  	    std::cout << std::hex;
-	    for (int i=0; i<8; i++) {
-	      for (int j=0; j<8; j++) {
-	      std::cout << (int) img_c( i, j, 0 ) << ", ";
-	      }
-	    }
-	    std::cout << "\n";
-
-  
   // Write back the channels
   img_c.resize(720,720,1,2,1);
   img.draw_image(0,0,0, 0, img_Y.get_channel(0) );
   img.draw_image(0,0,0, 1, img_c.get_channel(0) );
   img.draw_image(0,0,0, 2, img_c.get_channel(1) );
   // Convert back to RGB
-  img.YCbCrtoRGB();
+  //img.YCbCrtoRGB();
 }
 
 void base::EncodeInYBlocks(
@@ -291,12 +274,14 @@ void base::EncodeInYBlocks(
     unsigned char 			e
 ) const
 {
-  img( x0, y0, 0 ) = a;
-  img( x0+1, y0, 0 ) = b;
-  img( x0, y0+1, 0 ) = c;
-  img( x0+1, y0+1, 0 ) = d;
-  img( x0+8, y0, 0 ) = e;
-  img( x0+9, y0, 0 ) = e;
+  img( x0, y0, 0) 	= a & 0xf8;
+  img( x0+1, y0, 0) 	= b & 0xf8;
+  img( x0, y0+1, 0) 	= c & 0xf8;
+  img( x0+1, y0+1, 0) 	= d & 0xf8;
+  img( x0+8, y0, 0) 	= e & 0xf8;
+  img( x0+9, y0, 0)	= ((a & 0x07) << 5) | ((b & 0x06) << 2);
+  img( x0+8, y0+1, 0)	= ((c & 0x07) << 5) | ((d & 0x06) << 2);
+  img( x0+9, y0+1, 0)	= ((e & 0x07) << 5) | ((b & 0x01) << 4) | ((d & 0x01) << 3);
 }
 
 void base::EncodeInCBlocks(
@@ -310,12 +295,14 @@ void base::EncodeInCBlocks(
     unsigned char 			e
 ) const
 {  
-  img( x0, y0, 0 ) = a;
-  img( x0+1, y0, 0 ) = b;
-  img( x0, y0+1, 0 ) = c;
-  img( x0+1, y0+1, 0 ) = d;
-  img( x0, y0, 1 ) = e;
-  img( x0+1, y0, 1 ) = e;
+  img( x0, y0, 0) 	= a & 0xf8;
+  img( x0+1, y0, 0) 	= b & 0xf8;
+  img( x0, y0+1, 0) 	= c & 0xf8;
+  img( x0+1, y0+1, 0) 	= d & 0xf8;
+  img( x0, y0, 1) 	= e & 0xf8;
+  img( x0+1, y0, 1)	= ((a & 0x07) << 5) | ((b & 0x06) << 2);
+  img( x0, y0+1, 1)	= ((c & 0x07) << 5) | ((d & 0x06) << 2);
+  img( x0+1, y0+1, 1)	= ((e & 0x07) << 5) | ((b & 0x01) << 4) | ((d & 0x01) << 3);
 }
 
 unsigned int base::DecryptPhoto(
@@ -325,7 +312,7 @@ unsigned int base::DecryptPhoto(
   data_filename = "/home/chris/Desktop/data2.bin"; // !!!TEMP!!!
   //
   const char* src_filename =    // source image file (from which we read data bytes)
-    "/home/chris/Desktop/dst.bmp";
+    "/home/chris/Desktop/dst.jpg";
   std::ofstream data_file;	// data file object	 
   CImg<short int> * src =
     new CImg<short int>(); 	// source image object
@@ -393,23 +380,15 @@ void base::DecodeFromImage(
 {
 
   // Change colour mode
-  img.RGBtoYCbCr();
+  //img.RGBtoYCbCr();
   // Copy channels into different images (we need to subsample the chrominance values)
   cimg_library::CImg<short int> img_Y, img_c;
   img_Y = img.get_channel(0);				// intensity
   img_c = img.get_channels(1,2).resize(360,360,1,2,1);		// chrominance
-  
-  	    std::cout << std::hex;
-	    for (int i=0; i<8; i++) {
-	      for (int j=0; j<8; j++) {
-	      std::cout << (int) img_c( i, j, 0 ) << ", ";
-	      }
-	    }
-	    std::cout << "\n";
 	    
   // Loop through the image in 16x16 blocks (8x8 for chrominance)
-  for (int block_i=0; block_i<1; block_i++) {
-      for (int block_j=0; block_j<1; block_j++) {
+  for (int block_i=0; block_i<45; block_i++) {
+      for (int block_j=0; block_j<45; block_j++) {
 	  	    
 	  // Apply the transform (two iterations) to four blocks of
 	  // the intensity (Y) channel
@@ -424,22 +403,14 @@ void base::DecodeFromImage(
 	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
 	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
 	  }
-	  
-	  	    std::cout << std::hex;
-	    std::cout << (int) img_c( 0, 0, 0 ) << ", ";
-	    std::cout << (int) img_c( 1, 0, 0 ) 	<< ", ";
-	    std::cout << (int) img_c( 0, 1, 0 ) 	<< ", ";
-	    std::cout << (int) img_c( 1, 1, 0 ) 	<< ", ";
-	    std::cout << (int) img_c( 0, 0, 1 ) 	<< ", ";
-	    std::cout << (int) img_c( 1, 0, 1 ) 	<< "\n";
 	    
 	  // Read in 15 bytes of data from the approximation coefficients
 	  // 5 bytes from the first row of Y blocks
-	  DecodeFromYBlocks( img_c, 2*block_i*8, 2*block_j*8, data);
+	  DecodeFromYBlocks( img_Y, 2*block_i*8, 2*block_j*8, data);
 	  // 5 bytes from the second row of Y blocks
-	  DecodeFromYBlocks( img_c, 2*block_i*8, (2*block_j+1)*8, data);
+	  DecodeFromYBlocks( img_Y, 2*block_i*8, (2*block_j+1)*8, data);
 	  // 5 bytes from the single block of two chrominance channels
-	  DecodeFromCBlocks( img_Y, block_i*8, block_j*8, data);
+	  DecodeFromCBlocks( img_c, block_i*8, block_j*8, data);
     }
   }
 }
@@ -451,20 +422,28 @@ void base::DecodeFromYBlocks(
     std::vector<char>		& data
 ) const
 {
-  unsigned char p1,p2,p3,p4,p5,p6;
+  unsigned char p1,p2,p3,p4,p5,p6,p7,p8;
   p1 = img( x0, y0, 0 );
   p2 = img( x0+1, y0, 0 );
   p3 = img( x0, y0+1, 0 );
   p4 = img( x0+1, y0+1, 0 );
   p5 = img( x0+8, y0, 0 );
   p6 = img( x0+9, y0, 0 );
-
-  data.push_back( p1 );
-  data.push_back( p2 );
-  data.push_back( p3 );
-  data.push_back( p4 );
-  data.push_back( p5 );
-  data.push_back( p6 );
+  p7 = img( x0+8, y0+1, 0 );
+  p8 = img( x0+9, y0+1, 0 );
+  
+  unsigned char a,b,c,d,e;
+  a = (p1 & 0xf8) | ((p6 & 0xe0) >> 5);
+  b = (p2 & 0xf8) | ((p6 & 0x18) >> 2) | ((p8 & 0x10) >> 4 );
+  c = (p3 & 0xf8) | ((p7 & 0xe0) >> 5);
+  d = (p4 & 0xf8) | ((p7 & 0x18) >> 2) | ((p8 & 0x08) >> 3 );
+  e = (p5 & 0xf8) | ((p8 & 0xe0) >> 5);
+  
+  data.push_back( a );
+  data.push_back( b );
+  data.push_back( c );
+  data.push_back( d );
+  data.push_back( e );
 }
 
 void base::DecodeFromCBlocks(
@@ -474,20 +453,28 @@ void base::DecodeFromCBlocks(
     std::vector<char>		& data
 ) const
 {
-  unsigned char p1,p2,p3,p4,p5,p6;
+  unsigned char p1,p2,p3,p4,p5,p6,p7,p8;
   p1 = img( x0, y0, 0 );
   p2 = img( x0+1, y0, 0 );
   p3 = img( x0, y0+1, 0 );
   p4 = img( x0+1, y0+1, 0 );
   p5 = img( x0, y0, 1 );
   p6 = img( x0+1, y0, 1 );
-
-  data.push_back( p1 );
-  data.push_back( p2 );
-  data.push_back( p3 );
-  data.push_back( p4 );
-  data.push_back( p5 );
-  data.push_back( p6 );
+  p7 = img( x0, y0+1, 1 );
+  p8 = img( x0+1, y0+1, 1 );
+  
+  unsigned char a,b,c,d,e;
+  a = (p1 & 0xf8) | ((p6 & 0xe0) >> 5);
+  b = (p2 & 0xf8) | ((p6 & 0x18) >> 2) | ((p8 & 0x10) >> 4 );
+  c = (p3 & 0xf8) | ((p7 & 0xe0) >> 5);
+  d = (p4 & 0xf8) | ((p7 & 0x18) >> 2) | ((p8 & 0x08) >> 3 );
+  e = (p5 & 0xf8) | ((p8 & 0xe0) >> 5);
+  
+  data.push_back( a );
+  data.push_back( b );
+  data.push_back( c );
+  data.push_back( d );
+  data.push_back( e );
 }
 
 int div_floor(int a, int b) {

@@ -16451,7 +16451,6 @@ namespace cimg_library {
     CImg<Tfloat> get_HSItoRGB() const {
       return CImg< Tuchar>(*this,false).HSItoRGB();
     }
-
     //! Convert color pixels from (R,G,B) to (Y,Cb,Cr).
     CImg<T>& RGBtoYCbCr() {
       if (_spectrum!=3)
@@ -16504,6 +16503,60 @@ namespace cimg_library {
 
     CImg<Tuchar> get_YCbCrtoRGB() const {
       return CImg<Tuchar>(*this,false).YCbCrtoRGB();
+    }
+
+    //! Convert color pixels from (R,G,B) to (Y,Cb,Cr).
+    CImg<T>& RGBtoYCbCr_JPEG() {
+      if (_spectrum!=3)
+        throw CImgInstanceException(_cimg_instance
+                                    "RGBtoYCbCr() : Instance is not a RGB image.",
+                                    cimg_instance);
+
+      T *p1 = data(0,0,0,0), *p2 = data(0,0,0,1), *p3 = data(0,0,0,2);
+      for (unsigned int N = _width*_height*_depth; N; --N) {
+        const Tfloat
+          R = (Tfloat)*p1,
+          G = (Tfloat)*p2,
+          B = (Tfloat)*p3,
+          Y = 0.299*R + 0.587*G + 0.114*B,
+          Cb = -0.1687*R - 0.3313*G + 0.5*B + 128,
+          Cr = 0.5*R - 0.4187*G - 0.0813*B + 128;
+        *(p1++) = (T)(Y<0?0:(Y>255?255:Y));
+        *(p2++) = (T)(Cb<0?0:(Cb>255?255:Cb));
+        *(p3++) = (T)(Cr<0?0:(Cr>255?255:Cr));
+      }
+      return *this;
+    }
+
+    CImg<Tuchar> get_RGBtoYCbCr_JPEG() const {
+      return CImg<Tuchar>(*this,false).RGBtoYCbCr_JPEG();
+    }
+
+    //! Convert color pixels from (R,G,B) to (Y,Cb,Cr).
+    CImg<T>& YCbCrtoRGB_JPEG() {
+      if (_spectrum!=3)
+        throw CImgInstanceException(_cimg_instance
+                                    "YCbCrtoRGB() : Instance is not a YCbCr image.",
+                                    cimg_instance);
+
+      T *p1 = data(0,0,0,0), *p2 = data(0,0,0,1), *p3 = data(0,0,0,2);
+      for (unsigned int N = _width*_height*_depth; N; --N) {
+        const Tfloat
+          Y = (Tfloat)*p1,
+          Cb = (Tfloat)*p2,
+          Cr = (Tfloat)*p3,
+          R = Y + 1.401*(Cr-128),
+          G = Y - 0.34414*(Cb-128) - 0.71414*(Cr-128),
+          B = Y + 1.772*(Cb-128);
+        *(p1++) = (T)(R<0?0:(R>255?255:R));
+        *(p2++) = (T)(G<0?0:(G>255?255:G));
+        *(p3++) = (T)(B<0?0:(B>255?255:B));
+      }
+      return *this;
+    }
+
+    CImg<Tuchar> get_YCbCrtoRGB_JPEG() const {
+      return CImg<Tuchar>(*this,false).YCbCrtoRGB_JPEG();
     }
 
     //! Convert color pixels from (R,G,B) to (Y,U,V).
