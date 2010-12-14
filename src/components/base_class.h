@@ -72,16 +72,6 @@ class base
 	unsigned char 			d,
 	unsigned char 			e
     ) const;
-    void EncodeInCBlocks(
-	cimg_library::CImg<short int> & img,
-	unsigned int 			y0,
-	unsigned int 			x0,
-	unsigned char 			a,
-	unsigned char 			b,
-	unsigned char 			c,
-	unsigned char 			d,
-	unsigned char 			e
-    ) const;
     
   // Decoding data from an image
     unsigned int DecryptPhoto(
@@ -92,12 +82,6 @@ class base
       std::vector<char>		         & data
     ) const;
     void DecodeFromYBlocks(
-	cimg_library::CImg<short int> & img,
-	unsigned int 			y0,
-	unsigned int 			x0,
-        std::vector<char>		& data
-    ) const;
-    void DecodeFromCBlocks(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,

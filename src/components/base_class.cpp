@@ -125,7 +125,7 @@ const
   const char* dst_filename = 	// output filename
   "/home/chris/Desktop/dst.bmp";	 
   CImg<short int> * src =
-  new CImg<short int>(); 	// source image object
+  new CImg<short int>(); // source image object
   std::vector<char>     data; 	// byte array for our data bytes we wish to transferred
 
 
@@ -154,8 +154,8 @@ const
   // !!TODO!! Encrypt the data bytes
   // !!TODO!! Add FEC encoding
   
-  // Pad out to multiple of fifteen (since we encode 15 bytes per 4-block)
-  while ( data.size() % 3 != 0) data.push_back( 0x0000 );
+  // Pad out to multiple of ten (since we encode 10 bytes per 4-block)
+  while ( data.size() % 10 != 0) data.push_back( 0x0000 );
 
 
   // Encode into image using Haar DWT
@@ -187,49 +187,35 @@ void base::EncodeInImage(
 ) const
 {
 
-  // Format the source image to 720x720, 3 channel YCbCr colour, single slice
+  // Format the source image to 720x720, greyscale, single slice
   // (resample using Lanczos)
-  img.resize(720,720,1,3,6);
-  //img.RGBtoYCbCr();
-  // Copy channels into different images (we need to subsample the chrominance values)
-  cimg_library::CImg<short int> img_Y, img_c;
-  img_Y = img.get_channel(0);				// intensity
-  img_c = img.get_channels(1,2).resize(360,360,1,2,6);		// chrominance
+  img.resize(720,720,1,-1,6);
+  img.channel(0);
 
-  // Loop through the image in 16x16 intensity and 8x8 chrominance blocks
+  // Loop through the image in 16x16 blocks
   unsigned int idx; int exit = false;
   for (int block_i=0; block_i<45; block_i++) {
       for (int block_j=0; block_j<45; block_j++) {
 	  
-	  // Apply the transform (two iterations) to four blocks of
-	  // the intensity (Y) channel
+	  // Apply the transform (two iterations) to four blocks
 	  for (int k1=0; k1<2; k1++) {
 	    for (int k2=0; k2<2; k2++) {
-	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
-	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWT ( img , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWT ( img , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
 	    }
 	  }
-	  // and again to the *single* block of the two chrominance channels
-	  for (int c=0; c<2;c++) {
-	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
-	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
-	  }
 	  
-	  // Write out 15 bytes of data to the approximation coefficients
+	  // Write out 10 bytes of data to the approximation coefficients
 	  // 5 bytes to two blocks
-	  idx = 15*((block_i*45) + block_j);
-	  if ( idx+14 < data.size() ) {
+	  idx = 10*((block_i*45) + block_j);
+	  if ( idx+9 < data.size() ) {
 	    // 5 bytes to the first row of Y blocks
-	    EncodeInYBlocks(img_Y, 2*block_i*8, 2*block_j*8,
+	    EncodeInYBlocks(img, 2*block_i*8, 2*block_j*8,
 		    data[idx], data[idx+1], data[idx+2], data[idx+3], data[idx+4]
 		    );
 	    // 5 bytes to the second row of Y blocks
-	    EncodeInYBlocks(img_Y, 2*block_i*8, (2*block_j+1)*8,
+	    EncodeInYBlocks(img, 2*block_i*8, (2*block_j+1)*8,
 		    data[idx+5], data[idx+6], data[idx+7], data[idx+8], data[idx+9]
-		    );
-	    // 5 bytes to the single block of two chrominance channels
-	    EncodeInCBlocks(img_c, block_i*8, block_j*8,
-		    data[idx+10], data[idx+11], data[idx+12], data[idx+13], data[idx+14]
 		    );
 	  } else {
 	    // Stop writing data
@@ -239,28 +225,16 @@ void base::EncodeInImage(
 	  // Apply the inverse transform
 	  for (int k1=0; k1<2; k1++) {
 	    for (int k2=0; k2<2; k2++) {
-	      Haar2D_DWTi( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
-	      Haar2D_DWTi( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWTi( img , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWTi( img , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
 	    }
-	  }
-	  // and again to the *single* block of the two chrominance channels
-	  for (int c=0; c<2;c++) {
-	    Haar2D_DWTi( img_c , block_i*8, block_j*8 , c);
-	    Haar2D_DWTi( img_c , block_i*8, block_j*8 , c);
 	  }
 	  
 	  // If we finished, break out of the loops
 	  if (exit) block_i=block_j=45;
     }
   }
-  
-  // Write back the channels
-  img_c.resize(720,720,1,2,1);
-  img.draw_image(0,0,0, 0, img_Y.get_channel(0) );
-  img.draw_image(0,0,0, 1, img_c.get_channel(0) );
-  img.draw_image(0,0,0, 2, img_c.get_channel(1) );
-  // Convert back to RGB
-  //img.YCbCrtoRGB();
+
 }
 
 void base::EncodeInYBlocks(
@@ -274,35 +248,14 @@ void base::EncodeInYBlocks(
     unsigned char 			e
 ) const
 {
-  img( x0, y0, 0) 	= a & 0xf8;
-  img( x0+1, y0, 0) 	= b & 0xf8;
-  img( x0, y0+1, 0) 	= c & 0xf8;
-  img( x0+1, y0+1, 0) 	= d & 0xf8;
-  img( x0+8, y0, 0) 	= e & 0xf8;
-  img( x0+9, y0, 0)	= ((a & 0x07) << 5) | ((b & 0x06) << 2);
-  img( x0+8, y0+1, 0)	= ((c & 0x07) << 5) | ((d & 0x06) << 2);
-  img( x0+9, y0+1, 0)	= ((e & 0x07) << 5) | ((b & 0x01) << 4) | ((d & 0x01) << 3);
-}
-
-void base::EncodeInCBlocks(
-    cimg_library::CImg<short int> & 	img,
-    unsigned int 			x0,
-    unsigned int 			y0,
-    unsigned char 			a,
-    unsigned char 			b,
-    unsigned char 			c,
-    unsigned char 			d,
-    unsigned char 			e
-) const
-{  
-  img( x0, y0, 0) 	= a & 0xf8;
-  img( x0+1, y0, 0) 	= b & 0xf8;
-  img( x0, y0+1, 0) 	= c & 0xf8;
-  img( x0+1, y0+1, 0) 	= d & 0xf8;
-  img( x0, y0, 1) 	= e & 0xf8;
-  img( x0+1, y0, 1)	= ((a & 0x07) << 5) | ((b & 0x06) << 2);
-  img( x0, y0+1, 1)	= ((c & 0x07) << 5) | ((d & 0x06) << 2);
-  img( x0+1, y0+1, 1)	= ((e & 0x07) << 5) | ((b & 0x01) << 4) | ((d & 0x01) << 3);
+  img( x0, y0, 0) 	= (a & 0xf8) | 0x04;
+  img( x0+1, y0, 0) 	= (b & 0xf8) | 0x04;
+  img( x0, y0+1, 0) 	= (c & 0xf8) | 0x04;
+  img( x0+1, y0+1, 0) 	= (d & 0xf8) | 0x04;
+  img( x0+8, y0, 0) 	= (e & 0xf8) | 0x04;
+  img( x0+9, y0, 0)	= (((a & 0x07) << 5) | ((b & 0x06) << 2)) | 0x04;
+  img( x0+8, y0+1, 0)	= (((c & 0x07) << 5) | ((d & 0x06) << 2)) | 0x04;
+  img( x0+9, y0+1, 0)	= (((e & 0x07) << 5) | ((b & 0x01) << 4) | ((d & 0x01) << 3)) | 0x04;
 }
 
 unsigned int base::DecryptPhoto(
@@ -378,39 +331,24 @@ void base::DecodeFromImage(
     std::vector<char>		         & data
 ) const
 {
-
-  // Change colour mode
-  //img.RGBtoYCbCr();
-  // Copy channels into different images (we need to subsample the chrominance values)
-  cimg_library::CImg<short int> img_Y, img_c;
-  img_Y = img.get_channel(0);				// intensity
-  img_c = img.get_channels(1,2).resize(360,360,1,2,1);		// chrominance
 	    
-  // Loop through the image in 16x16 blocks (8x8 for chrominance)
+  // Loop through the image in 16x16 blocks
   for (int block_i=0; block_i<45; block_i++) {
       for (int block_j=0; block_j<45; block_j++) {
 	  	    
-	  // Apply the transform (two iterations) to four blocks of
-	  // the intensity (Y) channel
+	  // Apply the transform (two iterations) to four blocks
 	  for (int k1=0; k1<2; k1++) {
 	    for (int k2=0; k2<2; k2++) {
-	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
-	      Haar2D_DWT ( img_Y , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWT ( img , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
+	      Haar2D_DWT ( img , (2*block_i+k1)*8, (2*block_j+k2)*8 , 0);
 	    }
 	  }
-	  // and again to the *single* block of the two chrominance channels
-	  for (int c=0; c<2;c++) {
-	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
-	    Haar2D_DWT ( img_c , block_i*8, block_j*8 , c);
-	  }
 	    
-	  // Read in 15 bytes of data from the approximation coefficients
+	  // Read in 10 bytes of data from the approximation coefficients
 	  // 5 bytes from the first row of Y blocks
-	  DecodeFromYBlocks( img_Y, 2*block_i*8, 2*block_j*8, data);
+	  DecodeFromYBlocks( img, 2*block_i*8, 2*block_j*8, data);
 	  // 5 bytes from the second row of Y blocks
-	  DecodeFromYBlocks( img_Y, 2*block_i*8, (2*block_j+1)*8, data);
-	  // 5 bytes from the single block of two chrominance channels
-	  DecodeFromCBlocks( img_c, block_i*8, block_j*8, data);
+	  DecodeFromYBlocks( img, 2*block_i*8, (2*block_j+1)*8, data);
     }
   }
 }
@@ -431,37 +369,6 @@ void base::DecodeFromYBlocks(
   p6 = img( x0+9, y0, 0 );
   p7 = img( x0+8, y0+1, 0 );
   p8 = img( x0+9, y0+1, 0 );
-  
-  unsigned char a,b,c,d,e;
-  a = (p1 & 0xf8) | ((p6 & 0xe0) >> 5);
-  b = (p2 & 0xf8) | ((p6 & 0x18) >> 2) | ((p8 & 0x10) >> 4 );
-  c = (p3 & 0xf8) | ((p7 & 0xe0) >> 5);
-  d = (p4 & 0xf8) | ((p7 & 0x18) >> 2) | ((p8 & 0x08) >> 3 );
-  e = (p5 & 0xf8) | ((p8 & 0xe0) >> 5);
-  
-  data.push_back( a );
-  data.push_back( b );
-  data.push_back( c );
-  data.push_back( d );
-  data.push_back( e );
-}
-
-void base::DecodeFromCBlocks(
-    cimg_library::CImg<short int> & img,
-    unsigned int 			x0,
-    unsigned int 			y0,
-    std::vector<char>		& data
-) const
-{
-  unsigned char p1,p2,p3,p4,p5,p6,p7,p8;
-  p1 = img( x0, y0, 0 );
-  p2 = img( x0+1, y0, 0 );
-  p3 = img( x0, y0+1, 0 );
-  p4 = img( x0+1, y0+1, 0 );
-  p5 = img( x0, y0, 1 );
-  p6 = img( x0+1, y0, 1 );
-  p7 = img( x0, y0+1, 1 );
-  p8 = img( x0+1, y0+1, 1 );
   
   unsigned char a,b,c,d,e;
   a = (p1 & 0xf8) | ((p6 & 0xe0) >> 5);
