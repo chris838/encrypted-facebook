@@ -173,10 +173,6 @@ const
     return 1;
   }
 
-  const char* s = "adsfsdf";
-  const char*& ss = s;
-  DecryptPhoto( ss );
-
   // Return with the filename
   return 0; 
 }
@@ -248,14 +244,14 @@ void base::EncodeInYBlocks(
     unsigned char 			e
 ) const
 {
-  img( x0, y0, 0) 	= (a & 0xf8) | 0x04;
-  img( x0+1, y0, 0) 	= (b & 0xf8) | 0x04;
-  img( x0, y0+1, 0) 	= (c & 0xf8) | 0x04;
-  img( x0+1, y0+1, 0) 	= (d & 0xf8) | 0x04;
-  img( x0+8, y0, 0) 	= (e & 0xf8) | 0x04;
-  img( x0+9, y0, 0)	= (((a & 0x07) << 5) | ((b & 0x06) << 2)) | 0x04;
-  img( x0+8, y0+1, 0)	= (((c & 0x07) << 5) | ((d & 0x06) << 2)) | 0x04;
-  img( x0+9, y0+1, 0)	= (((e & 0x07) << 5) | ((b & 0x01) << 4) | ((d & 0x01) << 3)) | 0x04;
+  img( x0, y0, 0) 	= (a & 0xfc) | 0x02;
+  img( x0+1, y0, 0) 	= (b & 0xfc) | 0x02;
+  img( x0, y0+1, 0) 	= (c & 0xfc) | 0x02;
+  img( x0+1, y0+1, 0) 	= (d & 0xfc) | 0x02;
+  img( x0+8, y0, 0) 	= (e & 0xfc) | 0x02;
+  img( x0+9, y0, 0)	= (((a & 0x03) << 6) | ((b & 0x03) << 4) | ((d & 0x03) << 2)) | 0x02;
+  img( x0+8, y0+1, 0)	= (((c & 0x03) << 6)) | 0x02;
+  img( x0+9, y0+1, 0)	= (((e & 0x03) << 6)) | 0x02;
 }
 
 unsigned int base::DecryptPhoto(
@@ -371,11 +367,11 @@ void base::DecodeFromYBlocks(
   p8 = img( x0+9, y0+1, 0 );
   
   unsigned char a,b,c,d,e;
-  a = (p1 & 0xf8) | ((p6 & 0xe0) >> 5);
-  b = (p2 & 0xf8) | ((p6 & 0x18) >> 2) | ((p8 & 0x10) >> 4 );
-  c = (p3 & 0xf8) | ((p7 & 0xe0) >> 5);
-  d = (p4 & 0xf8) | ((p7 & 0x18) >> 2) | ((p8 & 0x08) >> 3 );
-  e = (p5 & 0xf8) | ((p8 & 0xe0) >> 5);
+  a = (p1 & 0xfc) | ((p6 & 0xc0) >> 6);
+  b = (p2 & 0xfc) | ((p6 & 0x30) >> 4);
+  c = (p3 & 0xfc) | ((p7 & 0xc0) >> 6);
+  d = (p4 & 0xfc) | ((p6 & 0x0c) >> 2);
+  e = (p5 & 0xfc) | ((p8 & 0xc0) >> 6);
   
   data.push_back( a );
   data.push_back( b );
