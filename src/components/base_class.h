@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <deque>
 #include <fstream>
 #include <iostream>
 #include <time.h>
@@ -61,7 +62,7 @@ class base
     ) const;
     void EncodeInImage(
       cimg_library::CImg<short int>	 & img,
-      std::vector<char>		         & data
+      std::deque<char>		         & data
     ) const;
     void EncodeInBlock(
 	cimg_library::CImg<short int> & img,
@@ -79,13 +80,14 @@ class base
     ) const;
     void DecodeFromImage(
       cimg_library::CImg<short int>	 & img,
-      std::vector<char>		         & data
+      std::deque<char>		         & data,
+      unsigned int			   len
     ) const;
     void DecodeFromBlock(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
-        std::vector<char>		& data
+        std::deque<char>		& data
     ) const;
     
   // Wavelet transforms for image encoding/decoding

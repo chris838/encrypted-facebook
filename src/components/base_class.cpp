@@ -126,13 +126,11 @@ unsigned int base::EncryptPhoto(
 )
 const
 {
-
-  const char* src_filename =    // source image file (to carry data signal)
+  const char* src_filename =    		 // source image file (to carry data signal)
   "/home/chris/Desktop/src.bmp";
-  std::ifstream data_file;	// data file object	 
-  CImg<short int> * src =
-  new CImg<short int>(); // source image object
-  std::vector<char>     data; 	// byte array for our data bytes we wish to transferred
+  std::ifstream data_file;			 // data file object	 
+  CImg<short int> * src = new CImg<short int>(); // source image object
+  std::deque<char>     data; 			 // byte array for our data bytes we wish to transferred
 
 
   // Load the source image file into a CImg object
@@ -141,6 +139,7 @@ const
     std::cout << "Error loading source image:" << e.what() << "\n";
     return 1;
   }
+
 
   // Load the binary file specified into a byte array
   data_file.open( data_filename, ios::binary );
@@ -151,31 +150,63 @@ const
   data_file.seekg(0, std::ios::end);
   size_t data_size = data_file.tellg(); // get the length of the file
   data_file.seekg(0, std::ios::beg);
-  data.resize( data_size );
   // read the file
-  data_file.read(&data[0], data_size);
+  std::vector<char> data_vec( data_size );
+  data_file.read(&data_vec[0], data_size);
+  for (unsigned int i=0; i<data_size;i++) data.push_back( data_vec[i] );
+  
+  
+  // Check size
+  if (data.size() > 21185) {
+    std::cout << "Error - too much data:" << "\n";
+    return 2;
+  }
+
+  // !!TODO!! Encrypt the data bytes
+  
+  
+  // Pad out to multiple of 223 since this is the FEC block size
+  srand( time(NULL) );
+  while ( data.size() % 223 != 0) data.push_back( (char) rand() );
+  
+  
+  // Add Reed-Solomon FEC encoding
+  std::string m, f; std::deque<char> data_fec;
+  for (deque<char>::iterator i = data.begin(); i!=data.end(); i+=223) {
+    m = std::string( i, i+223 );
+    ReedSolomonEncoder( m, f );
+    for (unsigned int i=0;i<223;i++) data_fec.push_back(m[i]);
+    for (unsigned int i=0;i<32;i++) data_fec.push_back( f[i]);;
+  }
+  data = data_fec;
+  
+  
+  // Prepend 6-byte length tag, encoded with triple modular redundancy
+  // Note that we store the original data size, before FEC and padding
+  unsigned short len = (unsigned short) data_size;
+  unsigned char len_hi,len_lo;
+  len_hi = (unsigned char) (len >> 8);
+  len_lo = (unsigned char) len;
+  for (int i=0; i<3; i++) data.push_front( len_lo);
+  for (int i=0; i<3; i++) data.push_front( len_hi);
+  
+
+  // Double check size
   if (data.size() > 90*90*3) {
     std::cout << "Error - too much data:" << "\n";
     return 2;
   }
 
-  // !!TODO!! Add length tag at start
-  // !!TODO!! Encrypt the data bytes
-  // !!TODO!! Add FEC encoding
   
-  // Pad out to multiple of three (since we encode 3 bytes per block)
-  while ( data.size() % 3 != 0) data.push_back( 0x0000 );
+    // Pad out to full image size
+  while ( data.size() < 90*90*3 ) data.push_back( (char) rand() );
 
-
+  
   // Encode into image using Haar DWT
   EncodeInImage( *src, data );
   
 
   // Generate a filename and save our final image (in a lossless format)
-  //time_t rawtime; time( &rawtime );
-  //std::stringstream ss;
-  //ss << rawtime;
-  // filename would be { ss.str + ".png" } or something
   try {src->save( dst_filename );}
   catch (CImgInstanceException &e) {
     std::cout << "Error saving output image: " << e.what() << "\n";
@@ -188,7 +219,7 @@ const
 
 void base::EncodeInImage(
    CImg<short int>    	& img, 
-   std::vector<char> 	& data
+   std::deque<char> 	& data
 ) const
 {
 
@@ -197,7 +228,7 @@ void base::EncodeInImage(
   img.resize(720,720,1,-1,6);
   img.channel(0);
 
-  // Loop through the image in 16x16 blocks
+  // Loop through the image in 8x8 blocks
   unsigned int idx, i, j; int exit = false;
   for (int block_i=0; block_i<90; block_i++) {
     for (int block_j=0; block_j<90; block_j++) {
@@ -226,7 +257,6 @@ void base::EncodeInImage(
 	if (exit) block_i=block_j=90;
     }
   }
-
 }
 
 void base::EncodeInBlock(
@@ -244,16 +274,24 @@ void base::EncodeInBlock(
   img( x0+1, y0+1 ) 	= ((a & 0x03) <<6) | ((b & 0x03) <<4) | ((c & 0x03) <<2) | 0x02;
 }
 
+unsigned char triple_mod_r(
+  unsigned char a,
+  unsigned char b,
+  unsigned char c
+)
+{
+  return ((a&b)|(a&c)|(b&c));
+}
+
 unsigned int base::DecryptPhoto(
   const char*                   & src_filename,
   const char*                   & data_filename
 ) const
 {
 
-  std::ofstream data_file;	// data file object	 
-  CImg<short int> * src =
-    new CImg<short int>(); 	// source image object
-  std::vector<char>     data; 	// byte array for our data bytes we wish to transferred
+  std::ofstream     data_file;				// data file object	 
+  CImg<short int> * src =  new CImg<short int>(); 	// source image object
+  std::deque<char>  data; 				// for data bytes we wish to transfer
 
 
   // Load the source image file into a CImg object
@@ -262,12 +300,49 @@ unsigned int base::DecryptPhoto(
     std::cout <<  "Error loading source image:" << e.what() << "\n";
     return 1;
   }
+  
+  // Decode the first two blocks to get data length
+  std::deque<char> len_blocks;
+  Haar2D_DWT ( *src , 0, 0 );
+  Haar2D_DWT ( *src , 0, 0 );
+  Haar2D_DWT ( *src , 0, 8 );
+  Haar2D_DWT ( *src , 0, 8 );
+  DecodeFromBlock( *src, 0, 0, len_blocks);
+  DecodeFromBlock( *src, 0, 8, len_blocks);
+  unsigned char len_hi, len_lo;
+  len_hi = triple_mod_r( len_blocks[0], len_blocks[1], len_blocks[2] );
+  len_lo = triple_mod_r( len_blocks[3], len_blocks[4], len_blocks[5] );
+  unsigned short len = (len_hi << 8) | len_lo;
+  // also want the length with fec
+  unsigned short len_wfec =  (len%223==0 ? len : (len-(len%223))+223); // padding
+  len_wfec = (len_wfec / 223) * 255;
+
 
   // Decode from image using Haar DWT
-  DecodeFromImage( *src, data );
+  DecodeFromImage( *src, data, (unsigned int) len_wfec+6 );
   
   
-  // !!TODO!! Correct errors
+  // Remove the first 6 bytes which encode the data length
+  for (int i=0; i<6; i++) data.pop_front();
+  
+  
+  // Remove any padding bytes at the end
+  while (data.size() > len_wfec) data.pop_back();
+  
+  
+  // Correct errors
+  std::string m, f, m2; std::deque<char> data_corrected;
+  for (deque<char>::iterator i = data.begin(); i!=data.end(); i+=255) {
+    m = std::string( i, i+223 );
+    f = std::string( i+223, i+255 );
+    ReedSolomonDecoder( m, f, m2 );
+    for (unsigned int i=0;i<223;i++) data_corrected.push_back(m2[i]);
+  }
+  data = data_corrected;
+  
+  // Remove FEC padding at the end
+  while (data.size() > len) data.pop_back();
+  
   // !!TODO!! Decrypt
   
     
@@ -277,7 +352,10 @@ unsigned int base::DecryptPhoto(
     std::cout << "Error creating data file:" << "\n";
     return 1;
   }
-  data_file.write(&data[0], data.size() );
+  std::vector<char> data_vec( data.size() );
+  for (unsigned int i=0; i<data.size();i++) data_vec[i] = data[i];
+
+  data_file.write(&data_vec[0], data_vec.size() );
 
   // Return with the filename
   return 0; 
@@ -285,15 +363,16 @@ unsigned int base::DecryptPhoto(
 
 void base::DecodeFromImage(
     cimg_library::CImg<short int>	 & img,
-    std::vector<char>		         & data
+    std::deque<char>		         & data,
+    unsigned int			   len
 ) const
 {
 	    
   // Loop through the image in 8x8 blocks
-  int i, j;
+  int i, j; unsigned int idx;
   for (int block_i=0; block_i<90; block_i++) {
       for (int block_j=0; block_j<90; block_j++) {
-	  
+	
 	  i = block_i*8; j = block_j*8;
 	  
 	  // Apply the transform (two iterations) to the block
@@ -302,6 +381,10 @@ void base::DecodeFromImage(
 	    
 	  // Read in 3 bytes of data from the approximation coefficients
 	  DecodeFromBlock( img, i, j, data);
+	  
+	  // exit if we have enough data
+	  idx = 3*((block_i*90) + block_j);
+	  if ( idx+2 > len) block_i = block_j = 90;
     }
   }
 }
@@ -310,7 +393,7 @@ void base::DecodeFromBlock(
     cimg_library::CImg<short int> & img,
     unsigned int 			x0,
     unsigned int 			y0,
-    std::vector<char>		& data
+    std::deque<char>		& data
 ) const
 {
   unsigned char p1,p2,p3,p4;
@@ -418,14 +501,6 @@ unsigned int base::CalculateBER(
       const char*                   & file2_path
 ) const
 {
-  std::string s = "A professional is a person who knows more and more about less and less until they know everything about nothing";
-  std::string s2, s3;
-  ReedSolomonEncoder( s, s2 );
-  //std::cout << s << ", " << s2 << "\n";
-  //s = "A progessional is a perton who knows more and more about less and less until they koow everything about nothing";
-  //std::cout << s << "\n";
-  //ReedSolomonDecoder( s, s2, s3 );
-  //std::cout << s3 << "\n";
   
   // ifstream objects
   std::ifstream file1, file2;
@@ -481,15 +556,15 @@ unsigned int base::ReedSolomonEncoder(
 ) const
 {
 
-   /* Finite Field Parameters */
-   const std::size_t field_descriptor                 =   8;
-   const std::size_t generator_polynommial_index      = 120;
-   const std::size_t generator_polynommial_root_count =  32;
-
-   /* Reed Solomon Code Parameters */
-   const std::size_t code_length = 255;
-   const std::size_t fec_length  =  32;
-   const std::size_t data_length = code_length - fec_length;
+  /* Finite Field Parameters */
+  const std::size_t field_descriptor                 =   8;
+  const std::size_t generator_polynommial_index      =   120;
+  const std::size_t generator_polynommial_root_count =   32;
+  
+  /* Reed Solomon Code Parameters */
+  const std::size_t code_length = 255;
+  const std::size_t fec_length  =  32;
+  const std::size_t data_length = code_length - fec_length;
 
    /* Instantiate Finite Field and Generator Polynomials */
    schifra::galois::field field(field_descriptor,
@@ -505,11 +580,8 @@ unsigned int base::ReedSolomonEncoder(
 
    /* Instantiate Encoder and Decoder (Codec) */
    schifra::reed_solomon::encoder<code_length,fec_length> encoder(field,generator_polynomial);
-   schifra::reed_solomon::decoder<code_length,fec_length> decoder(field,generator_polynommial_index);
 
    message = message + std::string(data_length - message.length(),static_cast<unsigned char>(0x00));
-
-   std::cout << "Original Message:   [" << message << "]" << std::endl;
 
    /* Instantiate RS Block For Codec */
    schifra::reed_solomon::block<code_length,fec_length> block;
@@ -520,40 +592,9 @@ unsigned int base::ReedSolomonEncoder(
       std::cout << "Error - Critical encoding failure!" << std::endl;
       return 1;
    }
-
-   /* Add errors at every 3rd location starting at position zero */
-   schifra::corrupt_message_all_errors00(block,0,3);
-
-   std::cout << "Corrupted Codeword: [" << block << "]" << std::endl;
    
-   /* Instantiate RS Block For Codec */
-   std::string s1 = "vzvvcx";
-   block.data_to_string(s1);
-   std::cout << s1 << ", " << s1 << "\n";
-   //schifra::reed_solomon::block<code_length,fec_length> block2(s1, s2);
-
-   if (!decoder.decode(block))
-   {
-      std::cout << "Error - Critical decoding failure!" << std::endl;
-      return 1;
-   }
-   else if (!schifra::is_block_equivelent(block,message))
-   {
-      std::cout << "Error - Error correction failed!" << std::endl;
-      return 1;
-   }
-
-   block.data_to_string(message);
-
-   std::cout << "Corrected Message:  [" << message << "]" << std::endl;
-
-   std::cout << "Encoder Parameters [" << schifra::reed_solomon::encoder<code_length,fec_length>::trait::code_length << ","
-                                       << schifra::reed_solomon::encoder<code_length,fec_length>::trait::data_length << ","
-                                       << schifra::reed_solomon::encoder<code_length,fec_length>::trait::fec_length << "]" << std::endl;
-
-   std::cout << "Decoder Parameters [" << schifra::reed_solomon::decoder<code_length,fec_length>::trait::code_length << ","
-                                       << schifra::reed_solomon::decoder<code_length,fec_length>::trait::data_length << ","
-                                       << schifra::reed_solomon::decoder<code_length,fec_length>::trait::fec_length << "]" << std::endl;
+   fec = std::string(fec_length,static_cast<unsigned char>(0x00));
+   block.fec_to_string(fec);
 
    return 0;
 }
@@ -566,12 +607,13 @@ unsigned int base::ReedSolomonDecoder(
 {
   /* Finite Field Parameters */
   const std::size_t field_descriptor                 =   8;
-  const std::size_t generator_polynommial_index      = 120;
-  const std::size_t generator_polynommial_root_count =  32;
+  const std::size_t generator_polynommial_index      =   120;
+  const std::size_t generator_polynommial_root_count =   32;
   
   /* Reed Solomon Code Parameters */
   const std::size_t code_length = 255;
   const std::size_t fec_length  =  32;
+  const std::size_t data_length = code_length - fec_length;
   
   /* Instantiate Finite Field and Generator Polynomials */
   schifra::galois::field field(field_descriptor,
@@ -594,12 +636,8 @@ unsigned int base::ReedSolomonDecoder(
      std::cout << "Error - Critical decoding failure!" << std::endl;
      return 1;
   }
-  else if (!schifra::is_block_equivelent(block,message))
-  {
-     std::cout << "Error - Error correction failed!" << std::endl;
-     return 1;
-  }
   
+  message = std::string(data_length,static_cast<unsigned char>(0x00));
   block.data_to_string(message);
   
   return 0;

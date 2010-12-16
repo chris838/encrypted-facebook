@@ -167,17 +167,17 @@ eFB = {
     
     generateEncryptedPhoto : function(s) {
         
-        /*window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/data.bin",
+        window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/data.bin",
                                             "/home/chris/Desktop/out.bmp"
-                                           ));*/
+                                           ));
         
-        /*window.alert( eFB.lib_DecryptPhoto( "/home/chris/Desktop/out.jpg",
-                                            "/home/chris/Desktop/data2.bin"
-                                   ));*/
-        window.alert( eFB.lib_CalculateBER( "/home/chris/Desktop/data.bin",
+        window.alert( eFB.lib_DecryptPhoto( "/home/chris/Desktop/out.jpg",
                                             "/home/chris/Desktop/data2.bin"
                                    ));
-    
+        /*window.alert( eFB.lib_CalculateBER( "/home/chris/Desktop/data.bin",
+                                            "/home/chris/Desktop/data2.bin"
+                                   ));*/
+
     },
     
     uploadPhoto : function(path, album_id, callback) {
