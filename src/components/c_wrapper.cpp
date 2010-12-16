@@ -99,10 +99,16 @@ const char* UTF8ToBin( const base* This, const char str[] , unsigned const int l
  * ready to be uploaded. Return an int indicating success.
  *
  */
-const unsigned int EncryptPhoto( const base* This, const char pathtofile[] ) {
-  
-  return This->EncryptPhoto( pathtofile );
-  
+const unsigned int EncryptPhoto( const base* This, const char data[], const char dst[] ) {
+  return This->EncryptPhoto( data,dst );
+}
+
+const unsigned int DecryptPhoto( const base* This, const char src[], const char data[] ) {
+  return This->DecryptPhoto( src,data );
+}
+
+const unsigned int CalculateBER( const base* This, const char f1[], const char f2[] ) {
+  return This->CalculateBER( f1,f2 );
 }
 
 void destroy_object( base* This )

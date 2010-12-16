@@ -130,7 +130,20 @@ eFB = {
             eFB.lib_EncryptPhoto= lib.declare("lib_EncryptPhoto",
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type
-                                     ctypes.char.ptr // parameter 1
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr // parameter 2
+            );
+            eFB.lib_DecryptPhoto= lib.declare("lib_DecryptPhoto",
+                                     ctypes.default_abi,
+                                     ctypes.uint32_t, // return type
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr // parameter 2
+            );
+            eFB.lib_CalculateBER= lib.declare("lib_CalculateBER",
+                                     ctypes.default_abi,
+                                     ctypes.uint32_t, // return type
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr // parameter 2
             );
             eFB.close_lib = lib.declare("close_lib",
                                      ctypes.default_abi,
@@ -154,8 +167,59 @@ eFB = {
     
     generateEncryptedPhoto : function(s) {
         
-        window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/photo.jpg" ) );
+        /*window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/data.bin",
+                                            "/home/chris/Desktop/out.bmp"
+                                           ));*/
+        
+        /*window.alert( eFB.lib_DecryptPhoto( "/home/chris/Desktop/out.jpg",
+                                            "/home/chris/Desktop/data2.bin"
+                                   ));*/
+        window.alert( eFB.lib_CalculateBER( "/home/chris/Desktop/data.bin",
+                                            "/home/chris/Desktop/data2.bin"
+                                   ));
     
+    },
+    
+    uploadPhoto : function(path, album_id, callback) {
+        
+        // Create a form
+        var form = content.document.createElement("form");
+        
+        // Create a file input element
+        var file_input = content.document.createElement("input");
+        file_input.setAttribute("type", "file");
+        file_input.setAttribute("name", "source");
+        file_input.value = path;
+        
+        // Create an access token input element
+        var token_input = content.document.createElement("input");
+        token_input.setAttribute("type", "text");
+        token_input.setAttribute("name", "access_token");
+        token_input.value = eFB.prefs.getCharPref("token");
+        
+        // Create a submit element
+        var submit_input = content.document.createElement("input");
+        submit_input.setAttribute("type", "submit");
+        submit_input.setAttribute("name", "submit_button");
+        submit_input.value = "Submit me";
+        
+        // Add the inputs to the form
+        form.appendChild( file_input );
+        form.appendChild( token_input );
+        form.appendChild( submit_input );
+        
+        // Add action and method attributes
+        form.setAttribute("id", "efbForm");
+        form.action = "https://graph.facebook.com/" + album_id + "/photos";
+        form.method = "POST";
+        form.enctype = "multipart/form-data";
+        
+        // Add the form to the document body
+        content.document.body.appendChild(form);
+        
+        // Send the form
+        form.submit();
+
     },
     
     generateTag : function(id) {

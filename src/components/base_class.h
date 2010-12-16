@@ -11,6 +11,7 @@
 #define cimg_use_jpeg 1
 #include "CImg.h"
 
+#include <cstddef>
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -20,7 +21,6 @@
 #include <sstream>
 #include <bitset>
 #include <blitz/array.h> 
-
 
 #define         MASKBITS                0x3F
 #define         MASKBYTE                0x80
@@ -56,32 +56,32 @@ class base
     
     // Encoding data within an image
     unsigned int EncryptPhoto(
-      const char*                   & pathtofile
+      const char*                   & data_filename,
+      const char*                   & dst_filename
     ) const;
     void EncodeInImage(
       cimg_library::CImg<short int>	 & img,
       std::vector<char>		         & data
     ) const;
-    void EncodeInYBlocks(
+    void EncodeInBlock(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
 	unsigned char 			a,
 	unsigned char 			b,
-	unsigned char 			c,
-	unsigned char 			d,
-	unsigned char 			e
+	unsigned char 			c
     ) const;
     
-  // Decoding data from an image
+    // Decoding data from an image
     unsigned int DecryptPhoto(
-      const char*                   & pathtofile
+      const char*                   & src_filename,
+      const char*                   & data_filename
     ) const;
     void DecodeFromImage(
       cimg_library::CImg<short int>	 & img,
       std::vector<char>		         & data
     ) const;
-    void DecodeFromYBlocks(
+    void DecodeFromBlock(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
@@ -89,22 +89,36 @@ class base
     ) const;
     
   // Wavelet transforms for image encoding/decoding
-  void Haar2D_DWT(
+    void Haar2D_DWT(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
-	unsigned int 			x0,
-	unsigned int 			c
+	unsigned int 			x0
     ) const;
     void Haar2D_DWTi(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
-	unsigned int 			x0,
-	unsigned int 			c
+	unsigned int 			x0
     ) const;
-
+    
+    // Calculate bit error rate
+    unsigned int CalculateBER(
+      const char*                   & file1,
+      const char*                   & file2
+    ) const;
+    
+    // Perform FEC encoding/decoding
+    unsigned int ReedSolomonEncoder(
+      std::string	& message,
+      std::string	& fec
+    ) const;
+    unsigned int ReedSolomonDecoder(
+      std::string	& message_plus_errors,
+      std::string	& fec,
+      std::string	& message
+    ) const;
+    
     virtual ~base() ;
     std::string str ;
-    // etc
 };
 
 #endif // BASE_CLASS_H

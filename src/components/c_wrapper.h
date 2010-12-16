@@ -11,7 +11,9 @@
 
   const char* binToUTF8( const base* This, const char* str , unsigned const int len);
   const char* UTF8ToBin( const base* This, const char* str , unsigned const int len);
-  const unsigned int EncryptPhoto( const base* This, const char* str );
+  const unsigned int EncryptPhoto( const base* This, const char* data, const char* dst );
+  const unsigned int DecryptPhoto( const base* This, const char* src, const char* data );
+  const unsigned int CalculateBER( const base* This, const char* f1, const char* f2 );
 
   void destroy_object( base* This ) ;
 
