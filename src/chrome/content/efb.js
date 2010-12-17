@@ -151,9 +151,9 @@ eFB = {
             );
             
             // Find the path for the extension and pass it to the library
-            var cache_dir   = addon.getResourceURI( "cache/" ).path;
-            var temp_dir    = addon.getResourceURI( "temp/" ).path;
-            callback( cache_dir,temp_dir );
+            eFB.cache_dir   = addon.getResourceURI( "cache/" ).path;
+            eFB.temp_dir    = addon.getResourceURI( "temp/" ).path;
+            callback( eFB.cache_dir, eFB.temp_dir );
             
         } );
     },
