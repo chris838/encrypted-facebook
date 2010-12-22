@@ -301,6 +301,12 @@ unsigned int base::DecryptPhoto(
     return 1;
   }
   
+  // Check that the dimensions are exactly 720x720
+  if (src->width() != 720 || src->height() != 720) {
+    std::cout << "Error - wrong image dimensions" << "\n";
+    return 2;
+  }
+  
   // Decode the first two blocks to get data length
   std::deque<char> len_blocks;
   Haar2D_DWT ( *src , 0, 0 );
@@ -316,7 +322,12 @@ unsigned int base::DecryptPhoto(
   // also want the length with fec
   unsigned short len_wfec =  (len%223==0 ? len : (len-(len%223))+223); // padding
   len_wfec = (len_wfec / 223) * 255;
-
+  
+  // Check that the length is valid (i.e. not too big)
+  if (len > 21185) {
+    std::cout << "Error - embedded length tag is too large" << "\n";
+    return 2;
+  }
 
   // Decode from image using Haar DWT
   DecodeFromImage( *src, data, (unsigned int) len_wfec+6 );
@@ -335,7 +346,10 @@ unsigned int base::DecryptPhoto(
   for (deque<char>::iterator i = data.begin(); i!=data.end(); i+=255) {
     m = std::string( i, i+223 );
     f = std::string( i+223, i+255 );
-    ReedSolomonDecoder( m, f, m2 );
+    if ( ReedSolomonDecoder( m, f, m2 ) > 0) {
+      std::cout << "FEC decoding failed, exiting" << "\n";
+      return 3;
+    }
     for (unsigned int i=0;i<223;i++) data_corrected.push_back(m2[i]);
   }
   data = data_corrected;
@@ -357,7 +371,7 @@ unsigned int base::DecryptPhoto(
 
   data_file.write(&data_vec[0], data_vec.size() );
 
-  // Return with the filename
+  // Return with success
   return 0; 
 }
 

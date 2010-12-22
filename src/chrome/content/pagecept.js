@@ -77,51 +77,179 @@ var onPageLoad2 = function(event) {
                 // (since a rewrite will trigger another page load, and thus another parseHTML)
                 if (page.innerHTML != text) page.innerHTML = text;
                 
-                
-                // Try and replace any images
-                // First try to get all facebook user images on the page
-                // TODO - get i tags aswell
-                var list = doc.getElementById("content").getElementsByTagName('img'); 
-                                
-                // Try and get rid of non-facebook graph api image objects
-                var ar = [];
-                for (var i=0; i<list.length; i++) {
-                    if ((( list.item(i).src.indexOf('photos') != -1)
-                         || ( list.item(i).src.indexOf('profile') != -1))
-                        && ( list.item(i).src.indexOf('fbcdn.net') != -1))
-                        ar.push( list.item(i) );
-                }
-                
-                // For each image, get the filename and try each id with the graph api
-                // to check if it is an image
-                ar.forEach( function(x) {
-                        var y = x.src.split('/');
-                        var z = y[ y.length -1 ];
-                        window.alert(z);
-                    }
-                );
-                
-                
-                // We maintain a list of image IDs that have been processed. For each ID there are
-                // three possible statuses.
-                
-                    // 0: Decryption tried but failed - object is not encrypted or we don't have the key.
-                    // Do nothing.
-                    
-                    // 1: Object is encrypted, plaintext exists in cache.
-                    // Replace image on page with cached plaintext (if we haven't already).
-                    
-                    // 2: Object is being processed (may or may not be decryptable).
-                    // Add doc to list of docs that need updating on completion (if we haven't already).
-                    // Replace image on page with loading image (if we haven't already).
-                    
-                    // 3: Object does not exist in cache.
-                    // Create pending cache entry (include reference to this doc) and initiate request.
-                    // Replace image on page with loading image.
+                // Now try replace any images with their plaintext
+                replaceImages(doc);
                 
             }
        }
     }  
+}
+
+var replaceImages = function(doc) {
+    
+    // Try and replace any images
+    // First try to get all facebook user images on the page
+    // TODO - get i tags aswell
+    var list = doc.getElementById("content").getElementsByTagName('img'); 
+                    
+    // Try and get rid of non-facebook graph api image objects
+    // TODO - get profile photos also
+    var ar = [];
+    for (var i=0; i<list.length; i++) {
+        if (( list.item(i).src.indexOf('photos') != -1)
+            && ( list.item(i).src.indexOf('fbcdn.net') != -1))
+            ar.push( list.item(i) );
+    }
+    
+    // For each image, get the id - it will be the second group of numbers of the filename
+    ar.forEach( function(x) {
+            var y = x.src.split('/');
+            var id = y[ y.length -1 ].split('.')[0].split('_')[1];                
+    
+            // We maintain a list of IDs that have been processed. For each ID there are
+            // three possible statuses.
+            if ( eFB.img_cache[id] != undefined ) {
+                switch(eFB.img_cache[id].status)
+                {
+                    // 0: ID is not a valid image object ID or was not parsed correctly.
+                    // Do nothing.
+                    case 0 :
+                        break;
+                    
+                    // 1: Decryption tried but failed - object is not encrypted or we don't have the key.
+                    // Do nothing.
+                    case 1 :
+                        break;
+                    
+                    // 2: Object is encrypted, plaintext exists in cache.
+                    // Replace image on page with cached plaintext (if we haven't already).
+                    // If replacement is made, exit loop since this will trigger another parseHTML()
+                    case 2 :
+                        var file = getFileObject( eFB.cache_dir + id + '_plain.jpg' );
+                        x.src = content.window.URL.createObjectURL(file);
+                        x.removeAttribute('height');
+                        break;
+                    
+                    // 3: Object is being processed (may or may not be decryptable).
+                    // Add doc to list of docs that need updating on completion (if we haven't already).
+                    // Replace image on page with loading image (if we haven't already).
+                    // If replacement is made, exit loop since this will trigger another parseHTML()
+                    case 3 :
+                        if ( eFB.img_cache[id].docs.indexOf(doc) == -1 ) {
+                            eFB.img_cache[id].docs.push(doc);
+                        }
+                        break;
+                }
+            } else {
+                // Object does not exist in cache.
+                // Create pending cache entry (include reference to this doc) and initiate request.
+                // Replace image on page with loading image.
+                // Exit loop since replacement this will trigger another parseHTML()
+                eFB.img_cache[id] = { status : 3, docs : [] };
+                eFB.img_cache[id].docs.push( doc ); 
+                getImageSRC(id);
+            }
+        }
+    );
+}
+
+var getImageSRC = function(id) {
+    
+    // Create a new XML HTTP request
+    var token = eFB.prefs.getCharPref("token");  
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://graph.facebook.com/" + id + "?access_token=" + token);
+    
+    // Define the callback function
+    var callback = function() {
+        if(xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                // Check if we have a valid image
+                var response = eval( '(' + xhr.responseText + ')' );
+                if ( response == false ) {
+                    // Not a valid image, write status 0 in cache
+                    eFB.img_cache[id].status = 0;
+                } else { 
+                    // Get the file using the source URL
+                    var path = eFB.cache_dir + id + '.jpg' ;
+                    var path2 = eFB.cache_dir + id + '_plain.jpg' ;
+                    
+                    // Define a progress listener for the download
+                    var prog_listener = {
+                        onProgressChange: function (aWebProgress, aRequest, aCurSelfProgress, aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress) {
+                            
+                        },
+                        onStateChange: function(aWebProgress, aRequest, aStateFlags, aStatus) {
+                            // If the download is finished
+                            if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
+                                // Try to decrypt the image
+                                if (!eFB.lib_DecryptPhoto( path, path2 )) {
+                                    // Decryption successful
+                                    eFB.img_cache[id].status = 2;
+                                    eFB.img_cache[id].docs.forEach( replaceImages );
+                                } else {
+                                    // Decryption failed
+                                    eFB.img_cache[id].status = 1;
+                                }
+                            }
+                        }
+                    };
+                    SaveImageFromURL( response.source, path, prog_listener );
+                }
+            } else {
+                window.alert("Error sending request, " + xhr.responseText);
+            }
+        }  
+    }
+    
+    // Attach the callback function when the request returns
+    xhr.onreadystatechange = function() {
+        callback();
+    }
+    
+    // Send the request
+    xhr.send();
+    
+}
+
+function SaveImageFromURL(url,path,prog_listener) {
+    
+    var file = Components.classes["@mozilla.org/file/local;1"]  
+                .createInstance(Components.interfaces.nsILocalFile);  
+    file.initWithPath( path );  
+    var wbp = Components.classes['@mozilla.org/embedding/browser/nsWebBrowserPersist;1']  
+              .createInstance(Components.interfaces.nsIWebBrowserPersist);  
+    var ios = Components.classes['@mozilla.org/network/io-service;1']  
+              .getService(Components.interfaces.nsIIOService);  
+    var uri = ios.newURI(url, null, null);  
+    wbp.persistFlags &= ~Components.interfaces.nsIWebBrowserPersist.PERSIST_FLAGS_NO_CONVERSION; // don't save gzipped  
+    
+    // add a progress listener
+    wbp.progressListener = prog_listener;
+    
+    wbp.saveURI(uri, null, null, null, null, file);
+
+}
+
+function getFileObject(path) {
+    
+        // Create an invisible form
+        var form = content.document.createElement("form");
+        form.setAttribute('style', 'display:none;');
+        
+        // Create a file input element
+        var file_input = content.document.createElement("input");
+        file_input.setAttribute("type", "file");
+        file_input.setAttribute("id", "fileElem");
+        file_input.value = path;
+        
+        // Add input to the form
+        form.appendChild( file_input );
+        
+        // Add the form to the document body
+        content.document.body.appendChild(form);
+        
+        return content.document.getElementById('fileElem').files[0];
 }
 
 this._loadHandler = function(event) { onPageLoad(event); };

@@ -25,7 +25,7 @@ eFB = {
                             "client_id=" + api_id + "&" +
                             "redirect_uri=http://www.facebook.com/connect/login_success.html&" +
                             "type=user_agent&" +
-                            "scope=publish_stream,offline_access,user_about_me,friends_about_me,user_notes,user_photos,user_videos,friends_videos&" +
+                            "scope=publish_stream,read_stream,offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=350,height=250,resizable=0");
         } else {
@@ -151,8 +151,8 @@ eFB = {
             );
             
             // Find the path for the extension and pass it to the library
-            eFB.cache_dir   = addon.getResourceURI( "cache/" ).path;
-            eFB.temp_dir    = addon.getResourceURI( "temp/" ).path;
+            eFB.cache_dir   = addon.getResourceURI( "" ).path + "cache/";
+            eFB.temp_dir    = addon.getResourceURI( "" ).path + "temp/";
             callback( eFB.cache_dir, eFB.temp_dir );
             
         } );
@@ -167,12 +167,12 @@ eFB = {
     
     generateEncryptedPhoto : function(s) {
         
-        window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/data.bin",
+        window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/out.bmp"
                                            ));
         
-        window.alert( eFB.lib_DecryptPhoto( "/home/chris/Desktop/out.jpg",
-                                            "/home/chris/Desktop/data2.bin"
+        window.alert( eFB.lib_DecryptPhoto( "/home/chris/Desktop/out.bmp",
+                                            "/home/chris/Desktop/hidden2.jpg"
                                    ));
         /*window.alert( eFB.lib_CalculateBER( "/home/chris/Desktop/data.bin",
                                             "/home/chris/Desktop/data2.bin"
@@ -317,7 +317,13 @@ eFB = {
      * We maintain a cache of previously retrieved and decrypted notes
      * 
     **/
-    cache : {}
+    cache : {},
+    
+    /**
+     * And also a cache of (possible) image IDs and their status
+     * 
+    **/
+    img_cache : {}
 
 };
 
