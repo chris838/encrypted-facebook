@@ -89,16 +89,27 @@ var replaceImages = function(doc) {
     
     // Try and replace any images
     // First try to get all facebook user images on the page
-    // TODO - get i tags aswell
     var list = doc.getElementById("content").getElementsByTagName('img'); 
                     
     // Try and get rid of non-facebook graph api image objects
-    // TODO - get profile photos also
     var ar = [];
     for (var i=0; i<list.length; i++) {
-        if (( list.item(i).src.indexOf('photos') != -1)
-            && ( list.item(i).src.indexOf('fbcdn.net') != -1))
-            ar.push( list.item(i) );
+        if (list.item(i).src.indexOf('fbcdn.net') != -1) {
+            if          (list.item(i).src.indexOf('photos') != -1) {
+                ar.push(  list.item(i) );
+            }
+        }
+    }
+    
+    // Try and replace any <i> tags with background images
+    list = doc.getElementById("content").getElementsByTagName('i'); 
+                    
+    // Try and get rid of non-facebook graph api image objects
+    var ar2 = [];
+    for (var i=0; i<list.length; i++) {
+        if (list.item(i).style.backgroundImage.indexOf('fbcdn.net') != -1) {
+            ar2.push(  list.item(i) );
+        }
     }
     
     // For each image, get the id - it will be the second group of numbers of the filename
@@ -128,6 +139,63 @@ var replaceImages = function(doc) {
                         var file = getFileObject( eFB.cache_dir + id + '_plain.jpg' );
                         x.src = content.window.URL.createObjectURL(file);
                         x.removeAttribute('height');
+                        break;
+                    
+                    // 3: Object is being processed (may or may not be decryptable).
+                    // Add doc to list of docs that need updating on completion (if we haven't already).
+                    // Replace image on page with loading image (if we haven't already).
+                    // If replacement is made, exit loop since this will trigger another parseHTML()
+                    case 3 :
+                        if ( eFB.img_cache[id].docs.indexOf(doc) == -1 ) {
+                            eFB.img_cache[id].docs.push(doc);
+                        }
+                        break;
+                }
+            } else {
+                // Object does not exist in cache.
+                // Create pending cache entry (include reference to this doc) and initiate request.
+                // Replace image on page with loading image.
+                // Exit loop since replacement this will trigger another parseHTML()
+                eFB.img_cache[id] = { status : 3, docs : [] };
+                eFB.img_cache[id].docs.push( doc ); 
+                getImageSRC(id);
+            }
+        }
+    );
+
+    // For each <i> tag, get the id - it will be the second group of numbers of the filename
+    ar2.forEach( function(x) {
+            var z = x.style.backgroundImage;
+            var y = z.split('/');
+            var id = y[ y.length -1 ].split('.')[0].split('_')[1];                
+    
+            // We maintain a list of IDs that have been processed. For each ID there are
+            // three possible statuses.
+            if ( eFB.img_cache[id] != undefined ) {
+                switch(eFB.img_cache[id].status)
+                {
+                    // 0: ID is not a valid image object ID or was not parsed correctly.
+                    // Do nothing.
+                    case 0 :
+                        break;
+                    
+                    // 1: Decryption tried but failed - object is not encrypted or we don't have the key.
+                    // Do nothing.
+                    case 1 :
+                        break;
+                    
+                    // 2: Object is encrypted, plaintext exists in cache.
+                    // Replace image on page with cached plaintext (if we haven't already).
+                    // If replacement is made, exit loop since this will trigger another parseHTML()
+                    case 2 :
+                        var file = getFileObject( eFB.cache_dir + id + '_plain.jpg' );
+                        var img = content.document.createElement("img");
+                        img.src = content.window.URL.createObjectURL(file);
+                        img.style.position = "absolute";
+                        img.style.height = "116px";
+                        img.style.width = "149px";
+                        x.style.overflow = "hidden";
+                        x.appendChild(img);
                         break;
                     
                     // 3: Object is being processed (may or may not be decryptable).
