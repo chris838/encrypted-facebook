@@ -5,23 +5,19 @@
 #error a C++ compiler is required
 #endif
 
-#define JPEG_INTERNALS
-
-#define cimg_verbosity 0     // Disable modal window in CImg exceptions.
-#define cimg_use_jpeg 1
-#include "CImg.h"
+#include "DataCarrierImg.h"
 
 #include <cstddef>
 #include <stdio.h>
 #include <string>
 #include <vector>
-#include <deque>
 #include <fstream>
 #include <iostream>
 #include <time.h>
 #include <sstream>
 #include <bitset>
-#include <blitz/array.h> 
+
+#include <botan/botan.h>
 
 #define         MASKBITS                0x3F
 #define         MASKBYTE                0x80
@@ -35,6 +31,21 @@ typedef unsigned short    Unicode2Bytes;
 typedef unsigned int      Unicode4Bytes;
 typedef unsigned char     byte;
 
+// each PubKey is used to store an (ID, public key) pair,
+// an array of these is passed to EncryptPhoto
+typedef struct
+{
+    unsigned char id  [8]; 	// 8-byte Facebook ID
+    unsigned char key [256];	// 256-btye (2048-bit) RSA public key
+} PubKey;
+
+// each HeadEntry is used to store an (ID, encrypted message key) pair,
+// we extract an array of these during DecryptPhoto
+typedef struct
+{
+    unsigned char id  [8];	// 8-byte Facebook ID
+    unsigned char key [16];	// 16-byte (128-bit) AES-128 message key (encrypted)
+} HeadEntry;
 
 class base
 {
@@ -57,12 +68,14 @@ class base
     
     // Encoding data within an image
     unsigned int EncryptPhoto(
+      const PubKey		      pubkeys[],
+      const unsigned int	      len,
       const char*                   & data_filename,
       const char*                   & dst_filename
     ) const;
     void EncodeInImage(
       cimg_library::CImg<short int>	 & img,
-      std::deque<char>		         & data
+      std::vector<char>		         & data
     ) const;
     void EncodeInBlock(
 	cimg_library::CImg<short int> & img,
@@ -80,14 +93,14 @@ class base
     ) const;
     void DecodeFromImage(
       cimg_library::CImg<short int>	 & img,
-      std::deque<char>		         & data,
+      std::vector<char>		         & data,
       unsigned int			   len
     ) const;
     void DecodeFromBlock(
 	cimg_library::CImg<short int> & img,
 	unsigned int 			y0,
 	unsigned int 			x0,
-        std::deque<char>		& data
+        std::vector<char>		& data
     ) const;
     
   // Wavelet transforms for image encoding/decoding

@@ -21,9 +21,9 @@ const char* lib_UTF8ToBin(const char str[], unsigned int len)
 }
 
 /* Takes the full path to a photo and generates a (temporary) encrypted version, ready to upload */
-const unsigned int lib_EncryptPhoto(const char data[], const char dst[])
+const unsigned int lib_EncryptPhoto( const char pubkeys[], const unsigned int len, const char data[], const char dst[])
 {
-  return EncryptPhoto( b,data,dst );
+  return EncryptPhoto( b,pubkeys,len,data,dst );
 }
 
 const unsigned int lib_DecryptPhoto(const char src[], const char data[])

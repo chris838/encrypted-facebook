@@ -131,7 +131,9 @@ eFB = {
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type
                                      ctypes.char.ptr, // parameter 1
-                                     ctypes.char.ptr // parameter 2
+                                     ctypes.uint32_t, // parameter 2
+                                     ctypes.char.ptr, // parameter 3
+                                     ctypes.char.ptr // parameter 4
             );
             eFB.lib_DecryptPhoto= lib.declare("lib_DecryptPhoto",
                                      ctypes.default_abi,
@@ -167,7 +169,9 @@ eFB = {
     
     generateEncryptedPhoto : function(s) {
         
-        window.alert( eFB.lib_EncryptPhoto( "/home/chris/Desktop/hidden.jpg",
+        window.alert( eFB.lib_EncryptPhoto( "aaaaaaaa00000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001",
+                                            1,
+                                            "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/out.bmp"
                                            ));
         

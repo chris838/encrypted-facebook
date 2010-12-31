@@ -99,8 +99,9 @@ const char* UTF8ToBin( const base* This, const char str[] , unsigned const int l
  * ready to be uploaded. Return an int indicating success.
  *
  */
-const unsigned int EncryptPhoto( const base* This, const char data[], const char dst[] ) {
-  return This->EncryptPhoto( data,dst );
+const unsigned int EncryptPhoto( const base* This, const char pubkeys[], const unsigned int len, const char data[], const char dst[] ) {
+  // Convert the char array to array of PubKey structs
+  return This->EncryptPhoto( (PubKey*) &pubkeys[0] ,len,data,dst );
 }
 
 const unsigned int DecryptPhoto( const base* This, const char src[], const char data[] ) {

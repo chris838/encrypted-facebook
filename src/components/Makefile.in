@@ -57,13 +57,13 @@ $(components_target_dir): $(build_dir)
 components_so := $(components_target_dir)/libtest.so
 
 $(components_target_dir)/c_client_test.o : $(components_dir)/c_client_test.c $(components_target_dir)
-	@gcc -ljpeg -Wall -std=c89 -pedantic -Werror -o $(components_target_dir)/c_client_test.o -c $(components_dir)/c_client_test.c
+	@gcc -lbotan -ljpeg -Wall -std=c89 -pedantic -Werror -o $(components_target_dir)/c_client_test.o -c $(components_dir)/c_client_test.c
 
 $(components_target_dir)/%.o : $(components_dir)/%.cpp $(components_target_dir)
-	@g++ -ljpeg -Wall -std=c++98 -pedantic -fPIC -c $< -o $@
+	@g++ -lbotan -ljpeg -Wall -std=c++98 -pedantic -fPIC -c $< -o $@
 
 $(components_target_dir)/libtest.so : $(components_target_dir)/c_client_test.o $(components_target_dir)/base_class.o $(components_target_dir)/c_wrapper.o $(components_target_dir)
-	@gcc -ljpeg -shared -Wl,-soname,$(components_target_dir)/libtest.so -o $(components_target_dir)/libtest.so \
+	@gcc -lbotan -ljpeg -shared -Wl,-soname,$(components_target_dir)/libtest.so -o $(components_target_dir)/libtest.so \
 	$(components_target_dir)/base_class.o $(components_target_dir)/c_wrapper.o $(components_target_dir)/c_client_test.o
 	@rm $(components_target_dir)/*.o
 	@echo "Created shared library libtest.so"
