@@ -1,0 +1,1540 @@
+\hypertarget{structcimg__library_1_1CImgList}{
+\section{CImgList$<$ T $>$ Struct Template Reference}
+\label{structcimg__library_1_1CImgList}\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}}
+}
+
+
+Class representing list of images CImg$<$T$>$.  
+
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a7c1c29e319c572a740b103b024f37034}{
+typedef \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ $\ast$ \hyperlink{structcimg__library_1_1CImgList_a7c1c29e319c572a740b103b024f37034}{iterator}}
+\label{structcimg__library_1_1CImgList_a7c1c29e319c572a740b103b024f37034}
+
+\begin{DoxyCompactList}\small\item\em Define a \hyperlink{structcimg__library_1_1CImgList_a7c1c29e319c572a740b103b024f37034}{CImgList$<$T$>$::iterator}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a449d35504b2500efc67af75ba3bf9277}{
+typedef const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ $\ast$ \hyperlink{structcimg__library_1_1CImgList_a449d35504b2500efc67af75ba3bf9277}{const\_\-iterator}}
+\label{structcimg__library_1_1CImgList_a449d35504b2500efc67af75ba3bf9277}
+
+\begin{DoxyCompactList}\small\item\em Define a \hyperlink{structcimg__library_1_1CImgList_a449d35504b2500efc67af75ba3bf9277}{CImgList$<$T$>$::const\_\-iterator}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a265a253612b46abed17c61b0a5e5ce30}{
+typedef T \hyperlink{structcimg__library_1_1CImgList_a265a253612b46abed17c61b0a5e5ce30}{value\_\-type}}
+\label{structcimg__library_1_1CImgList_a265a253612b46abed17c61b0a5e5ce30}
+
+\begin{DoxyCompactList}\small\item\em Value type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constructors / Destructor / Instance Management}
+\label{_amgrp40aea8b807100c67fa0d7b630c9c7060}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a30a624e43eb40c6df0fa1fdacf5c6235}{
+\hyperlink{structcimg__library_1_1CImgList_a30a624e43eb40c6df0fa1fdacf5c6235}{$\sim$CImgList} ()}
+\label{structcimg__library_1_1CImgList_a30a624e43eb40c6df0fa1fdacf5c6235}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ad9806b5302d100f40e74c2ca0e0616d1}{
+\hyperlink{structcimg__library_1_1CImgList_ad9806b5302d100f40e74c2ca0e0616d1}{CImgList} ()}
+\label{structcimg__library_1_1CImgList_ad9806b5302d100f40e74c2ca0e0616d1}
+
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a32d594cbd3687a11f87b96be504e54ba}{
+\hyperlink{structcimg__library_1_1CImgList_a32d594cbd3687a11f87b96be504e54ba}{CImgList} (const unsigned int n)}
+\label{structcimg__library_1_1CImgList_a32d594cbd3687a11f87b96be504e54ba}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list containing n empty images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae90e30ddf28f1b1af7f7402b377a1580}{
+\hyperlink{structcimg__library_1_1CImgList_ae90e30ddf28f1b1af7f7402b377a1580}{CImgList} (const unsigned int n, const unsigned int width, const unsigned int height=1, const unsigned int depth=1, const unsigned int spectrum=1)}
+\label{structcimg__library_1_1CImgList_ae90e30ddf28f1b1af7f7402b377a1580}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list containing n images with specified size. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a5a1fe85d7d944e9cc92094869bafd1c5}{
+\hyperlink{structcimg__library_1_1CImgList_a5a1fe85d7d944e9cc92094869bafd1c5}{CImgList} (const unsigned int n, const unsigned int width, const unsigned int height, const unsigned int depth, const unsigned int spectrum, const T val)}
+\label{structcimg__library_1_1CImgList_a5a1fe85d7d944e9cc92094869bafd1c5}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list containing n images with specified size, filled with specified value. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab4966ec9780e7620cf383ddffb2ce768}{
+\hyperlink{structcimg__library_1_1CImgList_ab4966ec9780e7620cf383ddffb2ce768}{CImgList} (const unsigned int n, const unsigned int width, const unsigned int height, const unsigned int depth, const unsigned int spectrum, const int val0, const int val1,...)}
+\label{structcimg__library_1_1CImgList_ab4966ec9780e7620cf383ddffb2ce768}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list containing n images with specified size and specified pixel values (int version). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a0d93bd3bdc808e65f85a3910b59f0d9d}{
+\hyperlink{structcimg__library_1_1CImgList_a0d93bd3bdc808e65f85a3910b59f0d9d}{CImgList} (const unsigned int n, const unsigned int width, const unsigned int height, const unsigned int depth, const unsigned int spectrum, const double val0, const double val1,...)}
+\label{structcimg__library_1_1CImgList_a0d93bd3bdc808e65f85a3910b59f0d9d}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list containing n images with specified size and specified pixel values (double version). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a0a5348dae3a399ca8bbd40829ee66cf9}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a0a5348dae3a399ca8bbd40829ee66cf9}{CImgList} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a0a5348dae3a399ca8bbd40829ee66cf9}
+
+\begin{DoxyCompactList}\small\item\em Construct a list containing n copies of the image img. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aca5c48ef7b6a21acff229298d4662d6a}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList_aca5c48ef7b6a21acff229298d4662d6a}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_aca5c48ef7b6a21acff229298d4662d6a}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from one image. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a0469864139d8c1d27da3c686ce1e3d57}{
+{\footnotesize template$<$typename t1 , typename t2 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a0469864139d8c1d27da3c686ce1e3d57}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a0469864139d8c1d27da3c686ce1e3d57}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from two images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a44bc8a6bb88dd8e77d4f941d4c432784}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a44bc8a6bb88dd8e77d4f941d4c432784}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a44bc8a6bb88dd8e77d4f941d4c432784}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from three images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a8bc14ca08857667fecd5f6139936e9c8}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a8bc14ca08857667fecd5f6139936e9c8}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a8bc14ca08857667fecd5f6139936e9c8}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from four images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae8a47967d6d90aada6e573e8ba5e85f7}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_ae8a47967d6d90aada6e573e8ba5e85f7}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_ae8a47967d6d90aada6e573e8ba5e85f7}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from five images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a301d324197166fb2ac137a1f243ec641}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 , typename t6 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a301d324197166fb2ac137a1f243ec641}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t6 $>$ \&img6, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a301d324197166fb2ac137a1f243ec641}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from six images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a3799e0732dfa0af77707e9db6fd7d4eb}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 , typename t6 , typename t7 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a3799e0732dfa0af77707e9db6fd7d4eb}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t6 $>$ \&img6, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t7 $>$ \&img7, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a3799e0732dfa0af77707e9db6fd7d4eb}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from seven images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_af92ee6bae27d0a19c27a7bb0bef8fc23}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 , typename t6 , typename t7 , typename t8 $>$ }\\\hyperlink{structcimg__library_1_1CImgList_af92ee6bae27d0a19c27a7bb0bef8fc23}{CImgList} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t6 $>$ \&img6, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t7 $>$ \&img7, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t8 $>$ \&img8, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_af92ee6bae27d0a19c27a7bb0bef8fc23}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from eight images. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a4c45cdb2fcd20003f727a885879db38f}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a4c45cdb2fcd20003f727a885879db38f}{CImgList} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgList_a4c45cdb2fcd20003f727a885879db38f}
+
+\begin{DoxyCompactList}\small\item\em Default copy constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a505af5fd1adf73d3429a95bfe6d10f5e}{
+{\bfseries CImgList} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list)}
+\label{structcimg__library_1_1CImgList_a505af5fd1adf73d3429a95bfe6d10f5e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a67a22c62beff88afae317fe4ae59aa0e}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList_a67a22c62beff88afae317fe4ae59aa0e}{CImgList} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const bool shared)}
+\label{structcimg__library_1_1CImgList_a67a22c62beff88afae317fe4ae59aa0e}
+
+\begin{DoxyCompactList}\small\item\em Advanced copy constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a31c34ce18e197409013e913dbab5a82e}{
+\hyperlink{structcimg__library_1_1CImgList_a31c34ce18e197409013e913dbab5a82e}{CImgList} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a31c34ce18e197409013e913dbab5a82e}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from a filename. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a964303a171630071ee0c839f4c590ea3}{
+\hyperlink{structcimg__library_1_1CImgList_a964303a171630071ee0c839f4c590ea3}{CImgList} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp)}
+\label{structcimg__library_1_1CImgList_a964303a171630071ee0c839f4c590ea3}
+
+\begin{DoxyCompactList}\small\item\em Construct an image list from a display. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a2543c94bba6d151572cc1d232717bb7d}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_a2543c94bba6d151572cc1d232717bb7d}{get\_\-shared} ()}
+\label{structcimg__library_1_1CImgList_a2543c94bba6d151572cc1d232717bb7d}
+
+\begin{DoxyCompactList}\small\item\em Return a shared instance of the list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a84bd68353b8a12155b71d2f275e84dc6}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_a84bd68353b8a12155b71d2f275e84dc6}{get\_\-shared} () const }
+\label{structcimg__library_1_1CImgList_a84bd68353b8a12155b71d2f275e84dc6}
+
+\begin{DoxyCompactList}\small\item\em Return a shared instance of the list. \item\end{DoxyCompactList}\item 
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab7aec05f7791abe11f1d0f0cdc8bd24e}{clear} ()
+\begin{DoxyCompactList}\small\item\em In-\/place version of the default constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac1fdedd65f2728500da3af7e94c19ae2}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ac1fdedd65f2728500da3af7e94c19ae2}{assign} ()}
+\label{structcimg__library_1_1CImgList_ac1fdedd65f2728500da3af7e94c19ae2}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the default constructor and default destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a6157637aebbb3b6680ae06ca7d2a2281}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a6157637aebbb3b6680ae06ca7d2a2281}{assign} (const unsigned int n)}
+\label{structcimg__library_1_1CImgList_a6157637aebbb3b6680ae06ca7d2a2281}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a272f3c85f8f6c8f50c9a57b37e2af7e7}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a272f3c85f8f6c8f50c9a57b37e2af7e7}{assign} (const unsigned int n, const unsigned int width, const unsigned int height=1, const unsigned int depth=1, const unsigned int spectrum=1)}
+\label{structcimg__library_1_1CImgList_a272f3c85f8f6c8f50c9a57b37e2af7e7}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a5c899bf2d49584ecd916d0790bd924f1}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a5c899bf2d49584ecd916d0790bd924f1}{assign} (const unsigned int n, const unsigned int width, const unsigned int height, const unsigned int depth, const unsigned int spectrum, const T val)}
+\label{structcimg__library_1_1CImgList_a5c899bf2d49584ecd916d0790bd924f1}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abcc4cc51e8aabb81a9d510984016eaba}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_abcc4cc51e8aabb81a9d510984016eaba}{assign} (const unsigned int n, const unsigned int width, const unsigned int height, const unsigned int depth, const unsigned int spectrum, const int val0, const int val1,...)}
+\label{structcimg__library_1_1CImgList_abcc4cc51e8aabb81a9d510984016eaba}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a3df64307b7dce388b7ba945c8d9cdeb1}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a3df64307b7dce388b7ba945c8d9cdeb1}{assign} (const unsigned int n, const unsigned int width, const unsigned int height, const unsigned int depth, const unsigned int spectrum, const double val0, const double val1,...)}
+\label{structcimg__library_1_1CImgList_a3df64307b7dce388b7ba945c8d9cdeb1}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a32c1d00030d825734734220045fb037c}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a32c1d00030d825734734220045fb037c}{assign} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a32c1d00030d825734734220045fb037c}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the copy constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aeb5dec5cebe0d74bb2ede2e78f65b683}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& {\bfseries assign} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_aeb5dec5cebe0d74bb2ede2e78f65b683}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a40666c4099c041777ca2ed1b0747f81b}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a40666c4099c041777ca2ed1b0747f81b}{assign} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a40666c4099c041777ca2ed1b0747f81b}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a1e358f65ab400e6a27d80f26afe9aeb6}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a1e358f65ab400e6a27d80f26afe9aeb6}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a1e358f65ab400e6a27d80f26afe9aeb6}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_afe8d25e995a3d934696796718057b584}{
+{\footnotesize template$<$typename t1 , typename t2 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_afe8d25e995a3d934696796718057b584}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_afe8d25e995a3d934696796718057b584}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a546cab2b857ae5a3d50224160a222baf}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a546cab2b857ae5a3d50224160a222baf}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a546cab2b857ae5a3d50224160a222baf}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab5d15e167713cc7cdf8309223faeceb4}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab5d15e167713cc7cdf8309223faeceb4}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_ab5d15e167713cc7cdf8309223faeceb4}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a554edc1d750adab1e29df397e1f48a1f}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a554edc1d750adab1e29df397e1f48a1f}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a554edc1d750adab1e29df397e1f48a1f}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9b4e4f632b087b23675c64c18c5dc4a9}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 , typename t6 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a9b4e4f632b087b23675c64c18c5dc4a9}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t6 $>$ \&img6, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a9b4e4f632b087b23675c64c18c5dc4a9}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ad221dc2a95d6921ad185721030882d62}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 , typename t6 , typename t7 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ad221dc2a95d6921ad185721030882d62}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t6 $>$ \&img6, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t7 $>$ \&img7, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_ad221dc2a95d6921ad185721030882d62}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac73f5df1ac298719adf44a9ea527e0a3}{
+{\footnotesize template$<$typename t1 , typename t2 , typename t3 , typename t4 , typename t5 , typename t6 , typename t7 , typename t8 $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ac73f5df1ac298719adf44a9ea527e0a3}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t1 $>$ \&img1, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t2 $>$ \&img2, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t3 $>$ \&img3, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t4 $>$ \&img4, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t5 $>$ \&img5, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t6 $>$ \&img6, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t7 $>$ \&img7, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t8 $>$ \&img8, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_ac73f5df1ac298719adf44a9ea527e0a3}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a15514475aae54fae9ea5cbd516579095}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a15514475aae54fae9ea5cbd516579095}{assign} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a15514475aae54fae9ea5cbd516579095}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a28925892f3d3cc6594ee78a4b906154f}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a28925892f3d3cc6594ee78a4b906154f}{assign} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp)}
+\label{structcimg__library_1_1CImgList_a28925892f3d3cc6594ee78a4b906154f}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the corresponding constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aa38fe7f2a57aa1cf304bde222f25272d}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \& \hyperlink{structcimg__library_1_1CImgList_aa38fe7f2a57aa1cf304bde222f25272d}{move\_\-to} (\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgList_aa38fe7f2a57aa1cf304bde222f25272d}
+
+\begin{DoxyCompactList}\small\item\em Move the content of the instance image list into another one. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a31d79df0a69a3283125c17f3190715b5}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \& {\bfseries move\_\-to} (\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const unsigned int pos)}
+\label{structcimg__library_1_1CImgList_a31d79df0a69a3283125c17f3190715b5}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a6c12806e432683b06fbc8919daa0a3d7}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a6c12806e432683b06fbc8919daa0a3d7}{swap} (\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list)}
+\label{structcimg__library_1_1CImgList_a6c12806e432683b06fbc8919daa0a3d7}
+
+\begin{DoxyCompactList}\small\item\em Swap all fields of two \hyperlink{structcimg__library_1_1CImgList}{CImgList} instances (use with care !). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae4ed726e07e4b14b2bbd36a9389e31f3}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ae4ed726e07e4b14b2bbd36a9389e31f3}{empty} ()}
+\label{structcimg__library_1_1CImgList_ae4ed726e07e4b14b2bbd36a9389e31f3}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to an empty list. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Overloaded Operators}
+\label{_amgrp10ba48134b3a5986e7dba07127eb6a73}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ac420a93062b5621e0345eb3f658fbc94}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ac420a93062b5621e0345eb3f658fbc94}{operator()} (const unsigned int pos)}
+\label{structcimg__library_1_1CImgList_ac420a93062b5621e0345eb3f658fbc94}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to the i-\/th element of the image list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a631a753b1a6a74cebecae88a97115c84}{
+const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& {\bfseries operator()} (const unsigned int pos) const }
+\label{structcimg__library_1_1CImgList_a631a753b1a6a74cebecae88a97115c84}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a282dc04b257673a1c4bd2627153a35ad}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a282dc04b257673a1c4bd2627153a35ad}{operator()} (const unsigned int pos, const unsigned int x, const unsigned int y=0, const unsigned int z=0, const unsigned int c=0)}
+\label{structcimg__library_1_1CImgList_a282dc04b257673a1c4bd2627153a35ad}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to (x,y,z,c) pixel of the pos-\/th image of the list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac19566ff57426635086a5c681f4dae47}{
+const T \& {\bfseries operator()} (const unsigned int pos, const unsigned int x, const unsigned int y=0, const unsigned int z=0, const unsigned int c=0) const }
+\label{structcimg__library_1_1CImgList_ac19566ff57426635086a5c681f4dae47}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aa984eefea21b860ca6f98ba049db3e1e}{
+\hyperlink{structcimg__library_1_1CImgList_aa984eefea21b860ca6f98ba049db3e1e}{operator const CImg$<$ T $>$ $\ast$} () const }
+\label{structcimg__library_1_1CImgList_aa984eefea21b860ca6f98ba049db3e1e}
+
+\begin{DoxyCompactList}\small\item\em Return address of the image vector. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a0f21983809954e8f7659305bdee019ea}{
+{\bfseries operator CImg$<$ T $>$ $\ast$} ()}
+\label{structcimg__library_1_1CImgList_a0f21983809954e8f7659305bdee019ea}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a76c8bdf651d88d36e2bb7a91e78e0aab}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a76c8bdf651d88d36e2bb7a91e78e0aab}{operator=} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img)}
+\label{structcimg__library_1_1CImgList_a76c8bdf651d88d36e2bb7a91e78e0aab}
+
+\begin{DoxyCompactList}\small\item\em Operator=(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a1b5c6cf7b774f259c1ba321b6d14a82c}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a1b5c6cf7b774f259c1ba321b6d14a82c}{operator=} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp)}
+\label{structcimg__library_1_1CImgList_a1b5c6cf7b774f259c1ba321b6d14a82c}
+
+\begin{DoxyCompactList}\small\item\em Operator=(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab541727426be2e3b20dc8350a4947530}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab541727426be2e3b20dc8350a4947530}{operator=} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgList_ab541727426be2e3b20dc8350a4947530}
+
+\begin{DoxyCompactList}\small\item\em Operator=(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ad332c325150462debaea7322045762b0}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& {\bfseries operator=} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list)}
+\label{structcimg__library_1_1CImgList_ad332c325150462debaea7322045762b0}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a14ed1542e0e40a6b4c5061b95e8fe557}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a14ed1542e0e40a6b4c5061b95e8fe557}{operator=} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a14ed1542e0e40a6b4c5061b95e8fe557}
+
+\begin{DoxyCompactList}\small\item\em Operator=(). \item\end{DoxyCompactList}\item 
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_a93d7eb669f13af8e6a4d05472f995470}{operator+} () const 
+\begin{DoxyCompactList}\small\item\em Operator+() (unary). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9c9486e30ea8c17ac092aa32b8898417}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a9c9486e30ea8c17ac092aa32b8898417}{operator,} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img)}
+\label{structcimg__library_1_1CImgList_a9c9486e30ea8c17ac092aa32b8898417}
+
+\begin{DoxyCompactList}\small\item\em Operator,(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab548ea2c24938c20250f879c4be3757a}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab548ea2c24938c20250f879c4be3757a}{operator,} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgList_ab548ea2c24938c20250f879c4be3757a}
+
+\begin{DoxyCompactList}\small\item\em Operator,(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a6eed4f177047ce79eb3b30f5b713be88}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_a6eed4f177047ce79eb3b30f5b713be88}{operator$>$} (const char axis) const }
+\label{structcimg__library_1_1CImgList_a6eed4f177047ce79eb3b30f5b713be88}
+
+\begin{DoxyCompactList}\small\item\em Operator$>$(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_afe3488dac908a062ddbd0b53a11be712}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_afe3488dac908a062ddbd0b53a11be712}{operator$<$} (const char axis) const }
+\label{structcimg__library_1_1CImgList_afe3488dac908a062ddbd0b53a11be712}
+
+\begin{DoxyCompactList}\small\item\em Operator$<$(). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Instance Characteristics}
+\label{_amgrp793b2d5051efe1cb9227216131875e3a}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a369399896761e31ae71db57fdd0ba431}{
+int \hyperlink{structcimg__library_1_1CImgList_a369399896761e31ae71db57fdd0ba431}{width} () const }
+\label{structcimg__library_1_1CImgList_a369399896761e31ae71db57fdd0ba431}
+
+\begin{DoxyCompactList}\small\item\em Return the size of the list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a90ca964ebcc1b02bbcde225edd49e812}{
+unsigned int \hyperlink{structcimg__library_1_1CImgList_a90ca964ebcc1b02bbcde225edd49e812}{size} () const }
+\label{structcimg__library_1_1CImgList_a90ca964ebcc1b02bbcde225edd49e812}
+
+\begin{DoxyCompactList}\small\item\em Return the size of the list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a4eb74a84a46cd4e2261774a8a1094bac}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ $\ast$ \hyperlink{structcimg__library_1_1CImgList_a4eb74a84a46cd4e2261774a8a1094bac}{data} ()}
+\label{structcimg__library_1_1CImgList_a4eb74a84a46cd4e2261774a8a1094bac}
+
+\begin{DoxyCompactList}\small\item\em Return a pointer to the image buffer. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a22fab676131c5060e01f98143a3ab165}{
+const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ $\ast$ {\bfseries data} () const }
+\label{structcimg__library_1_1CImgList_a22fab676131c5060e01f98143a3ab165}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a5d375377286c531297f35919059f0190}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ $\ast$ \hyperlink{structcimg__library_1_1CImgList_a5d375377286c531297f35919059f0190}{data} (const unsigned int l)}
+\label{structcimg__library_1_1CImgList_a5d375377286c531297f35919059f0190}
+
+\begin{DoxyCompactList}\small\item\em Return a pointer to the image buffer. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac4ee8d561578bcfa0b6512babf3a8697}{
+const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ $\ast$ {\bfseries data} (const unsigned int l) const }
+\label{structcimg__library_1_1CImgList_ac4ee8d561578bcfa0b6512babf3a8697}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ad69bd11391be1a1dba5c8202259664f8}{
+\hyperlink{structcimg__library_1_1CImg}{iterator} \hyperlink{structcimg__library_1_1CImgList_ad69bd11391be1a1dba5c8202259664f8}{begin} ()}
+\label{structcimg__library_1_1CImgList_ad69bd11391be1a1dba5c8202259664f8}
+
+\begin{DoxyCompactList}\small\item\em Returns an iterator to the beginning of the vector (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aa4b02d4f1a8500fb07a551069060709f}{
+\hyperlink{structcimg__library_1_1CImg}{const\_\-iterator} {\bfseries begin} () const }
+\label{structcimg__library_1_1CImgList_aa4b02d4f1a8500fb07a551069060709f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_acad38d52497a975bfb6f2f6acd76631f}{
+\hyperlink{structcimg__library_1_1CImg}{iterator} \hyperlink{structcimg__library_1_1CImgList_acad38d52497a975bfb6f2f6acd76631f}{end} ()}
+\label{structcimg__library_1_1CImgList_acad38d52497a975bfb6f2f6acd76631f}
+
+\begin{DoxyCompactList}\small\item\em Returns an iterator just past the last element (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a350132543d80a1c1e5be844e6d2878ea}{
+\hyperlink{structcimg__library_1_1CImg}{const\_\-iterator} {\bfseries end} () const }
+\label{structcimg__library_1_1CImgList_a350132543d80a1c1e5be844e6d2878ea}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab2dd25806fb3e69ca6d879ec627c79bd}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab2dd25806fb3e69ca6d879ec627c79bd}{front} ()}
+\label{structcimg__library_1_1CImgList_ab2dd25806fb3e69ca6d879ec627c79bd}
+
+\begin{DoxyCompactList}\small\item\em Returns a reference to the first element (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a1e5183421df7cacdc5419b81e2f26342}{
+const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& {\bfseries front} () const }
+\label{structcimg__library_1_1CImgList_a1e5183421df7cacdc5419b81e2f26342}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a44c4153c19437e863eda73d4bff335be}{
+const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a44c4153c19437e863eda73d4bff335be}{back} () const }
+\label{structcimg__library_1_1CImgList_a44c4153c19437e863eda73d4bff335be}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to the last image (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a92c6578767169ed5236af0932b792738}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& {\bfseries back} ()}
+\label{structcimg__library_1_1CImgList_a92c6578767169ed5236af0932b792738}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aaeb0702ae0c8ed0835dcdd51480c73cd}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_aaeb0702ae0c8ed0835dcdd51480c73cd}{at} (const int pos)}
+\label{structcimg__library_1_1CImgList_aaeb0702ae0c8ed0835dcdd51480c73cd}
+
+\begin{DoxyCompactList}\small\item\em Read an image in specified position. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae1344d782fd9c709aec8164c9a7a3abb}{
+T \& \hyperlink{structcimg__library_1_1CImgList_ae1344d782fd9c709aec8164c9a7a3abb}{atNXYZC} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val)}
+\label{structcimg__library_1_1CImgList_ae1344d782fd9c709aec8164c9a7a3abb}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Dirichlet boundary conditions. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9ceb88fd2ac3fda139fcdf0b259e81ec}{
+T {\bfseries atNXYZC} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val) const }
+\label{structcimg__library_1_1CImgList_a9ceb88fd2ac3fda139fcdf0b259e81ec}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab339e637cf6f9c97609b4529fd0d12ea}{
+T \& \hyperlink{structcimg__library_1_1CImgList_ab339e637cf6f9c97609b4529fd0d12ea}{atNXYZC} (const int pos, const int x, const int y, const int z, const int c)}
+\label{structcimg__library_1_1CImgList_ab339e637cf6f9c97609b4529fd0d12ea}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Neumann boundary conditions. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a6053193bf4f73812f33ab0fb373792a0}{
+T {\bfseries atNXYZC} (const int pos, const int x, const int y, const int z, const int c) const }
+\label{structcimg__library_1_1CImgList_a6053193bf4f73812f33ab0fb373792a0}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_abb901e9006a419f654a572903bdc6cd0}{
+T \& \hyperlink{structcimg__library_1_1CImgList_abb901e9006a419f654a572903bdc6cd0}{atNXYZ} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val)}
+\label{structcimg__library_1_1CImgList_abb901e9006a419f654a572903bdc6cd0}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Dirichlet boundary conditions for the four first coordinates ({\ttfamily pos}, {\ttfamily x},{\ttfamily y},{\ttfamily z}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a7af13e9853ed0daa85837eef7e4660af}{
+T {\bfseries atNXYZ} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val) const }
+\label{structcimg__library_1_1CImgList_a7af13e9853ed0daa85837eef7e4660af}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a90b58c00eec5108c8278946b473e91ea}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a90b58c00eec5108c8278946b473e91ea}{atNXYZ} (const int pos, const int x, const int y, const int z, const int c=0)}
+\label{structcimg__library_1_1CImgList_a90b58c00eec5108c8278946b473e91ea}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Neumann boundary conditions for the four first coordinates ({\ttfamily pos}, {\ttfamily x},{\ttfamily y},{\ttfamily z}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abc90c020d54fbc3e435d7ef061bcd2b7}{
+T {\bfseries atNXYZ} (const int pos, const int x, const int y, const int z, const int c=0) const }
+\label{structcimg__library_1_1CImgList_abc90c020d54fbc3e435d7ef061bcd2b7}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a58b8e4d5309ba350ec0aded9895debc4}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a58b8e4d5309ba350ec0aded9895debc4}{atNXY} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val)}
+\label{structcimg__library_1_1CImgList_a58b8e4d5309ba350ec0aded9895debc4}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Dirichlet boundary conditions for the three first coordinates ({\ttfamily pos}, {\ttfamily x},{\ttfamily y}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a8b6bf5ee9e485be0161b6a38dc3ebc7d}{
+T {\bfseries atNXY} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val) const }
+\label{structcimg__library_1_1CImgList_a8b6bf5ee9e485be0161b6a38dc3ebc7d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a1bf5a6f22d96117a961d888bfeaed2f2}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a1bf5a6f22d96117a961d888bfeaed2f2}{atNXY} (const int pos, const int x, const int y, const int z=0, const int c=0)}
+\label{structcimg__library_1_1CImgList_a1bf5a6f22d96117a961d888bfeaed2f2}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Neumann boundary conditions for the three first coordinates ({\ttfamily pos}, {\ttfamily x},{\ttfamily y}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a2125232e0109d5e6e1df3541bf37f044}{
+T {\bfseries atNXY} (const int pos, const int x, const int y, const int z=0, const int c=0) const }
+\label{structcimg__library_1_1CImgList_a2125232e0109d5e6e1df3541bf37f044}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aaa23c11216a52dcaa1aac85807adffd5}{
+T \& \hyperlink{structcimg__library_1_1CImgList_aaa23c11216a52dcaa1aac85807adffd5}{atNX} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val)}
+\label{structcimg__library_1_1CImgList_aaa23c11216a52dcaa1aac85807adffd5}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Dirichlet boundary conditions for the two first coordinates ({\ttfamily pos},{\ttfamily x}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9bfbf470696ebe40a7ad98d8db3ad9c3}{
+T {\bfseries atNX} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val) const }
+\label{structcimg__library_1_1CImgList_a9bfbf470696ebe40a7ad98d8db3ad9c3}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a3a68a8ec0fd908a91d3a543e200c0a35}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a3a68a8ec0fd908a91d3a543e200c0a35}{atNX} (const int pos, const int x, const int y=0, const int z=0, const int c=0)}
+\label{structcimg__library_1_1CImgList_a3a68a8ec0fd908a91d3a543e200c0a35}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Neumann boundary conditions for the two first coordinates ({\ttfamily pos}, {\ttfamily x}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a4d54f779679588849052b67538bfc629}{
+T {\bfseries atNX} (const int pos, const int x, const int y=0, const int z=0, const int c=0) const }
+\label{structcimg__library_1_1CImgList_a4d54f779679588849052b67538bfc629}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a54bb20ed86fec8372e1074b4f79735f9}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a54bb20ed86fec8372e1074b4f79735f9}{atN} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val)}
+\label{structcimg__library_1_1CImgList_a54bb20ed86fec8372e1074b4f79735f9}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Dirichlet boundary conditions for the first coordinates ({\ttfamily pos}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a052a1347ec91e03b593442ec5a3038a7}{
+T {\bfseries atN} (const int pos, const int x, const int y, const int z, const int c, const T out\_\-val) const }
+\label{structcimg__library_1_1CImgList_a052a1347ec91e03b593442ec5a3038a7}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_afa925fa8e93eb8c1e1d625c47faf3ab1}{
+T \& \hyperlink{structcimg__library_1_1CImgList_afa925fa8e93eb8c1e1d625c47faf3ab1}{atN} (const int pos, const int x=0, const int y=0, const int z=0, const int c=0)}
+\label{structcimg__library_1_1CImgList_afa925fa8e93eb8c1e1d625c47faf3ab1}
+
+\begin{DoxyCompactList}\small\item\em Read a pixel value with Neumann boundary conditions for the first coordinates ({\ttfamily pos}). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_afa02a998d8bb5dbdc93f5e56df9f8bcd}{
+T {\bfseries atN} (const int pos, const int x=0, const int y=0, const int z=0, const int c=0) const }
+\label{structcimg__library_1_1CImgList_afa02a998d8bb5dbdc93f5e56df9f8bcd}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a2d70c422e3e75e6cd810358486387300}{
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ charT $>$ \hyperlink{structcimg__library_1_1CImgList_a2d70c422e3e75e6cd810358486387300}{value\_\-string} (const char separator=',', const unsigned int max\_\-size=0) const }
+\label{structcimg__library_1_1CImgList_a2d70c422e3e75e6cd810358486387300}
+
+\begin{DoxyCompactList}\small\item\em Return a C-\/string containing the values of all images in the instance list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab7d3a61366cf906c03af6c8fa13309a7}{
+static const char $\ast$ \hyperlink{structcimg__library_1_1CImgList_ab7d3a61366cf906c03af6c8fa13309a7}{pixel\_\-type} ()}
+\label{structcimg__library_1_1CImgList_ab7d3a61366cf906c03af6c8fa13309a7}
+
+\begin{DoxyCompactList}\small\item\em Return a string describing the type of the image pixels in the list (template parameter {\ttfamily T}). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Instance Checking}
+\label{_amgrp918c881546642d9874d6c788f92e19cb}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_acef8e33cfd36a5d7d2fad939efcf02e3}{
+bool \hyperlink{structcimg__library_1_1CImgList_acef8e33cfd36a5d7d2fad939efcf02e3}{is\_\-empty} () const }
+\label{structcimg__library_1_1CImgList_acef8e33cfd36a5d7d2fad939efcf02e3}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if list is empty. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abf45495f91f5e6e04bd597f0dd5d1ee4}{
+bool \hyperlink{structcimg__library_1_1CImgList_abf45495f91f5e6e04bd597f0dd5d1ee4}{is\_\-sameN} (const unsigned int n) const }
+\label{structcimg__library_1_1CImgList_abf45495f91f5e6e04bd597f0dd5d1ee4}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if list if of specified size. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9bb4d12695868ddb3da5054fbc8e70f0}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_a9bb4d12695868ddb3da5054fbc8e70f0}{is\_\-sameN} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a9bb4d12695868ddb3da5054fbc8e70f0}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if list if of specified size. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a36f980621a1b6cfac495bc3664459728}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXY} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a36f980621a1b6cfac495bc3664459728}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ad19aca58581e33feaef0fdf888f58f3d}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXY} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_ad19aca58581e33feaef0fdf888f58f3d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a2feb87014ced3b5a31f65a0d676d3630}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXY} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a2feb87014ced3b5a31f65a0d676d3630}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8ea19c9c6d4317c0b93712bf3f932d13}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXY} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a8ea19c9c6d4317c0b93712bf3f932d13}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab1c89e89bd61546d5b0a98040c37356e}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXZ} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_ab1c89e89bd61546d5b0a98040c37356e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a16793039322edfa7707072a0cead6ab4}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXZ} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a16793039322edfa7707072a0cead6ab4}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a5868c1bd2bf5586112ab14f0fc031754}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXZ} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a5868c1bd2bf5586112ab14f0fc031754}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a6c454140a06fe23cdae4f9e40c1dcb23}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXZ} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a6c454140a06fe23cdae4f9e40c1dcb23}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a65a2c91e672f559e7217b1ca8bc82f21}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXC} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a65a2c91e672f559e7217b1ca8bc82f21}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a15d757c37cce7dc247fcd81362735795}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a15d757c37cce7dc247fcd81362735795}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab134ff21fed807ee56d03b6917a44394}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXC} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_ab134ff21fed807ee56d03b6917a44394}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a1d86605180510afe1d4541dabcec0c56}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a1d86605180510afe1d4541dabcec0c56}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a5d863be6ae8d5d8ab0af39aa78174b2f}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameYZ} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a5d863be6ae8d5d8ab0af39aa78174b2f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a4c7f51760565ceeed10210643af682d3}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameYZ} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a4c7f51760565ceeed10210643af682d3}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8e64a2539676a58f7cff1842ff9eb674}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNYZ} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a8e64a2539676a58f7cff1842ff9eb674}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8b2db25d02f89308860b27b511aaad03}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNYZ} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a8b2db25d02f89308860b27b511aaad03}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a39fea71206b4c4dc9b80575950fc2ece}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameYC} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a39fea71206b4c4dc9b80575950fc2ece}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a34d33dd885421fa5a92e97ad80ccd68f}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameYC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a34d33dd885421fa5a92e97ad80ccd68f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_adc1d19f5529d2946720c41c52aabfeb7}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNYC} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_adc1d19f5529d2946720c41c52aabfeb7}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a672a8a0e8632161d9a6e80a39617dd5a}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNYC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a672a8a0e8632161d9a6e80a39617dd5a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a0fbd732196771e98d2d3418eb03f1d77}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXYZ} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a0fbd732196771e98d2d3418eb03f1d77}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ae0b8d7a177ec44efb3455b38b4326073}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXYZ} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_ae0b8d7a177ec44efb3455b38b4326073}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a09a86eb8684cce93ffc06edda66bd94f}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXYZ} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a09a86eb8684cce93ffc06edda66bd94f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ad13e0412c5a526bfe5c9f553c5e16968}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXYZ} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_ad13e0412c5a526bfe5c9f553c5e16968}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a5468ee115db0e739ea554f5747e7ad16}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXYC} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a5468ee115db0e739ea554f5747e7ad16}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_abb857a12f030051cb3056cc692f2636d}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXYC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_abb857a12f030051cb3056cc692f2636d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab5223cb8ea867c6a5b796461723c37ec}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXYC} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_ab5223cb8ea867c6a5b796461723c37ec}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a95caa63e165daec61a424956a7b38d41}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXYC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a95caa63e165daec61a424956a7b38d41}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8c3bd3a2a08f049484197a65f97429c1}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameYZC} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a8c3bd3a2a08f049484197a65f97429c1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a64d104f910d97162ab03c8b3ebf7e8ba}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameYZC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a64d104f910d97162ab03c8b3ebf7e8ba}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aad75ec7484a76901c297fe3a8cb41902}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNYZC} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_aad75ec7484a76901c297fe3a8cb41902}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a9d964b9defcf586d9e86625b7a97e3c5}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNYZC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a9d964b9defcf586d9e86625b7a97e3c5}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a75a2889c78991b49f178a7a62013d9a1}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXYZC} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a75a2889c78991b49f178a7a62013d9a1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a5a7ddc76848f1ea9ce123bc047d3e2fe}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameXYZC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_a5a7ddc76848f1ea9ce123bc047d3e2fe}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a30c778297f0caf76c661b53bf29b364f}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXYZC} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_a30c778297f0caf76c661b53bf29b364f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aa8bd5f88e9c8c1d7b946aa2466da743f}{
+{\footnotesize template$<$typename t $>$ }\\bool {\bfseries is\_\-sameNXYZC} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list) const }
+\label{structcimg__library_1_1CImgList_aa8bd5f88e9c8c1d7b946aa2466da743f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a109ccf0092c2eb32ec57b451534c6e9a}{
+bool {\bfseries is\_\-sameX} (const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_a109ccf0092c2eb32ec57b451534c6e9a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_af98ed77d724e0c308efe3e7efb878338}{
+bool {\bfseries is\_\-sameNX} (const unsigned int n, const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_af98ed77d724e0c308efe3e7efb878338}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a270d026b782560acbd5ba92488605cca}{
+bool {\bfseries is\_\-sameY} (const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_a270d026b782560acbd5ba92488605cca}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ac260412703e5e3931102c5d781b9ab76}{
+bool {\bfseries is\_\-sameNY} (const unsigned int n, const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_ac260412703e5e3931102c5d781b9ab76}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_af0066f294d82d878cc672536c99165d1}{
+bool {\bfseries is\_\-sameZ} (const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_af0066f294d82d878cc672536c99165d1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8a027c6c21372e08b6195b00b0186f84}{
+bool {\bfseries is\_\-sameNZ} (const unsigned int n, const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_a8a027c6c21372e08b6195b00b0186f84}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a51537a703a9b012ee9b577dbd2c2f7db}{
+bool {\bfseries is\_\-sameC} (const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_a51537a703a9b012ee9b577dbd2c2f7db}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a1d7b315261b036d75051dd27f1d7c3f8}{
+bool {\bfseries is\_\-sameNC} (const unsigned int n, const unsigned int val) const }
+\label{structcimg__library_1_1CImgList_a1d7b315261b036d75051dd27f1d7c3f8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a7a3e0663947a6bafb1285b161c4b5408}{
+bool {\bfseries is\_\-sameXY} (const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_a7a3e0663947a6bafb1285b161c4b5408}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a1b43bc7dbea2784f295d7d0dc3d5166b}{
+bool {\bfseries is\_\-sameNXY} (const unsigned int n, const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_a1b43bc7dbea2784f295d7d0dc3d5166b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a35f92cc77e698ce82dec90db3b39e5ff}{
+bool {\bfseries is\_\-sameXZ} (const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_a35f92cc77e698ce82dec90db3b39e5ff}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ad81d356d5ac11b7cd44950e406e7a63d}{
+bool {\bfseries is\_\-sameNXZ} (const unsigned int n, const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_ad81d356d5ac11b7cd44950e406e7a63d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab2e3a7bb3b47401b4f27c6f007ff8499}{
+bool {\bfseries is\_\-sameXC} (const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_ab2e3a7bb3b47401b4f27c6f007ff8499}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aa819043b1d1241b751dab806a57f974e}{
+bool {\bfseries is\_\-sameNXC} (const unsigned int n, const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_aa819043b1d1241b751dab806a57f974e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a42acdfb75653787bc0d2c5f17b88e79d}{
+bool {\bfseries is\_\-sameYZ} (const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_a42acdfb75653787bc0d2c5f17b88e79d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a929332e3b999e70793574aa310e704e8}{
+bool {\bfseries is\_\-sameNYZ} (const unsigned int n, const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_a929332e3b999e70793574aa310e704e8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ac073c209bfecb9a758e7d55149e5bde9}{
+bool {\bfseries is\_\-sameYC} (const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_ac073c209bfecb9a758e7d55149e5bde9}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ada07e63cad808e0447fd2fc0313ac2e8}{
+bool {\bfseries is\_\-sameNYC} (const unsigned int n, const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_ada07e63cad808e0447fd2fc0313ac2e8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a4b43b177846cdc8fbafcbdf738dc8435}{
+bool {\bfseries is\_\-sameZC} (const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_a4b43b177846cdc8fbafcbdf738dc8435}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ad9e8be920d77cd03138ac0cd130a65f1}{
+bool {\bfseries is\_\-sameNZC} (const unsigned int n, const unsigned int val1, const unsigned int val2) const }
+\label{structcimg__library_1_1CImgList_ad9e8be920d77cd03138ac0cd130a65f1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab9bbd81e12e736cdc6fda8dec7ca22ef}{
+bool {\bfseries is\_\-sameXYZ} (const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_ab9bbd81e12e736cdc6fda8dec7ca22ef}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a4c602ac46a87f1ccf819c51faf643098}{
+bool {\bfseries is\_\-sameNXYZ} (const unsigned int n, const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_a4c602ac46a87f1ccf819c51faf643098}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a872e281613b4582319afb93313deb289}{
+bool {\bfseries is\_\-sameXYC} (const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_a872e281613b4582319afb93313deb289}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ac7bc287fe1f663a6cdfe702eaae2c9a6}{
+bool {\bfseries is\_\-sameNXYC} (const unsigned int n, const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_ac7bc287fe1f663a6cdfe702eaae2c9a6}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8f2315af629eeda36b7b573be1b085d6}{
+bool {\bfseries is\_\-sameXZC} (const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_a8f2315af629eeda36b7b573be1b085d6}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a7922bf31582c7acc820c9281f582cc3e}{
+bool {\bfseries is\_\-sameNXZC} (const unsigned int n, const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_a7922bf31582c7acc820c9281f582cc3e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a0f7d42458d6ff7923bcda712d343dbb7}{
+bool {\bfseries is\_\-sameYZC} (const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_a0f7d42458d6ff7923bcda712d343dbb7}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aa509e9da5b5978e091003484d6060851}{
+bool {\bfseries is\_\-sameNYZC} (const unsigned int n, const unsigned int val1, const unsigned int val2, const unsigned int val3) const }
+\label{structcimg__library_1_1CImgList_aa509e9da5b5978e091003484d6060851}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ae7f057fedc9005f4bcdaaf568bd9031a}{
+bool {\bfseries is\_\-sameXYZC} (const unsigned int dx, const unsigned int dy, const unsigned int dz, const unsigned int dc) const }
+\label{structcimg__library_1_1CImgList_ae7f057fedc9005f4bcdaaf568bd9031a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a7287ccec1d27b4ee66e9b3ec91a404df}{
+bool {\bfseries is\_\-sameNXYZC} (const unsigned int n, const unsigned int dx, const unsigned int dy, const unsigned int dz, const unsigned int dc) const }
+\label{structcimg__library_1_1CImgList_a7287ccec1d27b4ee66e9b3ec91a404df}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab1bae0ba7a5d78c14ed581ac26146536}{
+bool \hyperlink{structcimg__library_1_1CImgList_ab1bae0ba7a5d78c14ed581ac26146536}{containsNXYZC} (const int n, const int x=0, const int y=0, const int z=0, const int c=0) const }
+\label{structcimg__library_1_1CImgList_ab1bae0ba7a5d78c14ed581ac26146536}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if the list contains the pixel (n,x,y,z,c). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a974d8aafd86ec4b19b6725e1fd02dfa9}{
+bool \hyperlink{structcimg__library_1_1CImgList_a974d8aafd86ec4b19b6725e1fd02dfa9}{containsN} (const int n) const }
+\label{structcimg__library_1_1CImgList_a974d8aafd86ec4b19b6725e1fd02dfa9}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if the list contains the image (n). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_afd6e74dd0035fca58beeef2edbcf1c04}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_afd6e74dd0035fca58beeef2edbcf1c04}{contains} (const T \&pixel, t \&n, t \&x, t \&y, t \&z, t \&c) const }
+\label{structcimg__library_1_1CImgList_afd6e74dd0035fca58beeef2edbcf1c04}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if one of the image list contains the specified referenced value. If true, set coordinates (n,x,y,z,c). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aa571b5a74796e03fbc779ec90196d293}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_aa571b5a74796e03fbc779ec90196d293}{contains} (const T \&pixel, t \&n, t \&x, t \&y, t \&z) const }
+\label{structcimg__library_1_1CImgList_aa571b5a74796e03fbc779ec90196d293}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if one of the image list contains the specified referenced value. If true, set coordinates (n,x,y,z). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab56f27ecdc49e45290a3b659120bfa14}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_ab56f27ecdc49e45290a3b659120bfa14}{contains} (const T \&pixel, t \&n, t \&x, t \&y) const }
+\label{structcimg__library_1_1CImgList_ab56f27ecdc49e45290a3b659120bfa14}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if one of the image list contains the specified referenced value. If true, set coordinates (n,x,y). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a118927d0395a12bfc9fbe1bed71bceb5}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_a118927d0395a12bfc9fbe1bed71bceb5}{contains} (const T \&pixel, t \&n, t \&x) const }
+\label{structcimg__library_1_1CImgList_a118927d0395a12bfc9fbe1bed71bceb5}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if one of the image list contains the specified referenced value. If true, set coordinates (n,x). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a95ff2cb234bef4bcc9a8c08c0c6f7bfd}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_a95ff2cb234bef4bcc9a8c08c0c6f7bfd}{contains} (const T \&pixel, t \&n) const }
+\label{structcimg__library_1_1CImgList_a95ff2cb234bef4bcc9a8c08c0c6f7bfd}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if one of the image list contains the specified referenced value. If true, set coordinates (n). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac209cb1eac5d34a620140e1fb221605b}{
+bool \hyperlink{structcimg__library_1_1CImgList_ac209cb1eac5d34a620140e1fb221605b}{contains} (const T \&pixel) const }
+\label{structcimg__library_1_1CImgList_ac209cb1eac5d34a620140e1fb221605b}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if one of the image list contains the specified referenced value. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a4e9bb42cccd3f39ecb7c9e0783e40e28}{
+{\footnotesize template$<$typename t $>$ }\\bool \hyperlink{structcimg__library_1_1CImgList_a4e9bb42cccd3f39ecb7c9e0783e40e28}{contains} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img, t \&n) const }
+\label{structcimg__library_1_1CImgList_a4e9bb42cccd3f39ecb7c9e0783e40e28}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if the list contains the image 'img'. If true, returns the position (n) of the image in the list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac9db155d4cc5e0d066e9404cbef2f1eb}{
+bool \hyperlink{structcimg__library_1_1CImgList_ac9db155d4cc5e0d066e9404cbef2f1eb}{contains} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img) const }
+\label{structcimg__library_1_1CImgList_ac9db155d4cc5e0d066e9404cbef2f1eb}
+
+\begin{DoxyCompactList}\small\item\em Return {\ttfamily true} if the list contains the image img. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Mathematical Functions}
+\label{_amgrp2cea901d85d98e5ef43355db4a654e99}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a4dfdacede15a60eb00a588a9f3d4839a}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a4dfdacede15a60eb00a588a9f3d4839a}{min} ()}
+\label{structcimg__library_1_1CImgList_a4dfdacede15a60eb00a588a9f3d4839a}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to the minimum pixel value of the instance list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a01164a5a9ce47a184c451d53f145cf44}{
+const T \& {\bfseries min} () const }
+\label{structcimg__library_1_1CImgList_a01164a5a9ce47a184c451d53f145cf44}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a301155b753f6ab13ff25f164f389e142}{
+T \& \hyperlink{structcimg__library_1_1CImgList_a301155b753f6ab13ff25f164f389e142}{max} ()}
+\label{structcimg__library_1_1CImgList_a301155b753f6ab13ff25f164f389e142}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to the maximum pixel value of the instance list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_af1a616293569fbda2a769b612c86a8ab}{
+const T \& {\bfseries max} () const }
+\label{structcimg__library_1_1CImgList_af1a616293569fbda2a769b612c86a8ab}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ae5f7f2487cee985fa4e386644a2c0563}{
+{\footnotesize template$<$typename t $>$ }\\T \& \hyperlink{structcimg__library_1_1CImgList_ae5f7f2487cee985fa4e386644a2c0563}{min\_\-max} (t \&max\_\-val)}
+\label{structcimg__library_1_1CImgList_ae5f7f2487cee985fa4e386644a2c0563}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to the minimum pixel value of the instance list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a55d6667ec189587a86657535bc70bb4a}{
+{\footnotesize template$<$typename t $>$ }\\const T \& {\bfseries min\_\-max} (t \&max\_\-val) const }
+\label{structcimg__library_1_1CImgList_a55d6667ec189587a86657535bc70bb4a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aa17b9040f9296b7fe2d487a7d20e8eac}{
+{\footnotesize template$<$typename t $>$ }\\T \& \hyperlink{structcimg__library_1_1CImgList_aa17b9040f9296b7fe2d487a7d20e8eac}{max\_\-min} (t \&min\_\-val)}
+\label{structcimg__library_1_1CImgList_aa17b9040f9296b7fe2d487a7d20e8eac}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to the minimum pixel value of the instance list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a6c395452fd52c44306051def2da14251}{
+{\footnotesize template$<$typename t $>$ }\\const T \& {\bfseries max\_\-min} (t \&min\_\-val) const }
+\label{structcimg__library_1_1CImgList_a6c395452fd52c44306051def2da14251}
+
+\end{DoxyCompactItemize}
+\subsection*{List Manipulation}
+\label{_amgrpd0c99fdbff20276dd1304738a84fd9c3}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab95eea37a271a9c3942fd19404203af5}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab95eea37a271a9c3942fd19404203af5}{insert} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const unsigned int pos=$\sim$0U, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_ab95eea37a271a9c3942fd19404203af5}
+
+\begin{DoxyCompactList}\small\item\em Insert a copy of the image {\ttfamily img} into the current image list, at position {\ttfamily pos}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ace9966cad18c8a2d8c6758a470f1bd89}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& {\bfseries insert} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img, const unsigned int pos=$\sim$0U, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_ace9966cad18c8a2d8c6758a470f1bd89}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ab7715dcaf7ab8d95f2dc6df417a7d6a8}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-insert} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const unsigned int pos=$\sim$0U, const bool shared=false) const }
+\label{structcimg__library_1_1CImgList_ab7715dcaf7ab8d95f2dc6df417a7d6a8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a96931b7ec7843bfc1dceda7ff629f3ee}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a96931b7ec7843bfc1dceda7ff629f3ee}{insert} (const unsigned int n, const unsigned int pos=$\sim$0U)}
+\label{structcimg__library_1_1CImgList_a96931b7ec7843bfc1dceda7ff629f3ee}
+
+\begin{DoxyCompactList}\small\item\em Insert n empty images img into the current image list, at position {\ttfamily pos}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_afb191e12a181d7d82ab695e4ff3f3e8d}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-insert} (const unsigned int n, const unsigned int pos=$\sim$0U) const }
+\label{structcimg__library_1_1CImgList_afb191e12a181d7d82ab695e4ff3f3e8d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a3aee11aedb70021fb00593565a58be5d}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a3aee11aedb70021fb00593565a58be5d}{insert} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const unsigned int pos=$\sim$0U, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a3aee11aedb70021fb00593565a58be5d}
+
+\begin{DoxyCompactList}\small\item\em Insert n copies of the image {\ttfamily img} into the current image list, at position {\ttfamily pos}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a2f641087c86c3034a537e877f245f443}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-insert} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img, const unsigned int pos=$\sim$0U, const bool shared=false) const }
+\label{structcimg__library_1_1CImgList_a2f641087c86c3034a537e877f245f443}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a9240333e196899711406545f727b0539}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a9240333e196899711406545f727b0539}{insert} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const unsigned int pos=$\sim$0U, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_a9240333e196899711406545f727b0539}
+
+\begin{DoxyCompactList}\small\item\em Insert a copy of the image list {\ttfamily list} into the current image list, starting from position {\ttfamily pos}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a4813df33fcfca0d02eaddb2653c3057c}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-insert} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const unsigned int pos=$\sim$0U, const bool shared=false) const }
+\label{structcimg__library_1_1CImgList_a4813df33fcfca0d02eaddb2653c3057c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_af0bd9ec2232e6bb103c11ac2d1685413}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_af0bd9ec2232e6bb103c11ac2d1685413}{insert} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const unsigned int pos=$\sim$0U, const bool shared=false)}
+\label{structcimg__library_1_1CImgList_af0bd9ec2232e6bb103c11ac2d1685413}
+
+\begin{DoxyCompactList}\small\item\em Insert n copies of the list {\ttfamily list} at position {\ttfamily pos} of the current list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abf68a2890412c4e1d9202b15917aef59}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-insert} (const unsigned int n, const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list, const unsigned int pos=$\sim$0U, const bool shared=false) const }
+\label{structcimg__library_1_1CImgList_abf68a2890412c4e1d9202b15917aef59}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a2116e4ad3f06244c088451bfc7069474}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a2116e4ad3f06244c088451bfc7069474}{remove} (const unsigned int pos1, const unsigned int pos2)}
+\label{structcimg__library_1_1CImgList_a2116e4ad3f06244c088451bfc7069474}
+
+\begin{DoxyCompactList}\small\item\em Remove the images from positions {\ttfamily pos1} to {\ttfamily pos2}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a28a162856972959e34bc5ae6b8235cf6}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-remove} (const unsigned int pos1, const unsigned int pos2) const }
+\label{structcimg__library_1_1CImgList_a28a162856972959e34bc5ae6b8235cf6}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a53d3b09e0716599143e06294e17527e5}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a53d3b09e0716599143e06294e17527e5}{remove} (const unsigned int pos)}
+\label{structcimg__library_1_1CImgList_a53d3b09e0716599143e06294e17527e5}
+
+\begin{DoxyCompactList}\small\item\em Remove the image at position {\ttfamily pos} from the image list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac3f8d5e03881925788480229770f6318}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-remove} (const unsigned int pos) const }
+\label{structcimg__library_1_1CImgList_ac3f8d5e03881925788480229770f6318}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aacab3180a7750eaf910e7ec02af2b2af}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_aacab3180a7750eaf910e7ec02af2b2af}{remove} ()}
+\label{structcimg__library_1_1CImgList_aacab3180a7750eaf910e7ec02af2b2af}
+
+\begin{DoxyCompactList}\small\item\em Remove the last image from the image list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_af2317edcac6820a17bd99a577adbb949}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-remove} () const }
+\label{structcimg__library_1_1CImgList_af2317edcac6820a17bd99a577adbb949}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a4bddad7bd0b0831f2394d563c65448e5}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a4bddad7bd0b0831f2394d563c65448e5}{reverse} ()}
+\label{structcimg__library_1_1CImgList_a4bddad7bd0b0831f2394d563c65448e5}
+
+\begin{DoxyCompactList}\small\item\em Reverse list order. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a08e5fffa109ffcbc5c5501caaac31419}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-reverse} () const }
+\label{structcimg__library_1_1CImgList_a08e5fffa109ffcbc5c5501caaac31419}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a00f2db037b12bb52c151afd2b5b14b7f}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a00f2db037b12bb52c151afd2b5b14b7f}{images} (const unsigned int i0, const unsigned int i1)}
+\label{structcimg__library_1_1CImgList_a00f2db037b12bb52c151afd2b5b14b7f}
+
+\begin{DoxyCompactList}\small\item\em Get a sub-\/list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abe3f4aad864f0508b33d8511263b519c}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-images} (const unsigned int i0, const unsigned int i1) const }
+\label{structcimg__library_1_1CImgList_abe3f4aad864f0508b33d8511263b519c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a7b8806bd21527aa64aa3bd0e7506c9d8}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_a7b8806bd21527aa64aa3bd0e7506c9d8}{get\_\-shared\_\-images} (const unsigned int i0, const unsigned int i1)}
+\label{structcimg__library_1_1CImgList_a7b8806bd21527aa64aa3bd0e7506c9d8}
+
+\begin{DoxyCompactList}\small\item\em Get a shared sub-\/list. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9b596dd0de2b20e50321d8c89952c401}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-shared\_\-images} (const unsigned int i0, const unsigned int i1) const }
+\label{structcimg__library_1_1CImgList_a9b596dd0de2b20e50321d8c89952c401}
+
+\item 
+\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \hyperlink{structcimg__library_1_1CImgList_a563eced0a41cdb792b2b151b682f7ae5}{get\_\-append} (const char axis, const char align='p') const 
+\begin{DoxyCompactList}\small\item\em Return a single image which is the concatenation of all images of the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a3143702869165b83627245ca807a4709}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a3143702869165b83627245ca807a4709}{split} (const char axis, const int nb=0)}
+\label{structcimg__library_1_1CImgList_a3143702869165b83627245ca807a4709}
+
+\begin{DoxyCompactList}\small\item\em Return a list where each image has been split along the specified axis. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_adc2e5a953d030fca9af7af17119262a9}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-split} (const char axis, const int nb=0) const }
+\label{structcimg__library_1_1CImgList_adc2e5a953d030fca9af7af17119262a9}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_af014a9f295740c67d251221bfadaaed6}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_af014a9f295740c67d251221bfadaaed6}{push\_\-back} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img)}
+\label{structcimg__library_1_1CImgList_af014a9f295740c67d251221bfadaaed6}
+
+\begin{DoxyCompactList}\small\item\em Insert image {\ttfamily img} at the end of the list (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a337ac076e4fd5851e8bba422b42dff01}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a337ac076e4fd5851e8bba422b42dff01}{push\_\-front} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img)}
+\label{structcimg__library_1_1CImgList_a337ac076e4fd5851e8bba422b42dff01}
+
+\begin{DoxyCompactList}\small\item\em Insert image {\ttfamily img} at the front of the list (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a61bcce08364e24a78bdc39f53805870c}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a61bcce08364e24a78bdc39f53805870c}{push\_\-back} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgList_a61bcce08364e24a78bdc39f53805870c}
+
+\begin{DoxyCompactList}\small\item\em Insert list {\ttfamily list} at the end of the current list (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_acc07635982cf6d3fb8f1c59c240e4c6a}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_acc07635982cf6d3fb8f1c59c240e4c6a}{push\_\-front} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgList_acc07635982cf6d3fb8f1c59c240e4c6a}
+
+\begin{DoxyCompactList}\small\item\em Insert list {\ttfamily list} at the front of the current list (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a727aa097fb39a4de2d28622aa6636f12}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a727aa097fb39a4de2d28622aa6636f12}{pop\_\-back} ()}
+\label{structcimg__library_1_1CImgList_a727aa097fb39a4de2d28622aa6636f12}
+
+\begin{DoxyCompactList}\small\item\em Remove last element of the list (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a106291dd41cd3bce27239aac611ef064}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a106291dd41cd3bce27239aac611ef064}{pop\_\-front} ()}
+\label{structcimg__library_1_1CImgList_a106291dd41cd3bce27239aac611ef064}
+
+\begin{DoxyCompactList}\small\item\em Remove first element of the list (STL-\/compliant name). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_af640222e8d8e8fc6c1292bc928e04995}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_af640222e8d8e8fc6c1292bc928e04995}{erase} (const \hyperlink{structcimg__library_1_1CImg}{iterator} iter)}
+\label{structcimg__library_1_1CImgList_af640222e8d8e8fc6c1292bc928e04995}
+
+\begin{DoxyCompactList}\small\item\em Remove the element pointed by iterator {\ttfamily iter} (STL-\/compliant name). \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Data Input}
+\label{_amgrpb77bbd177ec1e4d71a0fe96d3d4e8b39}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a8ee71f92f35cc9e24d9d3a09456be2ae}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a8ee71f92f35cc9e24d9d3a09456be2ae}{load} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a8ee71f92f35cc9e24d9d3a09456be2ae}
+
+\begin{DoxyCompactList}\small\item\em Load an image list from a file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab3fe1de8da57902ded527ce43e27b72c}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab3fe1de8da57902ded527ce43e27b72c}{load\_\-cimg} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_ab3fe1de8da57902ded527ce43e27b72c}
+
+\begin{DoxyCompactList}\small\item\em Load an image list from a .cimg file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ad40ae65add913bd02bcd7d9914e89cf3}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ad40ae65add913bd02bcd7d9914e89cf3}{load\_\-cimg} (std::FILE $\ast$const file)}
+\label{structcimg__library_1_1CImgList_ad40ae65add913bd02bcd7d9914e89cf3}
+
+\begin{DoxyCompactList}\small\item\em Load an image list from a .cimg file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_adb13804029e8e95abe9860efc05b52f8}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_adb13804029e8e95abe9860efc05b52f8}{load\_\-cimg} (const char $\ast$const filename, const unsigned int n0, const unsigned int n1, const unsigned int x0, const unsigned int y0, const unsigned int z0, const unsigned int c0, const unsigned int x1, const unsigned int y1, const unsigned int z1, const unsigned int c1)}
+\label{structcimg__library_1_1CImgList_adb13804029e8e95abe9860efc05b52f8}
+
+\begin{DoxyCompactList}\small\item\em Load a sub-\/image list from a non compressed .cimg file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_add83dfb712666f092f5a222d6a55e400}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_add83dfb712666f092f5a222d6a55e400}{load\_\-cimg} (std::FILE $\ast$const file, const unsigned int n0, const unsigned int n1, const unsigned int x0, const unsigned int y0, const unsigned int z0, const unsigned int c0, const unsigned int x1, const unsigned int y1, const unsigned int z1, const unsigned int c1)}
+\label{structcimg__library_1_1CImgList_add83dfb712666f092f5a222d6a55e400}
+
+\begin{DoxyCompactList}\small\item\em Load a sub-\/image list from a non compressed .cimg file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a4991be1e15f3c49a4fa24870bd67d09b}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a4991be1e15f3c49a4fa24870bd67d09b}{load\_\-parrec} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a4991be1e15f3c49a4fa24870bd67d09b}
+
+\begin{DoxyCompactList}\small\item\em Load an image list from a PAR/REC (Philips) file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_af796089a71cdfa15360c7bb6dd36b762}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_af796089a71cdfa15360c7bb6dd36b762}{load\_\-yuv} (const char $\ast$const filename, const unsigned int sizex, const unsigned int sizey, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1, const bool yuv2rgb=true)}
+\label{structcimg__library_1_1CImgList_af796089a71cdfa15360c7bb6dd36b762}
+
+\begin{DoxyCompactList}\small\item\em Load an image sequence from a YUV file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9ddeb969d91ce1cb23167d83d0144a94}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a9ddeb969d91ce1cb23167d83d0144a94}{load\_\-yuv} (std::FILE $\ast$const file, const unsigned int sizex, const unsigned int sizey, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1, const bool yuv2rgb=true)}
+\label{structcimg__library_1_1CImgList_a9ddeb969d91ce1cb23167d83d0144a94}
+
+\begin{DoxyCompactList}\small\item\em Load an image sequence from a YUV file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac90b30e0027691debb81df26216b81c0}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ac90b30e0027691debb81df26216b81c0}{load\_\-ffmpeg} (const char $\ast$const filename, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1, const bool pixel\_\-format=true, const bool resume=false)}
+\label{structcimg__library_1_1CImgList_ac90b30e0027691debb81df26216b81c0}
+
+\begin{DoxyCompactList}\small\item\em Load an image from a video file, using ffmpeg libraries. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aa3885ef29cd5036361c12d407019de6c}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_aa3885ef29cd5036361c12d407019de6c}{load\_\-ffmpeg\_\-external} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_aa3885ef29cd5036361c12d407019de6c}
+
+\begin{DoxyCompactList}\small\item\em Load an image from a video file (MPEG,AVI) using the external tool 'ffmpeg'. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a0ab64a5a6414629623467ad5ee80b6fe}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a0ab64a5a6414629623467ad5ee80b6fe}{load\_\-gzip\_\-external} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a0ab64a5a6414629623467ad5ee80b6fe}
+
+\begin{DoxyCompactList}\small\item\em Load a gzipped list, using external tool 'gunzip'. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abf3317799008103e710d328b5f297407}{
+{\footnotesize template$<$typename tf , typename tc $>$ }\\\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_abf3317799008103e710d328b5f297407}{load\_\-off} (const char $\ast$const filename, \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ tf $>$ \&primitives, \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ tc $>$ \&colors)}
+\label{structcimg__library_1_1CImgList_abf3317799008103e710d328b5f297407}
+
+\begin{DoxyCompactList}\small\item\em Load a 3d object from a .OFF file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a9195765cb9bde15990a29ccd9306532c}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a9195765cb9bde15990a29ccd9306532c}{load\_\-tiff} (const char $\ast$const filename, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1)}
+\label{structcimg__library_1_1CImgList_a9195765cb9bde15990a29ccd9306532c}
+
+\begin{DoxyCompactList}\small\item\em Load a TIFF file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_abf9c8328ad47ecb7e15e716cecc3fd3b}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_abf9c8328ad47ecb7e15e716cecc3fd3b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a5d903f8df0741cf00e6c9e2f1dc8d835}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-cimg} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a5d903f8df0741cf00e6c9e2f1dc8d835}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a3d8408137d89b116ba448d357684e0c9}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-cimg} (std::FILE $\ast$const file)}
+\label{structcimg__library_1_1CImgList_a3d8408137d89b116ba448d357684e0c9}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a4d42b148b5b847c53c0972e21ccbf154}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-cimg} (const char $\ast$const filename, const unsigned int n0, const unsigned int n1, const unsigned int x0, const unsigned int y0, const unsigned int z0, const unsigned int c0, const unsigned int x1, const unsigned int y1, const unsigned int z1, const unsigned int c1)}
+\label{structcimg__library_1_1CImgList_a4d42b148b5b847c53c0972e21ccbf154}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a79a875c73c5db8a37c1637f65a82f4ac}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-cimg} (std::FILE $\ast$const file, const unsigned int n0, const unsigned int n1, const unsigned int x0, const unsigned int y0, const unsigned int z0, const unsigned int c0, const unsigned int x1, const unsigned int y1, const unsigned int z1, const unsigned int c1)}
+\label{structcimg__library_1_1CImgList_a79a875c73c5db8a37c1637f65a82f4ac}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aca5a8ad3bb0c44264af7c25cf82536b0}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-parrec} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_aca5a8ad3bb0c44264af7c25cf82536b0}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_acf9e5bdd2d8ca89b78d44da13ba66e71}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-yuv} (const char $\ast$const filename, const unsigned int sizex, const unsigned int sizey=1, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1, const bool yuv2rgb=true)}
+\label{structcimg__library_1_1CImgList_acf9e5bdd2d8ca89b78d44da13ba66e71}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aa1f2db8292397b3f7060fe66e6eca7af}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-yuv} (std::FILE $\ast$const file, const unsigned int sizex, const unsigned int sizey=1, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1, const bool yuv2rgb=true)}
+\label{structcimg__library_1_1CImgList_aa1f2db8292397b3f7060fe66e6eca7af}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_aec6188817de989c6355f9dcf81788f37}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-ffmpeg} (const char $\ast$const filename, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1, const bool pixel\_\-format=true)}
+\label{structcimg__library_1_1CImgList_aec6188817de989c6355f9dcf81788f37}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ae59117119fcf4c35eb85890c1699b037}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-ffmpeg\_\-external} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_ae59117119fcf4c35eb85890c1699b037}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a2afcc959c5c4408d4c1fa87f5506e472}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-gzip\_\-external} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_a2afcc959c5c4408d4c1fa87f5506e472}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_ac9c6bcf8e6c9eaaa62c4e9adc1b753be}{
+{\footnotesize template$<$typename tf , typename tc $>$ }\\static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-off} (const char $\ast$const filename, \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ tf $>$ \&primitives, \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ tc $>$ \&colors)}
+\label{structcimg__library_1_1CImgList_ac9c6bcf8e6c9eaaa62c4e9adc1b753be}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_af43113248d9f9940a0306a0f3c17a772}{
+static \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-load\_\-tiff} (const char $\ast$const filename, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int step\_\-frame=1)}
+\label{structcimg__library_1_1CImgList_af43113248d9f9940a0306a0f3c17a772}
+
+\end{DoxyCompactItemize}
+\subsection*{Data Output}
+\label{_amgrp94c0e9b311d45b04fc37b41903c6debc}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a6c6d78b8f8373762be3bb82ce01c7b97}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a6c6d78b8f8373762be3bb82ce01c7b97}{print} (const char $\ast$const title=0, const bool display\_\-stats=true) const }
+\label{structcimg__library_1_1CImgList_a6c6d78b8f8373762be3bb82ce01c7b97}
+
+\begin{DoxyCompactList}\small\item\em Print informations about the list on the standard output. \item\end{DoxyCompactList}\item 
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_abfa17448c3a4985faba1e30c32a04005}{display} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp, const char axis='x', const char align='p') const 
+\begin{DoxyCompactList}\small\item\em Display the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance in an existing \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} window (by reference). \item\end{DoxyCompactList}\item 
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ac670d063ffced544589167ae7541e3f3}{display} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp, const bool display\_\-info, const char axis='x', const char align='p') const 
+\begin{DoxyCompactList}\small\item\em Display the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance in a new display window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_add4fdf317970262811a68d52dc46f91b}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_add4fdf317970262811a68d52dc46f91b}{display} (const char $\ast$const title=0, const bool display\_\-info=true, const char axis='x', const char align='p') const }
+\label{structcimg__library_1_1CImgList_add4fdf317970262811a68d52dc46f91b}
+
+\begin{DoxyCompactList}\small\item\em Display the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance in a new display window. \item\end{DoxyCompactList}\item 
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a814fe09c21090e7673d96c6145fc64bf}{save} (const char $\ast$const filename, const int number=-\/1) const 
+\begin{DoxyCompactList}\small\item\em Save an image list into a file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_af89a53375d81d5967d89cc1a02b584da}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_af89a53375d81d5967d89cc1a02b584da}{save\_\-ffmpeg} (const char $\ast$const filename, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const unsigned int fps=25, const unsigned int bitrate=2048) const }
+\label{structcimg__library_1_1CImgList_af89a53375d81d5967d89cc1a02b584da}
+
+\begin{DoxyCompactList}\small\item\em Save an image sequence, using FFMPEG library. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a09200f3c4abcfa6572ff2686731c87b7}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a09200f3c4abcfa6572ff2686731c87b7}{save\_\-yuv} (const char $\ast$const filename=0, const bool rgb2yuv=true) const }
+\label{structcimg__library_1_1CImgList_a09200f3c4abcfa6572ff2686731c87b7}
+
+\begin{DoxyCompactList}\small\item\em Save an image sequence into a YUV file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aa49eac3ee2a1a76010d017bb6dbd0f0b}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_aa49eac3ee2a1a76010d017bb6dbd0f0b}{save\_\-yuv} (std::FILE $\ast$const file, const bool rgb2yuv=true) const }
+\label{structcimg__library_1_1CImgList_aa49eac3ee2a1a76010d017bb6dbd0f0b}
+
+\begin{DoxyCompactList}\small\item\em Save an image sequence into a YUV file. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a975ee8602db4ee405284e199e177d239}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a975ee8602db4ee405284e199e177d239}{save\_\-cimg} (std::FILE $\ast$file, const bool compress=false) const }
+\label{structcimg__library_1_1CImgList_a975ee8602db4ee405284e199e177d239}
+
+\begin{DoxyCompactList}\small\item\em Save an image list into a \hyperlink{structcimg__library_1_1CImg}{CImg} file (RAW binary file + simple header). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a40c2aa789c4ef09df224acb0634ac96f}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a40c2aa789c4ef09df224acb0634ac96f}{save\_\-cimg} (const char $\ast$const filename, const bool compress=false) const }
+\label{structcimg__library_1_1CImgList_a40c2aa789c4ef09df224acb0634ac96f}
+
+\begin{DoxyCompactList}\small\item\em Save an image list into a \hyperlink{structcimg__library_1_1CImg}{CImg} file (RAW binary file + simple header). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ab1591fa04951c4c11e30fb9813806f2e}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ab1591fa04951c4c11e30fb9813806f2e}{save\_\-cimg} (const char $\ast$const filename, const unsigned int n0, const unsigned int x0, const unsigned int y0, const unsigned int z0, const unsigned int c0) const }
+\label{structcimg__library_1_1CImgList_ab1591fa04951c4c11e30fb9813806f2e}
+
+\begin{DoxyCompactList}\small\item\em Insert the instance image into into an existing .cimg file, at specified coordinates. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ac8f8a249c4c75634265db9bf0ae2e54e}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ac8f8a249c4c75634265db9bf0ae2e54e}{save\_\-cimg} (std::FILE $\ast$const file, const unsigned int n0, const unsigned int x0, const unsigned int y0, const unsigned int z0, const unsigned int c0) const }
+\label{structcimg__library_1_1CImgList_ac8f8a249c4c75634265db9bf0ae2e54e}
+
+\begin{DoxyCompactList}\small\item\em Insert the instance image into into an existing .cimg file, at specified coordinates. \item\end{DoxyCompactList}\item 
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_ae9d11f1d698df3ffe1ef4a9ede594e1e}{save\_\-gzip\_\-external} (const char $\ast$const filename) const 
+\begin{DoxyCompactList}\small\item\em Save a file in TIFF format. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aeb3bfe7ec629509dfebe65a6c3704180}{
+const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_aeb3bfe7ec629509dfebe65a6c3704180}{save\_\-ffmpeg\_\-external} (const char $\ast$const filename, const unsigned int first\_\-frame=0, const unsigned int last\_\-frame=$\sim$0U, const char $\ast$const codec=\char`\"{}mpeg2video\char`\"{}, const unsigned int fps=25, const unsigned int bitrate=2048) const }
+\label{structcimg__library_1_1CImgList_aeb3bfe7ec629509dfebe65a6c3704180}
+
+\begin{DoxyCompactList}\small\item\em Save an image sequence using the external tool 'ffmpeg'. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae6b840a6196e38324e09f24c4d8591d4}{
+static bool {\bfseries is\_\-saveable} (const char $\ast$const filename)}
+\label{structcimg__library_1_1CImgList_ae6b840a6196e38324e09f24c4d8591d4}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a3cb95e9115f5a5c48f93a87f65265a42}{
+static void \hyperlink{structcimg__library_1_1CImgList_a3cb95e9115f5a5c48f93a87f65265a42}{save\_\-empty\_\-cimg} (const char $\ast$const filename, const unsigned int nb, const unsigned int dx, const unsigned int dy=1, const unsigned int dz=1, const unsigned int dc=1)}
+\label{structcimg__library_1_1CImgList_a3cb95e9115f5a5c48f93a87f65265a42}
+
+\begin{DoxyCompactList}\small\item\em Create an empty .cimg file with specified dimensions. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae279dbad076425b487bdff7ca0bc6189}{
+static void \hyperlink{structcimg__library_1_1CImgList_ae279dbad076425b487bdff7ca0bc6189}{save\_\-empty\_\-cimg} (std::FILE $\ast$const file, const unsigned int nb, const unsigned int dx, const unsigned int dy=1, const unsigned int dz=1, const unsigned int dc=1)}
+\label{structcimg__library_1_1CImgList_ae279dbad076425b487bdff7ca0bc6189}
+
+\begin{DoxyCompactList}\small\item\em Create an empty .cimg file with specified dimensions. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Others}
+\label{_amgrp52ef9633d88a7480b3a938ff9eaa2a25}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a3b57756b26a0473e3539c6af86d876b5}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a3b57756b26a0473e3539c6af86d876b5}{crop\_\-font} ()}
+\label{structcimg__library_1_1CImgList_a3b57756b26a0473e3539c6af86d876b5}
+
+\begin{DoxyCompactList}\small\item\em Create an auto-\/cropped font (along the X axis) from a input font {\ttfamily font}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_aa240a3e4e9713b62189f8df7fa47a988}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-crop\_\-font} () const }
+\label{structcimg__library_1_1CImgList_aa240a3e4e9713b62189f8df7fa47a988}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a231161b57fc1e5d813f254f65afefd8b}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a231161b57fc1e5d813f254f65afefd8b}{FFT} (const char axis, const bool invert=false)}
+\label{structcimg__library_1_1CImgList_a231161b57fc1e5d813f254f65afefd8b}
+
+\begin{DoxyCompactList}\small\item\em Compute a 1-\/D Fast Fourier Transform, along specified axis. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_ae9e7074da9c9955e37e9eebbd5bd9c22}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ Tfloat $>$ {\bfseries get\_\-FFT} (const char axis, const bool invert=false) const }
+\label{structcimg__library_1_1CImgList_ae9e7074da9c9955e37e9eebbd5bd9c22}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a9cc4c99d1c9ce55a3a75cfdf4d00bb0b}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a9cc4c99d1c9ce55a3a75cfdf4d00bb0b}{FFT} (const bool invert=false)}
+\label{structcimg__library_1_1CImgList_a9cc4c99d1c9ce55a3a75cfdf4d00bb0b}
+
+\begin{DoxyCompactList}\small\item\em Compute a n-\/d Fast Fourier Transform. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a344967c8b6e7bf0aa40039d1ab29efe2}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ Tfloat $>$ {\bfseries get\_\-FFT} (const bool invert=false) const }
+\label{structcimg__library_1_1CImgList_a344967c8b6e7bf0aa40039d1ab29efe2}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgList_a91693b640cda50a0830fdc1e7c7906e7}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a91693b640cda50a0830fdc1e7c7906e7}{reverse\_\-object3d} ()}
+\label{structcimg__library_1_1CImgList_a91693b640cda50a0830fdc1e7c7906e7}
+
+\begin{DoxyCompactList}\small\item\em Invert primitives orientation of a 3d object. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgList_a70dfc1cdeccae505ac5c7077f46e39c2}{
+\hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ {\bfseries get\_\-reverse\_\-object3d} () const }
+\label{structcimg__library_1_1CImgList_a70dfc1cdeccae505ac5c7077f46e39c2}
+
+\item 
+static const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \& \hyperlink{structcimg__library_1_1CImgList_a7834cdaab8dc2eccc67a7105a9b1febd}{font} (const unsigned int font\_\-height, const bool variable\_\-size=true)
+\begin{DoxyCompactList}\small\item\em Return a \hyperlink{structcimg__library_1_1CImg}{CImg} pre-\/defined font with desired size. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$ struct cimg\_\-library::CImgList$<$ T $>$}
+
+Class representing list of images CImg$<$T$>$. 
+
+\subsection{Member Function Documentation}
+\hypertarget{structcimg__library_1_1CImgList_ab7aec05f7791abe11f1d0f0cdc8bd24e}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!clear@{clear}}
+\index{clear@{clear}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgList}$<$T$>$\& clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{structcimg__library_1_1CImgList_ab7aec05f7791abe11f1d0f0cdc8bd24e}
+
+
+In-\/place version of the default constructor. 
+
+This function is strictly equivalent to \hyperlink{structcimg__library_1_1CImgList_ac1fdedd65f2728500da3af7e94c19ae2}{assign()} and has been introduced for having a STL-\/compliant function name. \hypertarget{structcimg__library_1_1CImgList_a93d7eb669f13af8e6a4d05472f995470}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!operator+@{operator+}}
+\index{operator+@{operator+}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgList}$<$T$>$ operator+ (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{structcimg__library_1_1CImgList_a93d7eb669f13af8e6a4d05472f995470}
+
+
+Operator+() (unary). 
+
+Writting '+list' is a convenient shortcut to 'CImgList$<$T$>$(list,false)' (forces a copy with non-\/shared elements). \hypertarget{structcimg__library_1_1CImgList_a563eced0a41cdb792b2b151b682f7ae5}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!get\_\-append@{get\_\-append}}
+\index{get\_\-append@{get\_\-append}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{get\_\-append}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImg}$<$T$>$ get\_\-append (
+\begin{DoxyParamCaption}
+\item[{const char}]{ axis, }
+\item[{const char}]{ align = {\ttfamily 'p'}}
+\end{DoxyParamCaption}
+) const}}
+\label{structcimg__library_1_1CImgList_a563eced0a41cdb792b2b151b682f7ae5}
+
+
+Return a single image which is the concatenation of all images of the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em axis}]: specify the axis for image concatenation. Can be 'x','y','z' or 'c'. \item[{\em align}]: specify the alignment for image concatenation. Can be 'p' (top), 'c' (center) or 'n' (bottom). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A CImg$<$T$>$ image corresponding to the concatenation is returned. 
+\end{DoxyReturn}
+\hypertarget{structcimg__library_1_1CImgList_abfa17448c3a4985faba1e30c32a04005}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!display@{display}}
+\index{display@{display}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CImgList}$<$T$>$\& display (
+\begin{DoxyParamCaption}
+\item[{{\bf CImgDisplay} \&}]{ disp, }
+\item[{const char}]{ axis = {\ttfamily 'x'}, }
+\item[{const char}]{ align = {\ttfamily 'p'}}
+\end{DoxyParamCaption}
+) const}}
+\label{structcimg__library_1_1CImgList_abfa17448c3a4985faba1e30c32a04005}
+
+
+Display the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance in an existing \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} window (by reference). 
+
+This function displays the list images of the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance into an existing \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} window. Images of the list are concatenated in a single temporarly image for visualization purposes. The function returns immediately. 
+\begin{DoxyParams}{Parameters}
+\item[{\em disp}]: reference to an existing \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} instance, where the current image list will be displayed. \item[{\em axis}]: specify the axis for image concatenation. Can be 'x','y','z' or 'c'. \item[{\em align}]: specify the alignment for image concatenation. Can be 'p' (top), 'c' (center) or 'n' (bottom). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance is returned. 
+\end{DoxyReturn}
+\hypertarget{structcimg__library_1_1CImgList_ac670d063ffced544589167ae7541e3f3}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!display@{display}}
+\index{display@{display}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CImgList}$<$T$>$\& display (
+\begin{DoxyParamCaption}
+\item[{{\bf CImgDisplay} \&}]{ disp, }
+\item[{const bool}]{ display\_\-info, }
+\item[{const char}]{ axis = {\ttfamily 'x'}, }
+\item[{const char}]{ align = {\ttfamily 'p'}}
+\end{DoxyParamCaption}
+) const}}
+\label{structcimg__library_1_1CImgList_ac670d063ffced544589167ae7541e3f3}
+
+
+Display the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance in a new display window. 
+
+This function opens a new window with a specific title and displays the list images of the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance into it. Images of the list are concatenated in a single temporarly image for visualization purposes. The function returns when a key is pressed or the display window is closed by the user. 
+\begin{DoxyParams}{Parameters}
+\item[{\em title}]: specify the title of the opening display window. \item[{\em axis}]: specify the axis for image concatenation. Can be 'x','y','z' or 'c'. \item[{\em align}]: specify the alignment for image concatenation. Can be 'p' (top), 'c' (center) or 'n' (bottom). \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the current \hyperlink{structcimg__library_1_1CImgList}{CImgList} instance is returned. 
+\end{DoxyReturn}
+\hypertarget{structcimg__library_1_1CImgList_a814fe09c21090e7673d96c6145fc64bf}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!save@{save}}
+\index{save@{save}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CImgList}$<$T$>$\& save (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$const }]{ filename, }
+\item[{const int}]{ number = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+) const}}
+\label{structcimg__library_1_1CImgList_a814fe09c21090e7673d96c6145fc64bf}
+
+
+Save an image list into a file. 
+
+Depending on the extension of the given filename, a file format is chosen for the output file. \hypertarget{structcimg__library_1_1CImgList_ae9d11f1d698df3ffe1ef4a9ede594e1e}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!save\_\-gzip\_\-external@{save\_\-gzip\_\-external}}
+\index{save\_\-gzip\_\-external@{save\_\-gzip\_\-external}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{save\_\-gzip\_\-external}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf CImgList}$<$T$>$\& save\_\-gzip\_\-external (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$const }]{ filename}
+\end{DoxyParamCaption}
+) const}}
+\label{structcimg__library_1_1CImgList_ae9d11f1d698df3ffe1ef4a9ede594e1e}
+
+
+Save a file in TIFF format. 
+
+Save an image list as a gzipped file, using external tool 'gzip'. \hypertarget{structcimg__library_1_1CImgList_a7834cdaab8dc2eccc67a7105a9b1febd}{
+\index{cimg\_\-library::CImgList@{cimg\_\-library::CImgList}!font@{font}}
+\index{font@{font}!cimg_library::CImgList@{cimg\_\-library::CImgList}}
+\subsubsection[{font}]{\setlength{\rightskip}{0pt plus 5cm}static const {\bf CImgList}$<$T$>$\& font (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{ font\_\-height, }
+\item[{const bool}]{ variable\_\-size = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{structcimg__library_1_1CImgList_a7834cdaab8dc2eccc67a7105a9b1febd}
+
+
+Return a \hyperlink{structcimg__library_1_1CImg}{CImg} pre-\/defined font with desired size. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em font\_\-height}]= height of the desired font (exact match for 11,13,17,19,24,32,38,57) \item[{\em fixed\_\-size}]= tell if the font has a fixed or variable width. \end{DoxyParams}

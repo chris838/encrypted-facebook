@@ -73,46 +73,11 @@ class base
       const char*                   & data_filename,
       const char*                   & dst_filename
     ) const;
-    void EncodeInImage(
-      cimg_library::CImg<short int>	 & img,
-      std::vector<char>		         & data
-    ) const;
-    void EncodeInBlock(
-	cimg_library::CImg<short int> & img,
-	unsigned int 			y0,
-	unsigned int 			x0,
-	unsigned char 			a,
-	unsigned char 			b,
-	unsigned char 			c
-    ) const;
     
     // Decoding data from an image
     unsigned int DecryptPhoto(
       const char*                   & src_filename,
       const char*                   & data_filename
-    ) const;
-    void DecodeFromImage(
-      cimg_library::CImg<short int>	 & img,
-      std::vector<char>		         & data,
-      unsigned int			   len
-    ) const;
-    void DecodeFromBlock(
-	cimg_library::CImg<short int> & img,
-	unsigned int 			y0,
-	unsigned int 			x0,
-        std::vector<char>		& data
-    ) const;
-    
-  // Wavelet transforms for image encoding/decoding
-    void Haar2D_DWT(
-	cimg_library::CImg<short int> & img,
-	unsigned int 			y0,
-	unsigned int 			x0
-    ) const;
-    void Haar2D_DWTi(
-	cimg_library::CImg<short int> & img,
-	unsigned int 			y0,
-	unsigned int 			x0
     ) const;
     
     // Calculate bit error rate

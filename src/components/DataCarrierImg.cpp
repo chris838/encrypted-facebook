@@ -1,8 +1,5 @@
 #include "DataCarrierImg.h"
 
-using namespace cimg_library;
-
-
 //! Format the image in preparation for implantation.
 /**
     This operation will resize the image to 720x720x1 and truncate the colour channels, as only data
@@ -35,19 +32,20 @@ DataCarrierImg::format_for_implantation()
 void
 DataCarrierImg::implant_data
 (
-    std::vector<char>& data;
+    std::vector<char>& data
 )
 {
     // Check the image is properly formatted
-    if (!is_formatted)
+    if (!_is_formatted)
         throw DataCarrierImgImplantationException("Error whilst implanting: image not formatted. ",
-                                                  "Was 'format_for_implantation' called?\n");
+                                                  "Was 'format_for_implantation' called?");
         
     // Check the data isn't too large, note down size and pad out to a multiple of three
-    if (data.size() > 90*90*3 - 6)
-        throw DataCarrierImgImplantationException("Error whilst implanting: too much data\n");
+    if (data.size() > _max_data)
+        throw DataCarrierImgImplantationException("Error whilst implanting: too much data");
     unsigned short len = data.size(); // store this for length tag later
-    while ( data.size() % 3 != 0) data.push_back( (char) rand() ); // random padding
+    std::srand ( time(NULL) );
+    while ( data.size() % 3 != 0) data.push_back( (char) std::rand() ); // random padding
     
     // Loop through the image in 8x8 blocks
     unsigned int idx, i, j;
@@ -65,7 +63,7 @@ DataCarrierImg::implant_data
               EncodeInBlock(i, j, data[idx], data[idx+1], data[idx+2] );
           } else {
               // finish with random bytes
-              EncodeInBlock(i, j, (char) rand(), (char) rand(), (char) rand());
+              EncodeInBlock(i, j, (char) std::rand(), (char) std::rand(), (char) std::rand());
           }
           // Apply the inverse transform
           Haar2D_DWTi(i, j);
@@ -82,7 +80,7 @@ DataCarrierImg::implant_data
 void
 DataCarrierImg::write_size
 (
-    unsigned short len;    
+    unsigned short len    
 )
 {
     unsigned char len_hi,len_lo;
@@ -117,12 +115,12 @@ DataCarrierImg::EncodeInBlock
     unsigned char 			a,
     unsigned char 			b,
     unsigned char 			c
-) const
+)
 {  
-  this( x0, y0 ) 	= (a & 0xfc) | 0x02;
-  this( x0+1, y0 ) 	= (b & 0xfc) | 0x02;
-  this( x0, y0+1 ) 	= (c & 0xfc) | 0x02;
-  this( x0+1, y0+1 ) 	= ((a & 0x03) <<6) | ((b & 0x03) <<4) | ((c & 0x03) <<2) | 0x02;
+  operator()( x0, y0 ) 	= (a & 0xfc) | 0x02;
+  operator()( x0+1, y0 ) 	= (b & 0xfc) | 0x02;
+  operator()( x0, y0+1 ) 	= (c & 0xfc) | 0x02;
+  operator()( x0+1, y0+1 ) 	= ((a & 0x03) <<6) | ((b & 0x03) <<4) | ((c & 0x03) <<2) | 0x02;
 }
 
 //! Attempt to allocate and return a new vector<char> containing the extracted data.
@@ -132,17 +130,19 @@ DataCarrierImg::EncodeInBlock
     then attempted. This function may well throw DataCarrierImgExtractionException since the image
     may be a normal Facebook image and not contain anything.
  */
-std::vector<char>&
-DataCarrierImg::extract_data() const
+void
+DataCarrierImg::extract_data
+(
+    std::vector<char>&  data
+)
 {
-    // Read the length tag from the image, check it is not too large or too small.
+    // Read the length tag from the image, check it is not too large .
     unsigned short len = read_size();
-    if (len > 90*90*3 - 6 || len < 255)
-        throw DataCarrierImgImplantationException("Extraction failed: invalid length tag\n");
-    
-    // Allocate a vector to store the extracted data
-    std::vector<char> data;
-    data.reserve( (len-(len%3))+3 );
+    if (len > _max_data )
+        throw DataCarrierImgImplantationException("Extraction failed: length tag too large.");
+        
+    // Reserve enough space to store the extracted data + possible padding
+    data.reserve( len+3 );
     
     // Loop through the image in 8x8 blocks
     int i, j; unsigned int idx;
@@ -162,14 +162,13 @@ DataCarrierImg::extract_data() const
       }
     }
     
-    // Remove any padding bytes at the end and return
+    // Remove any padding bytes at the end
     while (data.size() > len) data.pop_back();
-    return data;
 }
 
 
 unsigned short
-DataCarrierImg::read_size() const
+DataCarrierImg::read_size()
 {
     std::vector<char> len_blocks;
     Haar2D_DWT ( 89*8, 88*8 );
@@ -178,6 +177,10 @@ DataCarrierImg::read_size() const
     Haar2D_DWT ( 89*8, 89*8 );
     DecodeFromBlock( 89*8, 88*8, len_blocks);
     DecodeFromBlock( 89*8, 89*8, len_blocks);
+    Haar2D_DWTi( 89*8, 88*8 );
+    Haar2D_DWTi( 89*8, 88*8 );
+    Haar2D_DWTi( 89*8, 89*8 );
+    Haar2D_DWTi( 89*8, 89*8 );
     unsigned char len_hi, len_lo;
     len_hi = triple_mod_r( len_blocks[0], len_blocks[1], len_blocks[2] );
     len_lo = triple_mod_r( len_blocks[3], len_blocks[4], len_blocks[5] );
@@ -186,27 +189,28 @@ DataCarrierImg::read_size() const
 }
 
 unsigned char
-DataCarrierImg::triple_mod_r(
+DataCarrierImg::triple_mod_r
+(
   unsigned char a,
   unsigned char b,
   unsigned char c
-)
+) const
 {
   return ((a&b)|(a&c)|(b&c));
 }
 
 void
-DataCarrierImgs::DecodeFromBlock(
+DataCarrierImg::DecodeFromBlock(
     unsigned int 		x0,
     unsigned int 		y0,
     std::vector<char>		& data
 ) const
 {
     unsigned char p1,p2,p3,p4;
-    p1 = this( x0, y0 );
-    p2 = this( x0+1, y0 );
-    p3 = this( x0, y0+1 );
-    p4 = this( x0+1, y0+1 );
+    p1 = operator()( x0, y0 );
+    p2 = operator()( x0+1, y0 );
+    p3 = operator()( x0, y0+1 );
+    p4 = operator()( x0+1, y0+1 );
     
     unsigned char a,b,c;
     a = (p1 & 0xfc) | ((p4 & 0xc0) >> 6);
@@ -229,7 +233,7 @@ void
 DataCarrierImg::Haar2D_DWT(
 	unsigned int x0,
 	unsigned int y0
-) const
+)
 {  
   // Temp array for calculations
   short int temp[4];
@@ -238,23 +242,23 @@ DataCarrierImg::Haar2D_DWT(
   for (unsigned int x=x0; x<(x0+8); x++) {
     for (int i=0; i<4; i++) {
       // difference
-      temp[i] 		=  this(x, y0+(2*i)) - this(x, y0+(2*i+1));
+      temp[i] 		=  operator()(x, y0+(2*i)) - operator()(x, y0+(2*i+1));
       // average
-      this(x, y0+i)	=  div_floor( this(x, y0+(2*i)) + this(x, y0+(2*i+1)), 2);
+      operator()(x, y0+i)	=  div_floor( operator()(x, y0+(2*i)) + operator()(x, y0+(2*i+1)), 2);
     }
-    for (int i=0; i<4; i++) this(x, y0+4+i) = temp[i];
+    for (int i=0; i<4; i++) operator()(x, y0+4+i) = temp[i];
   }
   
   // For each row, perform the 1D (horizontal) HDWT with integer lifting
   for (unsigned int y=y0; y<(y0+8); y++) {
     for (int i=0; i<4; i++) {
       // difference
-      temp[i] 		=  this(x0+(2*i), y) - this(x0+(2*i+1), y);
+      temp[i] 		=  operator()(x0+(2*i), y) - operator()(x0+(2*i+1), y);
       // average
-      this(x0+i, y)	=  div_floor( this(x0+(2*i), y) + this(x0+(2*i+1), y), 2);
+      operator()(x0+i, y)	=  div_floor( operator()(x0+(2*i), y) + operator()(x0+(2*i+1), y), 2);
     }
     // copy in difference values
-    for (int i=0; i<4; i++) this(x0+4+i, y) = temp[i];
+    for (int i=0; i<4; i++) operator()(x0+4+i, y) = temp[i];
   }
   
 }
@@ -276,7 +280,7 @@ void
 DataCarrierImg::Haar2D_DWTi(
 	unsigned int x0,
 	unsigned int y0
-) const
+)
 {
   // Temporary array and ints for calculations
   short int temp[8], p1, p2;
@@ -285,29 +289,29 @@ DataCarrierImg::Haar2D_DWTi(
   for (unsigned int y=y0; y<(y0+8); y++) {
     for (unsigned int i=0; i<4; i++) {
       // Check we don't overflow the pixel
-      p1 	= this(x0+i, y) + div_floor(this(x0+4+i, y)+1,2) ; // lifting scheme here
-      p2 	= p1 - this(x0+4+i, y);
+      p1 	= operator()(x0+i, y) + div_floor(operator()(x0+4+i, y)+1,2) ; // lifting scheme here
+      p2 	= p1 - operator()(x0+4+i, y);
       if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-	p1 = p2 = this(x0+i, y);
+	p1 = p2 = operator()(x0+i, y);
       }
       temp[2*i]	  = p1;
       temp[2*i+1] = p2;
     }
-    for (int i=0; i<8; i++) this(x0+i, y) = temp[i];
+    for (int i=0; i<8; i++) operator()(x0+i, y) = temp[i];
   }
 
   // For each column, perform the 1D (vertical) inverse HDWT with integer lifting
   for (unsigned int x=x0; x<(x0+8); x++) {
     for (unsigned int i=0; i<4; i++) {
-      p1   	= this(x, y0+i) + div_floor(this(x, y0+4+i)+1,2) ; // lifting scheme here
-      p2	= p1 - this(x, y0+4+i);
+      p1   	= operator()(x, y0+i) + div_floor(operator()(x, y0+4+i)+1,2) ; // lifting scheme here
+      p2	= p1 - operator()(x, y0+4+i);
       if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-	p1 = p2 = this(x, y0+i);
+	p1 = p2 = operator()(x, y0+i);
       }
       temp[2*i]	  = p1;
       temp[2*i+1] = p2;
     }
-    for (int i=0; i<8; i++) this(x, y0+i) = temp[i];
+    for (int i=0; i<8; i++) operator()(x, y0+i) = temp[i];
   }
   
 }

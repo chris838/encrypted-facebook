@@ -9,6 +9,8 @@
 #include "CImg.h"
 
 #include <vector>
+#include <time.h>
+
 
 //! Class representing a CImg<char> with support for implanting and extracting data.
 /**
@@ -22,6 +24,9 @@ struct DataCarrierImg : public cimg_library::CImg<char>
         //! Flag to state whether the image has been prepared for implantation
         bool _is_formatted;
         
+        //! Constant member attribute determines max amount of bytes that can be implanted
+        const unsigned short _max_data;
+        
         void write_size
         (
             unsigned short len
@@ -32,13 +37,12 @@ struct DataCarrierImg : public cimg_library::CImg<char>
         Haar2D_DWT(
             unsigned int 			y0,
             unsigned int 			x0
-        ) const;
-        int div_floor(int a, int b) const;
+        );
         void
         Haar2D_DWTi(
             unsigned int 			y0,
             unsigned int 			x0
-        ) const;
+        );
         
         // Encoding/decoding to a block
         void
@@ -48,12 +52,26 @@ struct DataCarrierImg : public cimg_library::CImg<char>
             unsigned char 			a,
             unsigned char 			b,
             unsigned char 			c
-        ) const;
+        );
         void
         DecodeFromBlock(
             unsigned int 			y0,
             unsigned int 			x0,
             std::vector<char>		& data
+        ) const;
+        
+        // Helper functions
+        unsigned char
+        triple_mod_r
+        (
+          unsigned char a,
+          unsigned char b,
+          unsigned char c
+        ) const;
+        int
+        div_floor(
+            int a,
+            int b
         ) const;
         
     public :
@@ -67,14 +85,20 @@ struct DataCarrierImg : public cimg_library::CImg<char>
             std::vector<char>& data
         );
               
-        std::vector<char>&
-        extract_data() const;
+        void
+        extract_data
+        (
+            std::vector<char>& data
+        );
         
         unsigned short
-        read_size() const;
+        read_size();
             
         //! Default constructor.
-        DataCarrierImg() : cimg_library::CImg<char>(), _is_formatted(false) {}
+        DataCarrierImg() :  cimg_library::CImg<char>(),
+                            _is_formatted(false),
+                            _max_data((90*90*3)-6)
+        {}
 };
 
 

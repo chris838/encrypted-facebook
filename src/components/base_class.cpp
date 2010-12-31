@@ -121,482 +121,237 @@ void base::UTF8Decode2BytesUnicode(
 }
 
 unsigned int base::EncryptPhoto(
-  const PubKey		  pubkeys[],
-  const unsigned int 	  pk_len,
-  const char*		& data_filename,
-  const char* 		& dst_filename
+    const PubKey                pubkeys[],
+    const unsigned int 	        pk_len,
+    const char*		    &   data_filename,
+    const char* 	    &   dst_filename
 )
 const
 { 
-  const char* src_filename =  "/home/chris/Desktop/src.bmp"; // source image file (to carry data signal)
-  std::ifstream 	data_file;		 // data file object	 
-  CImg<short int> * 	src = new CImg<short int>(); // source image object
-  std::vector<char>     data; 		 	 // byte array for our data bytes we wish to transferred
-  data.reserve(90*90*3);			 // we know the max number of items possible to store
-  unsigned int 		head_size, data_size;		 // size of the raw data we are sending
+    const char* src_filename =  "/home/chris/Desktop/src.bmp"; // source image file (to carry data signal)
+    std::ifstream 	data_file;		 // data file object	 
+    DataCarrierImg * 	src = new DataCarrierImg(); // source image object
+    std::vector<char>     data; 		 	 // byte array for our data bytes we wish to transferred
+    data.reserve(90*90*3);			 // we know the max number of items possible to store
+    unsigned int 		head_size, data_size;		 // size of the raw data we are sending
+    
+    
+    // Generate a message key and random IV
+    Botan::LibraryInitializer init;
+    Botan::AutoSeeded_RNG rng;
+    Botan::SymmetricKey key(rng, 16); // a random 128-bit key
+    Botan::InitializationVector iv(rng, 16); // a random 128-bit IV
   
   
-  // Generate a message key and random IV
-  Botan::LibraryInitializer init;
-  Botan::AutoSeeded_RNG rng;
-  Botan::SymmetricKey key(rng, 16); // a random 128-bit key
-  Botan::InitializationVector iv(rng, 16); // a random 128-bit IV
-  
-  
-  // Create a message header containing the random IV and a set of (id, encrypted message key) pairs
-  std::string ivstr = iv.as_string();
-  for (unsigned int i=0; i<32; i++) data.push_back( ivstr[i] );
-  // TODO - for now, just add in plaintext
-  std::string keystr = key.as_string();
-  for (unsigned int i=0; i<32; i++) data.push_back( keystr[i] );
-  // Note the size of the header
-  head_size = data.size();
+    // Create a message header containing the random IV and a set of (id, encrypted message key) pairs
+    std::string ivstr = iv.as_string();
+    for (unsigned int i=0; i<32; i++) data.push_back( ivstr[i] );
+    // TODO - for now, just add in plaintext
+    std::string keystr = key.as_string();
+    for (unsigned int i=0; i<32; i++) data.push_back( keystr[i] );
+    // Note the size of the header
+    head_size = data.size();
 
 
-  // Load the binary file and check the size
-  data_file.open( data_filename, std::ios::binary );
-  if(!data_file.is_open()) {
-    std::cout << "Error opening data file:" << "\n";
-    return 1;
-  }
-  data_file.seekg(0, std::ios::end);
-  data_size = data_file.tellg(); // get the length of the file
-  if (head_size + data_size > 21222) {
-    std::cout << "Error - too much data (before processing)" << "\n";
-    return 2;
-  } else if (head_size + data_size < 223) {
-    std::cout << "Error - too little data (before processing)" << "\n";
-    std::cout << "Need at least one FEC block for ciphertext stealing" << "\n";
-    return 2;
-  }
-  
-  // Read the file into the data byte vector
-  data_file.seekg(0, std::ios::beg);
-  data.resize(head_size + data_size);
-  data_file.read(&data[head_size], data_size);
-
-
-  // Encrypt the data bytes
-  Botan::Pipe pipe(get_cipher("AES-128/CFB", key, iv, Botan::ENCRYPTION)); // CFB mode, so no padding required
-  pipe.start_msg();
-  pipe.write((Botan::byte*) &data[data.size() - data_size], data.size() ); // write in plaintext
-  pipe.end_msg();
-  pipe.read((Botan::byte*) &data[data.size() - data_size], data.size()); // read back out ciphertext
-  
-  
-  // Add Reed-Solomon FEC encoding with "ciphertext stealing" instead of padding
-  std::string m, f; std::vector<char> data_fec;
-  data_fec.reserve(90*90*3);
-  // first encode all full blocks
-  std::vector<char>::iterator i;
-  for (i = data.begin(); i<data.end()-223; i+=223) {
-    m = std::string( i, i+223 );
-    ReedSolomonEncoder( m, f );
-    for (unsigned int i=0;i<223;i++) data_fec.push_back(m[i]);
-    for (unsigned int i=0;i<32;i++) data_fec.push_back( f[i]);;
-  }
-  // then, if we have any data left
-  if (i != data.end()) {
-    // pad the last block with data from the penultimate (encoded) block
-    std::cout << "\n";
-    while ( data.size() % 223 != 0) {
-      data.push_back( data_fec.back() );
-      std::cout << (int) data_fec.back() << ',';
-      data_fec.pop_back();
+    // Load the binary file and check the size
+    data_file.open( data_filename, std::ios::binary );
+    if(!data_file.is_open()) {
+      std::cout << "Error opening data file:" << "\n";
+      return 1;
     }
-    std::cout << "\n";
-    // encode the final block
-    m = std::string( data.end()-223, data.end() );
-    ReedSolomonEncoder( m, f );
-    for (unsigned int i=0;i<223;i++) data_fec.push_back(m[i]);
-    for (unsigned int i=0;i<32;i++) data_fec.push_back( f[i]);
-  }
-  data = data_fec;
-  
-
-  // Double check size and pad as required
-  if (data.size() > 90*90*3 - 6) {
-    std::cout << "Error - too much data:" << "\n";
-    return 2;
-  }
-  // save the length so we can remove padding bytes
-  data_size = data.size();
-  // random padding bytes, last six reserved for length tag
-  while ( data.size() < 90*90*3 - 6) data.push_back( (char) rand() );
-  
-  
-  // Append a 6-byte length tag, encoded with triple modular redundancy
-  unsigned short len = (unsigned short) data_size;
-  unsigned char len_hi,len_lo;
-  len_hi = (unsigned char) (len >> 8);
-  len_lo = (unsigned char) len;
-  for (int i=0; i<3; i++) data.push_back( len_hi);
-  for (int i=0; i<3; i++) data.push_back( len_lo);
-  
-  std::cout << len << "\n"; 
-  
-
-  // Load the source image file into a CImg object
-  try {src->load( src_filename );}
-  catch (CImgInstanceException &e) {
-    std::cout << "Error loading source image:" << e.what() << "\n";
-    return 1;
-  }
-  
-  
-  // Encode into image using Haar DWT
-  EncodeInImage( *src, data );
-  
-
-  // Generate a filename and save our final image (in a lossless format)
-  try {src->save( dst_filename );}
-  catch (CImgInstanceException &e) {
-    std::cout << "Error saving output image: " << e.what() << "\n";
-    return 1;
-  }
-
-  // Return with succes
-  return 0; 
-}
-
-void base::EncodeInImage(
-   CImg<short int>    	& img, 
-   std::vector<char> 	& data
-) const
-{
-
-  // Format the source image to 720x720, greyscale, single slice
-  // (resample using Lanczos)
-  img.resize(720,720,1,-1,6);
-  img.channel(0);
-
-  // Loop through the image in 8x8 blocks
-  unsigned int idx, i, j; int exit = false;
-  for (int block_i=0; block_i<90; block_i++) {
-    for (int block_j=0; block_j<90; block_j++) {
-	
-	i = block_i*8; j = block_j*8;
-	
-	// Apply the transform to the block (two iterations)
-	Haar2D_DWT (img , i, j);
-	Haar2D_DWT (img , i, j);
-	
-	// Write out 3 bytes of data to the approximation coefficients
-	idx = 3*((block_i*90) + block_j);
-	if ( idx+2 < data.size() ) {
-	  // 3 bytes to one 8x8 block
-	  EncodeInBlock(img, i, j, data[idx], data[idx+1], data[idx+2] );
-	} else {
-	  // Stop writing data
-	  exit = true;
-	}
-	
-	// Apply the inverse transform
-	Haar2D_DWTi(img , i, j);
-	Haar2D_DWTi(img , i, j);
-	
-	// If we finished, break out of the loops
-	if (exit) block_i=block_j=90;
+    data_file.seekg(0, std::ios::end);
+    data_size = data_file.tellg(); // get the length of the file
+    if (head_size + data_size > 21222) {
+      std::cout << "Error - too much data (before processing)" << "\n";
+      return 2;
+    } else if (head_size + data_size < 223) {
+      std::cout << "Error - too little data (before processing)" << "\n";
+      std::cout << "Need at least one FEC block for ciphertext stealing" << "\n";
+      return 2;
     }
-  }
-}
+  
+    
+    // Read the file into the data byte vector
+    data_file.seekg(0, std::ios::beg);
+    data.resize(head_size + data_size);
+    data_file.read(&data[head_size], data_size);
 
-void base::EncodeInBlock(
-    cimg_library::CImg<short int> & 	img,
-    unsigned int 			x0,
-    unsigned int 			y0,
-    unsigned char 			a,
-    unsigned char 			b,
-    unsigned char 			c
-) const
-{  
-  img( x0, y0 ) 	= (a & 0xfc) | 0x02;
-  img( x0+1, y0 ) 	= (b & 0xfc) | 0x02;
-  img( x0, y0+1 ) 	= (c & 0xfc) | 0x02;
-  img( x0+1, y0+1 ) 	= ((a & 0x03) <<6) | ((b & 0x03) <<4) | ((c & 0x03) <<2) | 0x02;
-}
 
-unsigned char triple_mod_r(
-  unsigned char a,
-  unsigned char b,
-  unsigned char c
-)
-{
-  return ((a&b)|(a&c)|(b&c));
+    // Encrypt the data bytes
+    Botan::Pipe pipe(get_cipher("AES-128/CFB", key, iv, Botan::ENCRYPTION)); // CFB mode, so no padding required
+    pipe.start_msg();
+    pipe.write((Botan::byte*) &data[data.size() - data_size], data.size() ); // write in plaintext
+    pipe.end_msg();
+    pipe.read((Botan::byte*) &data[data.size() - data_size], data.size()); // read back out ciphertext
+  
+  
+    // Add Reed-Solomon FEC encoding with "ciphertext stealing" instead of padding
+    std::string m, f; std::vector<char> data_fec;
+    data_fec.reserve(90*90*3);
+    // first encode all full blocks
+    std::vector<char>::iterator i;
+    for (i = data.begin(); i<data.end()-223; i+=223) {
+      m = std::string( i, i+223 );
+      ReedSolomonEncoder( m, f );
+      for (unsigned int i=0;i<223;i++) data_fec.push_back(m[i]);
+      for (unsigned int i=0;i<32;i++) data_fec.push_back( f[i]);;
+    }
+    // then, if we have any data left
+    if (i != data.end()) {
+      // pad the last block with data from the penultimate (encoded) block
+      std::cout << "\n";
+      while ( data.size() % 223 != 0) {
+        data.push_back( data_fec.back() );
+        std::cout << (int) data_fec.back() << ',';
+        data_fec.pop_back();
+      }
+      std::cout << "\n";
+      // encode the final block
+      m = std::string( data.end()-223, data.end() );
+      ReedSolomonEncoder( m, f );
+      for (unsigned int i=0;i<223;i++) data_fec.push_back(m[i]);
+      for (unsigned int i=0;i<32;i++) data_fec.push_back( f[i]);
+    }
+    data = data_fec;
+    
+
+    // Load the source image file into a CImg object
+    try {src->load( src_filename );}
+    catch (CImgInstanceException &e) {
+      std::cout << "Error loading source image:" << e.what() << "\n";
+      return 1;
+    }
+  
+
+    // Store the data vector in the image
+    src->format_for_implantation();
+    try {src->implant_data( data );}
+    catch (DataCarrierImgImplantationException &e) {
+        std::cout << "Error implanting data: " << e.what() << "\n";
+        return 1;
+    }
+  
+
+    // Generate a filename and save our final image (in a lossless format)
+    try {src->save( dst_filename );}
+    catch (CImgInstanceException &e) {
+      std::cout << "Error saving output image: " << e.what() << "\n";
+      return 1;
+    }
+    
+    // Return with succes
+    return 0; 
 }
 
 unsigned int base::DecryptPhoto(
-  const char*                   & src_filename,
-  const char*                   & data_filename
+    const char*     & src_filename,
+    const char*     & data_filename
 ) const
 {
 
-  std::ofstream     data_file;				// data file object	 
-  CImg<short int> * src =  new CImg<short int>(); 	// source image object
-  std::vector<char>  data; 				// for data bytes we wish to transfer
-  data.reserve(90*90*3);
-
-
-  // Load the source image file into a CImg object
-  try {src->load( src_filename );}
-  catch (CImgInstanceException &e) {
-    std::cout <<  "Error loading source image:" << e.what() << "\n";
-    return 1;
-  }
-  
-  
-  // Check that the dimensions are exactly 720x720
-  if (src->width() != 720 || src->height() != 720) {
-    std::cout << "Error - wrong image dimensions" << "\n";
-    return 2;
-  }
-  
-  
-  // Decode the last two blocks to get data length
-  std::vector<char> len_blocks;
-  Haar2D_DWT ( *src , 89*8, 88*8 );
-  Haar2D_DWT ( *src , 89*8, 88*8 );
-  Haar2D_DWT ( *src , 89*8, 89*8 );
-  Haar2D_DWT ( *src , 89*8, 89*8 );
-  DecodeFromBlock( *src, 89*8, 88*8, len_blocks);
-  DecodeFromBlock( *src, 89*8, 89*8, len_blocks);
-  unsigned char len_hi, len_lo;
-  len_hi = triple_mod_r( len_blocks[0], len_blocks[1], len_blocks[2] );
-  len_lo = triple_mod_r( len_blocks[3], len_blocks[4], len_blocks[5] );
-  unsigned short len = (len_hi << 8) | len_lo;
-  
-  std::cout << len << "\n"; 
-  
-  
-  // Check that the length is valid (i.e. not too big, or too small)
-  if (len > 90*90*3 - 6) {
-    std::cout << "Error - embedded length tag is too large" << "\n";
-    return 2;
-  } else if (len < 255) {
-    std::cout << "Error - embedded length tag is too small" << "\n";
-    return 2;
-  }
-  
-
-  // Decode from image using Haar DWT
-  DecodeFromImage( *src, data, (unsigned int) len );
-  
-  
-  // Correct errors
-  std::string m, f, m2, m3; std::vector<char> data_corrected;
-  std::vector<char>::iterator i;
-  // decode all but the final full block
-  for (i = data.begin(); i < data.end()-510; i+=255) {
-    m = std::string( i, i+223 );
-    f = std::string( i+223, i+255 );
-    if ( ReedSolomonDecoder( m, f, m2 ) > 0) {
-      std::cout << "FEC decoding failed, exiting" << "\n";
-      return 3;
-    }
-    for (unsigned int i=0;i<223;i++) data_corrected.push_back(m2[i]);
-  }
-  // if we have any partial blocks
-  if (i != data.end()-255) {
-    // decode the final block-size bits of data
-    m = std::string( data.end()-255, data.end()-32 );
-    f = std::string( data.end()-32 , data.end() );
-    if ( ReedSolomonDecoder( m, f, m3 ) > 0) {
-      std::cout << "FEC decoding failed, exiting" << "\n";
-      return 3;
-    }
-    // write back to data
-    std::cout << "\n";
-    for (int j = data.size()%255; j < 255; j++) {
-      std::cout << (int) m3[j-32] << ',';
-      data[ data.size()-(j+1) ] = m3[j-32];
-    }
-    std::cout << "\n";
-  }
-  // now decode the final full block
-  for (i = data.begin() + ((data.size() - data.size()%255) - 255); i < data.end()-255; i+=255) {
-    m = std::string( i, i+223 );
-    f = std::string( i+223, i+255 );
-    if ( ReedSolomonDecoder( m, f, m2 ) > 0) {
-      std::cout << "FEC decoding failed, exiting" << "\n";
-      return 3;
-    }
-    for (unsigned int i=0;i<223;i++) data_corrected.push_back(m2[i]);
-  }
-  // if any partial data, it now needs to be appended
-  for (unsigned int i=0;i< data.size()%255 - 32 ;i++) data_corrected.push_back(m3[i]);
-  data = data_corrected;
-  
-  
-  // Retrieve the  message key and decrypt the data bytes
-  // !!!TODO!!! - See if we can decrpyt the message
-  // for now the key is always in plaintext at the front of the message
-  Botan::LibraryInitializer init;
-  std::string ivstr(32, 'x');
-  for (unsigned int i=0; i<32; i++) ivstr[i] = data[i];
-  Botan::InitializationVector iv( ivstr );
-  std::string keystr(32, 'x');
-  for (unsigned int i=0; i<32; i++) keystr[i] = data[32+i];
-  Botan::SymmetricKey key( keystr );
-  // We use AES-128 with CFB, so no padding required
-  Botan::Pipe pipe(get_cipher("AES-128/CFB", key, iv, Botan::DECRYPTION));
-  // Write ciphertext into cipher
-  pipe.start_msg();
-  pipe.write((Botan::byte*) &data[64], data.size()-64 );  
-  pipe.end_msg();
-  // Write out the plaintext back to the vector
-  pipe.read((Botan::byte*) &data[64], data.size()-64 );
-  
-  
+    std::ofstream     data_file;			// data file object	 
+    DataCarrierImg * src =  new DataCarrierImg(); 	// source image object
+    std::vector<char>  data; 				// for data bytes we wish to transfer
     
-  // Save data to a file
-  data_file.open( data_filename, std::ios::binary);
-  if(!data_file.is_open()) {
-    std::cout << "Error creating data file:" << "\n";
-    return 1;
-  }
-  data_file.write(&data[64], data.size()-64 );
-
-  // Return with success
-  return 0; 
-}
-
-void base::DecodeFromImage(
-    cimg_library::CImg<short int>	 & img,
-    std::vector<char>		         & data,
-    unsigned int			   len
-) const
-{
-	    
-  // Loop through the image in 8x8 blocks
-  int i, j; unsigned int idx;
-  for (int block_i=0; block_i<90; block_i++) {
-      for (int block_j=0; block_j<90; block_j++) {
-	
-	  i = block_i*8; j = block_j*8;
-	  
-	  // Apply the transform (two iterations) to the block
-	  Haar2D_DWT ( img , i, j );
-	  Haar2D_DWT ( img , i, j );
-	    
-	  // Read in 3 bytes of data from the approximation coefficients
-	  DecodeFromBlock( img, i, j, data);
-	  
-	  // exit if we have enough data
-	  idx = 3*((block_i*90) + block_j);
-	  if ( idx+2 > len) block_i = block_j = 90;
+    
+    // Load the source image file into a CImg object
+    try {src->load( src_filename );}
+    catch (CImgInstanceException &e) {
+      std::cout <<  "Error loading source image:" << e.what() << "\n";
+      return 1;
     }
-  }
-  
-  // Remove any padding bytes at the end
-  while (data.size() > len) data.pop_back();
-}
-
-void base::DecodeFromBlock(
-    cimg_library::CImg<short int> & img,
-    unsigned int 			x0,
-    unsigned int 			y0,
-    std::vector<char>		& data
-) const
-{
-  unsigned char p1,p2,p3,p4;
-  p1 = img( x0, y0 );
-  p2 = img( x0+1, y0 );
-  p3 = img( x0, y0+1 );
-  p4 = img( x0+1, y0+1 );
-  
-  unsigned char a,b,c;
-  a = (p1 & 0xfc) | ((p4 & 0xc0) >> 6);
-  b = (p2 & 0xfc) | ((p4 & 0x30) >> 4);
-  c = (p3 & 0xfc) | ((p4 & 0x0c) >> 2);
-  
-  data.push_back( a );
-  data.push_back( b );
-  data.push_back( c );
-}
-
-int div_floor(int a, int b) {
-  if (a>=0) return a/b;
-  else return (a-1)/b; 
-}
-
-void base::Haar2D_DWT(
-	CImg<short int> & img, 
-	unsigned int x0,
-	unsigned int y0
-) const
-{
-  // Perform the Haar Discrete Wavelet Transform (with lifting scheme so
-  // the inverse can be performed losslessly). We start at pixel (x0,y0)
-  // in the image and work on the subsequent 8x8 block.
-  
-  // Temp array for calculations
-  short int temp[4];
-  
-  // For each column, perform the 1D (vertical) HDWT with integer lifting
-  for (unsigned int x=x0; x<(x0+8); x++) {
-    for (int i=0; i<4; i++) {
-      // difference
-      temp[i] 		=  img(x, y0+(2*i)) - img(x, y0+(2*i+1));
-      // average
-      img(x, y0+i)	=  div_floor( img(x, y0+(2*i)) + img(x, y0+(2*i+1)), 2);
+    
+    
+    // Check that the dimensions are exactly 720x720
+    if (src->width() != 720 || src->height() != 720) {
+      std::cout << "Error - wrong image dimensions" << "\n";
+      return 2;
     }
-    for (int i=0; i<4; i++) img(x, y0+4+i) = temp[i];
-  }
-  
-  // For each row, perform the 1D (horizontal) HDWT with integer lifting
-  for (unsigned int y=y0; y<(y0+8); y++) {
-    for (int i=0; i<4; i++) {
-      // difference
-      temp[i] 		=  img(x0+(2*i), y) - img(x0+(2*i+1), y);
-      // average
-      img(x0+i, y)	=  div_floor( img(x0+(2*i), y) + img(x0+(2*i+1), y), 2);
-    }
-    // copy in difference values
-    for (int i=0; i<4; i++) img(x0+4+i, y) = temp[i];
-  }
-  
-}
-
-void base::Haar2D_DWTi(
-	CImg<short int> & img,
-	unsigned int x0,
-	unsigned int y0
-) const
-{
-  // Perform the inverse Haar Discrete Wavelet Transform using a lifting scheme
-  // We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block.
-  short int temp[8], p1, p2;
-  // For each row, perform the 1D (horizontal) inverse HDWT with integer lifting
-  for (unsigned int y=y0; y<(y0+8); y++) {
-    for (unsigned int i=0; i<4; i++) {
-      // Check we don't overflow the pixel
-      p1 	= img(x0+i, y) + div_floor(img(x0+4+i, y)+1,2) ; // lifting scheme here
-      p2 	= p1 - img(x0+4+i, y);
-      if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-	p1 = p2 = img(x0+i, y);
+      
+    
+      // Decode from image using Haar DWT
+      try {src->extract_data( data );}
+      catch (DataCarrierImgExtractionException &e) {
+          std::cout << "Error extracting data: " << e.what() << "\n";
+          return 1;
       }
-      temp[2*i]	  = p1;
-      temp[2*i+1] = p2;
-    }
-    for (int i=0; i<8; i++) img(x0+i, y) = temp[i];
-  }
-
-  // For each column, perform the 1D (vertical) inverse HDWT with integer lifting
-  for (unsigned int x=x0; x<(x0+8); x++) {
-    for (unsigned int i=0; i<4; i++) {
-      p1   	= img(x, y0+i) + div_floor(img(x, y0+4+i)+1,2) ; // lifting scheme here
-      p2	= p1 - img(x, y0+4+i);
-      if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-	p1 = p2 = img(x, y0+i);
+    
+    // Correct errors
+    std::string m, f, m2, m3; std::vector<char> data_corrected;
+    std::vector<char>::iterator i;
+    // decode all but the final full block
+    for (i = data.begin(); i < data.end()-510; i+=255) {
+      m = std::string( i, i+223 );
+      f = std::string( i+223, i+255 );
+      if ( ReedSolomonDecoder( m, f, m2 ) > 0) {
+        std::cout << "FEC decoding failed, exiting" << "\n";
+        return 3;
       }
-      temp[2*i]	  = p1;
-      temp[2*i+1] = p2;
+      for (unsigned int i=0;i<223;i++) data_corrected.push_back(m2[i]);
     }
-    for (int i=0; i<8; i++) img(x, y0+i) = temp[i];
-  }
-  
+    // if we have any partial blocks
+    if (i != data.end()-255) {
+      // decode the final block-size bits of data
+      m = std::string( data.end()-255, data.end()-32 );
+      f = std::string( data.end()-32 , data.end() );
+      if ( ReedSolomonDecoder( m, f, m3 ) > 0) {
+        std::cout << "FEC decoding failed, exiting" << "\n";
+        return 3;
+      }
+      // write back to data
+      std::cout << "\n";
+      for (int j = data.size()%255; j < 255; j++) {
+        std::cout << (int) m3[j-32] << ',';
+        data[ data.size()-(j+1) ] = m3[j-32];
+      }
+      std::cout << "\n";
+    }
+    // now decode the final full block
+    for (i = data.begin() + ((data.size() - data.size()%255) - 255); i < data.end()-255; i+=255) {
+      m = std::string( i, i+223 );
+      f = std::string( i+223, i+255 );
+      if ( ReedSolomonDecoder( m, f, m2 ) > 0) {
+        std::cout << "FEC decoding failed, exiting" << "\n";
+        return 3;
+      }
+      for (unsigned int i=0;i<223;i++) data_corrected.push_back(m2[i]);
+    }
+    // if any partial data, it now needs to be appended
+    for (unsigned int i=0;i< data.size()%255 - 32 ;i++) data_corrected.push_back(m3[i]);
+    data = data_corrected;
+    
+    
+    // Retrieve the  message key and decrypt the data bytes
+    // !!!TODO!!! - See if we can decrpyt the message
+    // for now the key is always in plaintext at the front of the message
+    Botan::LibraryInitializer init;
+    std::string ivstr(32, 'x');
+    for (unsigned int i=0; i<32; i++) ivstr[i] = data[i];
+    Botan::InitializationVector iv( ivstr );
+    std::string keystr(32, 'x');
+    for (unsigned int i=0; i<32; i++) keystr[i] = data[32+i];
+    Botan::SymmetricKey key( keystr );
+    // We use AES-128 with CFB, so no padding required
+    Botan::Pipe pipe(get_cipher("AES-128/CFB", key, iv, Botan::DECRYPTION));
+    // Write ciphertext into cipher
+    pipe.start_msg();
+    pipe.write((Botan::byte*) &data[64], data.size()-64 );  
+    pipe.end_msg();
+    // Write out the plaintext back to the vector
+    pipe.read((Botan::byte*) &data[64], data.size()-64 );
+    
+      
+    // Save data to a file
+    data_file.open( data_filename, std::ios::binary);
+    if(!data_file.is_open()) {
+      std::cout << "Error creating data file:" << "\n";
+      return 1;
+    }
+    data_file.write(&data[64], data.size()-64 );
+    
+    // Return with success
+    return 0; 
 }
-
 
 unsigned int base::CalculateBER(
       const char*                   & file1_path,

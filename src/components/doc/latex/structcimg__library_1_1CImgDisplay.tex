@@ -1,0 +1,982 @@
+\hypertarget{structcimg__library_1_1CImgDisplay}{
+\section{CImgDisplay Struct Reference}
+\label{structcimg__library_1_1CImgDisplay}\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+}
+
+
+This class represents a window which can display \hyperlink{structcimg__library_1_1CImg}{CImg} images and handles mouse and keyboard events.  
+
+
+\subsection*{Constructors / Destructor / Instance Management}
+\label{_amgrp40aea8b807100c67fa0d7b630c9c7060}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ae4b8135f23d41f2077ff1d63deb452ea}{
+\hyperlink{structcimg__library_1_1CImgDisplay_ae4b8135f23d41f2077ff1d63deb452ea}{$\sim$CImgDisplay} ()}
+\label{structcimg__library_1_1CImgDisplay_ae4b8135f23d41f2077ff1d63deb452ea}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a54e3407c3b858f5f40283264e39b4f38}{
+\hyperlink{structcimg__library_1_1CImgDisplay_a54e3407c3b858f5f40283264e39b4f38}{CImgDisplay} ()}
+\label{structcimg__library_1_1CImgDisplay_a54e3407c3b858f5f40283264e39b4f38}
+
+\begin{DoxyCompactList}\small\item\em Create an empty display window. \item\end{DoxyCompactList}\item 
+\hyperlink{structcimg__library_1_1CImgDisplay_abb46df06ee84d2be48cf5c57a9ed2f6d}{CImgDisplay} (const unsigned int width, const unsigned int height, const char $\ast$const title=0, const unsigned int normalization=3, const bool is\_\-fullscreen=false, const bool is\_\-closed=false)
+\begin{DoxyCompactList}\small\item\em Create a display window with a specified size {\ttfamily pwidth} x {\ttfamily height}. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay_a17a3e5d3c1452bea980a3fc27b94a62c}{CImgDisplay} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img, const char $\ast$const title=0, const unsigned int normalization=3, const bool is\_\-fullscreen=false, const bool is\_\-closed=false)
+\begin{DoxyCompactList}\small\item\em Create a display window from an image. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay_a381c35cf0bf2de9d41a037703d1e1ea6}{CImgDisplay} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list, const char $\ast$const title=0, const unsigned int normalization=3, const bool is\_\-fullscreen=false, const bool is\_\-closed=false)
+\begin{DoxyCompactList}\small\item\em Create a display window from an image list. \item\end{DoxyCompactList}\item 
+\hyperlink{structcimg__library_1_1CImgDisplay_a6765c355fa3ae998b9729b358f198a61}{CImgDisplay} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp)
+\begin{DoxyCompactList}\small\item\em Create a display window by copying another one. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a816d8c873ae3d27854bd0620646224b9}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a816d8c873ae3d27854bd0620646224b9}{assign} ()}
+\label{structcimg__library_1_1CImgDisplay_a816d8c873ae3d27854bd0620646224b9}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the destructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa78d227523af633336bcf25ec00e0384}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_aa78d227523af633336bcf25ec00e0384}{assign} (const unsigned int width, const unsigned int height, const char $\ast$const title=0, const unsigned int normalization=3, const bool is\_\-fullscreen=false, const bool is\_\-closed=false)}
+\label{structcimg__library_1_1CImgDisplay_aa78d227523af633336bcf25ec00e0384}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a0ba9bc27cc704ef439f6433b23f894a3}{
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a0ba9bc27cc704ef439f6433b23f894a3}{assign} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img, const char $\ast$const title=0, const unsigned int normalization=3, const bool is\_\-fullscreen=false, const bool is\_\-closed=false)}
+\label{structcimg__library_1_1CImgDisplay_a0ba9bc27cc704ef439f6433b23f894a3}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a94ee7ecdd108db45e8c76e5bc116d912}{
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a94ee7ecdd108db45e8c76e5bc116d912}{assign} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list, const char $\ast$const title=0, const unsigned int normalization=3, const bool is\_\-fullscreen=false, const bool is\_\-closed=false)}
+\label{structcimg__library_1_1CImgDisplay_a94ee7ecdd108db45e8c76e5bc116d912}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ac103e68816e12f5fd67c8f293fe18acd}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_ac103e68816e12f5fd67c8f293fe18acd}{assign} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp)}
+\label{structcimg__library_1_1CImgDisplay_ac103e68816e12f5fd67c8f293fe18acd}
+
+\begin{DoxyCompactList}\small\item\em In-\/place version of the constructor. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a03d4a8009b65ae368a939a5ecec2a2cf}{
+static \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a03d4a8009b65ae368a939a5ecec2a2cf}{empty} ()}
+\label{structcimg__library_1_1CImgDisplay_a03d4a8009b65ae368a939a5ecec2a2cf}
+
+\begin{DoxyCompactList}\small\item\em Return a reference to an empty display. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Overloaded Operators}
+\label{_amgrp10ba48134b3a5986e7dba07127eb6a73}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a2f9f3b13982f0236e8715021cfcd7778}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& {\bfseries operator=} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ t $>$ \&img)}
+\label{structcimg__library_1_1CImgDisplay_a2f9f3b13982f0236e8715021cfcd7778}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab92fbd4797afead8af055fe24e240e19}{
+{\footnotesize template$<$typename t $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& {\bfseries operator=} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ t $>$ \&list)}
+\label{structcimg__library_1_1CImgDisplay_ab92fbd4797afead8af055fe24e240e19}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a81d1882a4d7d0579298fe6fc706fca40}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a81d1882a4d7d0579298fe6fc706fca40}{operator=} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp)}
+\label{structcimg__library_1_1CImgDisplay_a81d1882a4d7d0579298fe6fc706fca40}
+
+\begin{DoxyCompactList}\small\item\em Operator=(). \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa385aa18f5e42db5a415c25a90f4193d}{
+\hyperlink{structcimg__library_1_1CImgDisplay_aa385aa18f5e42db5a415c25a90f4193d}{operator bool} () const }
+\label{structcimg__library_1_1CImgDisplay_aa385aa18f5e42db5a415c25a90f4193d}
+
+\begin{DoxyCompactList}\small\item\em Return true if display is not empty. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Instance Checking}
+\label{_amgrp918c881546642d9874d6c788f92e19cb}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_acef8e33cfd36a5d7d2fad939efcf02e3}{
+bool \hyperlink{structcimg__library_1_1CImgDisplay_acef8e33cfd36a5d7d2fad939efcf02e3}{is\_\-empty} () const }
+\label{structcimg__library_1_1CImgDisplay_acef8e33cfd36a5d7d2fad939efcf02e3}
+
+\begin{DoxyCompactList}\small\item\em Return true is display is empty. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a2de15bd974a282882cbb02718501f954}{
+bool {\bfseries is\_\-closed} () const }
+\label{structcimg__library_1_1CImgDisplay_a2de15bd974a282882cbb02718501f954}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af5b6c08e077751fe6dd6ad76bfd30885}{
+bool {\bfseries is\_\-resized} () const }
+\label{structcimg__library_1_1CImgDisplay_af5b6c08e077751fe6dd6ad76bfd30885}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a540466e47b7c1f71e3b35bc002335f5b}{
+bool {\bfseries is\_\-moved} () const }
+\label{structcimg__library_1_1CImgDisplay_a540466e47b7c1f71e3b35bc002335f5b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab2c397e92b059010f69b6e999f3c25eb}{
+bool {\bfseries is\_\-event} () const }
+\label{structcimg__library_1_1CImgDisplay_ab2c397e92b059010f69b6e999f3c25eb}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab1d732fb0aae68bac3a95c1629c52beb}{
+bool {\bfseries is\_\-fullscreen} () const }
+\label{structcimg__library_1_1CImgDisplay_ab1d732fb0aae68bac3a95c1629c52beb}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a5df1371379d5b85e44bed3f7e42a0c7c}{
+bool {\bfseries is\_\-key} () const }
+\label{structcimg__library_1_1CImgDisplay_a5df1371379d5b85e44bed3f7e42a0c7c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ac1bf84a095a6df08b34f5fd386367419}{
+bool {\bfseries is\_\-keyESC} () const }
+\label{structcimg__library_1_1CImgDisplay_ac1bf84a095a6df08b34f5fd386367419}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a80ca34e2a465fc7a097497576106aedc}{
+bool {\bfseries is\_\-keyF1} () const }
+\label{structcimg__library_1_1CImgDisplay_a80ca34e2a465fc7a097497576106aedc}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a87be20ad15eab71dde4319720df5b55a}{
+bool {\bfseries is\_\-keyF2} () const }
+\label{structcimg__library_1_1CImgDisplay_a87be20ad15eab71dde4319720df5b55a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a916d7239e9db0a575ade25fc795e409d}{
+bool {\bfseries is\_\-keyF3} () const }
+\label{structcimg__library_1_1CImgDisplay_a916d7239e9db0a575ade25fc795e409d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ad5eb0f10ccff9612eb631de4b3fc05aa}{
+bool {\bfseries is\_\-keyF4} () const }
+\label{structcimg__library_1_1CImgDisplay_ad5eb0f10ccff9612eb631de4b3fc05aa}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aeb19317ec7ff477a751f5f04a34ed5df}{
+bool {\bfseries is\_\-keyF5} () const }
+\label{structcimg__library_1_1CImgDisplay_aeb19317ec7ff477a751f5f04a34ed5df}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a0b1e52958448ce43c6d5eaf47be24178}{
+bool {\bfseries is\_\-keyF6} () const }
+\label{structcimg__library_1_1CImgDisplay_a0b1e52958448ce43c6d5eaf47be24178}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3859408be7c2b0894b256d2310fd4f5e}{
+bool {\bfseries is\_\-keyF7} () const }
+\label{structcimg__library_1_1CImgDisplay_a3859408be7c2b0894b256d2310fd4f5e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3fa0f0ecb6d40dceb02e6d069f307974}{
+bool {\bfseries is\_\-keyF8} () const }
+\label{structcimg__library_1_1CImgDisplay_a3fa0f0ecb6d40dceb02e6d069f307974}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6e785f47ffe35d5af48ee069de8cb519}{
+bool {\bfseries is\_\-keyF9} () const }
+\label{structcimg__library_1_1CImgDisplay_a6e785f47ffe35d5af48ee069de8cb519}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa086d9eb1f131d1e889434f9ed5de2f3}{
+bool {\bfseries is\_\-keyF10} () const }
+\label{structcimg__library_1_1CImgDisplay_aa086d9eb1f131d1e889434f9ed5de2f3}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a02b10485568bd5958ab8fabad9b57585}{
+bool {\bfseries is\_\-keyF11} () const }
+\label{structcimg__library_1_1CImgDisplay_a02b10485568bd5958ab8fabad9b57585}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ad7daac93ebffdc0eacd16d50cf21df6c}{
+bool {\bfseries is\_\-keyF12} () const }
+\label{structcimg__library_1_1CImgDisplay_ad7daac93ebffdc0eacd16d50cf21df6c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ac3faf31fcc2b0633b6faced1a1cb6975}{
+bool {\bfseries is\_\-keyPAUSE} () const }
+\label{structcimg__library_1_1CImgDisplay_ac3faf31fcc2b0633b6faced1a1cb6975}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af86bc69e13d70b3f602b8f0a9e61b048}{
+bool {\bfseries is\_\-key1} () const }
+\label{structcimg__library_1_1CImgDisplay_af86bc69e13d70b3f602b8f0a9e61b048}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aafdf3c2618283e1023f31d1e41598af6}{
+bool {\bfseries is\_\-key2} () const }
+\label{structcimg__library_1_1CImgDisplay_aafdf3c2618283e1023f31d1e41598af6}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ac8b630bbad43e24153b3c47e95b9fbb0}{
+bool {\bfseries is\_\-key3} () const }
+\label{structcimg__library_1_1CImgDisplay_ac8b630bbad43e24153b3c47e95b9fbb0}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9ef2f569b6b1079c3a2763905e68d9ad}{
+bool {\bfseries is\_\-key4} () const }
+\label{structcimg__library_1_1CImgDisplay_a9ef2f569b6b1079c3a2763905e68d9ad}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6c94e6ee6b390e369279d46c6ac55e9c}{
+bool {\bfseries is\_\-key5} () const }
+\label{structcimg__library_1_1CImgDisplay_a6c94e6ee6b390e369279d46c6ac55e9c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a66ced90f18904fb804e85fcb0a56455e}{
+bool {\bfseries is\_\-key6} () const }
+\label{structcimg__library_1_1CImgDisplay_a66ced90f18904fb804e85fcb0a56455e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab2b93787a4c6dd7d948675d36d4765a1}{
+bool {\bfseries is\_\-key7} () const }
+\label{structcimg__library_1_1CImgDisplay_ab2b93787a4c6dd7d948675d36d4765a1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a720fb331297f2db3c6e11dadfbdca811}{
+bool {\bfseries is\_\-key8} () const }
+\label{structcimg__library_1_1CImgDisplay_a720fb331297f2db3c6e11dadfbdca811}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a73e570c943affee5de8a4e028ba37685}{
+bool {\bfseries is\_\-key9} () const }
+\label{structcimg__library_1_1CImgDisplay_a73e570c943affee5de8a4e028ba37685}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a073ccf31fcd242f8627b7377194a8406}{
+bool {\bfseries is\_\-key0} () const }
+\label{structcimg__library_1_1CImgDisplay_a073ccf31fcd242f8627b7377194a8406}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ace21f3df2eca630dd5417f96abca3269}{
+bool {\bfseries is\_\-keyBACKSPACE} () const }
+\label{structcimg__library_1_1CImgDisplay_ace21f3df2eca630dd5417f96abca3269}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6f5bdfa139f9fa9e728015fb99c2a411}{
+bool {\bfseries is\_\-keyINSERT} () const }
+\label{structcimg__library_1_1CImgDisplay_a6f5bdfa139f9fa9e728015fb99c2a411}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aaf73c71eb0cdd9c441292edebb248f97}{
+bool {\bfseries is\_\-keyHOME} () const }
+\label{structcimg__library_1_1CImgDisplay_aaf73c71eb0cdd9c441292edebb248f97}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a2c97493b45b1f6e7928414b549d0ca23}{
+bool {\bfseries is\_\-keyPAGEUP} () const }
+\label{structcimg__library_1_1CImgDisplay_a2c97493b45b1f6e7928414b549d0ca23}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a7449ca430075faf820be2e82ca33f760}{
+bool {\bfseries is\_\-keyTAB} () const }
+\label{structcimg__library_1_1CImgDisplay_a7449ca430075faf820be2e82ca33f760}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_afbee36d38b54f5812e6e5afc16e814a9}{
+bool {\bfseries is\_\-keyQ} () const }
+\label{structcimg__library_1_1CImgDisplay_afbee36d38b54f5812e6e5afc16e814a9}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9dc0c09698b8b547dffc59b3f177d2ad}{
+bool {\bfseries is\_\-keyW} () const }
+\label{structcimg__library_1_1CImgDisplay_a9dc0c09698b8b547dffc59b3f177d2ad}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a0f84fb1aa0a41645cc17f35fee7809b8}{
+bool {\bfseries is\_\-keyE} () const }
+\label{structcimg__library_1_1CImgDisplay_a0f84fb1aa0a41645cc17f35fee7809b8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a2aec102bcc4b78b3a6a3e3c0049c34e8}{
+bool {\bfseries is\_\-keyR} () const }
+\label{structcimg__library_1_1CImgDisplay_a2aec102bcc4b78b3a6a3e3c0049c34e8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a532daaaba99d7b6880546038d08e8a7d}{
+bool {\bfseries is\_\-keyT} () const }
+\label{structcimg__library_1_1CImgDisplay_a532daaaba99d7b6880546038d08e8a7d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a1dc137c0d8a9ed87f94518cd5cb13770}{
+bool {\bfseries is\_\-keyY} () const }
+\label{structcimg__library_1_1CImgDisplay_a1dc137c0d8a9ed87f94518cd5cb13770}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a286f4e3ba6448d661f2f530d1d2a19b4}{
+bool {\bfseries is\_\-keyU} () const }
+\label{structcimg__library_1_1CImgDisplay_a286f4e3ba6448d661f2f530d1d2a19b4}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9196a78c99cea5d37531f5372b971ef9}{
+bool {\bfseries is\_\-keyI} () const }
+\label{structcimg__library_1_1CImgDisplay_a9196a78c99cea5d37531f5372b971ef9}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3e0107ea5a63c56d91bcc61dbf6143f9}{
+bool {\bfseries is\_\-keyO} () const }
+\label{structcimg__library_1_1CImgDisplay_a3e0107ea5a63c56d91bcc61dbf6143f9}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6dcb6ac03e7fe466e3a0201c3c282e46}{
+bool {\bfseries is\_\-keyP} () const }
+\label{structcimg__library_1_1CImgDisplay_a6dcb6ac03e7fe466e3a0201c3c282e46}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a56ae02535a1ef0897b8a4100d8ecad31}{
+bool {\bfseries is\_\-keyDELETE} () const }
+\label{structcimg__library_1_1CImgDisplay_a56ae02535a1ef0897b8a4100d8ecad31}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aed9b4d7bb79304ce03160ddbd11a1349}{
+bool {\bfseries is\_\-keyEND} () const }
+\label{structcimg__library_1_1CImgDisplay_aed9b4d7bb79304ce03160ddbd11a1349}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a45b512bf7726500295d013bc1cc7b49a}{
+bool {\bfseries is\_\-keyPAGEDOWN} () const }
+\label{structcimg__library_1_1CImgDisplay_a45b512bf7726500295d013bc1cc7b49a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4e0a4107e7ec23dfa6d372e8fe9af3db}{
+bool {\bfseries is\_\-keyCAPSLOCK} () const }
+\label{structcimg__library_1_1CImgDisplay_a4e0a4107e7ec23dfa6d372e8fe9af3db}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3c7c1e1b7fcf5469c7d6183da0f1ac58}{
+bool {\bfseries is\_\-keyA} () const }
+\label{structcimg__library_1_1CImgDisplay_a3c7c1e1b7fcf5469c7d6183da0f1ac58}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a96752c1d6f3733e3e7e0e70e60c71e5c}{
+bool {\bfseries is\_\-keyS} () const }
+\label{structcimg__library_1_1CImgDisplay_a96752c1d6f3733e3e7e0e70e60c71e5c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a2e1b2c94f2daeb8ae29320b2d95ad48f}{
+bool {\bfseries is\_\-keyD} () const }
+\label{structcimg__library_1_1CImgDisplay_a2e1b2c94f2daeb8ae29320b2d95ad48f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6dc0763393d1936badd249bdf784a6ec}{
+bool {\bfseries is\_\-keyF} () const }
+\label{structcimg__library_1_1CImgDisplay_a6dc0763393d1936badd249bdf784a6ec}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9f50de1f8928605a69e7695e0b0d1fae}{
+bool {\bfseries is\_\-keyG} () const }
+\label{structcimg__library_1_1CImgDisplay_a9f50de1f8928605a69e7695e0b0d1fae}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a75ae1a3042f334e1d2207959a7e6c901}{
+bool {\bfseries is\_\-keyH} () const }
+\label{structcimg__library_1_1CImgDisplay_a75ae1a3042f334e1d2207959a7e6c901}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9addfded9882248f93f947d3c231227e}{
+bool {\bfseries is\_\-keyJ} () const }
+\label{structcimg__library_1_1CImgDisplay_a9addfded9882248f93f947d3c231227e}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a84c90ddb6720299ee2488f462a158a8b}{
+bool {\bfseries is\_\-keyK} () const }
+\label{structcimg__library_1_1CImgDisplay_a84c90ddb6720299ee2488f462a158a8b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af273c90975f0cc2d13c4e2bbdd286f53}{
+bool {\bfseries is\_\-keyL} () const }
+\label{structcimg__library_1_1CImgDisplay_af273c90975f0cc2d13c4e2bbdd286f53}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a8400d29c2ba07d8c8a40c08381da1757}{
+bool {\bfseries is\_\-keyENTER} () const }
+\label{structcimg__library_1_1CImgDisplay_a8400d29c2ba07d8c8a40c08381da1757}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aaa0db255ec632ff99a3e461593590213}{
+bool {\bfseries is\_\-keySHIFTLEFT} () const }
+\label{structcimg__library_1_1CImgDisplay_aaa0db255ec632ff99a3e461593590213}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a219b61b87687aad46f9899f89d08721f}{
+bool {\bfseries is\_\-keyZ} () const }
+\label{structcimg__library_1_1CImgDisplay_a219b61b87687aad46f9899f89d08721f}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a0166d6847dfa001a33cba4e3a183fb7c}{
+bool {\bfseries is\_\-keyX} () const }
+\label{structcimg__library_1_1CImgDisplay_a0166d6847dfa001a33cba4e3a183fb7c}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a98990370527345a18c055d9374be764b}{
+bool {\bfseries is\_\-keyC} () const }
+\label{structcimg__library_1_1CImgDisplay_a98990370527345a18c055d9374be764b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ac3cafe1e54d45027b16a900b6b0dc46a}{
+bool {\bfseries is\_\-keyV} () const }
+\label{structcimg__library_1_1CImgDisplay_ac3cafe1e54d45027b16a900b6b0dc46a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a5099c5b7eb9b7398afb2a9dd53a65598}{
+bool {\bfseries is\_\-keyB} () const }
+\label{structcimg__library_1_1CImgDisplay_a5099c5b7eb9b7398afb2a9dd53a65598}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6c5d97124da3e8975f09eb3a7fec83c3}{
+bool {\bfseries is\_\-keyN} () const }
+\label{structcimg__library_1_1CImgDisplay_a6c5d97124da3e8975f09eb3a7fec83c3}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aeeaa887e397aa8a84c9ed0edc119e9d4}{
+bool {\bfseries is\_\-keyM} () const }
+\label{structcimg__library_1_1CImgDisplay_aeeaa887e397aa8a84c9ed0edc119e9d4}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af3d21c324f5cb96a3557d8a757600fc0}{
+bool {\bfseries is\_\-keySHIFTRIGHT} () const }
+\label{structcimg__library_1_1CImgDisplay_af3d21c324f5cb96a3557d8a757600fc0}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a0967b98bec724066243bd22569632662}{
+bool {\bfseries is\_\-keyARROWUP} () const }
+\label{structcimg__library_1_1CImgDisplay_a0967b98bec724066243bd22569632662}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a8dbde98794a65a5aa6ab92269044313d}{
+bool {\bfseries is\_\-keyCTRLLEFT} () const }
+\label{structcimg__library_1_1CImgDisplay_a8dbde98794a65a5aa6ab92269044313d}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ada0ad4672cb6dbe244bcf20d58c99ad5}{
+bool {\bfseries is\_\-keyAPPLEFT} () const }
+\label{structcimg__library_1_1CImgDisplay_ada0ad4672cb6dbe244bcf20d58c99ad5}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a66905ac14763719a95832b77801bc0f1}{
+bool {\bfseries is\_\-keyALT} () const }
+\label{structcimg__library_1_1CImgDisplay_a66905ac14763719a95832b77801bc0f1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab6ba7d0468525c2f4c5a8520242e52a3}{
+bool {\bfseries is\_\-keySPACE} () const }
+\label{structcimg__library_1_1CImgDisplay_ab6ba7d0468525c2f4c5a8520242e52a3}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a5a0207a3a4f43297ad8db70d1f65545b}{
+bool {\bfseries is\_\-keyALTGR} () const }
+\label{structcimg__library_1_1CImgDisplay_a5a0207a3a4f43297ad8db70d1f65545b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3865fde8898f7099207524509af2f009}{
+bool {\bfseries is\_\-keyAPPRIGHT} () const }
+\label{structcimg__library_1_1CImgDisplay_a3865fde8898f7099207524509af2f009}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a651b42afbe1d84f46ed5a47b56483e23}{
+bool {\bfseries is\_\-keyMENU} () const }
+\label{structcimg__library_1_1CImgDisplay_a651b42afbe1d84f46ed5a47b56483e23}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab417929a8c4461d72c3d943fed9bdf8b}{
+bool {\bfseries is\_\-keyCTRLRIGHT} () const }
+\label{structcimg__library_1_1CImgDisplay_ab417929a8c4461d72c3d943fed9bdf8b}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af6aae13b4e955179135dff3b6a47a9d0}{
+bool {\bfseries is\_\-keyARROWLEFT} () const }
+\label{structcimg__library_1_1CImgDisplay_af6aae13b4e955179135dff3b6a47a9d0}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a8b94c3a8b777d8140fd3c03797433ad1}{
+bool {\bfseries is\_\-keyARROWDOWN} () const }
+\label{structcimg__library_1_1CImgDisplay_a8b94c3a8b777d8140fd3c03797433ad1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aaa04c0765c3a30f4df06df3bb8501267}{
+bool {\bfseries is\_\-keyARROWRIGHT} () const }
+\label{structcimg__library_1_1CImgDisplay_aaa04c0765c3a30f4df06df3bb8501267}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a843474450b0824ccdd3d93e1b2328522}{
+bool {\bfseries is\_\-keyPAD0} () const }
+\label{structcimg__library_1_1CImgDisplay_a843474450b0824ccdd3d93e1b2328522}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a79a2c6ac50e2d46fd77d4b976963f83a}{
+bool {\bfseries is\_\-keyPAD1} () const }
+\label{structcimg__library_1_1CImgDisplay_a79a2c6ac50e2d46fd77d4b976963f83a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_add147597d5bbafc230a9710db4fa65ec}{
+bool {\bfseries is\_\-keyPAD2} () const }
+\label{structcimg__library_1_1CImgDisplay_add147597d5bbafc230a9710db4fa65ec}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab2d7a851533414c435a4f634c72f3695}{
+bool {\bfseries is\_\-keyPAD3} () const }
+\label{structcimg__library_1_1CImgDisplay_ab2d7a851533414c435a4f634c72f3695}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a20aeeb0c1065e133d2e35a782eceddc8}{
+bool {\bfseries is\_\-keyPAD4} () const }
+\label{structcimg__library_1_1CImgDisplay_a20aeeb0c1065e133d2e35a782eceddc8}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa1522a35fb0e16c788d76989f12de2a6}{
+bool {\bfseries is\_\-keyPAD5} () const }
+\label{structcimg__library_1_1CImgDisplay_aa1522a35fb0e16c788d76989f12de2a6}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9b9ee1f94227f0c2a8179a0c091db343}{
+bool {\bfseries is\_\-keyPAD6} () const }
+\label{structcimg__library_1_1CImgDisplay_a9b9ee1f94227f0c2a8179a0c091db343}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6ccc4aa67a5d9ceb6352d38eb5e65e8a}{
+bool {\bfseries is\_\-keyPAD7} () const }
+\label{structcimg__library_1_1CImgDisplay_a6ccc4aa67a5d9ceb6352d38eb5e65e8a}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a796b4083380ef3d5a2e5d91497ef15e3}{
+bool {\bfseries is\_\-keyPAD8} () const }
+\label{structcimg__library_1_1CImgDisplay_a796b4083380ef3d5a2e5d91497ef15e3}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_abadbf1825a77489ee15d25710fec7974}{
+bool {\bfseries is\_\-keyPAD9} () const }
+\label{structcimg__library_1_1CImgDisplay_abadbf1825a77489ee15d25710fec7974}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a07065df68fd795956e07dc3c1f60d963}{
+bool {\bfseries is\_\-keyPADADD} () const }
+\label{structcimg__library_1_1CImgDisplay_a07065df68fd795956e07dc3c1f60d963}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9f598d8794d2a29c10735d27dc3a4a53}{
+bool {\bfseries is\_\-keyPADSUB} () const }
+\label{structcimg__library_1_1CImgDisplay_a9f598d8794d2a29c10735d27dc3a4a53}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ad9e06d61afb37b8f1ab0854be9549507}{
+bool {\bfseries is\_\-keyPADMUL} () const }
+\label{structcimg__library_1_1CImgDisplay_ad9e06d61afb37b8f1ab0854be9549507}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_afc7b98fea247d00464f539b6e9268d17}{
+bool {\bfseries is\_\-keyPADDIV} () const }
+\label{structcimg__library_1_1CImgDisplay_afc7b98fea247d00464f539b6e9268d17}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6c44d9820988689071b057256d16cbc1}{
+bool {\bfseries is\_\-key} (const unsigned int key) const }
+\label{structcimg__library_1_1CImgDisplay_a6c44d9820988689071b057256d16cbc1}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab8df75aaa8c32b86d2baedf281a70d0e}{
+bool \hyperlink{structcimg__library_1_1CImgDisplay_ab8df75aaa8c32b86d2baedf281a70d0e}{is\_\-key} (const char $\ast$const textcode) const }
+\label{structcimg__library_1_1CImgDisplay_ab8df75aaa8c32b86d2baedf281a70d0e}
+
+\begin{DoxyCompactList}\small\item\em Get keycode corresponding to given input string. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab4d07c4705f419b32b84dc91eaf4c564}{
+bool \hyperlink{structcimg__library_1_1CImgDisplay_ab4d07c4705f419b32b84dc91eaf4c564}{is\_\-key\_\-sequence} (const unsigned int $\ast$const key\_\-sequence, const unsigned int length, const bool remove\_\-sequence=false)}
+\label{structcimg__library_1_1CImgDisplay_ab4d07c4705f419b32b84dc91eaf4c564}
+
+\begin{DoxyCompactList}\small\item\em Test if a key sequence has been typed. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Instance Characteristics}
+\label{_amgrp793b2d5051efe1cb9227216131875e3a}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a369399896761e31ae71db57fdd0ba431}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_a369399896761e31ae71db57fdd0ba431}{width} () const }
+\label{structcimg__library_1_1CImgDisplay_a369399896761e31ae71db57fdd0ba431}
+
+\begin{DoxyCompactList}\small\item\em Return display width. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ae26bcfe2f33f5873dbdfb6948cf1f59f}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_ae26bcfe2f33f5873dbdfb6948cf1f59f}{height} () const }
+\label{structcimg__library_1_1CImgDisplay_ae26bcfe2f33f5873dbdfb6948cf1f59f}
+
+\begin{DoxyCompactList}\small\item\em Return display height. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ae60918cd2b0b4c6588b2d10aea46a22c}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_ae60918cd2b0b4c6588b2d10aea46a22c}{mouse\_\-x} () const }
+\label{structcimg__library_1_1CImgDisplay_ae60918cd2b0b4c6588b2d10aea46a22c}
+
+\begin{DoxyCompactList}\small\item\em Return X-\/coordinate of the mouse pointer. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a628a43671de755c52d67ad01a019292b}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_a628a43671de755c52d67ad01a019292b}{mouse\_\-y} () const }
+\label{structcimg__library_1_1CImgDisplay_a628a43671de755c52d67ad01a019292b}
+
+\begin{DoxyCompactList}\small\item\em Return Y-\/coordinate of the mouse pointer. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_adff5e3fda26574b001a038360b188479}{
+unsigned int \hyperlink{structcimg__library_1_1CImgDisplay_adff5e3fda26574b001a038360b188479}{button} () const }
+\label{structcimg__library_1_1CImgDisplay_adff5e3fda26574b001a038360b188479}
+
+\begin{DoxyCompactList}\small\item\em Return current or previous state of the mouse buttons. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3a455e002ed5dcc1fc2c23df07781522}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_a3a455e002ed5dcc1fc2c23df07781522}{wheel} () const }
+\label{structcimg__library_1_1CImgDisplay_a3a455e002ed5dcc1fc2c23df07781522}
+
+\begin{DoxyCompactList}\small\item\em Return current state of the mouse wheel. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a5e321648f3701b0ea6d9f7049cd6da38}{
+unsigned int \hyperlink{structcimg__library_1_1CImgDisplay_a5e321648f3701b0ea6d9f7049cd6da38}{key} (const unsigned int pos=0) const }
+\label{structcimg__library_1_1CImgDisplay_a5e321648f3701b0ea6d9f7049cd6da38}
+
+\begin{DoxyCompactList}\small\item\em Return current or previous state of the keyboard. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a885a46a61297c842fe2a7a37bbee2a54}{
+unsigned int {\bfseries released\_\-key} (const unsigned int pos=0) const }
+\label{structcimg__library_1_1CImgDisplay_a885a46a61297c842fe2a7a37bbee2a54}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a67719cb05110ca9e5725bc59f8350b68}{
+unsigned int \hyperlink{structcimg__library_1_1CImgDisplay_a67719cb05110ca9e5725bc59f8350b68}{normalization} () const }
+\label{structcimg__library_1_1CImgDisplay_a67719cb05110ca9e5725bc59f8350b68}
+
+\begin{DoxyCompactList}\small\item\em Return normalization type of the display. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a01f58dd237a70f1b83f0fe9ec560ae2d}{
+const char $\ast$ \hyperlink{structcimg__library_1_1CImgDisplay_a01f58dd237a70f1b83f0fe9ec560ae2d}{title} () const }
+\label{structcimg__library_1_1CImgDisplay_a01f58dd237a70f1b83f0fe9ec560ae2d}
+
+\begin{DoxyCompactList}\small\item\em Return title of the display. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a0daf640f96f8a620a34de6cbea1f79f1}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_a0daf640f96f8a620a34de6cbea1f79f1}{window\_\-width} () const }
+\label{structcimg__library_1_1CImgDisplay_a0daf640f96f8a620a34de6cbea1f79f1}
+
+\begin{DoxyCompactList}\small\item\em Return display window width. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a706b9cb3b2bcdb372db6fe33693a8ae4}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_a706b9cb3b2bcdb372db6fe33693a8ae4}{window\_\-height} () const }
+\label{structcimg__library_1_1CImgDisplay_a706b9cb3b2bcdb372db6fe33693a8ae4}
+
+\begin{DoxyCompactList}\small\item\em Return display window height. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ae1226fc43587896b59edd1cf57c77056}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_ae1226fc43587896b59edd1cf57c77056}{window\_\-x} () const }
+\label{structcimg__library_1_1CImgDisplay_ae1226fc43587896b59edd1cf57c77056}
+
+\begin{DoxyCompactList}\small\item\em Return X-\/coordinate of the window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ad978bf4dc9acf4129159e0edd55e1111}{
+int \hyperlink{structcimg__library_1_1CImgDisplay_ad978bf4dc9acf4129159e0edd55e1111}{window\_\-y} () const }
+\label{structcimg__library_1_1CImgDisplay_ad978bf4dc9acf4129159e0edd55e1111}
+
+\begin{DoxyCompactList}\small\item\em Return Y-\/coordinate of the window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3ade6e852b67fea14093915c5dca7862}{
+float \hyperlink{structcimg__library_1_1CImgDisplay_a3ade6e852b67fea14093915c5dca7862}{frames\_\-per\_\-second} ()}
+\label{structcimg__library_1_1CImgDisplay_a3ade6e852b67fea14093915c5dca7862}
+
+\begin{DoxyCompactList}\small\item\em Return the frame per second rate. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa50e87a914abfa8af110579efe731032}{
+static unsigned int \hyperlink{structcimg__library_1_1CImgDisplay_aa50e87a914abfa8af110579efe731032}{keycode} (const char $\ast$const textcode)}
+\label{structcimg__library_1_1CImgDisplay_aa50e87a914abfa8af110579efe731032}
+
+\begin{DoxyCompactList}\small\item\em Get keycode corresponding to given input string. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4219f41cd905bbaabaab92b2ed1a70aa}{
+static int \hyperlink{structcimg__library_1_1CImgDisplay_a4219f41cd905bbaabaab92b2ed1a70aa}{screen\_\-width} ()}
+\label{structcimg__library_1_1CImgDisplay_a4219f41cd905bbaabaab92b2ed1a70aa}
+
+\begin{DoxyCompactList}\small\item\em Return the width of the screen resolution. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a8c14a95f72679922995641b29d860da1}{
+static int \hyperlink{structcimg__library_1_1CImgDisplay_a8c14a95f72679922995641b29d860da1}{screen\_\-height} ()}
+\label{structcimg__library_1_1CImgDisplay_a8c14a95f72679922995641b29d860da1}
+
+\begin{DoxyCompactList}\small\item\em Return the height of the screen resolution. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Display Manipulation}
+\label{_amgrp11e21ad5086dc6a900aa8a3ec5d951ed}
+ \begin{DoxyCompactItemize}
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_afd781dd620229f1178245c6e990121ae}{
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_afd781dd620229f1178245c6e990121ae}{display} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img)}
+\label{structcimg__library_1_1CImgDisplay_afd781dd620229f1178245c6e990121ae}
+
+\begin{DoxyCompactList}\small\item\em Display an image in a window. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a43bcd9fcc817fa49152a81a2bf6cdb20}{display} (const \hyperlink{structcimg__library_1_1CImgList}{CImgList}$<$ T $>$ \&list, const char axis='x', const char align='p')
+\begin{DoxyCompactList}\small\item\em Display an image list CImgList$<$T$>$ into a display window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ae3fd73d5fc6a4ac9b87b1b8cdacc3833}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_ae3fd73d5fc6a4ac9b87b1b8cdacc3833}{resize} (const bool redraw=true)}
+\label{structcimg__library_1_1CImgDisplay_ae3fd73d5fc6a4ac9b87b1b8cdacc3833}
+
+\begin{DoxyCompactList}\small\item\em Resize a display window in its current size. \item\end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_afee064d94e1ec2e764af537fbee30d13}{resize} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img, const bool redraw=true)
+\begin{DoxyCompactList}\small\item\em Resize a display window with the size of an image. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af4d082c39b75c096acb3fee6cda89b19}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_af4d082c39b75c096acb3fee6cda89b19}{resize} (const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp, const bool redraw=true)}
+\label{structcimg__library_1_1CImgDisplay_af4d082c39b75c096acb3fee6cda89b19}
+
+\begin{DoxyCompactList}\small\item\em Resize a display window using the size of the given display {\ttfamily disp}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4fe0da6092c184682ff767dd5b83bbc5}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a4fe0da6092c184682ff767dd5b83bbc5}{resize} (const int width, const int height, const bool redraw=true)}
+\label{structcimg__library_1_1CImgDisplay_a4fe0da6092c184682ff767dd5b83bbc5}
+
+\begin{DoxyCompactList}\small\item\em Resize window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a773481c59a3938e6de939a1531b13f01}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a773481c59a3938e6de939a1531b13f01}{set\_\-fullscreen} (const bool is\_\-fullscreen, const bool redraw=true)}
+\label{structcimg__library_1_1CImgDisplay_a773481c59a3938e6de939a1531b13f01}
+
+\begin{DoxyCompactList}\small\item\em Set fullscreen mode. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a62d224a7c18d3091eb0d56e1bc8c36fe}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a62d224a7c18d3091eb0d56e1bc8c36fe}{toggle\_\-fullscreen} (const bool redraw=true)}
+\label{structcimg__library_1_1CImgDisplay_a62d224a7c18d3091eb0d56e1bc8c36fe}
+
+\begin{DoxyCompactList}\small\item\em Toggle fullscreen mode. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a1b27a2a375509146444ab06b2f7b8851}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a1b27a2a375509146444ab06b2f7b8851}{show} ()}
+\label{structcimg__library_1_1CImgDisplay_a1b27a2a375509146444ab06b2f7b8851}
+
+\begin{DoxyCompactList}\small\item\em Show a closed display. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a7e35c3363f8859c8a952a60dd4aa3fca}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a7e35c3363f8859c8a952a60dd4aa3fca}{close} ()}
+\label{structcimg__library_1_1CImgDisplay_a7e35c3363f8859c8a952a60dd4aa3fca}
+
+\begin{DoxyCompactList}\small\item\em Close a visible display. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a21da6f48a7ed419e7605f02925be4718}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a21da6f48a7ed419e7605f02925be4718}{move} (const int pos\_\-x, const int pos\_\-y)}
+\label{structcimg__library_1_1CImgDisplay_a21da6f48a7ed419e7605f02925be4718}
+
+\begin{DoxyCompactList}\small\item\em Move window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a9fc997c0451ce75666f1bdfe45eb0343}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a9fc997c0451ce75666f1bdfe45eb0343}{show\_\-mouse} ()}
+\label{structcimg__library_1_1CImgDisplay_a9fc997c0451ce75666f1bdfe45eb0343}
+
+\begin{DoxyCompactList}\small\item\em Show mouse pointer. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a3fb8cda1473f326934c286e6e5d825e2}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a3fb8cda1473f326934c286e6e5d825e2}{hide\_\-mouse} ()}
+\label{structcimg__library_1_1CImgDisplay_a3fb8cda1473f326934c286e6e5d825e2}
+
+\begin{DoxyCompactList}\small\item\em Hide mouse pointer. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_af089ae3b38f20ac0f5a450dc5ad215f1}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_af089ae3b38f20ac0f5a450dc5ad215f1}{set\_\-mouse} (const int pos\_\-x, const int pos\_\-y)}
+\label{structcimg__library_1_1CImgDisplay_af089ae3b38f20ac0f5a450dc5ad215f1}
+
+\begin{DoxyCompactList}\small\item\em Move mouse pointer to a specific location. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_afde9a27e1bb7d0ef822a0f0613f99d32}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_afde9a27e1bb7d0ef822a0f0613f99d32}{set\_\-title} (const char $\ast$const format,...)}
+\label{structcimg__library_1_1CImgDisplay_afde9a27e1bb7d0ef822a0f0613f99d32}
+
+\begin{DoxyCompactList}\small\item\em Set the window title. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a1e0eea237d50ddb7e010a8b5edb5fdf4}{
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a1e0eea237d50ddb7e010a8b5edb5fdf4}{render} (const \hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img)}
+\label{structcimg__library_1_1CImgDisplay_a1e0eea237d50ddb7e010a8b5edb5fdf4}
+
+\begin{DoxyCompactList}\small\item\em Render image buffer into GDI native image format. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4e67d156351dd7dfdfd2f04e563c4f2a}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a4e67d156351dd7dfdfd2f04e563c4f2a}{paint} ()}
+\label{structcimg__library_1_1CImgDisplay_a4e67d156351dd7dfdfd2f04e563c4f2a}
+
+\begin{DoxyCompactList}\small\item\em Re-\/paint image content in window. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4b97d4d8b8c293cbf540ba06596ded54}{
+{\footnotesize template$<$typename T $>$ }\\const \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a4b97d4d8b8c293cbf540ba06596ded54}{snapshot} (\hyperlink{structcimg__library_1_1CImg}{CImg}$<$ T $>$ \&img) const }
+\label{structcimg__library_1_1CImgDisplay_a4b97d4d8b8c293cbf540ba06596ded54}
+
+\begin{DoxyCompactList}\small\item\em Take a snapshot of the display in the specified image. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6e9eb0990daa50aa51ce6202bcf774ae}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a6e9eb0990daa50aa51ce6202bcf774ae}{set\_\-button} ()}
+\label{structcimg__library_1_1CImgDisplay_a6e9eb0990daa50aa51ce6202bcf774ae}
+
+\begin{DoxyCompactList}\small\item\em Simulate a mouse button event. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa8fc0d8a39b2063d9f1f6cea8fcc2cfb}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& {\bfseries set\_\-button} (const unsigned int button, const bool is\_\-pressed=true)}
+\label{structcimg__library_1_1CImgDisplay_aa8fc0d8a39b2063d9f1f6cea8fcc2cfb}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a1a255a5404da7ba5b511c23cefa91879}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a1a255a5404da7ba5b511c23cefa91879}{set\_\-wheel} ()}
+\label{structcimg__library_1_1CImgDisplay_a1a255a5404da7ba5b511c23cefa91879}
+
+\begin{DoxyCompactList}\small\item\em Simulate a mouse wheel event, or flush wheel events. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a90e0d424e65ccc6dba2a0df2e5886759}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& {\bfseries set\_\-wheel} (const int amplitude)}
+\label{structcimg__library_1_1CImgDisplay_a90e0d424e65ccc6dba2a0df2e5886759}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a199046786d132551afa204c8b80eddc1}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a199046786d132551afa204c8b80eddc1}{set\_\-key} ()}
+\label{structcimg__library_1_1CImgDisplay_a199046786d132551afa204c8b80eddc1}
+
+\begin{DoxyCompactList}\small\item\em Simulate a keyboard press/release event, or flush all key events. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ae4bcb80bf4c19ff9c41a0821754148b6}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& {\bfseries set\_\-key} (const unsigned int keycode, const bool pressed=true)}
+\label{structcimg__library_1_1CImgDisplay_ae4bcb80bf4c19ff9c41a0821754148b6}
+
+\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4bf168837be505b1301604b151280f6e}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a4bf168837be505b1301604b151280f6e}{flush} ()}
+\label{structcimg__library_1_1CImgDisplay_a4bf168837be505b1301604b151280f6e}
+
+\begin{DoxyCompactList}\small\item\em Flush all display events. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a79669a0b7bdc65aff8313c590c7faab0}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_a79669a0b7bdc65aff8313c590c7faab0}{wait} (const unsigned int milliseconds)}
+\label{structcimg__library_1_1CImgDisplay_a79669a0b7bdc65aff8313c590c7faab0}
+
+\begin{DoxyCompactList}\small\item\em Synchronized waiting function. Same as \hyperlink{namespacecimg__library_1_1cimg_a3c8917c0f12139bff6de6e3e45fc5b77}{cimg::wait()}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ab16d9d312efaecc3630dc6539269bab9}{
+\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \& \hyperlink{structcimg__library_1_1CImgDisplay_ab16d9d312efaecc3630dc6539269bab9}{wait} ()}
+\label{structcimg__library_1_1CImgDisplay_ab16d9d312efaecc3630dc6539269bab9}
+
+\begin{DoxyCompactList}\small\item\em Wait for an event occuring on the current display. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a903bbc0d3fe2b9179790f7baea035916}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a903bbc0d3fe2b9179790f7baea035916}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1)}
+\label{structcimg__library_1_1CImgDisplay_a903bbc0d3fe2b9179790f7baea035916}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring on the display {\ttfamily disp1}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ad33d8e77ac9fab757e6f9e9afc067765}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_ad33d8e77ac9fab757e6f9e9afc067765}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2)}
+\label{structcimg__library_1_1CImgDisplay_ad33d8e77ac9fab757e6f9e9afc067765}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1} or {\ttfamily disp2}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_ace751dd163a5ea476947bcad5554035e}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_ace751dd163a5ea476947bcad5554035e}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3)}
+\label{structcimg__library_1_1CImgDisplay_ace751dd163a5ea476947bcad5554035e}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2} or {\ttfamily disp3}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a78ac24c082d4eb13d127374a4bf64987}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a78ac24c082d4eb13d127374a4bf64987}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4)}
+\label{structcimg__library_1_1CImgDisplay_a78ac24c082d4eb13d127374a4bf64987}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3} or {\ttfamily disp4}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a205f86fcf436778bf3219c8163d33425}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a205f86fcf436778bf3219c8163d33425}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp5)}
+\label{structcimg__library_1_1CImgDisplay_a205f86fcf436778bf3219c8163d33425}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3}, {\ttfamily disp4} or {\ttfamily disp5}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a2ca2604a502f006134bd159285c24d84}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a2ca2604a502f006134bd159285c24d84}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp5, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp6)}
+\label{structcimg__library_1_1CImgDisplay_a2ca2604a502f006134bd159285c24d84}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3}, {\ttfamily disp4}, ... {\ttfamily disp6}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a4e44eab5ce34cfa5872122decb31115e}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a4e44eab5ce34cfa5872122decb31115e}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp5, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp6, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp7)}
+\label{structcimg__library_1_1CImgDisplay_a4e44eab5ce34cfa5872122decb31115e}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3}, {\ttfamily disp4}, ... {\ttfamily disp7}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a6bf0e4fd59de6a0e60d787da8cb55b40}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a6bf0e4fd59de6a0e60d787da8cb55b40}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp5, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp6, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp7, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp8)}
+\label{structcimg__library_1_1CImgDisplay_a6bf0e4fd59de6a0e60d787da8cb55b40}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3}, {\ttfamily disp4}, ... {\ttfamily disp8}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a8af9b2ad0b81d8e22d3e09fd4e8dcf12}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a8af9b2ad0b81d8e22d3e09fd4e8dcf12}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp5, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp6, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp7, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp8, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp9)}
+\label{structcimg__library_1_1CImgDisplay_a8af9b2ad0b81d8e22d3e09fd4e8dcf12}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3}, {\ttfamily disp4}, ... {\ttfamily disp9}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_aa2fb3e192c2ba6a39a7965357c36a4ad}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_aa2fb3e192c2ba6a39a7965357c36a4ad}{wait} (\hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp1, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp2, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp3, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp4, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp5, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp6, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp7, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp8, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp9, \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay} \&disp10)}
+\label{structcimg__library_1_1CImgDisplay_aa2fb3e192c2ba6a39a7965357c36a4ad}
+
+\begin{DoxyCompactList}\small\item\em Wait for any event occuring either on the display {\ttfamily disp1}, {\ttfamily disp2}, {\ttfamily disp3}, {\ttfamily disp4}, ... {\ttfamily disp10}. \item\end{DoxyCompactList}\item 
+\hypertarget{structcimg__library_1_1CImgDisplay_a530c68e321d3adcb30fcefa06a25ca5b}{
+static void \hyperlink{structcimg__library_1_1CImgDisplay_a530c68e321d3adcb30fcefa06a25ca5b}{wait\_\-all} ()}
+\label{structcimg__library_1_1CImgDisplay_a530c68e321d3adcb30fcefa06a25ca5b}
+
+\begin{DoxyCompactList}\small\item\em Wait for a window event in any \hyperlink{structcimg__library_1_1CImg}{CImg} window. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents a window which can display \hyperlink{structcimg__library_1_1CImg}{CImg} images and handles mouse and keyboard events. Creating a {\ttfamily \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay}} instance opens a window that can be used to display a {\ttfamily CImg$<$T$>$} image of a {\ttfamily CImgList$<$T$>$} image list inside. When a display is created, associated window events (such as mouse motion, keyboard and window size changes) are handled and can be easily detected by testing specific {\ttfamily \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay}} data fields. See cimg\_\-displays for a complete tutorial on using the {\ttfamily \hyperlink{structcimg__library_1_1CImgDisplay}{CImgDisplay}} class. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structcimg__library_1_1CImgDisplay_abb46df06ee84d2be48cf5c57a9ed2f6d}{
+\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}!CImgDisplay@{CImgDisplay}}
+\index{CImgDisplay@{CImgDisplay}!cimg_library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+\subsubsection[{CImgDisplay}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgDisplay} (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{ width, }
+\item[{const unsigned int}]{ height, }
+\item[{const char $\ast$const }]{ title = {\ttfamily 0}, }
+\item[{const unsigned int}]{ normalization = {\ttfamily 3}, }
+\item[{const bool}]{ is\_\-fullscreen = {\ttfamily false}, }
+\item[{const bool}]{ is\_\-closed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{structcimg__library_1_1CImgDisplay_abb46df06ee84d2be48cf5c57a9ed2f6d}
+
+
+Create a display window with a specified size {\ttfamily pwidth} x {\ttfamily height}. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em width}]Width of the display window. \item[{\em height}]Height of the display window. \item[{\em title}]Title of the display window. \item[{\em normalization}]Normalization type of the display window (0=none, 1=always, 2=once). \item[{\em is\_\-fullscreen}]: Fullscreen mode. \item[{\em is\_\-closed}]: Initially visible mode. A black image will be initially displayed in the display window. \end{DoxyParams}
+\hypertarget{structcimg__library_1_1CImgDisplay_a17a3e5d3c1452bea980a3fc27b94a62c}{
+\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}!CImgDisplay@{CImgDisplay}}
+\index{CImgDisplay@{CImgDisplay}!cimg_library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+\subsubsection[{CImgDisplay}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgDisplay} (
+\begin{DoxyParamCaption}
+\item[{const {\bf CImg}$<$ T $>$ \&}]{ img, }
+\item[{const char $\ast$const }]{ title = {\ttfamily 0}, }
+\item[{const unsigned int}]{ normalization = {\ttfamily 3}, }
+\item[{const bool}]{ is\_\-fullscreen = {\ttfamily false}, }
+\item[{const bool}]{ is\_\-closed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{structcimg__library_1_1CImgDisplay_a17a3e5d3c1452bea980a3fc27b94a62c}
+
+
+Create a display window from an image. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em img}]: Image that will be used to create the display window. \item[{\em title}]: Title of the display window \item[{\em normalization}]: Normalization type of the display window. \item[{\em is\_\-fullscreen}]: Fullscreen mode. \item[{\em is\_\-closed}]: Initially visible mode. \end{DoxyParams}
+\hypertarget{structcimg__library_1_1CImgDisplay_a381c35cf0bf2de9d41a037703d1e1ea6}{
+\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}!CImgDisplay@{CImgDisplay}}
+\index{CImgDisplay@{CImgDisplay}!cimg_library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+\subsubsection[{CImgDisplay}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgDisplay} (
+\begin{DoxyParamCaption}
+\item[{const {\bf CImgList}$<$ T $>$ \&}]{ list, }
+\item[{const char $\ast$const }]{ title = {\ttfamily 0}, }
+\item[{const unsigned int}]{ normalization = {\ttfamily 3}, }
+\item[{const bool}]{ is\_\-fullscreen = {\ttfamily false}, }
+\item[{const bool}]{ is\_\-closed = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}explicit\mbox{]}}}}
+\label{structcimg__library_1_1CImgDisplay_a381c35cf0bf2de9d41a037703d1e1ea6}
+
+
+Create a display window from an image list. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em list}]: The list of images to display. \item[{\em title}]: Title of the display window \item[{\em normalization}]: Normalization type of the display window. \item[{\em is\_\-fullscreen}]: Fullscreen mode. \item[{\em is\_\-closed}]: Initially visible mode. \end{DoxyParams}
+\hypertarget{structcimg__library_1_1CImgDisplay_a6765c355fa3ae998b9729b358f198a61}{
+\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}!CImgDisplay@{CImgDisplay}}
+\index{CImgDisplay@{CImgDisplay}!cimg_library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+\subsubsection[{CImgDisplay}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgDisplay} (
+\begin{DoxyParamCaption}
+\item[{const {\bf CImgDisplay} \&}]{ disp}
+\end{DoxyParamCaption}
+)}}
+\label{structcimg__library_1_1CImgDisplay_a6765c355fa3ae998b9729b358f198a61}
+
+
+Create a display window by copying another one. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em disp}]: Display window to copy. \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structcimg__library_1_1CImgDisplay_a43bcd9fcc817fa49152a81a2bf6cdb20}{
+\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}!display@{display}}
+\index{display@{display}!cimg_library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgDisplay}\& display (
+\begin{DoxyParamCaption}
+\item[{const {\bf CImgList}$<$ T $>$ \&}]{ list, }
+\item[{const char}]{ axis = {\ttfamily 'x'}, }
+\item[{const char}]{ align = {\ttfamily 'p'}}
+\end{DoxyParamCaption}
+)}}
+\label{structcimg__library_1_1CImgDisplay_a43bcd9fcc817fa49152a81a2bf6cdb20}
+
+
+Display an image list CImgList$<$T$>$ into a display window. 
+
+First, all images of the list are appended into a single image used for visualization, then this image is displayed in the current display window. 
+\begin{DoxyParams}{Parameters}
+\item[{\em list}]: The list of images to display. \item[{\em axis}]: The axis used to append the image for visualization. Can be 'x' (default),'y','z' or 'c'. \item[{\em align}]: Defines the relative alignment of images when displaying images of different sizes. Can be '{\ttfamily c'} (centered, which is the default), '{\ttfamily p'} (top alignment) and '{\ttfamily n'} (bottom aligment). \end{DoxyParams}
+\hypertarget{structcimg__library_1_1CImgDisplay_afee064d94e1ec2e764af537fbee30d13}{
+\index{cimg\_\-library::CImgDisplay@{cimg\_\-library::CImgDisplay}!resize@{resize}}
+\index{resize@{resize}!cimg_library::CImgDisplay@{cimg\_\-library::CImgDisplay}}
+\subsubsection[{resize}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CImgDisplay}\& resize (
+\begin{DoxyParamCaption}
+\item[{const {\bf CImg}$<$ T $>$ \&}]{ img, }
+\item[{const bool}]{ redraw = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{structcimg__library_1_1CImgDisplay_afee064d94e1ec2e764af537fbee30d13}
+
+
+Resize a display window with the size of an image. 
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em img}]: Input image. {\ttfamily image.width} and {\ttfamily image.height} give the new dimensions of the display window. \item[{\em redraw}]: If {\ttfamily true} (default), the current displayed image in the display window will be bloc-\/interpolated to fit the new dimensions. If {\ttfamily false}, a black image will be drawn in the resized window. \end{DoxyParams}
