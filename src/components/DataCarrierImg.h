@@ -104,13 +104,13 @@ struct DataCarrierImg : public cimg_library::CImg<char>
 
 using namespace cimg_library;
 
-// The \ref DataCarrierImgExtractionException class is thrown when data extraction fails
+//! Thrown when data extraction fails
 struct DataCarrierImgExtractionException : public CImgException
 {
     DataCarrierImgExtractionException(const char *const format, ...) { _cimg_exception_err("DataCarrierImgExtractionException",false); }
 };
 
-// The \ref DataCarrierImgImplantationException class is thrown when data implantation fails
+//! Thrown when data implantation fails
 struct DataCarrierImgImplantationException : public CImgException
 {
   DataCarrierImgImplantationException(const char *const format, ...) { _cimg_exception_err("DataCarrierImgImplantationException",false); }

@@ -54,24 +54,24 @@ Inheritance diagram for IConduitImage:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#ab697b8ff0b8bc87a3f17a8af30fa37e2">getMaxSize</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the maximum ammount of data that can be stored in this implementation.  <a href="#ab697b8ff0b8bc87a3f17a8af30fa37e2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual unsigned short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#a7070b468d77b99cb6e26849b938264b9">read_size</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check how much data (if any) is stored in the current image.  <a href="#a7070b468d77b99cb6e26849b938264b9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#a20a2b214e8535fa70790a9b9012693ae">implant_data</a> (std::vector&lt; char &gt; &amp;data)=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Implant data.  <a href="#a20a2b214e8535fa70790a9b9012693ae"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#a4023566af236193894767c84f1a27d02">extract_data</a> (std::vector&lt; char &gt; &amp;data)=0</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Extract data.  <a href="#a4023566af236193894767c84f1a27d02"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#adf25b030496042f8e063ad54806fcf9d">getMaxData</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the maximum ammount of data that can be stored in this implementation.  <a href="#adf25b030496042f8e063ad54806fcf9d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual unsigned short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#af4c6699ceacada4b0222ad4f1d1c384d">readSize</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check how much data (if any) is stored in the current image.  <a href="#af4c6699ceacada4b0222ad4f1d1c384d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#aead78fe96a2ec4e676c7aaf018427671">implantData</a> (std::vector&lt; char &gt; &amp;data)=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Implant data.  <a href="#aead78fe96a2ec4e676c7aaf018427671"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classefb_1_1IConduitImage.html#a920c1ba3f4f8d7531a8b6f8c8b38def6">extractData</a> (std::vector&lt; char &gt; &amp;data)=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Extract data.  <a href="#a920c1ba3f4f8d7531a8b6f8c8b38def6"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>Abstract class defining a conduit image, with functionality for implanting and extracting data. </p>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab697b8ff0b8bc87a3f17a8af30fa37e2"></a><!-- doxytag: member="efb::IConduitImage::getMaxSize" ref="ab697b8ff0b8bc87a3f17a8af30fa37e2" args="()=0" -->
+<a class="anchor" id="adf25b030496042f8e063ad54806fcf9d"></a><!-- doxytag: member="efb::IConduitImage::getMaxData" ref="adf25b030496042f8e063ad54806fcf9d" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual unsigned int getMaxSize </td>
+          <td class="memname">virtual unsigned int getMaxData </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -85,12 +85,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7070b468d77b99cb6e26849b938264b9"></a><!-- doxytag: member="efb::IConduitImage::read_size" ref="a7070b468d77b99cb6e26849b938264b9" args="()=0" -->
+<a class="anchor" id="af4c6699ceacada4b0222ad4f1d1c384d"></a><!-- doxytag: member="efb::IConduitImage::readSize" ref="af4c6699ceacada4b0222ad4f1d1c384d" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual unsigned short read_size </td>
+          <td class="memname">virtual unsigned short readSize </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -102,14 +102,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Check how much data (if any) is stored in the current image. </p>
 
+<p>Implemented in <a class="el" href="classefb_1_1HaarConduitImage.html#a5e272ba12218188cba439255dea9df40">HaarConduitImage</a>.</p>
+
 </div>
 </div>
-<a class="anchor" id="a20a2b214e8535fa70790a9b9012693ae"></a><!-- doxytag: member="efb::IConduitImage::implant_data" ref="a20a2b214e8535fa70790a9b9012693ae" args="(std::vector&lt; char &gt; &amp;data)=0" -->
+<a class="anchor" id="aead78fe96a2ec4e676c7aaf018427671"></a><!-- doxytag: member="efb::IConduitImage::implantData" ref="aead78fe96a2ec4e676c7aaf018427671" args="(std::vector&lt; char &gt; &amp;data)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void implant_data </td>
+          <td class="memname">virtual void implantData </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; char &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>data</em></td>
@@ -122,14 +124,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Implant data. </p>
 
+<p>Implemented in <a class="el" href="classefb_1_1HaarConduitImage.html#a722f5510d5b87afd72222afed3f77d34">HaarConduitImage</a>.</p>
+
 </div>
 </div>
-<a class="anchor" id="a4023566af236193894767c84f1a27d02"></a><!-- doxytag: member="efb::IConduitImage::extract_data" ref="a4023566af236193894767c84f1a27d02" args="(std::vector&lt; char &gt; &amp;data)=0" -->
+<a class="anchor" id="a920c1ba3f4f8d7531a8b6f8c8b38def6"></a><!-- doxytag: member="efb::IConduitImage::extractData" ref="a920c1ba3f4f8d7531a8b6f8c8b38def6" args="(std::vector&lt; char &gt; &amp;data)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void extract_data </td>
+          <td class="memname">virtual void extractData </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; char &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>data</em></td>
@@ -142,10 +146,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Extract data. </p>
 
+<p>Implemented in <a class="el" href="classefb_1_1HaarConduitImage.html#a34b2b3ff92ddfea24ccd0c1b6786152c">HaarConduitImage</a>.</p>
+
 </div>
 </div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 2 2011 06:39:41 for Encrypted Facebook by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jan 2 2011 08:02:16 for Encrypted Facebook by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

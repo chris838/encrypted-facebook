@@ -8,3 +8,233 @@ Inheritance diagram for HaarConduitImage:\begin{figure}[H]
 \includegraphics[height=2.000000cm]{classefb_1_1HaarConduitImage}
 \end{center}
 \end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classefb_1_1HaarConduitImage_af7fc5c1f79d83384ccdefea6b867ac2e}{HaarConduitImage} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a1ffe316d6387cb21689ede4f06c44500}{writeSize} (unsigned short len)
+\begin{DoxyCompactList}\small\item\em Writes the size of the image (2 bytes) to the last two blocks, using triple modular redundancy. \item\end{DoxyCompactList}\item 
+unsigned short \hyperlink{classefb_1_1HaarConduitImage_a5e272ba12218188cba439255dea9df40}{readSize} ()
+\begin{DoxyCompactList}\small\item\em Attempt to read the size tag of the image, describing how many bytes of data are stored. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a722f5510d5b87afd72222afed3f77d34}{implantData} (std::vector$<$ char $>$ \&data)
+\begin{DoxyCompactList}\small\item\em Implant a specified vector$<$char$>$ into the image. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a34b2b3ff92ddfea24ccd0c1b6786152c}{extractData} (std::vector$<$ char $>$ \&data)
+\begin{DoxyCompactList}\small\item\em Attempt to allocate and return a new vector$<$char$>$ containing the extracted data. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a81e5b4f5db557a4899d4ae07c1e1b4d7}{formatForImplantation} ()
+\begin{DoxyCompactList}\small\item\em Format the image in preparation for implantation. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a7f72437165a2c5d3dd0bda166c281cf1}{encodeInBlock} (unsigned int x0, unsigned int y0, \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} a, \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} b, \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} c)
+\begin{DoxyCompactList}\small\item\em Encode 3 bytes of data to the Haar coefficients of an 8x8 block. \item\end{DoxyCompactList}\item 
+\hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} \hyperlink{classefb_1_1HaarConduitImage_aec2f90bd4eefb8ed4c7efe0bf2ffcf11}{tripleModR} (\hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} a, \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} b, \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} c) const 
+\begin{DoxyCompactList}\small\item\em Helper function to decode triple modular redundancy coded bytes. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a06964ac33b5eda29247dfd8759f8829e}{decodeFromBlock} (unsigned int x0, unsigned int y0, std::vector$<$ char $>$ \&data) const 
+\item 
+void \hyperlink{classefb_1_1HaarConduitImage_a875768da357b56e18091f3b7a1d4057b}{haar2dDwt} (unsigned int x0, unsigned int y0)
+\begin{DoxyCompactList}\small\item\em Perform the Haar Discrete Wavelet transform on an 8x8 block. \item\end{DoxyCompactList}\item 
+int \hyperlink{classefb_1_1HaarConduitImage_a72f0f029a9b61d1b7955a513aa908378}{divFloor} (int a, int b) const 
+\begin{DoxyCompactList}\small\item\em Helper function for lifting scheme. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1HaarConduitImage_acd25c4ac995afaeb0ec93a1015f92d0b}{haar2dDwti} (unsigned int x0, unsigned int y0)
+\begin{DoxyCompactList}\small\item\em Perform the inverse Haar Discrete Wavelet transform on an 8x8 block. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classefb_1_1HaarConduitImage_aba28e7654a4ce9835d571c3daaebc43c}{is\_\-formatted\_\-}
+\begin{DoxyCompactList}\small\item\em Flag to state whether the image has been prepared for implantation. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classefb_1_1HaarConduitImage_af7fc5c1f79d83384ccdefea6b867ac2e}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!HaarConduitImage@{HaarConduitImage}}
+\index{HaarConduitImage@{HaarConduitImage}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{HaarConduitImage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf HaarConduitImage} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classefb_1_1HaarConduitImage_af7fc5c1f79d83384ccdefea6b867ac2e}
+
+
+Default constructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classefb_1_1HaarConduitImage_a81e5b4f5db557a4899d4ae07c1e1b4d7}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!formatForImplantation@{formatForImplantation}}
+\index{formatForImplantation@{formatForImplantation}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{formatForImplantation}]{\setlength{\rightskip}{0pt plus 5cm}void formatForImplantation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a81e5b4f5db557a4899d4ae07c1e1b4d7}
+
+
+Format the image in preparation for implantation. 
+
+This operation will resize the image to 720x720x1 and truncate the colour channels, as only data storage in single-\/channel (greyscale) image is supported. JPEG compression requires an (imperfect) colour space transform from RGB to YCrCb which complicates using colour images for data storage. Even worse -\/ Facebook's JPEG compression process uses chrominance subsampling. However, this does mean that discarding the additional two chrominance channels only results in a 50 reduction in maximum potential data storage capacity. \hypertarget{classefb_1_1HaarConduitImage_a7f72437165a2c5d3dd0bda166c281cf1}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!encodeInBlock@{encodeInBlock}}
+\index{encodeInBlock@{encodeInBlock}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{encodeInBlock}]{\setlength{\rightskip}{0pt plus 5cm}void encodeInBlock (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{ x0, }
+\item[{unsigned int}]{ y0, }
+\item[{{\bf byte}}]{ a, }
+\item[{{\bf byte}}]{ b, }
+\item[{{\bf byte}}]{ c}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a7f72437165a2c5d3dd0bda166c281cf1}
+
+
+Encode 3 bytes of data to the Haar coefficients of an 8x8 block. 
+
+This operation assumes we have performed the Haar transform (two iterations) on the block in question. We store the provided 3 bytes of data in the most significant bits of 4 Haar coefficents which represent the low-\/frequency component of the image. \hypertarget{classefb_1_1HaarConduitImage_aec2f90bd4eefb8ed4c7efe0bf2ffcf11}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!tripleModR@{tripleModR}}
+\index{tripleModR@{tripleModR}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{tripleModR}]{\setlength{\rightskip}{0pt plus 5cm}{\bf byte} tripleModR (
+\begin{DoxyParamCaption}
+\item[{{\bf byte}}]{ a, }
+\item[{{\bf byte}}]{ b, }
+\item[{{\bf byte}}]{ c}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_aec2f90bd4eefb8ed4c7efe0bf2ffcf11}
+
+
+Helper function to decode triple modular redundancy coded bytes. 
+
+\hypertarget{classefb_1_1HaarConduitImage_a06964ac33b5eda29247dfd8759f8829e}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!decodeFromBlock@{decodeFromBlock}}
+\index{decodeFromBlock@{decodeFromBlock}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{decodeFromBlock}]{\setlength{\rightskip}{0pt plus 5cm}void decodeFromBlock (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{ x0, }
+\item[{unsigned int}]{ y0, }
+\item[{std::vector$<$ char $>$ \&}]{ data}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a06964ac33b5eda29247dfd8759f8829e}
+\hypertarget{classefb_1_1HaarConduitImage_a875768da357b56e18091f3b7a1d4057b}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!haar2dDwt@{haar2dDwt}}
+\index{haar2dDwt@{haar2dDwt}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{haar2dDwt}]{\setlength{\rightskip}{0pt plus 5cm}void haar2dDwt (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{ x0, }
+\item[{unsigned int}]{ y0}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a875768da357b56e18091f3b7a1d4057b}
+
+
+Perform the Haar Discrete Wavelet transform on an 8x8 block. 
+
+Perform the Haar Discrete Wavelet Transform (with lifting scheme so the inverse can be performed losslessly). We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block. \hypertarget{classefb_1_1HaarConduitImage_a72f0f029a9b61d1b7955a513aa908378}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!divFloor@{divFloor}}
+\index{divFloor@{divFloor}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{divFloor}]{\setlength{\rightskip}{0pt plus 5cm}int divFloor (
+\begin{DoxyParamCaption}
+\item[{int}]{ a, }
+\item[{int}]{ b}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a72f0f029a9b61d1b7955a513aa908378}
+
+
+Helper function for lifting scheme. 
+
+\hypertarget{classefb_1_1HaarConduitImage_acd25c4ac995afaeb0ec93a1015f92d0b}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!haar2dDwti@{haar2dDwti}}
+\index{haar2dDwti@{haar2dDwti}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{haar2dDwti}]{\setlength{\rightskip}{0pt plus 5cm}void haar2dDwti (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{ x0, }
+\item[{unsigned int}]{ y0}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_acd25c4ac995afaeb0ec93a1015f92d0b}
+
+
+Perform the inverse Haar Discrete Wavelet transform on an 8x8 block. 
+
+Perform the inverse Haar Discrete Wavelet Transform using a lifting scheme We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block. \hypertarget{classefb_1_1HaarConduitImage_a1ffe316d6387cb21689ede4f06c44500}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!writeSize@{writeSize}}
+\index{writeSize@{writeSize}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{writeSize}]{\setlength{\rightskip}{0pt plus 5cm}void writeSize (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{ len}
+\end{DoxyParamCaption}
+)}}
+\label{classefb_1_1HaarConduitImage_a1ffe316d6387cb21689ede4f06c44500}
+
+
+Writes the size of the image (2 bytes) to the last two blocks, using triple modular redundancy. 
+
+\hypertarget{classefb_1_1HaarConduitImage_a5e272ba12218188cba439255dea9df40}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!readSize@{readSize}}
+\index{readSize@{readSize}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{readSize}]{\setlength{\rightskip}{0pt plus 5cm}unsigned short readSize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a5e272ba12218188cba439255dea9df40}
+
+
+Attempt to read the size tag of the image, describing how many bytes of data are stored. 
+
+
+
+Implements \hyperlink{classefb_1_1IConduitImage_af4c6699ceacada4b0222ad4f1d1c384d}{IConduitImage}.
+
+\hypertarget{classefb_1_1HaarConduitImage_a722f5510d5b87afd72222afed3f77d34}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!implantData@{implantData}}
+\index{implantData@{implantData}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{implantData}]{\setlength{\rightskip}{0pt plus 5cm}void implantData (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ char $>$ \&}]{ data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a722f5510d5b87afd72222afed3f77d34}
+
+
+Implant a specified vector$<$char$>$ into the image. 
+
+This operation implants a data vector into the image, using 3 bytes per 8x8 pixel block. The final two blocks are reserved for storing the length of the data vector, so it may be easily recovered. Unused blocks are padded with random data. This function may throw \hyperlink{classefb_1_1ConduitImageExtractException}{ConduitImageExtractException}, normally if the data provided is too large to store.
+
+/param data The vector$<$char$>$ that we wish to implant in the image. Must be no more than 24294 bytes (90x90 blocks, 3 bytes per block, subtract 6-\/byte length tag). 
+
+Implements \hyperlink{classefb_1_1IConduitImage_aead78fe96a2ec4e676c7aaf018427671}{IConduitImage}.
+
+\hypertarget{classefb_1_1HaarConduitImage_a34b2b3ff92ddfea24ccd0c1b6786152c}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!extractData@{extractData}}
+\index{extractData@{extractData}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{extractData}]{\setlength{\rightskip}{0pt plus 5cm}void extractData (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ char $>$ \&}]{ data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_a34b2b3ff92ddfea24ccd0c1b6786152c}
+
+
+Attempt to allocate and return a new vector$<$char$>$ containing the extracted data. 
+
+This operation allocates a new vector$<$char$>$ big of a size denoted by the length tag at the end (last two 8x8 pixel blocks) of the image. Extraction of the data is then attempted. This function may well throw \hyperlink{classefb_1_1ConduitImageExtractException}{ConduitImageExtractException} since the image may be a normal Facebook image and not contain anything. 
+
+Implements \hyperlink{classefb_1_1IConduitImage_a920c1ba3f4f8d7531a8b6f8c8b38def6}{IConduitImage}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classefb_1_1HaarConduitImage_aba28e7654a4ce9835d571c3daaebc43c}{
+\index{efb::HaarConduitImage@{efb::HaarConduitImage}!is\_\-formatted\_\-@{is\_\-formatted\_\-}}
+\index{is\_\-formatted\_\-@{is\_\-formatted\_\-}!efb::HaarConduitImage@{efb::HaarConduitImage}}
+\subsubsection[{is\_\-formatted\_\-}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf is\_\-formatted\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1HaarConduitImage_aba28e7654a4ce9835d571c3daaebc43c}
+
+
+Flag to state whether the image has been prepared for implantation. 
+
