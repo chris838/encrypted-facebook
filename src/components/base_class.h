@@ -5,9 +5,6 @@
 #error a C++ compiler is required
 #endif
 
-// TEST INCLUDE
-#include "efb.h"
-
 #include "DataCarrierImg.h"
 
  

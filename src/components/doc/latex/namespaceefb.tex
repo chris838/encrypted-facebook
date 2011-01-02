@@ -1,0 +1,85 @@
+\hypertarget{namespaceefb}{
+\section{efb Namespace Reference}
+\label{namespaceefb}\index{efb@{efb}}
+}
+
+
+Namespace containing all the Encrypted Facebook C++ code.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structefb_1_1FacebookId}{FacebookId}
+\item 
+class \hyperlink{classefb_1_1IFirefoxInterface}{IFirefoxInterface}
+\begin{DoxyCompactList}\small\item\em Firefox interface definition. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1ICrypto}{ICrypto}
+\begin{DoxyCompactList}\small\item\em Abstract class definining the interface for the cryptographic algorithms. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1IFec}{IFec}
+\begin{DoxyCompactList}\small\item\em Abstract class definining the interface for the error correction algorithms. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1IConduitImage}{IConduitImage}
+\begin{DoxyCompactList}\small\item\em Abstract class defining a conduit image, with functionality for implanting and extracting data. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1ICore}{ICore}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classefb_1_1Core}{Core} library class. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1BotanCrypto}{BotanCrypto}
+\begin{DoxyCompactList}\small\item\em Botan cryptography class using N-\/byte AES and M-\/byte RSA. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1ShifraFec}{ShifraFec}
+\begin{DoxyCompactList}\small\item\em Shifra Reed Solomon error correction library where code rate is (N,M). \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1ReedSolomon255Fec}{ReedSolomon255Fec}
+\begin{DoxyCompactList}\small\item\em Reed Solomon error correction using the Shifra library with 255-\/byte block size providing a (255,223) code rate. \item\end{DoxyCompactList}\item 
+class \hyperlink{classefb_1_1HaarConduitImage}{HaarConduitImage}
+\item 
+class \hyperlink{classefb_1_1Core}{Core}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned short \hyperlink{namespaceefb_acce95f2192212162af47fde5af397bea}{Unicode2Bytes}
+\item 
+typedef unsigned int \hyperlink{namespaceefb_aa0d3cfad43f6f1a2056b87427ada3b74}{Unicode4Bytes}
+\item 
+typedef unsigned char \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Namespace containing all the Encrypted Facebook C++ code. This namespace contains several abstract base classes along with their concrete subclasses. In places we use abstract classes in place of interfaces -\/ hence the 'I' prefix. Some abstract classes do not particularly conform to the definition of interface, however for continuity we still use the 'I' prefix to denote that these classes are abstract and must be extended.
+
+\begin{DoxyParagraph}{Main library class and Firefox interface}
+
+\end{DoxyParagraph}
+The main libray (abstract) class \hyperlink{classefb_1_1ICore}{ICore} implements \hyperlink{classefb_1_1IFirefoxInterface}{IFirefoxInterface} -\/ the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
+
+On instantiation the class also creates (as members) instances of the cryptograhic and error correction classes which group related functions. This class also contains methods for UTF8 string decoding and encoding.
+
+The class also forms part of what can be described as something similiar to an abstract factory pattern -\/ in that any concrete subclass of \hyperlink{classefb_1_1ICore}{ICore} determines (to some extent) which concrete cryptography, error correction and image subclasses are used. This is because there exists some interdependancy between exact implementations of these library sub-\/components. For example, the error correction implementation must match the bit error rate inccured when the image carrier implementation undergoes compression.
+
+\begin{DoxyParagraph}{Cryptograhy and error correction algorithms}
+
+\end{DoxyParagraph}
+The \hyperlink{classefb_1_1ICrypto}{ICrypto} class defines an interface to the cryptography algorithms used by the rest of the library. These include algorithms for both symmetric and asymmetric encryption/decryption, and also for public/private key pair generation. The \hyperlink{classefb_1_1IFec}{IFec} class similarly defines an interface to the forward error correction algorithms.
+
+For both library classes, subclass creation and destruction is managed by the main library class which will extend \hyperlink{classefb_1_1ICore}{ICore}. A concrete \hyperlink{classefb_1_1ICore}{ICore} subclass will select concrete subclasses of \hyperlink{classefb_1_1IFec}{IFec} and \hyperlink{classefb_1_1ICrypto}{ICrypto}.
+
+\begin{DoxyParagraph}{Conduit image class}
+
+\end{DoxyParagraph}
+The \hyperlink{classefb_1_1IConduitImage}{IConduitImage} abstract class extends the CImg library class (CImg) by adding functionality to implant and extract data to the image in a reasonably JPEG compression immune fashion. Like the \hyperlink{classefb_1_1IFec}{IFec} and \hyperlink{classefb_1_1ICrypto}{ICrypto} library classes the concrete implemention is specified by the concrete implementation of \hyperlink{classefb_1_1ICore}{ICore}. 
+
+\subsection{Typedef Documentation}
+\hypertarget{namespaceefb_acce95f2192212162af47fde5af397bea}{
+\index{efb@{efb}!Unicode2Bytes@{Unicode2Bytes}}
+\index{Unicode2Bytes@{Unicode2Bytes}!efb@{efb}}
+\subsubsection[{Unicode2Bytes}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned short {\bf Unicode2Bytes}}}
+\label{namespaceefb_acce95f2192212162af47fde5af397bea}
+\hypertarget{namespaceefb_aa0d3cfad43f6f1a2056b87427ada3b74}{
+\index{efb@{efb}!Unicode4Bytes@{Unicode4Bytes}}
+\index{Unicode4Bytes@{Unicode4Bytes}!efb@{efb}}
+\subsubsection[{Unicode4Bytes}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned int {\bf Unicode4Bytes}}}
+\label{namespaceefb_aa0d3cfad43f6f1a2056b87427ada3b74}
+\hypertarget{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{
+\index{efb@{efb}!byte@{byte}}
+\index{byte@{byte}!efb@{efb}}
+\subsubsection[{byte}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned char {\bf byte}}}
+\label{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}

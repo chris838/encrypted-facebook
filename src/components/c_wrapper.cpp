@@ -1,4 +1,8 @@
 #include "c_wrapper.h"
+
+// TEST INCLUDE
+#include "efb.h"
+
 #include "base_class.h"
 
 #include <bitset>

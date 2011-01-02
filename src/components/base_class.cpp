@@ -1,14 +1,5 @@
 #include "base_class.h"
 
-// Reed Solomon includes
-#include "rs/schifra_galois_field.hpp"
-#include "rs/schifra_galois_field_polynomial.hpp"
-#include "rs/schifra_sequential_root_generator_polynomial_creator.hpp"
-#include "rs/schifra_reed_solomon_encoder.hpp"
-#include "rs/schifra_reed_solomon_decoder.hpp"
-#include "rs/schifra_reed_solomon_block.hpp"
-#include "rs/schifra_error_processes.hpp"
-
 using namespace cimg_library;
 
 base::base(const std::string cd, const std::string td) : cache_dir(cd), temp_dir(td)
@@ -407,23 +398,26 @@ unsigned int base::CalculateBER(
 
   return 0;
 }
+
 unsigned int base::ReedSolomonEncoder(
       std::string  	& message,
       std::string	& fec
 ) const
+{return 0;}
+/**
 {
 
-  /* Finite Field Parameters */
+  // Finite Field Parameters 
   const std::size_t field_descriptor                 =   8;
   const std::size_t generator_polynommial_index      =   120;
   const std::size_t generator_polynommial_root_count =   32;
   
-  /* Reed Solomon Code Parameters */
+  // Reed Solomon Code Parameters 
   const std::size_t code_length = 255;
   const std::size_t fec_length  =  32;
   const std::size_t data_length = code_length - fec_length;
 
-   /* Instantiate Finite Field and Generator Polynomials */
+   // Instantiate Finite Field and Generator Polynomials 
    schifra::galois::field field(field_descriptor,
                                 schifra::galois::primitive_polynomial_size06,
                                 schifra::galois::primitive_polynomial06);
@@ -435,15 +429,15 @@ unsigned int base::ReedSolomonEncoder(
                                                          generator_polynommial_root_count,
                                                          generator_polynomial);
 
-   /* Instantiate Encoder and Decoder (Codec) */
+   // Instantiate Encoder and Decoder (Codec) 
    schifra::reed_solomon::encoder<code_length,fec_length> encoder(field,generator_polynomial);
 
    message = message + std::string(data_length - message.length(),static_cast<unsigned char>(0x00));
 
-   /* Instantiate RS Block For Codec */
+   // Instantiate RS Block For Codec 
    schifra::reed_solomon::block<code_length,fec_length> block;
 
-   /* Transform message into Reed-Solomon encoded codeword */
+   // Transform message into Reed-Solomon encoded codeword 
    if (!encoder.encode(message,block))
    {
       std::cout << "Error - Critical encoding failure!" << std::endl;
@@ -455,24 +449,26 @@ unsigned int base::ReedSolomonEncoder(
 
    return 0;
 }
-
+  */
 unsigned int base::ReedSolomonDecoder(
       std::string  	& message_plus_errors,
       std::string	& fec,
       std::string	& message
 ) const
+{return 0;}
+/**
 {
-  /* Finite Field Parameters */
+  // Finite Field Parameters 
   const std::size_t field_descriptor                 =   8;
   const std::size_t generator_polynommial_index      =   120;
   const std::size_t generator_polynommial_root_count =   32;
   
-  /* Reed Solomon Code Parameters */
+  // Reed Solomon Code Parameters 
   const std::size_t code_length = 255;
   const std::size_t fec_length  =  32;
   const std::size_t data_length = code_length - fec_length;
   
-  /* Instantiate Finite Field and Generator Polynomials */
+  // Instantiate Finite Field and Generator Polynomials 
   schifra::galois::field field(field_descriptor,
 			       schifra::galois::primitive_polynomial_size06,
 			       schifra::galois::primitive_polynomial06);
@@ -482,10 +478,10 @@ unsigned int base::ReedSolomonDecoder(
 							generator_polynommial_root_count,
 							generator_polynomial);
   
-  /* Instantiate Decoder (Codec) */
+  // Instantiate Decoder (Codec) 
   schifra::reed_solomon::decoder<code_length,fec_length> decoder(field,generator_polynommial_index);
   
-  /* Instantiate RS Block For Codec */
+  // Instantiate RS Block For Codec 
   schifra::reed_solomon::block<code_length,fec_length> block(message_plus_errors, fec);
   
   if (!decoder.decode(block))
@@ -499,6 +495,7 @@ unsigned int base::ReedSolomonDecoder(
   
   return 0;
 }
+*/
 
 base::~base()
 {

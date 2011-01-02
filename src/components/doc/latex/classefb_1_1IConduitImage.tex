@@ -1,0 +1,84 @@
+\hypertarget{classefb_1_1IConduitImage}{
+\section{IConduitImage Class Reference}
+\label{classefb_1_1IConduitImage}\index{efb::IConduitImage@{efb::IConduitImage}}
+}
+
+
+Abstract class defining a conduit image, with functionality for implanting and extracting data.  
+
+
+Inheritance diagram for IConduitImage:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classefb_1_1IConduitImage}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual unsigned int \hyperlink{classefb_1_1IConduitImage_ab697b8ff0b8bc87a3f17a8af30fa37e2}{getMaxSize} ()=0
+\begin{DoxyCompactList}\small\item\em Get the maximum ammount of data that can be stored in this implementation. \item\end{DoxyCompactList}\item 
+virtual unsigned short \hyperlink{classefb_1_1IConduitImage_a7070b468d77b99cb6e26849b938264b9}{read\_\-size} ()=0
+\begin{DoxyCompactList}\small\item\em Check how much data (if any) is stored in the current image. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classefb_1_1IConduitImage_a20a2b214e8535fa70790a9b9012693ae}{implant\_\-data} (std::vector$<$ char $>$ \&data)=0
+\begin{DoxyCompactList}\small\item\em Implant data. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classefb_1_1IConduitImage_a4023566af236193894767c84f1a27d02}{extract\_\-data} (std::vector$<$ char $>$ \&data)=0
+\begin{DoxyCompactList}\small\item\em Extract data. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstract class defining a conduit image, with functionality for implanting and extracting data. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classefb_1_1IConduitImage_ab697b8ff0b8bc87a3f17a8af30fa37e2}{
+\index{efb::IConduitImage@{efb::IConduitImage}!getMaxSize@{getMaxSize}}
+\index{getMaxSize@{getMaxSize}!efb::IConduitImage@{efb::IConduitImage}}
+\subsubsection[{getMaxSize}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int getMaxSize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1IConduitImage_ab697b8ff0b8bc87a3f17a8af30fa37e2}
+
+
+Get the maximum ammount of data that can be stored in this implementation. 
+
+\hypertarget{classefb_1_1IConduitImage_a7070b468d77b99cb6e26849b938264b9}{
+\index{efb::IConduitImage@{efb::IConduitImage}!read\_\-size@{read\_\-size}}
+\index{read\_\-size@{read\_\-size}!efb::IConduitImage@{efb::IConduitImage}}
+\subsubsection[{read\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned short read\_\-size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1IConduitImage_a7070b468d77b99cb6e26849b938264b9}
+
+
+Check how much data (if any) is stored in the current image. 
+
+\hypertarget{classefb_1_1IConduitImage_a20a2b214e8535fa70790a9b9012693ae}{
+\index{efb::IConduitImage@{efb::IConduitImage}!implant\_\-data@{implant\_\-data}}
+\index{implant\_\-data@{implant\_\-data}!efb::IConduitImage@{efb::IConduitImage}}
+\subsubsection[{implant\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}virtual void implant\_\-data (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ char $>$ \&}]{ data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1IConduitImage_a20a2b214e8535fa70790a9b9012693ae}
+
+
+Implant data. 
+
+\hypertarget{classefb_1_1IConduitImage_a4023566af236193894767c84f1a27d02}{
+\index{efb::IConduitImage@{efb::IConduitImage}!extract\_\-data@{extract\_\-data}}
+\index{extract\_\-data@{extract\_\-data}!efb::IConduitImage@{efb::IConduitImage}}
+\subsubsection[{extract\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}virtual void extract\_\-data (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ char $>$ \&}]{ data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1IConduitImage_a4023566af236193894767c84f1a27d02}
+
+
+Extract data. 
+
