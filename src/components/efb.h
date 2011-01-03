@@ -148,7 +148,7 @@
     };
 
     //! Abstract class defining a conduit image, with functionality for implanting and extracting data.
-    class IConduitImage : public cimg_library::CImg<char>
+    class IConduitImage : public cimg_library::CImg<byte>
     {
         public :
             //! Get the maximum ammount of data that can be stored in this implementation.
@@ -440,17 +440,16 @@
          */
         void encodeInBlock
         (
-            unsigned int 			x0,
-            unsigned int 			y0,
-            byte 			a,
-            byte 			b,
-            byte 			c
+            byte 	    a,
+            byte 	    b,
+            byte 	    c,
+            short int       temp[8][8]
         )
         {  
-          operator()( x0, y0 ) 	= (a & 0xfc) | 0x02;
-          operator()( x0+1, y0 ) 	= (b & 0xfc) | 0x02;
-          operator()( x0, y0+1 ) 	= (c & 0xfc) | 0x02;
-          operator()( x0+1, y0+1 ) 	= ((a & 0x03) <<6) | ((b & 0x03) <<4) | ((c & 0x03) <<2) | 0x02;
+          temp[0][0] 	= (a & 0xfc) | 0x02;
+          temp[1][0] 	= (b & 0xfc) | 0x02;
+          temp[0][1] 	= (c & 0xfc) | 0x02;
+          temp[1][1]	= ((a & 0x03) <<6) | ((b & 0x03) <<4) | ((c & 0x03) <<2) | 0x02;
         }
         
                
@@ -466,16 +465,15 @@
         }
         
         void decodeFromBlock(
-            unsigned int 		x0,
-            unsigned int 		y0,
-            std::vector<byte>		& data
+            short int temp[8][8],
+            std::vector<byte> & data
         ) const
         {
             byte p1,p2,p3,p4;
-            p1 = operator()( x0, y0 );
-            p2 = operator()( x0+1, y0 );
-            p3 = operator()( x0, y0+1 );
-            p4 = operator()( x0+1, y0+1 );
+            p1 = temp[0][0];
+            p2 = temp[1][0];
+            p3 = temp[0][1];
+            p4 = temp[1][1];
             
             byte a,b,c;
             a = (p1 & 0xfc) | ((p4 & 0xc0) >> 6);
@@ -488,42 +486,64 @@
         }
         
         
-        //! Perform the Haar Discrete Wavelet transform on an 8x8 block.
+        //! Perform the Haar Discrete Wavelet transform on an 8x8 temp block.
         /**
-            Perform the Haar Discrete Wavelet Transform (with lifting scheme so the inverse can be performed losslessly). We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block.
+            Perform the Haar Discrete Wavelet Transform (with lifting scheme so the inverse can be performed losslessly). The result is written to the supplied 8x8 array, since we cannot do this in place (we would need an extra sign bit for 3/4 of the 64 pixels).
         */
-        void haar2dDwt(
-                unsigned int x0,
-                unsigned int y0
-        )
-        {  
-            // Temp array for calculations
-            short int temp[4];
-            
-            // For each column, perform the 1D (vertical) HDWT with integer lifting
-            for (unsigned int x=x0; x<(x0+8); x++) {
-              for (unsigned int i=0; i<4; i++) {
-                // difference
-                temp[i] = operator()(x, y0+(2*i)) - operator()(x, y0+(2*i+1));
-                // average
-                operator()(x, y0+i) = divFloor( operator()(x, y0+(2*i)) + operator()(x, y0+(2*i+1)), 2);
-              }
-              for (unsigned int i=0; i<4; i++) operator()(x, y0+4+i) = temp[i];
+        void haar2dDwt
+        (
+            unsigned int x0,
+            unsigned int y0,
+            short int temp[8][8]
+        ) const
+        {
+            short int temp2[8][8];
+            // First iteration works on the entire 8x8 block
+            // For each row...
+            for (unsigned int j=0; j<8; j++) {
+                // Perform 1D Haar transfrom with integer lifting
+                for (unsigned int i=0; i<4; i++) {
+                    // average
+                    temp2[i][j] = divFloor( operator()(x0+2*i, y0+j) +
+                                            operator()(x0+2*i+1, y0+j),
+                                            2);
+                    // difference
+                    temp2[4+i][j] = operator()(x0+2*i, y0+j) -
+                                    operator()(x0+2*i+1, y0+j);
+                }
             }
-            
-            // For each row, perform the 1D (horizontal) HDWT with integer lifting
-            for (unsigned int y=y0; y<(y0+8); y++) {
-              for (unsigned int i=0; i<4; i++) {
-                // difference
-                temp[i] = operator()(x0+(2*i), y) - operator()(x0+(2*i+1), y);
-                // average
-                operator()(x0+i, y) = divFloor( operator()(x0+(2*i), y) + operator()(x0+(2*i+1), y), 2);
-              }
-              // copy in difference values
-              for (unsigned int i=0; i<4; i++) operator()(x0+4+i, y) = temp[i];
-            } 
+            // For each column...
+            for (unsigned int i=0; i<8; i++) {
+                // Perform 1D Haar transfrom with integer lifting
+                for (unsigned int j=0; j<4; j++) {
+                    // average
+                    temp[i][j] = divFloor( temp2[i][2*j] + temp2[i][2*j+1], 2);
+                    // difference
+                    temp[i][4+j] = temp2[i][2*j] - temp2[0][2*j+1];
+                }
+            }
+            // Then the next iteration on the top left 4x4 corner block
+            // For each row...
+            for (unsigned int j=0; j<4; j++) {
+                // Perform 1D Haar transfrom with integer lifting
+                for (unsigned int i=0; i<2; i++) {
+                    // average
+                    temp2[i][j] = divFloor(temp[2*i][j] + temp[2*i+1][j], 2);
+                    // difference
+                    temp2[2+i][j] = temp[2*i][j] - temp[2*i+1][j];
+                }
+            }
+            // For each column...
+            for (unsigned int i=0; i<4; i++) {
+                // Perform 1D Haar transfrom with integer lifting
+                for (unsigned int j=0; j<2; j++) {
+                    // average
+                    temp[i][j] = divFloor(temp2[i][2*j] + temp2[i][2*j+1], 2);
+                    // difference
+                    temp[i][2+j] = temp2[i][2*j] - temp2[i][2*j+1];
+                }
+            }
         }
-        
         
         //! Helper function for lifting scheme
         int divFloor(int a, int b) const {
@@ -531,50 +551,78 @@
           else return (a-1)/b; 
         }
         
+        void truncateCoefficients( short int& p1, short int& p2, short int& m)
+        {
+            // If p1 or p2 lie outside the range 0-255 we must rectify this, however we *MUST* also preserve their mean value (m) as this contains data.
+            if (p1<0) {p1 = 0; p2 = 2*m;}
+            if (p1>255) {p1 = 255; p2 = 2*m-255;}
+            if (p2<0) {p2 = 0; p1 = 2*m;}
+            if (p2>255) {p2 = 255; p1 = 2*m-255;}
+        }
         
         //! Perform the inverse Haar Discrete Wavelet transform on an 8x8 block.
         /**
-            Perform the inverse Haar Discrete Wavelet Transform using a lifting scheme. We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block.
+            Perform the inverse Haar Discrete Wavelet Transform using a lifting scheme. We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block. We read in from the supplied temp block containing the wavelet coefficients.
         */
         void haar2dDwti(
-                unsigned int x0,
-                unsigned int y0
+            short int temp[8][8],
+            unsigned int x0,
+            unsigned int y0
         )
         {
-            // Temporary array and ints for calculations
-            short int temp[8], p1, p2;
-            
-            // For each row, perform the 1D (horizontal) inverse HDWT with integer lifting
-            for (unsigned int y=y0; y<(y0+8); y++) {
+            short int temp2[8][8], p1, p2;
+            // First iteration just on the 4x4 top left corner block
+            // For each column...
+            for (unsigned int i=0; i<4; i++) {
+                // Perform 1D inverse Haar transfrom with integer lifting
+                for (unsigned int j=0; j<2; j++) {
+                    p1 	= temp[i][j] + divFloor(temp[i][2+j]+1,2) ;
+                    p2 	= p1 - temp[i][2+j];
+                    // Check we don't overflow the pixel
+                    if (i<2) truncateCoefficients(p1,p2,temp[i][j]);
+                    temp2[i][2*j] = p1;
+                    temp2[i][2*j+1] = p2;
+                }
+            }
+            // For each row (do the same again)...
+            for (unsigned int j=0; j<4; j++) {
+                // Perform 1D inverse Haar transfrom with integer lifting
+                for (unsigned int i=0; i<2; i++) {
+                    // Check we don't overflow the pixel
+                    p1 	= temp2[i][j] + divFloor(temp2[2+i][j]+1,2) ;
+                    p2 	= p1 - temp2[2+i][j];
+                    truncateCoefficients(p1,p2,temp2[i][j]);
+                    temp[2*i][j] =  p1;
+                    temp[2*i+1][j] = p2;                    
+                }
+            }
+            // Then the next iteration on the entire 8x8 block
+            // For each column...
+            for (unsigned int i=0; i<8; i++) {
+                // Perform 1D inverse Haar transfrom with integer lifting
+                for (unsigned int j=0; j<4; j++) {
+                    // Check we don't overflow the pixel
+                    p1 	= temp[i][j] + divFloor(temp[i][4+j]+1,2) ;
+                    p2 	= p1 - temp[i][4+j];
+                    if (j<4) truncateCoefficients(p1,p2,temp[i][j]);
+                    temp2[i][2*j] = p1;
+                    temp2[i][2*j+1] = p2; 
+                }
+            }
+            // For each row (do the same again)...
+            for (unsigned int j=0; j<8; j++) {
+                // Perform 1D inverse Haar transfrom with integer lifting
                 for (unsigned int i=0; i<4; i++) {
                     // Check we don't overflow the pixel
-                    p1 = operator()(x0+i, y) + divFloor(operator()(x0+4+i, y)+1,2) ; // lifting scheme here
-                    p2 = p1 - operator()(x0+4+i, y);
-                    if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-                        p1 = p2 = operator()(x0+i, y);
-                    }
-                    temp[2*i]	  = p1;
-                    temp[2*i+1] = p2;
+                    p1 	= temp2[i][j] + divFloor(temp2[4+i][j]+1,2) ;
+                    p2 	= p1 - temp2[4+i][j];
+                    truncateCoefficients(p1,p2,temp2[i][j]);
+                    operator()(x0+2*i, y0+j) = temp[2*i][j] = p1;
+                    operator()(x0+2*i+1, y0+j) = temp[2*i+1][j] = p2;                    
                 }
-                for (unsigned int i=0; i<8; i++) operator()(x0+i, y) = temp[i];
-            }
-            
-            // For each column, perform the 1D (vertical) inverse HDWT with integer lifting
-            for (unsigned int x=x0; x<(x0+8); x++) {
-                for (unsigned int i=0; i<4; i++) {
-                    p1 = operator()(x, y0+i) + divFloor(operator()(x, y0+4+i)+1,2) ; // lifting scheme here
-                    p2 = p1 - operator()(x, y0+4+i);
-                    if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-                        p1 = p2 = operator()(x, y0+i);
-                    }
-                    temp[2*i]	  = p1;
-                    temp[2*i+1] = p2;
-                }
-                for (unsigned int i=0; i<8; i++) operator()(x, y0+i) = temp[i];
             }
         }
 
-    
         public :
         
             //! Default constructor.
@@ -593,38 +641,34 @@
                 unsigned short len    
             )
             {
+                short int temp[8][8];
                 byte len_hi,len_lo;
                 len_hi = (byte) (len >> 8);
                 len_lo = (byte) len;
-                // Apply the Haar transform to the two blocks (two iterations)
-                haar2dDwt (89*8, 88*8);
-                haar2dDwt (89*8, 88*8);
-                haar2dDwt (89*8, 89*8);
-                haar2dDwt (89*8, 89*8);
-                // Write in each half of the 2-byte length tag three times over
-                encodeInBlock(89*8, 88*8, len_hi, len_hi, len_hi );
-                encodeInBlock(89*8, 89*8, len_lo, len_lo, len_lo );
-                // Apply the inverse transform
-                haar2dDwti(89*8, 88*8);
-                haar2dDwti(89*8, 88*8);
-                haar2dDwti(89*8, 89*8);
-                haar2dDwti(89*8, 89*8);
+                //
+                haar2dDwt (89*8, 88*8, temp);
+                encodeInBlock(len_hi, len_hi, len_hi, temp );
+                haar2dDwti(temp, 89*8, 88*8);
+                //
+                haar2dDwt (89*8, 89*8, temp);
+                encodeInBlock(len_lo, len_lo, len_lo, temp );
+                haar2dDwti(temp, 89*8, 89*8);
             }
             
             //! Attempt to read the size tag of the image, describing how many bytes of data are stored.
             unsigned short readSize()
             {
+                short int temp[8][8];
                 std::vector<byte> len_blocks;
-                haar2dDwt ( 89*8, 88*8 );
-                haar2dDwt ( 89*8, 88*8 );
-                haar2dDwt ( 89*8, 89*8 );
-                haar2dDwt ( 89*8, 89*8 );
-                decodeFromBlock( 89*8, 88*8, len_blocks);
-                decodeFromBlock( 89*8, 89*8, len_blocks);
-                haar2dDwti( 89*8, 88*8 );
-                haar2dDwti( 89*8, 88*8 );
-                haar2dDwti( 89*8, 89*8 );
-                haar2dDwti( 89*8, 89*8 );
+                //
+                haar2dDwt ( 89*8, 88*8, temp );
+                decodeFromBlock( temp, len_blocks);
+                haar2dDwti( temp, 89*8, 88*8 );
+                //
+                haar2dDwt ( 89*8, 89*8, temp );
+                decodeFromBlock( temp, len_blocks);
+                haar2dDwti( temp, 89*8, 89*8 );
+                //
                 byte len_hi, len_lo;
                 len_hi = tripleModR( len_blocks[0], len_blocks[1], len_blocks[2] );
                 len_lo = tripleModR( len_blocks[3], len_blocks[4], len_blocks[5] );
@@ -653,34 +697,31 @@
                 unsigned short len = data.size(); // store this for length tag later
                 std::srand ( time(NULL) );
                 while ( data.size() % 3 != 0) data.push_back( (char) std::rand() ); // random padding
-                
+                                
                 // Loop through the image in 8x8 blocks
                 unsigned int idx, i, j;
-                for (int block_i=0; block_i<90; block_i++) {
-                  for (int block_j=0; block_j<90; block_j++) {
-                      
-                      i = block_i*8; j = block_j*8;
-                      // Apply the Haar transform to the block (two iterations)
-                      haar2dDwt (i, j);
-                      haar2dDwt (i, j);
-                      // Write out 3 bytes of data to the approximation coefficients
-                      idx = 3*((block_i*90) + block_j);
-                      if ( idx+2 < data.size() ) {
-                          // 3 bytes to one 8x8 block
-                          encodeInBlock(i, j, data[idx], data[idx+1], data[idx+2] );
-                      } else {
-                          // finish with random bytes
-                          encodeInBlock(i, j, (char) std::rand(), (char) std::rand(), (char) std::rand());
-                      }
-                      // Apply the inverse transform
-                      haar2dDwti(i, j);
-                      haar2dDwti(i, j);
+                short int temp[8][8];
+                for (unsigned int block_i=0; block_i<90; block_i++) {
+                  for (unsigned int block_j=0; block_j<90; block_j++) {
+                        i = block_i*8; j = block_j*8;
+                        // Apply the Haar transform to the block (two iterations)
+                        haar2dDwt (i, j, temp);
+                        // Write out 3 bytes of data to the approximation coefficients
+                        idx = 3*((block_i*90) + block_j);
+                        if ( idx+2 < data.size() ) {
+                            // 3 bytes to one 8x8 block
+                            encodeInBlock(data[idx], data[idx+1], data[idx+2], temp );
+                        } else {
+                            // finish with random bytes
+                            encodeInBlock((byte) std::rand(), (byte) std::rand(), (byte) std::rand(), temp);
+                        }
+                        // Apply the inverse transform and write back to the image
+                        haar2dDwti(temp, i, j);
                   }    
                 }
-              
+                
                 // Write the size of the data stored to the last two image blocks
                 writeSize(len);
-            
             }
             
             //! Attempt to allocate and return a new vector<byte> containing the extracted data.
@@ -703,16 +744,16 @@
                 
                 // Loop through the image in 8x8 blocks
                 int i, j; unsigned int idx;
-                for (int block_i=0; block_i<90; block_i++) {
-                    for (int block_j=0; block_j<90; block_j++) {
+                short int temp[8][8];
+                for (unsigned int block_i=0; block_i<90; block_i++) {
+                    for (unsigned int block_j=0; block_j<90; block_j++) {
                       
                         i = block_i*8; j = block_j*8;
                         
                         // Apply the transform (two iterations) to the block
-                        haar2dDwt ( i, j );
-                        haar2dDwt ( i, j );
+                        haar2dDwt (i, j, temp);
                         // Read in 3 bytes of data from the approximation coefficients
-                        decodeFromBlock( i, j, data);
+                        decodeFromBlock(temp, data);
                         // exit if we have enough data
                         idx = 3*((block_i*90) + block_j);
                         if ( idx+2 > len) block_i = block_j = 90;
@@ -771,7 +812,7 @@
                 data_file.seekg(0, std::ios::beg);
                 data.resize(head_size + data_size);
                 data_file.read((char*) &data[head_size], data_size);
-            /*
+            
                 // Generate header and encrypt the data
                 std::vector<FacebookId> ids_vector = std::vector<FacebookId>(ids, ids+len);
                 try {crypto->encryptMessage(ids_vector, data);}
@@ -779,7 +820,7 @@
                   std::cout << "Error encrypting: " << e.what() << std::endl;
                   return 4;
                 }
-              
+             /* 
                 // Add error correction code
                 try {fec->encode( data );}
                 catch (FecEncodeException &e) {
@@ -849,14 +890,13 @@
                   std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
                   return 3;
                 }
-                
+                */
                 // Retrieve the message key from the header and decrypt the data
                 try {crypto->decryptMessage(data);}
                 catch (DecryptionException &e) {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
-                */
                 
                 // Save data to a file, skipping the header
                 head_size = crypto->retrieveHeaderSize(data);
