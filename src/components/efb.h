@@ -1,6 +1,7 @@
 // Include required standard C++ headers.
 #include <stdio.h>
 #include <string>
+#include <bitset>
 #include <vector>
 #include <sstream>
 #include <stdexcept>
@@ -29,7 +30,7 @@
 
     \par Main library class and Firefox interface
     
-    The main libray (abstract) class \ref ICore implements IFirefoxInterface - the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
+    The main libray (abstract) class \ref ICore implements IeFBLibrary - the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
     
     On instantiation the class also creates (as members) instances of the cryptograhic and error correction classes which group related functions. This class also contains methods for UTF8 string decoding and encoding.
     
@@ -46,32 +47,34 @@
     The \ref IConduitImage abstract class extends the CImg library class (CImg) by adding functionality to implant and extract data to the image in a reasonably JPEG compression immune fashion. Like the \ref IFec and \ref ICrypto library classes the concrete implemention is specified by the concrete implementation of \ref ICore.    
 */
 
-namespace efb {
+//namespace efb {
 
     typedef unsigned short  Unicode2Bytes;
     typedef unsigned int    Unicode4Bytes;
     typedef unsigned char   byte;
-    typedef struct
-    {
-        unsigned int hi;
-        unsigned int lo;
-    }                       FacebookId;
+    
+    typedef long long int FacebookId;
+    
     // Exceptions for dealing with images - grouped into implant and extract.
     struct ImplantException : public std::runtime_error {
         ImplantException(const std::string &err) : std::runtime_error(err) {} };
-    struct ExractException : public std::runtime_error {
-        ExractException(const std::string &err) : std::runtime_error(err) {} };
+    struct ExtractException : public std::runtime_error {
+        ExtractException(const std::string &err) : std::runtime_error(err) {} };
     struct ConduitImageImplantException : public ImplantException {
         ConduitImageImplantException(const std::string &err) : ImplantException(err) {} };
-    struct ConduitImageExractException : public ExractException {
-        ConduitImageExractException(const std::string &err) : ExractException(err) {} };
+    struct ConduitImageExtractException : public ExtractException {
+        ConduitImageExtractException(const std::string &err) : ExtractException(err) {} };
     struct FecEncodeException : public ImplantException {
         FecEncodeException(const std::string &err) : ImplantException(err) {} };
-    struct FecDecodeException : public ExractException {
-        FecDecodeException(const std::string &err) : ExractException(err) {} };
+    struct FecDecodeException : public ExtractException {
+        FecDecodeException(const std::string &err) : ExtractException(err) {} };
+    struct EncryptionException : public ImplantException {
+        EncryptionException(const std::string &err) : ImplantException(err) {} };
+    struct DecryptionException : public ExtractException {
+        DecryptionException(const std::string &err) : ExtractException(err) {} };
 
-    //! Firefox interface definition.
-    class IFirefoxInterface
+    //! Library interface definition.
+    class IeFBLibrary
     {
         public :
             //! Initialise library with Facebook ID and extension directory.
@@ -82,35 +85,37 @@ namespace efb {
             //! Encrypt a file into an image for the supplied array of recipients.
             virtual unsigned int encryptFileInImage
             (
-                const FacebookId ids[],
+                const char ids[],
                 const unsigned int len,
-                const char*  src_filename,
+                const char*  data_filename,
                 const char*  img_out_filename
-            ) const = 0;
+            ) = 0;
             //! Attempt to extract and decrypt a file from an image.
             virtual unsigned int decryptFileFromImage
             (
                 const char*  img_in_filename,
-                const char*  dst_filename
-            ) const = 0;
+                const char*  data_filename
+            ) = 0;
             
             //! Take a message string and encrypt into a Facebook-ready string. Both will be null terminated.
             virtual unsigned int encryptString
             (
+                const char ids[],
+                const unsigned int len,
                 const char*  input,
                       char*  output
-            ) const = 0;
+            ) = 0;
             //! Take string from Facebook and decrypt to a message string. Both will be null terminated.
             virtual unsigned int decryptString(
                 const char*  input,
                       char*  output
-            ) const = 0;
+            ) = 0;
             
             //! Debug function for calculating BER
             virtual unsigned int calculateBitErrorRate
             (
-                const char*  file1,
-                const char*  file2
+                const char*  file1_path,
+                const char*  file2_path
             ) const = 0;
     };
     
@@ -120,13 +125,15 @@ namespace efb {
         public :
             //! Returns the predicted header size so we can leave room before encryption.
             virtual unsigned int calculateHeaderSize( unsigned int numOfIds ) const = 0;
+            //! Retrieves header of any stored data size so we can skip this after decryption.
+            virtual unsigned int retrieveHeaderSize(std::vector<byte>& data) const = 0;
             //! Writes header and encrypts message. Assumes there is a header-size offset before data bytes begin.
             virtual void encryptMessage
             (
                 std::vector<FacebookId>& ids,
                 std::vector<byte>& data // with header-size offset before data bytes begin
             ) = 0;
-            //! Parses any data header and attempts to decrypt the data
+            //! Parses any data header and attempts to decrypt the data, leaving the header in place.
             virtual void decryptMessage( std::vector<byte>& data ) = 0;
     };
     
@@ -134,10 +141,10 @@ namespace efb {
     class IFec
     {
         public :
-            //! Encode data into a new vector.
-            virtual std::vector<byte>& encode( std::vector<byte>& data);
-            //! Decode (correct) data into a new vector.
-            virtual std::vector<byte>& decode( std::vector<byte>& data);
+            //! Encode data by appending error correction codes.
+            virtual void encode( std::vector<byte>& data)=0;
+            //! Decode (correct) data in place.
+            virtual void decode( std::vector<byte>& data)=0;
     };
 
     //! Abstract class defining a conduit image, with functionality for implanting and extracting data.
@@ -149,33 +156,34 @@ namespace efb {
             //! Check how much data (if any) is stored in the current image.
             virtual unsigned short readSize() = 0;
             //! Implant data.
-            virtual void implantData( std::vector<char>& data ) = 0;
+            virtual void implantData( std::vector<byte>& data ) = 0;
             //! Extract data.
-            virtual void extractData( std::vector<char>& data ) = 0;
+            virtual void extractData( std::vector<byte>& data ) = 0;
     };
     
     //! Core library class.
     /**
         This is the main library class. Other library components (cryptography and error correction) are grouped into further classes and instantiated as attribute members.
     */
-    class ICore : public IFirefoxInterface
+    class ICore : public IeFBLibrary
     {
-        //! Instance of the cryptographic library code.
-        ICrypto* crypto;
-        //! Instance of the forward error correction library code.
-        IFec* fec;
-        //! Initialiser for the cryptograhic library code.
-        void init_crypto()
-            {crypto = &create_ICrypto();}
-        //! Initialiser for the forward error correction library code.
-        void init_fec()
-            {fec = &create_IFec();}
         //! Abstract factory pattern object creater.
-        virtual IConduitImage& create_IConduitImage() = 0;
+        virtual IConduitImage* create_IConduitImage() = 0;
         //! Abstract factory pattern object creater.
-        virtual ICrypto& create_ICrypto() = 0;
+        virtual ICrypto* create_ICrypto() = 0;
         //! Abstract factory pattern object creater.
-        virtual IFec& create_IFec() = 0;
+        virtual IFec* create_IFec() = 0;
+        
+        protected :
+            //! Instance of the cryptographic library code.
+            ICrypto* crypto;
+            //! Instance of the forward error correction library code.
+            IFec* fec;
+            // Default constructor
+            ICore( ICrypto* crypto, IFec* fec ) :
+                crypto( crypto ),
+                fec( fec )
+            {}
     };
     
     //! Botan cryptography class using N-byte AES and M-byte RSA.
@@ -241,11 +249,7 @@ namespace efb {
                 keystr[i] = data[iv.length()+i];
             setMessageKey( keystr );
         }
-        
-        //! Get the header size 
-        unsigned int retrieveHeaderSize(std::vector<byte>& data) const
-            {return iv.as_string().length() + key.as_string().length();}
-            
+                    
         //! Botan library members
         Botan::LibraryInitializer init;
         Botan::AutoSeeded_RNG rng;
@@ -253,7 +257,7 @@ namespace efb {
         Botan::InitializationVector iv;
         
         public :
-            
+        
             BotanCrypto()
             {
                 // so we can work out their sizes properly...
@@ -262,6 +266,9 @@ namespace efb {
             }
             
             unsigned int calculateHeaderSize( unsigned int numOfIds ) const
+                {return iv.as_string().length() + key.as_string().length();}
+
+            unsigned int retrieveHeaderSize(std::vector<byte>& data) const
                 {return iv.as_string().length() + key.as_string().length();}
                 
             void encryptMessage
@@ -317,8 +324,8 @@ namespace efb {
         schifra::galois::field_polynomial generator_polynomial_;
         schifra::sequential_root_generator_polynomial_creator polynomial_creator_;
         // Encoder and Decoder (Codec)
-        schifra::reed_solomon::encoder<N,M-N> encoder_;
-        schifra::reed_solomon::decoder<N,M-N> decoder_;
+        schifra::reed_solomon::encoder<N,N-M> encoder_;
+        schifra::reed_solomon::decoder<N,N-M> decoder_;
     
         //! Generate FEC code from a message   
         void encodeBlock(
@@ -387,6 +394,12 @@ namespace efb {
                 encoder_(field_,generator_polynomial_),
                 decoder_(field_,generator_polynommial_index_)
             {}
+            
+            //! Encode data by appending error correction codes.
+            void encode( std::vector<byte>& data) {}
+            //! Decode (correct) data in place.
+            void decode( std::vector<byte>& data) {}
+            
     };
     
     //! Reed Solomon error correction using the Schifra library with 255-byte block size providing a (255,223) code rate.
@@ -401,7 +414,7 @@ namespace efb {
                 32      // generator_polynommial_root_count
             ) {}
     };
-    
+    //! Conduit image class which uses the Haar wavelet tranform to store data in low frequency image components.
     class HaarConduitImage : public IConduitImage
     {
     
@@ -423,9 +436,7 @@ namespace efb {
         
         //! Encode 3 bytes of data to the Haar coefficients of an 8x8 block
         /**
-            This operation assumes we have performed the Haar transform (two iterations) on the block in
-            question. We store the provided 3 bytes of data in the most significant bits of 4 Haar coefficents
-            which represent the low-frequency component of the image.
+            This operation assumes we have performed the Haar transform (two iterations) on the block in question. We store the provided 3 bytes of data in the most significant bits of 4 Haar coefficents which represent the low-frequency component of the image.
          */
         void encodeInBlock
         (
@@ -457,7 +468,7 @@ namespace efb {
         void decodeFromBlock(
             unsigned int 		x0,
             unsigned int 		y0,
-            std::vector<char>		& data
+            std::vector<byte>		& data
         ) const
         {
             byte p1,p2,p3,p4;
@@ -479,41 +490,38 @@ namespace efb {
         
         //! Perform the Haar Discrete Wavelet transform on an 8x8 block.
         /**
-            Perform the Haar Discrete Wavelet Transform (with lifting scheme so
-            the inverse can be performed losslessly). We start at pixel (x0,y0)
-            in the image and work on the subsequent 8x8 block.
+            Perform the Haar Discrete Wavelet Transform (with lifting scheme so the inverse can be performed losslessly). We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block.
         */
         void haar2dDwt(
                 unsigned int x0,
                 unsigned int y0
         )
         {  
-          // Temp array for calculations
-          short int temp[4];
-          
-          // For each column, perform the 1D (vertical) HDWT with integer lifting
-          for (unsigned int x=x0; x<(x0+8); x++) {
-            for (int i=0; i<4; i++) {
-              // difference
-              temp[i] 		=  operator()(x, y0+(2*i)) - operator()(x, y0+(2*i+1));
-              // average
-              operator()(x, y0+i)	=  divFloor( operator()(x, y0+(2*i)) + operator()(x, y0+(2*i+1)), 2);
+            // Temp array for calculations
+            short int temp[4];
+            
+            // For each column, perform the 1D (vertical) HDWT with integer lifting
+            for (unsigned int x=x0; x<(x0+8); x++) {
+              for (unsigned int i=0; i<4; i++) {
+                // difference
+                temp[i] = operator()(x, y0+(2*i)) - operator()(x, y0+(2*i+1));
+                // average
+                operator()(x, y0+i) = divFloor( operator()(x, y0+(2*i)) + operator()(x, y0+(2*i+1)), 2);
+              }
+              for (unsigned int i=0; i<4; i++) operator()(x, y0+4+i) = temp[i];
             }
-            for (int i=0; i<4; i++) operator()(x, y0+4+i) = temp[i];
-          }
-          
-          // For each row, perform the 1D (horizontal) HDWT with integer lifting
-          for (unsigned int y=y0; y<(y0+8); y++) {
-            for (int i=0; i<4; i++) {
-              // difference
-              temp[i] 		=  operator()(x0+(2*i), y) - operator()(x0+(2*i+1), y);
-              // average
-              operator()(x0+i, y)	=  divFloor( operator()(x0+(2*i), y) + operator()(x0+(2*i+1), y), 2);
-            }
-            // copy in difference values
-            for (int i=0; i<4; i++) operator()(x0+4+i, y) = temp[i];
-          }
-          
+            
+            // For each row, perform the 1D (horizontal) HDWT with integer lifting
+            for (unsigned int y=y0; y<(y0+8); y++) {
+              for (unsigned int i=0; i<4; i++) {
+                // difference
+                temp[i] = operator()(x0+(2*i), y) - operator()(x0+(2*i+1), y);
+                // average
+                operator()(x0+i, y) = divFloor( operator()(x0+(2*i), y) + operator()(x0+(2*i+1), y), 2);
+              }
+              // copy in difference values
+              for (unsigned int i=0; i<4; i++) operator()(x0+4+i, y) = temp[i];
+            } 
         }
         
         
@@ -526,45 +534,44 @@ namespace efb {
         
         //! Perform the inverse Haar Discrete Wavelet transform on an 8x8 block.
         /**
-            Perform the inverse Haar Discrete Wavelet Transform using a lifting scheme
-            We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block.
+            Perform the inverse Haar Discrete Wavelet Transform using a lifting scheme. We start at pixel (x0,y0) in the image and work on the subsequent 8x8 block.
         */
         void haar2dDwti(
                 unsigned int x0,
                 unsigned int y0
         )
         {
-          // Temporary array and ints for calculations
-          short int temp[8], p1, p2;
-          
-          // For each row, perform the 1D (horizontal) inverse HDWT with integer lifting
-          for (unsigned int y=y0; y<(y0+8); y++) {
-            for (unsigned int i=0; i<4; i++) {
-              // Check we don't overflow the pixel
-              p1 	= operator()(x0+i, y) + divFloor(operator()(x0+4+i, y)+1,2) ; // lifting scheme here
-              p2 	= p1 - operator()(x0+4+i, y);
-              if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-                p1 = p2 = operator()(x0+i, y);
-              }
-              temp[2*i]	  = p1;
-              temp[2*i+1] = p2;
+            // Temporary array and ints for calculations
+            short int temp[8], p1, p2;
+            
+            // For each row, perform the 1D (horizontal) inverse HDWT with integer lifting
+            for (unsigned int y=y0; y<(y0+8); y++) {
+                for (unsigned int i=0; i<4; i++) {
+                    // Check we don't overflow the pixel
+                    p1 = operator()(x0+i, y) + divFloor(operator()(x0+4+i, y)+1,2) ; // lifting scheme here
+                    p2 = p1 - operator()(x0+4+i, y);
+                    if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
+                        p1 = p2 = operator()(x0+i, y);
+                    }
+                    temp[2*i]	  = p1;
+                    temp[2*i+1] = p2;
+                }
+                for (unsigned int i=0; i<8; i++) operator()(x0+i, y) = temp[i];
             }
-            for (int i=0; i<8; i++) operator()(x0+i, y) = temp[i];
-          }
-        
-          // For each column, perform the 1D (vertical) inverse HDWT with integer lifting
-          for (unsigned int x=x0; x<(x0+8); x++) {
-            for (unsigned int i=0; i<4; i++) {
-              p1   	= operator()(x, y0+i) + divFloor(operator()(x, y0+4+i)+1,2) ; // lifting scheme here
-              p2	= p1 - operator()(x, y0+4+i);
-              if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
-                p1 = p2 = operator()(x, y0+i);
-              }
-              temp[2*i]	  = p1;
-              temp[2*i+1] = p2;
+            
+            // For each column, perform the 1D (vertical) inverse HDWT with integer lifting
+            for (unsigned int x=x0; x<(x0+8); x++) {
+                for (unsigned int i=0; i<4; i++) {
+                    p1 = operator()(x, y0+i) + divFloor(operator()(x, y0+4+i)+1,2) ; // lifting scheme here
+                    p2 = p1 - operator()(x, y0+4+i);
+                    if ((p1>255) || (p1<0) || (p2>255) || (p2<0)) {
+                        p1 = p2 = operator()(x, y0+i);
+                    }
+                    temp[2*i]	  = p1;
+                    temp[2*i+1] = p2;
+                }
+                for (unsigned int i=0; i<8; i++) operator()(x, y0+i) = temp[i];
             }
-            for (int i=0; i<8; i++) operator()(x, y0+i) = temp[i];
-          } 
         }
 
     
@@ -573,6 +580,12 @@ namespace efb {
             //! Default constructor.
             HaarConduitImage() : is_formatted_(false)
             {}
+            
+            //! Maximum data that can be stored with this implementation.
+            unsigned int getMaxData()
+            {
+                return (90*90*3) - 6;
+            }
         
             //! Writes the size of the image (2 bytes) to the last two blocks, using triple modular redundancy.
             void writeSize
@@ -601,7 +614,7 @@ namespace efb {
             //! Attempt to read the size tag of the image, describing how many bytes of data are stored.
             unsigned short readSize()
             {
-                std::vector<char> len_blocks;
+                std::vector<byte> len_blocks;
                 haar2dDwt ( 89*8, 88*8 );
                 haar2dDwt ( 89*8, 88*8 );
                 haar2dDwt ( 89*8, 89*8 );
@@ -619,21 +632,20 @@ namespace efb {
                 return ((len_hi << 8) | len_lo);
             }
             
-            //! Implant a specified vector<char> into the image.
+            //! Implant a specified vector<byte> into the image.
             /**
                 This operation implants a data vector into the image, using 3 bytes per 8x8 pixel block. The final two blocks are reserved for storing the length of the data vector, so it may be easily recovered. Unused blocks are padded with random data. This function may throw ConduitImageExtractException, normally if the data provided is too large to store.
                 
-                /param data The vector<char> that we wish to implant in the image. Must be no more than 24294 bytes (90x90 blocks, 3 bytes per block, subtract 6-byte length tag).       
+                /param data The vector<byte> that we wish to implant in the image. Must be no more than 24294 bytes (90x90 blocks, 3 bytes per block, subtract 6-byte length tag).       
              */
             void implantData
             (
-                std::vector<char>& data
+                std::vector<byte>& data
             )
             {
                 // Check the image is properly formatted
                 if (!is_formatted_)
-                    throw ConduitImageImplantException(
-                        "Image not formatted. Was 'formatForImplantation' called?" );
+                    formatForImplantation();
                     
                 // Check the data isn't too large, note down size and pad out to a multiple of three
                 if (data.size() > getMaxData())
@@ -671,15 +683,16 @@ namespace efb {
             
             }
             
-            //! Attempt to allocate and return a new vector<char> containing the extracted data.
+            //! Attempt to allocate and return a new vector<byte> containing the extracted data.
             /**
-                This operation allocates a new vector<char> big of a size denoted by the length tag at the end (last two 8x8 pixel blocks) of the image. Extraction of the data is then attempted. This function may well throw ConduitImageExtractException since the image may be a normal Facebook image and not contain anything.
+                This operation allocates a new vector<byte> big of a size denoted by the length tag at the end (last two 8x8 pixel blocks) of the image. Extraction of the data is then attempted. This function may well throw ConduitImageExtractException since the image may be a normal Facebook image and not contain anything.
              */
             void extractData
             (
-                std::vector<char>&  data
+                std::vector<byte>&  data
             )
             {
+            
                 // Read the length tag from the image, check it is not too large .
                 unsigned short len = readSize();
                 if (len > getMaxData() )
@@ -711,6 +724,220 @@ namespace efb {
             }
     };
     
+    //! General library implementation using Reed Solomon FEC and Haar wavelet method for images.
+    /**
+        This implementation uses the Haar wavelet method to store data in images. Errors are corrected with the Schifra Reed Solomon library using a (255,223) code rate. Crytographic protocols are provided by the Botan library using AES-128 and 2048-bit public key RSA.
+    */
     class Core : public ICore
-    {};
-}
+   {
+        public :
+            //!Default contructor
+            Core() :
+                ICore( create_ICrypto(), create_IFec() )
+            {}
+            
+            //! Initialise library with Facebook ID and extension directory.
+            unsigned int initialise() {return 0;}
+            //! Close the library and wipe any volatile directories.
+            void close() {}
+            
+            unsigned int encryptFileInImage
+            (
+                const char ids[],
+                const unsigned int len,
+                const char*  data_filename,
+                const char*  img_out_filename
+            )
+            {
+                // !!!TODO!!! - For now we use a specific template image located on the desktop
+                const char* template_filename =  "/home/chris/Desktop/src.bmp";
+                //	 
+                std::ifstream 	data_file; // input data file
+                std::vector<byte> data; // byte array for our data bytes we wish to transfer
+                IConduitImage* 	img = create_IConduitImage(); // conduit image object
+                data.reserve( img->getMaxData() ); // we know the max number of items possible to store
+                unsigned int head_size, data_size; // size of the raw data we are sending
+
+                // Load the file, leaving room for the encryption header
+                head_size = crypto->calculateHeaderSize(len);
+                data_file.open( data_filename, std::ios::binary );
+                if(!data_file.is_open()) {
+                    std::cout << "Error opening data file." << std::endl;
+                    return 1;
+                }
+                data_file.seekg(0, std::ios::end);
+                data_size = data_file.tellg(); // get the length of the file 
+                // read the file into the data byte vector
+                data_file.seekg(0, std::ios::beg);
+                data.resize(head_size + data_size);
+                data_file.read((char*) &data[head_size], data_size);
+            /*
+                // Generate header and encrypt the data
+                std::vector<FacebookId> ids_vector = std::vector<FacebookId>(ids, ids+len);
+                try {crypto->encryptMessage(ids_vector, data);}
+                catch (EncryptionException &e) {
+                  std::cout << "Error encrypting: " << e.what() << std::endl;
+                  return 4;
+                }
+              
+                // Add error correction code
+                try {fec->encode( data );}
+                catch (FecEncodeException &e) {
+                  std::cout << "Error adding error correction code: " << e.what() << std::endl;
+                  return 2;
+                }
+            */
+                // Load the template image file into a ConduitImage object
+                try {img->load( template_filename );}
+                catch (cimg_library::CImgInstanceException &e) {
+                  std::cout << "Error loading template image: " << e.what() << std::endl;
+                  return 3;
+                }
+              
+                // Store the data vector in the image
+                try {img->implantData( data );}
+                catch (ConduitImageImplantException &e) {
+                    std::cout << "Error implanting data: " << e.what() << std::endl;
+                    return 4;
+                }
+              
+                // Save our final image (in a lossless format)
+                try {img->save( img_out_filename );}
+                catch (cimg_library::CImgInstanceException &e) {
+                  std::cout << "Error saving output image: " << e.what() << std::endl;
+                  return 3;
+                }
+                
+                // Return with succes
+                return 0;
+            }
+        
+            unsigned int decryptFileFromImage
+            (
+                const char*  img_in_filename,
+                const char*  data_filename
+            )
+            {
+                std::ofstream       data_file;  // data file object	 
+                IConduitImage*      img = create_IConduitImage();        // source image object
+                std::vector<byte>   data;       // for data bytes we wish to transfer
+                unsigned int head_size;         // size of header so we can skip
+                
+                // Load the source image file into a CImg object
+                try {img->load( img_in_filename );}
+                catch (cimg_library::CImgInstanceException &e) {
+                  std::cout <<  "Error loading source image: " << e.what() << std::endl;
+                  return 1;
+                }
+                
+                // Check that the dimensions are exactly 720x720
+                if (img->width() != 720 || img->height() != 720) {
+                  std::cout << "Error extracting data: wrong image dimensions." << std::endl;
+                  return 2;
+                }
+                
+                // Decode from image using Haar DWT
+                try {img->extractData( data );}
+                catch (ConduitImageExtractException &e) {
+                    std::cout << "Error extracting data: " << e.what() << std::endl;
+                    return 2;
+                }
+                /*
+                // Correct errors
+                try {fec->decode( data );}
+                catch (FecDecodeException &e) {
+                  std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
+                  return 3;
+                }
+                
+                // Retrieve the message key from the header and decrypt the data
+                try {crypto->decryptMessage(data);}
+                catch (DecryptionException &e) {
+                  std::cout << "Error decrypting: " << e.what() << std::endl;
+                  return 4;
+                }
+                */
+                
+                // Save data to a file, skipping the header
+                head_size = crypto->retrieveHeaderSize(data);
+                data_file.open( data_filename, std::ios::binary);
+                if(!data_file.is_open()) {
+                  std::cout << "Error creating data file:" << std::endl;
+                  return 1;
+                }
+                data_file.write((char*) &data[head_size], data.size()-head_size );
+
+                // Return with success
+                return 0; 
+            }
+            
+            //! Take a message string and encrypt into a Facebook-ready string. Both will be null terminated.
+            unsigned int encryptString
+            (
+                const char ids[],
+                const unsigned int len,
+                const char*  input,
+                      char*  output
+            ) {return 0;}
+            //! Take string from Facebook and decrypt to a message string. Both will be null terminated.
+            unsigned int decryptString(
+                const char*  input,
+                      char*  output
+            ) {return 0;}
+            
+            //! Debug function for calculating BER
+            unsigned int calculateBitErrorRate
+            (
+                const char*  file1_path,
+                const char*  file2_path
+            ) const
+            {
+                // ifstream objects
+                std::ifstream file1, file2;
+                // open file 1
+                file1.open( file1_path, std::ios::binary );
+                if(!file1.is_open()) {
+                  std::cout << "Error opening data file 1:" << std::endl;
+                  return 1;
+                }
+                // and file 2
+                file2.open( file2_path, std::ios::binary );
+                if(!file2.is_open()) {
+                  std::cout << "Error opening data file 2:" << std::endl;
+                  return 1;
+                }
+                // vector byte arrays 
+                std::vector<byte> data1, data2;
+                // load file 1 into array
+                file1.seekg(0, std::ios::end);
+                size_t file1_size = file1.tellg(); // get the length of the file
+                file1.seekg(0, std::ios::beg);
+                data1.resize( file1_size );
+                // read into array
+                file1.read((char*) &data1[0], file1_size);
+                // load file 2 into array
+                file2.seekg(0, std::ios::end);
+                size_t file2_size = file2.tellg(); // get the length of the file
+                file2.seekg(0, std::ios::beg);
+                data2.resize( file2_size );
+                // read into array
+                file2.read((char*) &data2[0], file2_size);
+                
+                // Calculate the BER and output to std::cout
+                unsigned int total=0, errors=0;
+                for (unsigned int i=0; i<data1.size(); i++) {
+                  unsigned char error = data1[i] ^ data2[i];
+                  std::bitset<8> bs( error );
+                  errors += bs.count();
+                  total += 8;
+                }
+                std::cout << ((float) errors) / total << std::endl;
+
+                return 0;
+            }
+            
+            IConduitImage* create_IConduitImage() {return new HaarConduitImage();}
+            ICrypto* create_ICrypto() {return new BotanCrypto<16,256>();}
+            IFec* create_IFec() {return new ReedSolomon255Fec();}
+    };
+// }

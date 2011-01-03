@@ -251,7 +251,7 @@ var getImageSRC = function(id) {
                             // If the download is finished
                             if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
                                 // Try to decrypt the image
-                                if (!eFB.lib_DecryptPhoto( path, path2 )) {
+                                if (!eFB.decryptFileFromImage( path, path2 )) {
                                     // Decryption successful
                                     eFB.img_cache[id].status = 2;
                                     eFB.img_cache[id].docs.forEach( replaceImages );

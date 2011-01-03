@@ -64,7 +64,7 @@ eFB = {
             // The variables we will submit
             var plaintext = document.getElementById("efb-text").value;
             //
-            var msg = eFB.lib_binToUTF8(plaintext,plaintext.length).readString(); // No encrytion yet
+            var msg = eFB.encryptString(plaintext).readString(); // No encrytion yet
 
             var subject_tag = encodeURIComponent( "ˠ" );
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
@@ -109,25 +109,21 @@ eFB = {
             Components.utils.import("resource://gre/modules/ctypes.jsm");
             var lib = ctypes.open( addon.getResourceURI( "components/libtest.so" ).path );
             
-            eFB.init_lib= lib.declare("init_lib",
+            eFB.initialise= lib.declare("initialise",
                                      ctypes.default_abi,
-                                     ctypes.int32_t,  // return type
-                                     ctypes.char.ptr, // parameter 1
-                                     ctypes.char.ptr  // parameter 2
+                                     ctypes.uint32_t  // return type
             );
-            eFB.lib_binToUTF8= lib.declare("lib_binToUTF8",
+            eFB.encryptString= lib.declare("c_encryptString",
                                      ctypes.default_abi,
                                      ctypes.char.ptr, // return type
-                                     ctypes.char.ptr, // parameter 1
-                                     ctypes.uint32_t  //parameter 2
+                                     ctypes.char.ptr // parameter 1
             );
-            eFB.lib_UTF8ToBin= lib.declare("lib_UTF8ToBin",
+            eFB.decryptString= lib.declare("c_decryptString",
                                      ctypes.default_abi,
                                      ctypes.char.ptr, // return type
-                                     ctypes.char.ptr, // parameter 1
-                                     ctypes.uint32_t  //parameter 2
+                                     ctypes.char.ptr // parameter 1
             );
-            eFB.lib_EncryptPhoto= lib.declare("lib_EncryptPhoto",
+            eFB.encryptFileInImage= lib.declare("c_encryptFileInImage",
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type
                                      ctypes.char.ptr, // parameter 1
@@ -135,19 +131,19 @@ eFB = {
                                      ctypes.char.ptr, // parameter 3
                                      ctypes.char.ptr // parameter 4
             );
-            eFB.lib_DecryptPhoto= lib.declare("lib_DecryptPhoto",
+            eFB.decryptFileFromImage= lib.declare("c_decryptFileFromImage",
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type
                                      ctypes.char.ptr, // parameter 1
                                      ctypes.char.ptr // parameter 2
             );
-            eFB.lib_CalculateBER= lib.declare("lib_CalculateBER",
+            eFB.calculateBitErrorRate= lib.declare("c_calculateBitErrorRate",
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type
                                      ctypes.char.ptr, // parameter 1
                                      ctypes.char.ptr // parameter 2
             );
-            eFB.close_lib = lib.declare("close_lib",
+            eFB.close = lib.declare("close",
                                      ctypes.default_abi,
                                      ctypes.int32_t // return type
             );
@@ -160,22 +156,24 @@ eFB = {
         } );
     },
     
-    init_lib : function() {},
-    lib_binToUTF8: function() {},
-    lib_UTF8ToBin: function() {},
-    lib_EncryptPhoto: function() {},
-    close_lib: function() {},
+    initialise : function() {},
+    encryptString: function() {},
+    decryptString: function() {},
+    encryptFileInImage: function() {},
+    decryptFileFromImage: function() {},
+    close: function() {},
     
     
     generateEncryptedPhoto : function(s) {
         
-        window.alert( eFB.lib_EncryptPhoto( "aaaaaaaa00000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001",
+        window.alert( eFB.encryptFileInImage( "aaaaaaaa00000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001",
                                             1,
                                             "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/out.bmp"
                                            ));
         
-        window.alert( eFB.lib_DecryptPhoto( "/home/chris/Desktop/out.bmp",
+        window.alert( eFB.decryptFileFromImage(
+                                            "/home/chris/Desktop/out.bmp",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
         /*window.alert( eFB.lib_CalculateBER( "/home/chris/Desktop/data.bin",
@@ -252,7 +250,7 @@ eFB = {
                         var note = obj.message;
                         var id = parseInt( obj.id, 10 );
                         // decode note
-                        note = eFB.lib_UTF8ToBin(note,note.length).readString();
+                        note = eFB.decryptString(note).readString();
                         
                         // Copy the list of docs (if any) we need to refresh
                         var doclist = [];
@@ -334,4 +332,4 @@ eFB = {
 // Load the C/C++ binary library functions
 // ensure that the callback function (i.e. the C/C++ library initilisation)
 // is passed the extension path.
-eFB.loadLibs( function( cache_dir,temp_dir ) {eFB.init_lib( cache_dir,temp_dir );} );
+eFB.loadLibs( function( cache_dir,temp_dir ) {eFB.initialise();} );
