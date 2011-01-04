@@ -4,7 +4,7 @@
 IeFBLibrary* create_IeFBLibrary()
 {
   /* For now we use this concrete implementation. Potentially the exact library implementation which is instantiated could be decided at runtime, e.g. by passing parameters (specified in browser) to this function. */
-  return (IeFBLibrary*) new Core();
+  return (IeFBLibrary*) new efb::Core();
 }
 
 /* Take a null terminated UTF8 string. Remove the null terminal and treat as an array of arbitrary binary data. Encrypt it for the supplied set of intended recipients, prepending the appropriate message header. Encode into a Facebook-ready UTF8 format, treating each two byte pair as a unicode codepoint (with some modifications to avoid certain illegal characters, including null). Terminate with a null character and return. */

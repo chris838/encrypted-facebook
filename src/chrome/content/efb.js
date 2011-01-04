@@ -161,6 +161,7 @@ eFB = {
     decryptString: function() {},
     encryptFileInImage: function() {},
     decryptFileFromImage: function() {},
+    calculateBitErrorRate: function() {},
     close: function() {},
     
     
@@ -173,12 +174,12 @@ eFB = {
                                            ));
         
         window.alert( eFB.decryptFileFromImage(
-                                            "/home/chris/Desktop/out.bmp",
+                                            "/home/chris/Desktop/out.jpg",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
-        /*window.alert( eFB.lib_CalculateBER( "/home/chris/Desktop/data.bin",
-                                            "/home/chris/Desktop/data2.bin"
-                                   ));*/
+        window.alert( eFB.calculateBitErrorRate( "/home/chris/Desktop/hidden.jpg",
+                                            "/home/chris/Desktop/hidden2.jpg"
+                                   ));
 
     },
     

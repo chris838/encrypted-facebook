@@ -24,56 +24,10 @@
 // Include the Botan crypto library
 #include <botan/botan.h>
 
-//! Namespace containing all the Encrypted Facebook C++ code.
+//! Library interface definition.
 /**
-    This namespace contains several abstract base classes along with their concrete subclasses. In places we use abstract classes in place of interfaces - hence the 'I' prefix. Some abstract classes do not particularly conform to the definition of interface, however for continuity we still use the 'I' prefix to denote that these classes are abstract and must be extended.
-
-    \par Main library class and Firefox interface
-    
-    The main libray (abstract) class \ref ICore implements IeFBLibrary - the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
-    
-    On instantiation the class also creates (as members) instances of the cryptograhic and error correction classes which group related functions. This class also contains methods for UTF8 string decoding and encoding.
-    
-    The class also forms part of what can be described as something similiar to an abstract factory pattern - in that any concrete subclass of \ref ICore determines (to some extent) which concrete cryptography, error correction and image subclasses are used. This is because there exists some interdependancy between exact implementations of these library sub-components. For example, the error correction implementation must match the bit error rate inccured when the image carrier implementation undergoes compression. 
-    
-    \par Cryptograhy and error correction algorithms
-    
-    The \ref ICrypto class defines an interface to the cryptography algorithms used by the rest of the library. These include algorithms for both symmetric and asymmetric encryption/decryption, and also for public/private key pair generation. The \ref IFec class similarly defines an interface to the forward error correction algorithms.
-    
-    For both library classes, subclass creation and destruction is managed by the main library class which will extend \ref ICore. A concrete \ref ICore subclass will select concrete subclasses of \ref IFec and \ref ICrypto.
-    
-    \par Conduit image class
-    
-    The \ref IConduitImage abstract class extends the CImg library class (CImg) by adding functionality to implant and extract data to the image in a reasonably JPEG compression immune fashion. Like the \ref IFec and \ref ICrypto library classes the concrete implemention is specified by the concrete implementation of \ref ICore.    
+    This definition lies outside the namespace so it can be seen by the C wrapper (since C doesnt't support namespaces). There may exist a better way.
 */
-
-//namespace efb {
-
-    typedef unsigned short  Unicode2Bytes;
-    typedef unsigned int    Unicode4Bytes;
-    typedef unsigned char   byte;
-    
-    typedef long long int FacebookId;
-    
-    // Exceptions for dealing with images - grouped into implant and extract.
-    struct ImplantException : public std::runtime_error {
-        ImplantException(const std::string &err) : std::runtime_error(err) {} };
-    struct ExtractException : public std::runtime_error {
-        ExtractException(const std::string &err) : std::runtime_error(err) {} };
-    struct ConduitImageImplantException : public ImplantException {
-        ConduitImageImplantException(const std::string &err) : ImplantException(err) {} };
-    struct ConduitImageExtractException : public ExtractException {
-        ConduitImageExtractException(const std::string &err) : ExtractException(err) {} };
-    struct FecEncodeException : public ImplantException {
-        FecEncodeException(const std::string &err) : ImplantException(err) {} };
-    struct FecDecodeException : public ExtractException {
-        FecDecodeException(const std::string &err) : ExtractException(err) {} };
-    struct EncryptionException : public ImplantException {
-        EncryptionException(const std::string &err) : ImplantException(err) {} };
-    struct DecryptionException : public ExtractException {
-        DecryptionException(const std::string &err) : ExtractException(err) {} };
-
-    //! Library interface definition.
     class IeFBLibrary
     {
         public :
@@ -119,6 +73,55 @@
             ) const = 0;
     };
     
+
+//! Namespace containing all the Encrypted Facebook C++ code.
+/**
+    This namespace contains several abstract base classes along with their concrete subclasses. In places we use abstract classes in place of interfaces - hence the 'I' prefix. Some abstract classes do not particularly conform to the definition of interface, however for continuity we still use the 'I' prefix to denote that these classes are abstract and must be extended.
+
+    \par Main library class and Firefox interface
+    
+    The main libray (abstract) class \ref ICore implements IeFBLibrary - the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
+    
+    On instantiation the class also creates (as members) instances of the cryptograhic and error correction classes which group related functions. This class also contains methods for UTF8 string decoding and encoding.
+    
+    The class also forms part of what can be described as something similiar to an abstract factory pattern - in that any concrete subclass of \ref ICore determines (to some extent) which concrete cryptography, error correction and image subclasses are used. This is because there exists some interdependancy between exact implementations of these library sub-components. For example, the error correction implementation must match the bit error rate inccured when the image carrier implementation undergoes compression. 
+    
+    \par Cryptograhy and error correction algorithms
+    
+    The \ref ICrypto class defines an interface to the cryptography algorithms used by the rest of the library. These include algorithms for both symmetric and asymmetric encryption/decryption, and also for public/private key pair generation. The \ref IFec class similarly defines an interface to the forward error correction algorithms.
+    
+    For both library classes, subclass creation and destruction is managed by the main library class which will extend \ref ICore. A concrete \ref ICore subclass will select concrete subclasses of \ref IFec and \ref ICrypto.
+    
+    \par Conduit image class
+    
+    The \ref IConduitImage abstract class extends the CImg library class (CImg) by adding functionality to implant and extract data to the image in a reasonably JPEG compression immune fashion. Like the \ref IFec and \ref ICrypto library classes the concrete implemention is specified by the concrete implementation of \ref ICore.    
+*/
+namespace efb {
+
+    typedef unsigned short  Unicode2Bytes;
+    typedef unsigned int    Unicode4Bytes;
+    typedef unsigned char   byte;
+    
+    typedef long long int FacebookId;
+    
+    // Exceptions for dealing with images - grouped into implant and extract.
+    struct ImplantException : public std::runtime_error {
+        ImplantException(const std::string &err) : std::runtime_error(err) {} };
+    struct ExtractException : public std::runtime_error {
+        ExtractException(const std::string &err) : std::runtime_error(err) {} };
+    struct ConduitImageImplantException : public ImplantException {
+        ConduitImageImplantException(const std::string &err) : ImplantException(err) {} };
+    struct ConduitImageExtractException : public ExtractException {
+        ConduitImageExtractException(const std::string &err) : ExtractException(err) {} };
+    struct FecEncodeException : public ImplantException {
+        FecEncodeException(const std::string &err) : ImplantException(err) {} };
+    struct FecDecodeException : public ExtractException {
+        FecDecodeException(const std::string &err) : ExtractException(err) {} };
+    struct EncryptionException : public ImplantException {
+        EncryptionException(const std::string &err) : ImplantException(err) {} };
+    struct DecryptionException : public ExtractException {
+        DecryptionException(const std::string &err) : ExtractException(err) {} };
+
     //! Abstract class definining the interface for the cryptographic algorithms.
     class ICrypto
     {
@@ -198,18 +201,6 @@
             {iv =  Botan::InitializationVector(rng, N);} // a random N-byte iv
         void generateNewMessageKey()
             {key =  Botan::SymmetricKey(rng, N);} // a random N-byte key
-        void setIv( std::string & ivstr )
-            {iv =  Botan::InitializationVector( ivstr );}
-        void setMessageKey( std::string & keystr)
-            {key =  Botan::SymmetricKey( keystr );}
-            
-        // Append the current (plaintext) IV and (ciphered) message key to the supplied vector
-        void getIv( std::vector<byte> & data )
-        {
-            std::string ivstr = iv.as_string();
-            for (unsigned int i=0; i<ivstr.length(); i++)
-            data.push_back( ivstr[i] );
-        }
         void getCipheredMessageKey
         (
             FacebookId & id,
@@ -226,11 +217,11 @@
             generateNewIv();
             generateNewMessageKey();
             // create the header and write to the start of the vector
-            getIv( data );
+            for (unsigned int i=0; i<iv.length(); i++)
+                data[i] = iv.begin()[i];
             // TODO - for now just append the key in plaintext
-            std::string keystr = key.as_string();
-            for (unsigned int i=0; i<keystr.length(); i++)
-                data.push_back( keystr[i] );
+            for (unsigned int i=0; i<key.length(); i++)
+                data[iv.length()+i] = key.begin()[i];
         }
         
         //! Attempty to parse a crypto header - this will retrieve and set the message key and IV.
@@ -239,15 +230,8 @@
             std::vector<byte> & data
         )
         {
-            std::string ivstr(iv.length(), 'x');
-            for (unsigned int i=0; i<iv.length(); i++)
-                ivstr[i] = data[i];
-            setIv( ivstr );
-            // TODO - right now the key is just appended in plaintext
-            std::string keystr(key.length(), 'x');
-            for (unsigned int i=0; i<key.length(); i++)
-                keystr[i] = data[iv.length()+i];
-            setMessageKey( keystr );
+            iv =  Botan::InitializationVector( &data[0], iv.length() );
+            key =  Botan::SymmetricKey( &data[iv.length()], key.length() );
         }
                     
         //! Botan library members
@@ -266,10 +250,10 @@
             }
             
             unsigned int calculateHeaderSize( unsigned int numOfIds ) const
-                {return iv.as_string().length() + key.as_string().length();}
+                {return iv.length() + key.length();}
 
             unsigned int retrieveHeaderSize(std::vector<byte>& data) const
-                {return iv.as_string().length() + key.as_string().length();}
+                {return iv.length() + key.length();}
                 
             void encryptMessage
             (
@@ -316,9 +300,9 @@
         const std::size_t generator_polynommial_index_;
         const std::size_t generator_polynommial_root_count_;
         // Reed Solomon Code Parameters
-        const std::size_t code_length_;
-        const std::size_t fec_length_;
-        const std::size_t data_length_;
+        const std::size_t code_width_;
+        const std::size_t fec_width_;
+        const std::size_t data_width_;
         // Finite Field and Generator Polynomials
         schifra::galois::field field_;
         schifra::galois::field_polynomial generator_polynomial_;
@@ -329,35 +313,29 @@
     
         //! Generate FEC code from a message   
         void encodeBlock(
-            std::string  	& message,
+            std::string & message,
             std::string	& fec
         ) const
         {
-            // Pad out to full size
-            message = message + std::string(
-                data_length_ - message.length(),static_cast<byte>(0x00));
             // Instantiate RS Block For Codec
             schifra::reed_solomon::block<N,N-M> block;
             // Transform message into Reed-Solomon encoded codeword
             if (!encoder_.encode(message,block))
                 throw FecEncodeException("Error - Critical encoding failure!");
-            fec = std::string(fec_length_,static_cast<byte>(0x00));
             block.fec_to_string(fec);
         }
         
         //! Try and fix any errors in a block-size message using FEC code
         void decodeBlock(
-            std::string & message_plus_errors,
-            std::string	& fec,
-            std::string	& message
+            std::string & message,
+            std::string	& fec
         ) const
         {
             // Instantiate RS Block For Codec
-            schifra::reed_solomon::block<N,N-M> block(message_plus_errors, fec);
+            schifra::reed_solomon::block<N,N-M> block(message, fec);
             // Try and fix any errors in the message
             if (!decoder_.decode(block))
                 throw FecDecodeException("Error - Critical decoding failure!");
-            message = std::string(data_length_,static_cast<byte>(0x00));
             block.data_to_string(message);
         }
         
@@ -372,9 +350,9 @@
                 field_descriptor_(field_descriptor),
                 generator_polynommial_index_(generator_polynommial_index),
                 generator_polynommial_root_count_(generator_polynommial_root_count),
-                code_length_(N),
-                fec_length_(N-M),
-                data_length_(M),
+                code_width_(N),
+                fec_width_(N-M),
+                data_width_(M),
                 // Instantiate Finite Field and Generator Polynomials
                 field_
                 (
@@ -396,9 +374,42 @@
             {}
             
             //! Encode data by appending error correction codes.
-            void encode( std::vector<byte>& data) {}
-            //! Decode (correct) data in place.
-            void decode( std::vector<byte>& data) {}
+            void encode( std::vector<byte>& data)
+            {
+                // Cycle through each block, appending FEC code at the back of the array. Note that any final partial block will be padded automatically by this process, provided enough blocks exist.
+                unsigned int num_blocks = (data.size()/data_width_) + (data.size()%data_width_==0?0:1);
+                std::cout << num_blocks << std::endl;
+                if ( num_blocks*fec_width_ < data_width_ )
+                    throw FecEncodeException(
+                    "Not enough data blocks to pad (possible) partial last block.");
+                
+                for (unsigned int i=0; i<num_blocks*data_width_;i+=data_width_) {
+                    std::string message((char*) &data[i], data_width_);
+                    std::string fec(fec_width_, static_cast<byte>(0x00));
+                    encodeBlock(message, fec);   
+                    for (unsigned int j=0;j<fec_width_;j++) data.push_back( fec[j] );
+                }            
+            }
+            
+            
+            //! Decode (i.e. correct) data in place.
+            void decode( std::vector<byte>& data) {
+                // We decode backwards since the last block may contain encoded FEC codes for the initial blocks.
+                unsigned int num_blocks = (data.size()/code_width_) + (data.size()%code_width_==0?0:1);
+                
+                for (int i=(num_blocks-1)*data_width_; i>=0; i-=data_width_) {
+                    std::string message((char*) &data[i], data_width_);
+                    std::string fec((char*) &data[data.size()-fec_width_], fec_width_ );
+                    try{decodeBlock(message,fec);}
+                    catch (FecDecodeException &e) {
+                        std::cout << "block didn't decode " << i/data_width_ << std::endl;
+                    }
+                    //remove used fec
+                    for (unsigned int j=0;j<fec_width_;j++) data.pop_back();
+                    //write back corrected data
+                    for (unsigned int j=0;j<data_width_;j++) data[i+j] = message[j];
+                }   
+            }
             
     };
     
@@ -554,10 +565,14 @@
         void truncateCoefficients( short int& p1, short int& p2, short int& m)
         {
             // If p1 or p2 lie outside the range 0-255 we must rectify this, however we *MUST* also preserve their mean value (m) as this contains data.
+            /*
             if (p1<0) {p1 = 0; p2 = 2*m;}
             if (p1>255) {p1 = 255; p2 = 2*m-255;}
             if (p2<0) {p2 = 0; p1 = 2*m;}
             if (p2>255) {p2 = 255; p1 = 2*m-255;}
+            */
+            if ((p1<0) || (p1>255) || (p2<0) || (p2>255)) {p1=p2=m;}
+            
         }
         
         //! Perform the inverse Haar Discrete Wavelet transform on an 8x8 block.
@@ -579,7 +594,7 @@
                     p1 	= temp[i][j] + divFloor(temp[i][2+j]+1,2) ;
                     p2 	= p1 - temp[i][2+j];
                     // Check we don't overflow the pixel
-                    if (i<2) truncateCoefficients(p1,p2,temp[i][j]);
+                    truncateCoefficients(p1,p2,temp[i][j]);
                     temp2[i][2*j] = p1;
                     temp2[i][2*j+1] = p2;
                 }
@@ -604,7 +619,7 @@
                     // Check we don't overflow the pixel
                     p1 	= temp[i][j] + divFloor(temp[i][4+j]+1,2) ;
                     p2 	= p1 - temp[i][4+j];
-                    if (j<4) truncateCoefficients(p1,p2,temp[i][j]);
+                    truncateCoefficients(p1,p2,temp[i][j]);
                     temp2[i][2*j] = p1;
                     temp2[i][2*j+1] = p2; 
                 }
@@ -722,6 +737,7 @@
                 
                 // Write the size of the data stored to the last two image blocks
                 writeSize(len);
+                
             }
             
             //! Attempt to allocate and return a new vector<byte> containing the extracted data.
@@ -810,9 +826,10 @@
                 data_size = data_file.tellg(); // get the length of the file 
                 // read the file into the data byte vector
                 data_file.seekg(0, std::ios::beg);
+                data = std::vector<byte>( head_size, (byte) '|' );
                 data.resize(head_size + data_size);
                 data_file.read((char*) &data[head_size], data_size);
-            
+            /*
                 // Generate header and encrypt the data
                 std::vector<FacebookId> ids_vector = std::vector<FacebookId>(ids, ids+len);
                 try {crypto->encryptMessage(ids_vector, data);}
@@ -820,14 +837,14 @@
                   std::cout << "Error encrypting: " << e.what() << std::endl;
                   return 4;
                 }
-             /* 
+            */
                 // Add error correction code
                 try {fec->encode( data );}
                 catch (FecEncodeException &e) {
                   std::cout << "Error adding error correction code: " << e.what() << std::endl;
                   return 2;
                 }
-            */
+            
                 // Load the template image file into a ConduitImage object
                 try {img->load( template_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
@@ -883,21 +900,21 @@
                     std::cout << "Error extracting data: " << e.what() << std::endl;
                     return 2;
                 }
-                /*
+                
                 // Correct errors
                 try {fec->decode( data );}
                 catch (FecDecodeException &e) {
                   std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
                   return 3;
                 }
-                */
+            /*   
                 // Retrieve the message key from the header and decrypt the data
                 try {crypto->decryptMessage(data);}
                 catch (DecryptionException &e) {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
-                
+            */    
                 // Save data to a file, skipping the header
                 head_size = crypto->retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);
@@ -966,12 +983,11 @@
                 // Calculate the BER and output to std::cout
                 unsigned int total=0, errors=0;
                 for (unsigned int i=0; i<data1.size(); i++) {
-                  unsigned char error = data1[i] ^ data2[i];
+                  byte error = data1[i] ^ data2[i];
                   std::bitset<8> bs( error );
                   errors += bs.count();
                   total += 8;
                 }
-                std::cout << ((float) errors) / total << std::endl;
 
                 return 0;
             }
@@ -980,4 +996,4 @@
             ICrypto* create_ICrypto() {return new BotanCrypto<16,256>();}
             IFec* create_IFec() {return new ReedSolomon255Fec();}
     };
-// }
+}
