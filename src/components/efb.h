@@ -333,6 +333,7 @@ namespace efb {
         {
             // Instantiate RS Block For Codec
             schifra::reed_solomon::block<N,N-M> block(message, fec);
+
             // Try and fix any errors in the message
             if (!decoder_.decode(block))
                 throw FecDecodeException("Error - Critical decoding failure!");
@@ -344,7 +345,9 @@ namespace efb {
             SchifraFec(
                 std::size_t field_descriptor,
                 std::size_t generator_polynommial_index,
-                std::size_t generator_polynommial_root_count
+                std::size_t generator_polynommial_root_count,
+                const unsigned int primitive_polynomial_size,
+                const unsigned int primitive_polynomial[9]
             ) :
                 // Initialisation for const attributes
                 field_descriptor_(field_descriptor),
@@ -357,8 +360,8 @@ namespace efb {
                 field_
                 (
                     field_descriptor_,
-                    schifra::galois::primitive_polynomial_size06,
-                    schifra::galois::primitive_polynomial06
+                    primitive_polynomial_size,
+                    primitive_polynomial
                 ),
                 generator_polynomial_(field_),
                 polynomial_creator_ // don't need this var, but need to call constructor (probably)
@@ -378,7 +381,6 @@ namespace efb {
             {
                 // Cycle through each block, appending FEC code at the back of the array. Note that any final partial block will be padded automatically by this process, provided enough blocks exist.
                 unsigned int num_blocks = (data.size()/data_width_) + (data.size()%data_width_==0?0:1);
-                std::cout << num_blocks << std::endl;
                 if ( num_blocks*fec_width_ < data_width_ )
                     throw FecEncodeException(
                     "Not enough data blocks to pad (possible) partial last block.");
@@ -422,7 +424,23 @@ namespace efb {
             (
                 8,      // field_descriptor
                 120,    // generator_polynommial_index
-                32      // generator_polynommial_root_count
+                32,      // generator_polynommial_root_count
+                schifra::galois::primitive_polynomial_size06,
+                schifra::galois::primitive_polynomial06
+            ) {}
+    };
+    //! Reed Solomon error correction using the Schifra library with 15-byte block size providing a (15,8) code rate.
+    class ReedSolomon15Fec : public SchifraFec<15,8>
+    {
+        public :
+            //! Default constructor.
+            ReedSolomon15Fec() : SchifraFec<15,8>
+            (
+                4,      // field_descriptor
+                0,    // generator_polynommial_index
+                7,      // generator_polynommial_root_count
+                schifra::galois::primitive_polynomial_size01,
+                schifra::galois::primitive_polynomial01
             ) {}
     };
     //! Conduit image class which uses the Haar wavelet tranform to store data in low frequency image components.
@@ -499,7 +517,7 @@ namespace efb {
         
         //! Perform the Haar Discrete Wavelet transform on an 8x8 temp block.
         /**
-            Perform the Haar Discrete Wavelet Transform (with lifting scheme so the inverse can be performed losslessly). The result is written to the supplied 8x8 array, since we cannot do this in place (we would need an extra sign bit for 3/4 of the 64 pixels).
+            Perform the Haar Discrete Wavelet Transform (with lifting scheme so the inverse can be performed losslessly). The result is written to the supplied 8x8 array, since we cannot do this in place (we would need (at least) an extra sign bit for 3/4 of the 64 coefficients).
         */
         void haar2dDwt
         (
@@ -515,12 +533,12 @@ namespace efb {
                 // Perform 1D Haar transfrom with integer lifting
                 for (unsigned int i=0; i<4; i++) {
                     // average
-                    temp2[i][j] = divFloor( operator()(x0+2*i, y0+j) +
-                                            operator()(x0+2*i+1, y0+j),
+                    temp2[i][j] = divFloor( operator()(x0+(2*i), y0+j) +
+                                            operator()(x0+((2*i)+1), y0+j),
                                             2);
                     // difference
-                    temp2[4+i][j] = operator()(x0+2*i, y0+j) -
-                                    operator()(x0+2*i+1, y0+j);
+                    temp2[4+i][j] = operator()(x0+(2*i), y0+j) -
+                                    operator()(x0+((2*i)+1), y0+j);
                 }
             }
             // For each column...
@@ -528,9 +546,9 @@ namespace efb {
                 // Perform 1D Haar transfrom with integer lifting
                 for (unsigned int j=0; j<4; j++) {
                     // average
-                    temp[i][j] = divFloor( temp2[i][2*j] + temp2[i][2*j+1], 2);
+                    temp[i][j] = divFloor( temp2[i][2*j] + temp2[i][(2*j)+1], 2);
                     // difference
-                    temp[i][4+j] = temp2[i][2*j] - temp2[0][2*j+1];
+                    temp[i][4+j] = temp2[i][2*j] - temp2[i][(2*j)+1];
                 }
             }
             // Then the next iteration on the top left 4x4 corner block
@@ -594,7 +612,7 @@ namespace efb {
                     p1 	= temp[i][j] + divFloor(temp[i][2+j]+1,2) ;
                     p2 	= p1 - temp[i][2+j];
                     // Check we don't overflow the pixel
-                    truncateCoefficients(p1,p2,temp[i][j]);
+                    if (i<2) truncateCoefficients(p1,p2,temp[i][j]);
                     temp2[i][2*j] = p1;
                     temp2[i][2*j+1] = p2;
                 }
@@ -619,7 +637,7 @@ namespace efb {
                     // Check we don't overflow the pixel
                     p1 	= temp[i][j] + divFloor(temp[i][4+j]+1,2) ;
                     p2 	= p1 - temp[i][4+j];
-                    truncateCoefficients(p1,p2,temp[i][j]);
+                    if (i<4) truncateCoefficients(p1,p2,temp[i][j]);
                     temp2[i][2*j] = p1;
                     temp2[i][2*j+1] = p2; 
                 }
@@ -829,7 +847,7 @@ namespace efb {
                 data = std::vector<byte>( head_size, (byte) '|' );
                 data.resize(head_size + data_size);
                 data_file.read((char*) &data[head_size], data_size);
-            /*
+            
                 // Generate header and encrypt the data
                 std::vector<FacebookId> ids_vector = std::vector<FacebookId>(ids, ids+len);
                 try {crypto->encryptMessage(ids_vector, data);}
@@ -837,14 +855,14 @@ namespace efb {
                   std::cout << "Error encrypting: " << e.what() << std::endl;
                   return 4;
                 }
-            */
+            
                 // Add error correction code
                 try {fec->encode( data );}
                 catch (FecEncodeException &e) {
                   std::cout << "Error adding error correction code: " << e.what() << std::endl;
                   return 2;
                 }
-            
+             
                 // Load the template image file into a ConduitImage object
                 try {img->load( template_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
@@ -900,21 +918,21 @@ namespace efb {
                     std::cout << "Error extracting data: " << e.what() << std::endl;
                     return 2;
                 }
-                
+               
                 // Correct errors
                 try {fec->decode( data );}
                 catch (FecDecodeException &e) {
                   std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
                   return 3;
                 }
-            /*   
+            
                 // Retrieve the message key from the header and decrypt the data
                 try {crypto->decryptMessage(data);}
                 catch (DecryptionException &e) {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
-            */    
+            
                 // Save data to a file, skipping the header
                 head_size = crypto->retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);
@@ -981,14 +999,26 @@ namespace efb {
                 file2.read((char*) &data2[0], file2_size);
                 
                 // Calculate the BER and output to std::cout
-                unsigned int total=0, errors=0;
+                unsigned int total=0, errors=0; std::vector<byte> e;
                 for (unsigned int i=0; i<data1.size(); i++) {
                   byte error = data1[i] ^ data2[i];
+                  e.push_back( error );
                   std::bitset<8> bs( error );
                   errors += bs.count();
                   total += 8;
                 }
-
+                std::cout << errors << " errors in " << total <<" bits. ";
+                std::cout << ((float) errors) / total << std::endl;
+                
+                // Write out errors to a file
+                std::ofstream error_file;
+                error_file.open( "/home/chris/Desktop/errors.bin", std::ios::binary);
+                if(!error_file.is_open()) {
+                  std::cout << "Error creating error file:" << std::endl;
+                  return 1;
+                }
+                error_file.write((char*) &e[0], e.size() );
+                
                 return 0;
             }
             
