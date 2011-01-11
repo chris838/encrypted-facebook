@@ -3,6 +3,7 @@
 #include <string>
 #include <bitset>
 #include <vector>
+#include <map>
 #include <sstream>
 #include <stdexcept>
 
@@ -23,6 +24,7 @@
 
 // Include the Botan crypto library
 #include <botan/botan.h>
+#include <botan/rsa.h>
 
 //! Library interface definition.
 /**
@@ -31,18 +33,37 @@
     class IeFBLibrary
     {
         public :
-            //! Initialise library with Facebook ID and extension directory.
-            virtual unsigned int initialise() = 0;
-            //! Close the library and wipe any volatile directories.
+            //! Load a cryptographic identity from the filenames provided.
+            virtual unsigned int loadIdentity
+            (
+                const char* private_key_filename,
+                const char* public_key_filename,
+                const char* passphrase
+            ) = 0;
+            
+            //! Generate a new cryptographic identity and write out to the filenames provided.
+            virtual unsigned int generateIdentity
+            (
+                const char* private_key_filename,
+                const char* public_key_filename,
+                const char* passphrase
+            ) const = 0;
+            
+            //! Load a set of Facebook ID / public key pairs which will be used for encrypting messages/photos.
+            virtual unsigned int loadIdKeyPair
+            (
+                const char* idkeypair_filename
+            ) = 0;
+            
+            //! Close the library and wipe any sensitive directories/information.
             virtual void close() = 0;
             
             //! Encrypt a file into an image for the supplied array of recipients.
             virtual unsigned int encryptFileInImage
             (
-                const char ids[],
-                const unsigned int len,
-                const char*  data_filename,
-                const char*  img_out_filename
+                const char* ids,
+                const char* data_filename,
+                const char* img_out_filename
             ) = 0;
             //! Attempt to extract and decrypt a file from an image.
             virtual unsigned int decryptFileFromImage
@@ -54,8 +75,7 @@
             //! Take a message string and encrypt into a Facebook-ready string. Both will be null terminated.
             virtual unsigned int encryptString
             (
-                const char ids[],
-                const unsigned int len,
+                const char* ids,
                 const char*  input,
                       char*  output
             ) = 0;
@@ -80,29 +100,27 @@
 
     \par Main library class and Firefox interface
     
-    The main libray (abstract) class \ref ICore implements IeFBLibrary - the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
+    The main libray (abstract) class \ref IBasicLibrary implements IeFBLibrary - the external interface exposed to Firefox via the C wrapper code. When a concrete subclass is instantiated it requires a Facebook user ID with which a profile directory is created (if not present). Clean up of any cached images is performed both on construction and destruction.
     
-    On instantiation the class also creates (as members) instances of the cryptograhic and error correction classes which group related functions. This class also contains methods for UTF8 string decoding and encoding.
+    On instantiation the class also creates (as members) instances of the cryptograhic and error correction classes which group related functions using its 'factory' member. This class also contains methods for UTF8 string decoding and encoding.
     
-    The class also forms part of what can be described as something similiar to an abstract factory pattern - in that any concrete subclass of \ref ICore determines (to some extent) which concrete cryptography, error correction and image subclasses are used. This is because there exists some interdependancy between exact implementations of these library sub-components. For example, the error correction implementation must match the bit error rate inccured when the image carrier implementation undergoes compression. 
+    The \ref BasicLibary conrete subclass is instantiated with some \ref ILibFactory subclass. This abstract factory pattern is used to group complimentary libray sub-components, since there exists some interdependancy between the exact implementation of each of these sub-components. For example, the error correction implementation must match the bit error rate inccured when the image carrier implementation undergoes compression. 
     
     \par Cryptograhy and error correction algorithms
     
     The \ref ICrypto class defines an interface to the cryptography algorithms used by the rest of the library. These include algorithms for both symmetric and asymmetric encryption/decryption, and also for public/private key pair generation. The \ref IFec class similarly defines an interface to the forward error correction algorithms.
     
-    For both library classes, subclass creation and destruction is managed by the main library class which will extend \ref ICore. A concrete \ref ICore subclass will select concrete subclasses of \ref IFec and \ref ICrypto.
+    For both library classes, subclass creation and destruction is managed by the main library class which will extend \ref IeFBLibrary. A concrete \ref ILibFactory subclass will select concrete subclasses of \ref IFec and \ref ICrypto.
     
     \par Conduit image class
     
-    The \ref IConduitImage abstract class extends the CImg library class (CImg) by adding functionality to implant and extract data to the image in a reasonably JPEG compression immune fashion. Like the \ref IFec and \ref ICrypto library classes the concrete implemention is specified by the concrete implementation of \ref ICore.    
+    The \ref IConduitImage abstract class extends the CImg library class (CImg) by adding functionality to implant and extract data to the image in a reasonably JPEG compression immune fashion. Like the \ref IFec and \ref ICrypto library classes the concrete implemention is specified by the concrete implementation of \ref ILibFactory.    
 */
 namespace efb {
 
     typedef unsigned short  Unicode2Bytes;
     typedef unsigned int    Unicode4Bytes;
     typedef unsigned char   byte;
-    
-    typedef long long int FacebookId;
     
     // Exceptions for dealing with images - grouped into implant and extract.
     struct ImplantException : public std::runtime_error {
@@ -121,6 +139,36 @@ namespace efb {
         EncryptionException(const std::string &err) : ImplantException(err) {} };
     struct DecryptionException : public ExtractException {
         DecryptionException(const std::string &err) : ExtractException(err) {} };
+        
+    // Key exception, thrown when dealing with identities and cryptographic keys.
+    struct IdException : public std::runtime_error {
+        IdException(const std::string &err) : std::runtime_error(err) {} };
+        
+    //! Structure for representing Facebook IDs, which we assume to be passed on construction as 15-16 byte ASCII character sequences. They can be represented by an 8-byte integer type. 
+    struct FacebookId
+    {
+        unsigned long long int val;
+        
+        FacebookId( const char* str )
+        {
+            // Convert string to a numeric values so that key representation takes mimimal space.
+            std::stringstream ss;
+            ss << str;
+            if ( (ss >> val).fail() ) throw IdException("Error converting Facebook ID to numeric value.");
+        }
+        
+        FacebookId( std::string str )
+        {
+            // Convert string to a numeric values so that key representation takes mimimal space.
+            std::stringstream ss;
+            ss << str;
+            if ( (ss >> val).fail() ) throw IdException("Error converting Facebook ID to numeric value.");
+        }
+    };
+    
+    //! Overloaded operator so type can be used in a keymap
+    bool operator< (const FacebookId& fid1, const FacebookId& fid2)
+        {return fid1.val < fid2.val;}
 
     //! Abstract class definining the interface for the cryptographic algorithms.
     class ICrypto
@@ -138,6 +186,25 @@ namespace efb {
             ) = 0;
             //! Parses any data header and attempts to decrypt the data, leaving the header in place.
             virtual void decryptMessage( std::vector<byte>& data ) = 0;
+            //! Generate and write a new private/public key pair to disk.
+            virtual void generateKeys
+            (
+                std::ofstream& private_key_file,
+                std::ofstream& public_key_file,    
+                std::string& passphrase
+            ) = 0;
+            //! Load a private/public key pair into memory.
+            virtual void loadKeys
+            (
+                std::string& private_key_filename,
+                std::string& public_key_filename,   
+                std::string& passphrase
+            ) = 0;
+            //! Load a potential recipient's public key into memory.
+            virtual void loadIdKeyPair
+            (
+                std::string& idkeypair_filename
+            ) = 0;
     };
     
     //! Abstract class definining the interface for the error correction algorithms.
@@ -145,9 +212,9 @@ namespace efb {
     {
         public :
             //! Encode data by appending error correction codes.
-            virtual void encode( std::vector<byte>& data)=0;
+            virtual void encode( std::vector<byte>& data) const =0;
             //! Decode (correct) data in place.
-            virtual void decode( std::vector<byte>& data)=0;
+            virtual void decode( std::vector<byte>& data) const =0;
     };
 
     //! Abstract class defining a conduit image, with functionality for implanting and extracting data.
@@ -164,29 +231,19 @@ namespace efb {
             virtual void extractData( std::vector<byte>& data ) = 0;
     };
     
-    //! Core library class.
+    //! Abstract factory class.
     /**
-        This is the main library class. Other library components (cryptography and error correction) are grouped into further classes and instantiated as attribute members.
+        An abstract factory class used to generate library sub-components. It defines a group of compatible or complementary sub-component implementations.
     */
-    class ICore : public IeFBLibrary
+    class ILibFactory
     {
-        //! Abstract factory pattern object creater.
-        virtual IConduitImage* create_IConduitImage() = 0;
-        //! Abstract factory pattern object creater.
-        virtual ICrypto* create_ICrypto() = 0;
-        //! Abstract factory pattern object creater.
-        virtual IFec* create_IFec() = 0;
-        
-        protected :
-            //! Instance of the cryptographic library code.
-            ICrypto* crypto;
-            //! Instance of the forward error correction library code.
-            IFec* fec;
-            // Default constructor
-            ICore( ICrypto* crypto, IFec* fec ) :
-                crypto( crypto ),
-                fec( fec )
-            {}
+        public :
+            //! Conduit image object creater.
+            virtual IConduitImage& create_IConduitImage() const = 0;
+            //! Cryptography library object creater.
+            virtual ICrypto& create_ICrypto() const = 0;
+            //! Forward error correction library object creater.
+            virtual IFec& create_IFec() const = 0;
     };
     
     //! Botan cryptography class using N-byte AES and M-byte RSA.
@@ -198,9 +255,9 @@ namespace efb {
     {
         // Generate or set a random IV and random message key
         void generateNewIv()
-            {iv =  Botan::InitializationVector(rng, N);} // a random N-byte iv
+            {iv_ = Botan::InitializationVector(rng_, N);} // a random N-byte iv
         void generateNewMessageKey()
-            {key =  Botan::SymmetricKey(rng, N);} // a random N-byte key
+            {key_ = Botan::SymmetricKey(rng_, N);} // a random N-byte key
         void getCipheredMessageKey
         (
             FacebookId & id,
@@ -217,11 +274,11 @@ namespace efb {
             generateNewIv();
             generateNewMessageKey();
             // create the header and write to the start of the vector
-            for (unsigned int i=0; i<iv.length(); i++)
-                data[i] = iv.begin()[i];
+            for (unsigned int i=0; i<iv_.length(); i++)
+                data[i] = iv_.begin()[i];
             // TODO - for now just append the key in plaintext
-            for (unsigned int i=0; i<key.length(); i++)
-                data[iv.length()+i] = key.begin()[i];
+            for (unsigned int i=0; i<key_.length(); i++)
+                data[iv_.length()+i] = key_.begin()[i];
         }
         
         //! Attempty to parse a crypto header - this will retrieve and set the message key and IV.
@@ -230,15 +287,21 @@ namespace efb {
             std::vector<byte> & data
         )
         {
-            iv =  Botan::InitializationVector( &data[0], iv.length() );
-            key =  Botan::SymmetricKey( &data[iv.length()], key.length() );
+            iv_ =  Botan::InitializationVector( &data[0], iv_.length() );
+            key_ =  Botan::SymmetricKey( &data[iv_.length()], key_.length() );
         }
                     
-        //! Botan library members
-        Botan::LibraryInitializer init;
-        Botan::AutoSeeded_RNG rng;
-        Botan::SymmetricKey key;
-        Botan::InitializationVector iv;
+        //! Botan library attribute members
+        Botan::LibraryInitializer init_;
+        Botan::AutoSeeded_RNG rng_;
+        Botan::InitializationVector iv_;
+        // user keys
+        Botan::SymmetricKey key_;
+        Botan::RSA_PrivateKey private_key_;
+        Botan::RSA_PublicKey public_key_;
+        // recipient public key dictionary
+        std::map<FacebookId,Botan::RSA_PublicKey> idkeymap_;
+        
         
         public :
         
@@ -250,10 +313,10 @@ namespace efb {
             }
             
             unsigned int calculateHeaderSize( unsigned int numOfIds ) const
-                {return iv.length() + key.length();}
+                {return iv_.length() + key_.length();}
 
             unsigned int retrieveHeaderSize(std::vector<byte>& data) const
-                {return iv.length() + key.length();}
+                {return iv_.length() + key_.length();}
                 
             void encryptMessage
             (
@@ -268,7 +331,7 @@ namespace efb {
                 unsigned int hs = calculateHeaderSize( ids.size() ), ds = data.size(), ms = ds - hs;
                 std::stringstream ss; ss << "AES-" << N*8 << "/CFB";
                 Botan::Pipe encrypter(
-                    get_cipher(ss.str(), key, iv, Botan::ENCRYPTION));
+                    get_cipher(ss.str(), key_, iv_, Botan::ENCRYPTION));
                 encrypter.start_msg();
                 encrypter.write((Botan::byte*) &data[hs], ms ); 
                 encrypter.end_msg();
@@ -284,11 +347,68 @@ namespace efb {
                 unsigned int hs = retrieveHeaderSize(data), ds = data.size(), ms = ds - hs;
                 std::stringstream ss; ss << "AES-" << N*8 << "/CFB";
                 Botan::Pipe decrypter(
-                    get_cipher(ss.str(), key, iv, Botan::DECRYPTION));
+                    get_cipher(ss.str(), key_, iv_, Botan::DECRYPTION));
                 decrypter.start_msg();
                 decrypter.write((Botan::byte*) &data[hs], ms );  
                 decrypter.end_msg();
                 decrypter.read((Botan::byte*) &data[hs], ms );
+            }
+            
+            //! Generate a private/public key pair and save to disk.
+            void generateKeys
+            (
+                std::ofstream& private_key_file,
+                std::ofstream& public_key_file,
+                std::string& passphrase
+            )
+            {
+                // Create keys.
+                Botan::RSA_PrivateKey rsa_key(rng_, 8*M);
+                
+                // PEM encode as strings.
+                std::string rsa_private_pem = Botan::PKCS8::PEM_encode(rsa_key, rng_, passphrase);
+                std::string rsa_public_pem = Botan::X509::PEM_encode(rsa_key);
+                
+                // Write to disk
+                private_key_file << rsa_private_pem;
+                public_key_file << rsa_public_pem;
+            }
+            
+            //! Load a private/public key pair from disk.
+            void loadKeys
+            (
+                std::string& private_key_filename,
+                std::string& public_key_filename,
+                std::string& passphrase
+            )
+            {
+                // Load into pointers
+                Botan::PKCS8_PrivateKey* private_key_ptr(
+                    Botan::PKCS8::load_key(private_key_filename, rng_, passphrase) );
+                Botan::X509_PublicKey* public_key_ptr(
+                    Botan::X509::load_key(public_key_filename) );
+                
+                // Downcasting - but we know they are RSA keys so its ok
+                private_key_ = *dynamic_cast<Botan::RSA_PrivateKey*>(private_key_ptr);
+                public_key_ = *dynamic_cast<Botan::RSA_PublicKey*>(public_key_ptr);            
+            }
+            
+            //! Load potential recipients' public keys into memory.
+            void loadIdKeyPair
+            (
+                std::string& idkeypair_filename
+            )
+            {
+                // First get the FacebookId by stripping from the filename.
+                FacebookId id( idkeypair_filename.substr(0, idkeypair_filename.find_last_of('.') ) );
+                
+                // Then read the public key from the file.
+                Botan::X509_PublicKey* key_ptr(
+                    Botan::X509::load_key(idkeypair_filename) );
+                Botan::RSA_PublicKey key = *dynamic_cast<Botan::RSA_PublicKey*>(key_ptr);
+                
+                // Save the pair in the id/key map.
+                idkeymap_[id] = key;
             }
     };
     //! Schifra Reed Solomon error correction library where code rate is (N,M)
@@ -377,7 +497,7 @@ namespace efb {
             {}
             
             //! Encode data by appending error correction codes.
-            void encode( std::vector<byte>& data)
+            void encode( std::vector<byte>& data) const
             {
                 // Cycle through each block, appending FEC code at the back of the array. Note that any final partial block will be padded automatically by this process, provided enough blocks exist.
                 unsigned int num_blocks = (data.size()/data_width_) + (data.size()%data_width_==0?0:1);
@@ -395,7 +515,8 @@ namespace efb {
             
             
             //! Decode (i.e. correct) data in place.
-            void decode( std::vector<byte>& data) {
+            void decode( std::vector<byte>& data) const
+            {
                 // We decode backwards since the last block may contain encoded FEC codes for the initial blocks.
                 unsigned int num_blocks = (data.size()/code_width_) + (data.size()%code_width_==0?0:1);
                 
@@ -799,27 +920,122 @@ namespace efb {
             }
     };
     
-    //! General library implementation using Reed Solomon FEC and Haar wavelet method for images.
+   
+    //! Basic library implementation.
     /**
-        This implementation uses the Haar wavelet method to store data in images. Errors are corrected with the Schifra Reed Solomon library using a (255,223) code rate. Crytographic protocols are provided by the Botan library using AES-128 and 2048-bit public key RSA.
+        This library implementation takes a Facebook ID on instantiation which defines the directory within which file I/O takes place.
     */
-    class Core : public ICore
+    class BasicLibary : public IeFBLibrary
    {
+        const ILibFactory& factory_;
+        ICrypto& crypto_; // not const, has state (key and iv)
+        const IFec& fec_;
+        const FacebookId id_;
+        const std::string working_directory_;
+        
         public :
-            //!Default contructor
-            Core() :
-                ICore( create_ICrypto(), create_IFec() )
-            {}
+            //! Instantiate the library with Facebook ID and extension directory.
+            /**
+                \param factory The library factory which will generate library sub-components.
+                \param id The Facebook ID of the current user.
+                \param working_directory The full path to libraries working directory. This will almost certainly contain the Facebook ID. All subsequent pathnames used in correspondence with the library will be in relation to this directory.
+            */
+            BasicLibary
+            (
+                const ILibFactory& factory,
+                const char* id,
+                const char* working_directory
+            ) :
+                // Initialisation list
+                factory_( factory ),
+                crypto_( factory_.create_ICrypto() ),
+                fec_( factory_.create_IFec() ),
+                id_( id ),
+                working_directory_( working_directory )
+            {
+                std::cout << "Library intialised." << std::endl;
+                std::cout << "Facebook ID is " << id_.val << "." << std::endl;
+                std::cout << "Working directory is " << working_directory_ << "." << std::endl;
+            }
             
-            //! Initialise library with Facebook ID and extension directory.
-            unsigned int initialise() {return 0;}
+            //! Generate a new cryptographic identity and write out to the filenames provided.
+            unsigned int generateIdentity
+            (
+                const char* private_key_filename,
+                const char* public_key_filename,
+                const char* passphrase
+            ) const
+            {
+                // File handles
+                std::ofstream private_key_file, public_key_file;
+                   
+                // Load the (new) private key file
+                private_key_file.open(
+                    (working_directory_+private_key_filename).c_str(), std::ios::binary);
+                if(!private_key_file.is_open()) {
+                    std::cout << "Error opening private key file: ";
+                    std::cout << working_directory_ << private_key_filename << std::endl;
+                    return 1;
+                }
+                
+                // Load the (new) public key file
+                public_key_file.open(
+                    (working_directory_+public_key_filename).c_str(), std::ios::binary );
+                if(!public_key_file.is_open()) {
+                    std::cout << "Error opening public key file: ";
+                    std::cout << working_directory_ << public_key_filename << std::endl;
+                    return 1;
+                }
+                
+                std::string passphrase_str(passphrase);
+                crypto_.generateKeys(
+                    private_key_file, public_key_file, passphrase_str );
+                
+                return 0;
+            }
+            
+            
+            //! Load a cryptographic identity from the filenames provided.
+            unsigned int loadIdentity
+            (
+                const char* private_key_filename,
+                const char* public_key_filename,
+                const char* passphrase
+            )
+            {
+                std::string private_key_filename_full =
+                    working_directory_ + *(new std::string(private_key_filename));
+                std::string public_key_filename_full =
+                    working_directory_ + *(new std::string(public_key_filename));
+                
+                crypto_.loadKeys(
+                    private_key_filename_full,
+                    public_key_filename_full,
+                    *(new std::string(passphrase))
+                );
+                
+                return 0;
+            }
+            
+            //! Load a potential recipient's ID and private key which may be used for encryption.
+            unsigned int loadIdKeyPair
+            (
+                const char* idkeypair_filename
+            )
+            {
+                std::string idkeypair_filename_str(idkeypair_filename);
+                std::string idkeypair_filename_full = working_directory_ + idkeypair_filename_str;
+                
+                crypto_.loadIdKeyPair(idkeypair_filename_full);
+                return 0;
+            }
+    
             //! Close the library and wipe any volatile directories.
             void close() {}
             
             unsigned int encryptFileInImage
             (
-                const char ids[],
-                const unsigned int len,
+                const char* ids,
                 const char*  data_filename,
                 const char*  img_out_filename
             )
@@ -829,12 +1045,27 @@ namespace efb {
                 //	 
                 std::ifstream 	data_file; // input data file
                 std::vector<byte> data; // byte array for our data bytes we wish to transfer
-                IConduitImage* 	img = create_IConduitImage(); // conduit image object
-                data.reserve( img->getMaxData() ); // we know the max number of items possible to store
+                IConduitImage& img = factory_.create_IConduitImage(); // conduit image object
+                data.reserve( img.getMaxData() ); // we know the max number of items possible to store
                 unsigned int head_size, data_size; // size of the raw data we are sending
-
+                
+                // Load IDs into a vector (currently they are semi-colon delimited)
+                std::string id_string;
+                std::vector<FacebookId> ids_vector;
+                unsigned int i = 0;
+                while ( ids[i] != '\0' )
+                {
+                    while (ids[i] != ';')
+                    {
+                        id_string.push_back( ids[i++] );
+                    }
+                    FacebookId id_object( id_string );
+                    ids_vector.push_back(id_object);
+                    i++;
+                }
+                
                 // Load the file, leaving room for the encryption header
-                head_size = crypto->calculateHeaderSize(len);
+                head_size = crypto_.calculateHeaderSize( ids_vector.size() );
                 data_file.open( data_filename, std::ios::binary );
                 if(!data_file.is_open()) {
                     std::cout << "Error opening data file." << std::endl;
@@ -847,38 +1078,37 @@ namespace efb {
                 data = std::vector<byte>( head_size, (byte) '|' );
                 data.resize(head_size + data_size);
                 data_file.read((char*) &data[head_size], data_size);
-            
+                
                 // Generate header and encrypt the data
-                std::vector<FacebookId> ids_vector = std::vector<FacebookId>(ids, ids+len);
-                try {crypto->encryptMessage(ids_vector, data);}
+                try {crypto_.encryptMessage(ids_vector, data);}
                 catch (EncryptionException &e) {
                   std::cout << "Error encrypting: " << e.what() << std::endl;
                   return 4;
                 }
-            
+                
                 // Add error correction code
-                try {fec->encode( data );}
+                try {fec_.encode( data );}
                 catch (FecEncodeException &e) {
                   std::cout << "Error adding error correction code: " << e.what() << std::endl;
                   return 2;
                 }
              
                 // Load the template image file into a ConduitImage object
-                try {img->load( template_filename );}
+                try {img.load( template_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
                   std::cout << "Error loading template image: " << e.what() << std::endl;
                   return 3;
                 }
               
                 // Store the data vector in the image
-                try {img->implantData( data );}
+                try {img.implantData( data );}
                 catch (ConduitImageImplantException &e) {
                     std::cout << "Error implanting data: " << e.what() << std::endl;
                     return 4;
                 }
               
                 // Save our final image (in a lossless format)
-                try {img->save( img_out_filename );}
+                try {img.save( img_out_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
                   std::cout << "Error saving output image: " << e.what() << std::endl;
                   return 3;
@@ -895,46 +1125,46 @@ namespace efb {
             )
             {
                 std::ofstream       data_file;  // data file object	 
-                IConduitImage*      img = create_IConduitImage();        // source image object
+                IConduitImage&      img = factory_.create_IConduitImage();        // source image object
                 std::vector<byte>   data;       // for data bytes we wish to transfer
                 unsigned int head_size;         // size of header so we can skip
                 
                 // Load the source image file into a CImg object
-                try {img->load( img_in_filename );}
+                try {img.load( img_in_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
                   std::cout <<  "Error loading source image: " << e.what() << std::endl;
                   return 1;
                 }
                 
                 // Check that the dimensions are exactly 720x720
-                if (img->width() != 720 || img->height() != 720) {
+                if (img.width() != 720 || img.height() != 720) {
                   std::cout << "Error extracting data: wrong image dimensions." << std::endl;
                   return 2;
                 }
                 
                 // Decode from image using Haar DWT
-                try {img->extractData( data );}
+                try {img.extractData( data );}
                 catch (ConduitImageExtractException &e) {
                     std::cout << "Error extracting data: " << e.what() << std::endl;
                     return 2;
                 }
                
                 // Correct errors
-                try {fec->decode( data );}
+                try {fec_.decode( data );}
                 catch (FecDecodeException &e) {
                   std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
                   return 3;
                 }
             
                 // Retrieve the message key from the header and decrypt the data
-                try {crypto->decryptMessage(data);}
+                try {crypto_.decryptMessage(data);}
                 catch (DecryptionException &e) {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
             
                 // Save data to a file, skipping the header
-                head_size = crypto->retrieveHeaderSize(data);
+                head_size = crypto_.retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);
                 if(!data_file.is_open()) {
                   std::cout << "Error creating data file:" << std::endl;
@@ -949,8 +1179,7 @@ namespace efb {
             //! Take a message string and encrypt into a Facebook-ready string. Both will be null terminated.
             unsigned int encryptString
             (
-                const char ids[],
-                const unsigned int len,
+                const char* ids,
                 const char*  input,
                       char*  output
             ) {return 0;}
@@ -960,7 +1189,7 @@ namespace efb {
                       char*  output
             ) {return 0;}
             
-            //! Debug function for calculating BER
+            //! Calculate bit error rate (for debugging purposes).
             unsigned int calculateBitErrorRate
             (
                 const char*  file1_path,
@@ -1021,9 +1250,22 @@ namespace efb {
                 
                 return 0;
             }
-            
-            IConduitImage* create_IConduitImage() {return new HaarConduitImage();}
-            ICrypto* create_ICrypto() {return new BotanCrypto<16,256>();}
-            IFec* create_IFec() {return new ReedSolomon255Fec();}
+    };
+
+    //! Haar wavelet AES-128/RSA-2048 based abstract factory pattern.
+    /**
+        This implementation uses the Haar wavelet method to store data in images. Errors are corrected with the Schifra Reed Solomon library using a (255,223) code rate. Cryptographic protocols are provided by the Botan library using AES-128 and 2048-bit public key RSA.
+    */
+    class Haar128Factory : public ILibFactory
+    {
+            IConduitImage& create_IConduitImage() const {
+                return *(new HaarConduitImage());
+            }
+            ICrypto& create_ICrypto() const {
+                return *(new BotanCrypto<16,256>());
+            }
+            IFec& create_IFec() const {
+                return *(new ReedSolomon255Fec());
+            }
     };
 }

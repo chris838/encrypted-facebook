@@ -113,6 +113,25 @@ eFB = {
                                      ctypes.default_abi,
                                      ctypes.uint32_t  // return type
             );
+            eFB.generateIdentity= lib.declare("c_generateIdentity",
+                                     ctypes.default_abi,
+                                     ctypes.uint32_t, // return type                                     
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr, // parameter 2
+                                     ctypes.char.ptr // parameter 3
+            );
+            eFB.loadIdentity= lib.declare("c_loadIdentity",
+                                     ctypes.default_abi,
+                                     ctypes.uint32_t, // return type                                     
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr, // parameter 2
+                                     ctypes.char.ptr // parameter 3
+            );
+            eFB.loadIdKeyPair= lib.declare("c_loadIdKeyPair",
+                                     ctypes.default_abi,
+                                     ctypes.uint32_t, // return type                                     
+                                     ctypes.char.ptr // parameter 1
+            );
             eFB.encryptString= lib.declare("c_encryptString",
                                      ctypes.default_abi,
                                      ctypes.char.ptr, // return type
@@ -157,6 +176,9 @@ eFB = {
     },
     
     initialise : function() {},
+    generateIdentity : function() {},
+    loadIdentity : function() {},
+    loadIdKeyPair : function() {},
     encryptString: function() {},
     decryptString: function() {},
     encryptFileInImage: function() {},
@@ -166,9 +188,17 @@ eFB = {
     
     
     generateEncryptedPhoto : function(s) {
+    
+        window.alert( eFB.generateIdentity( "keys/user.key", "keys/user.pubkey", "password" ) );
         
-        window.alert( eFB.encryptFileInImage( "aaaaaaaa00000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001",
-                                            1,
+        window.alert( eFB.loadIdentity( "keys/user.key", "keys/user.pubkey", "password" ) );
+        
+        window.alert( eFB.loadIdKeyPair( "keys/11111111.pubkey" ) );
+        window.alert( eFB.loadIdKeyPair( "keys/123456788888888.pubkey" ) );
+        window.alert( eFB.loadIdKeyPair( "keys/1234567887654321.pubkey" ) );
+        
+        /*
+        window.alert( eFB.encryptFileInImage( "1234567887654321;11111111;",
                                             "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/out.bmp"
                                            ));
@@ -177,10 +207,11 @@ eFB = {
                                             "/home/chris/Desktop/out.jpg",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
+        
         window.alert( eFB.calculateBitErrorRate( "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
-
+        */
     },
     
     uploadPhoto : function(path, album_id, callback) {

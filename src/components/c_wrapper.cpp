@@ -3,13 +3,37 @@
 
 IeFBLibrary* create_IeFBLibrary()
 {
-  /* For now we use this concrete implementation. Potentially the exact library implementation which is instantiated could be decided at runtime, e.g. by passing parameters (specified in browser) to this function. */
-  return (IeFBLibrary*) new efb::Core();
+/* For now we use this concrete implementation. Potentially the exact library implementation which is instantiated could be decided at runtime, e.g. by passing parameters (specified in browser) to this function. */
+  return (IeFBLibrary*) new efb::BasicLibary(
+      *(new efb::Haar128Factory()),
+      "146278748752732",
+      "/home/chris/.mozilla/firefox-4.0/dev/extensions/efb@cl.cam.ac.uk/146278748752732/"
+    );
+}
+
+/* Load a cryptographic identity from the filenames provided. */
+const unsigned int loadIdentity(
+   IeFBLibrary* This, const char* private_key_filename, const char* public_key_filename, const char* passphrase)
+{
+  return This->loadIdentity(private_key_filename, public_key_filename, passphrase);
+}
+
+/* Generate a new cryptographic identity and write out to the filenames provided. */
+const unsigned int generateIdentity(
+   IeFBLibrary* This, const char* private_key_filename, const char* public_key_filename, const char* passphrase)
+{
+  return This->generateIdentity(private_key_filename, public_key_filename, passphrase);
+}
+
+/* Load a set of Facebook ID / public key pairs from the provided directory, which will be used for encrypting messages/photos. */
+const unsigned int loadIdKeyPair( IeFBLibrary* This, const char* idkeypairs_dir)
+{
+  return This->loadIdKeyPair(idkeypairs_dir);
 }
 
 /* Take a null terminated UTF8 string. Remove the null terminal and treat as an array of arbitrary binary data. Encrypt it for the supplied set of intended recipients, prepending the appropriate message header. Encode into a Facebook-ready UTF8 format, treating each two byte pair as a unicode codepoint (with some modifications to avoid certain illegal characters, including null). Terminate with a null character and return. */
 const char* encryptString(
-  IeFBLibrary* This, const char ids[], const unsigned int len, const char* str)
+  IeFBLibrary* This, const char* ids, const char* str)
 {
   return "something";
 }
@@ -24,13 +48,12 @@ const char* decryptString( IeFBLibrary* This, const char* str)
 const unsigned int encryptFileInImage
 (
   IeFBLibrary* This,
-  const char ids[],
-  const unsigned int len,
+  const char* ids,
   const char* data_in_filename,
   const char* img_out_filename
 )
 {
-  return This->encryptFileInImage( ids, len, data_in_filename, img_out_filename );
+  return This->encryptFileInImage( ids, data_in_filename, img_out_filename );
 }
 
 /* Given the path to a source image and a destination file, attempt to extract and decrypt data from the image and write out to the file. */
