@@ -136,7 +136,8 @@ eFB = {
             eFB.encryptString= lib.declare("c_encryptString",
                                      ctypes.default_abi,
                                      ctypes.char.ptr, // return type
-                                     ctypes.char.ptr // parameter 1
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr // parameter 2
             );
             eFB.decryptString= lib.declare("c_decryptString",
                                      ctypes.default_abi,
@@ -197,6 +198,14 @@ eFB = {
         window.alert( eFB.loadIdKeyPair( "123456788888888", "keys/123456788888888.pubkey" ) );
         window.alert( eFB.loadIdKeyPair( "1234567887654321", "keys/1234567887654321.pubkey" ) );
         
+        msg = "Here is my message....";
+        window.alert(msg);
+        msg = eFB.encryptString( "1234567887654321;11111111;", msg ).readString();
+        window.alert(msg);
+        msg = eFB.decryptString( msg ).readString();
+        window.alert(msg);
+    
+    /*
         window.alert( eFB.encryptFileInImage( "1234567887654321;11111111;",
                                             "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/out.bmp"
@@ -211,6 +220,7 @@ eFB = {
                                             "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
+    */
     },
     
     uploadPhoto : function(path, album_id, callback) {

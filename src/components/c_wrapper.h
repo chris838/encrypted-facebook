@@ -15,9 +15,9 @@ const unsigned int generateIdentity(IeFBLibrary* This, const char* private_key_f
 
 const unsigned int loadIdKeyPair( IeFBLibrary* This, const char* id, const char* key_filename);
 
-const char* encryptString(IeFBLibrary* This, const char* ids, const char* str);
+const char* encryptString(IeFBLibrary* This, const char* ids, const char* str_in);
 
-const char* decryptString(IeFBLibrary* This, const char* str);
+const char* decryptString(IeFBLibrary* This, const char* str_in);
 
 const unsigned int encryptFileInImage(IeFBLibrary* This, const char* ids, const char* data_in_filename, const char* img_out_filename);
 

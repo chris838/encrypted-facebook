@@ -28,6 +28,15 @@
 #include <botan/pubkey.h>
 #include <botan/look_pk.h>
 
+// Useful mask bytes for UTF8 enc/decoding
+#define         MASKBITS                0x3F
+#define         MASKBYTE                0x80
+#define         MASK2BYTES              0xC0
+#define         MASK3BYTES              0xE0
+#define         MASK4BYTES              0xF0
+#define         MASK5BYTES              0xF8
+#define         MASK6BYTES              0xFC
+
 //! Library interface definition.
 /**
     This definition lies outside the namespace so it can be seen by the C wrapper (since C doesnt't support namespaces). There may exist a better way.
@@ -76,17 +85,15 @@
             ) = 0;
             
             //! Take a message string and encrypt into a Facebook-ready string. Both will be null terminated.
-            virtual unsigned int encryptString
+            virtual const char* encryptString
             (
                 const char* ids,
-                const char*  input,
-                      char*  output
-            ) = 0;
+                const char*  input
+            ) const = 0;
             //! Take string from Facebook and decrypt to a message string. Both will be null terminated.
-            virtual unsigned int decryptString(
-                const char*  input,
-                      char*  output
-            ) = 0;
+            virtual const char* decryptString(
+                const char*  input
+            ) const = 0;
             
             //! Debug function for calculating BER
             virtual unsigned int calculateBitErrorRate
@@ -122,7 +129,6 @@
 namespace efb {
 
     typedef unsigned short  Unicode2Bytes;
-    typedef unsigned int    Unicode4Bytes;
     typedef unsigned char   byte;
     
     // Exceptions for dealing with images - grouped into implant and extract.
@@ -239,6 +245,15 @@ namespace efb {
             virtual void extractData( std::vector<byte>& data ) = 0;
     };
     
+    
+    //! Abstract class defining a codec to encode and decode strings to and from Facebook.
+    class IStringCodec
+    {
+        public :
+            virtual std::string binaryToFbReady( std::vector<byte>& data) const = 0;
+            virtual std::vector<byte> fbReadyToBinary( std::string& str ) const = 0; 
+    };
+    
     //! Abstract factory class.
     /**
         An abstract factory class used to generate library sub-components. It defines a group of compatible or complementary sub-component implementations.
@@ -252,6 +267,8 @@ namespace efb {
             virtual ICrypto& create_ICrypto() const = 0;
             //! Forward error correction library object creater.
             virtual IFec& create_IFec() const = 0;
+            //! String codec object creater.
+            virtual IStringCodec& create_IStringCodec() const = 0;
     };
     
     //! Botan cryptography class using N-byte AES and M-byte RSA.
@@ -259,7 +276,7 @@ namespace efb {
         This class uses the Botan cryptography library to perform encryption and decryption in place. AES and RSA are the symmetric and asymmetric (respectively) schemes employed. The template variables <N,M> determine the key lengths. The header consists of two length bytes specifying the number of recipients, the message IV in plaintext, and a sequence of (Facebook ID, message-key) pairs. Each message-key is encrypted under the public key of the Facebook ID it is paired with.
     */
     template <int N, int M>
-    class BotanCrypto : public ICrypto
+    class BotanRSACrypto : public ICrypto
     {
         // Generate or set a random IV and random message key
         void generateNewIv()
@@ -393,7 +410,7 @@ namespace efb {
         
         public :
         
-            BotanCrypto()
+            BotanRSACrypto()
             {
                 // so we can work out their sizes properly...
                 generateNewIv();
@@ -1022,6 +1039,131 @@ namespace efb {
     };
     
    
+    
+    //! UTF8 codec which shifts characters by 0xB0 (176) to avoid problem characters.
+    class ShiftB0StringCodec : public IStringCodec
+    {
+        public :
+            std::string binaryToFbReady( std::vector<byte>& data) const
+            {
+                
+                std::string output;
+                // If not an even number of bytes, we pad with 0x08 byte AND prepend special padding character which is unicode: 0x10F000
+                if (data.size()%2 != 0) {
+                    data.push_back((byte)0x08);
+                    output.push_back((byte)(MASK4BYTES | (0x10F000 >> 18)));
+                    output.push_back((byte)(MASKBYTE | (0x10F000 >> 12 & MASKBITS)));
+                    output.push_back((byte)(MASKBYTE | (0x10F000 >> 6 & MASKBITS)));
+                    output.push_back((byte)(MASKBYTE | (0x10F000 & MASKBITS)));
+                }
+                std::vector<Unicode2Bytes> input( data.begin(), data.end() );
+                for(unsigned int i=0; i < input.size(); i++)
+                   {
+                      // First we add an offset of 0x00b0
+                      // so no dealing with control or null characters
+                      unsigned int in = ((unsigned int) input[i]) + 0x00b0;
+                      
+                      // 0xxxxxxx
+                      if(in < 0x80) output.push_back((byte)in);
+                      
+                      // 110xxxxx 10xxxxxx
+                      else if(in < 0x800)
+                      {
+                         output.push_back((byte)(MASK2BYTES | (in >> 6)));
+                         output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
+                      }
+                      else if ( (in >= 0xd800) & (in <= 0xdfff) )
+                      {  
+                        // this character range is not valid (they are surrogate pair codes) so we shift 1 bit to the left and use those code points instead
+                         output.push_back((byte)(MASK4BYTES | (in >> 17)));
+                         output.push_back((byte)(MASKBYTE   | (in >> 11 & MASKBITS)));
+                         output.push_back((byte)(MASKBYTE   | (in >> 5 & MASKBITS)));
+                         output.push_back((byte)(MASKBYTE   | (in << 1 & MASKBITS)));
+                      }
+                      
+                      // 1110xxxx 10xxxxxx 10xxxxxx
+                      else if(in < 0x10000)
+                      {
+                         output.push_back((byte)(MASK3BYTES | (in >> 12)));
+                         output.push_back((byte)(MASKBYTE | (in >> 6 & MASKBITS)));
+                         output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
+                      }
+                      
+                      // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+                      else if(in < 0x10ffff)
+                      {
+                         output.push_back((byte)(MASK4BYTES | (in >> 18)));
+                         output.push_back((byte)(MASKBYTE | (in >> 12 & MASKBITS)));
+                         output.push_back((byte)(MASKBYTE | (in >> 6 & MASKBITS)));
+                         output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
+                      }
+                   }
+                return output;
+            }
+            
+            std::vector<byte> fbReadyToBinary( std::string& input ) const
+            {
+            bool padded = false;
+            std::vector<Unicode2Bytes> output;
+            for(unsigned int i=0; i < input.size();)
+            {
+               unsigned int ch;
+         
+               // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+               if((input[i] & MASK4BYTES) == MASK4BYTES)
+               {
+                 if (input[i] > 0xf2 && input[i] < 0x100) // this is a surrogate character
+                 {                   
+                   ch = ((input[i+0] & 0x07)     << 17) |
+                        ((input[i+1] & MASKBITS) << 11) |
+                        ((input[i+2] & MASKBITS) <<  5) |
+                        ((input[i+3] & MASKBITS) >>  1);
+                 } else {
+                   ch = ((input[i+0] & 0x07)     << 18) |
+                        ((input[i+1] & MASKBITS) << 12) |
+                        ((input[i+2] & MASKBITS) <<  6) |
+                        ((input[i+3] & MASKBITS));
+                 }
+                  i += 4;
+               }
+               
+               // 1110xxxx 10xxxxxx 10xxxxxx
+               else if((input[i] & MASK3BYTES) == MASK3BYTES)
+               {
+                  ch = ((input[i] & 0x0F) << 12) | (
+                        (input[i+1] & MASKBITS) << 6)
+                       | (input[i+2] & MASKBITS);
+                  i += 3;
+               }
+               
+               // 110xxxxx 10xxxxxx
+               else if((input[i] & MASK2BYTES) == MASK2BYTES)
+               {
+                  ch = ((input[i] & 0x1F) << 6) | (input[i+1] & MASKBITS);
+                  i += 2;
+               }
+               
+               // 0xxxxxxx
+               else if(input[i] < MASKBYTE)
+               {
+                  ch = input[i];
+                  i += 1;
+               }
+               
+               // check for padding character
+               if (ch == 0x10F000) {
+                    padded = true;
+               }
+               else output.push_back( (Unicode2Bytes) (ch - 0xb0) ); // subtract 0xb0 offset 
+            }
+            
+            std::vector<byte> data(output.begin(), output.end());
+            // If we found a padding character, remove last byte
+            if (padded) data.pop_back();
+            return data;
+        }
+    };
+    
     //! Basic library implementation.
     /**
         This library implementation takes a Facebook ID on instantiation which defines the directory within which file I/O takes place.
@@ -1031,6 +1173,7 @@ namespace efb {
         const ILibFactory& factory_;
         ICrypto& crypto_; // not const, has state (key and iv)
         const IFec& fec_;
+        const IStringCodec& string_codec_;
         const FacebookId id_;
         const std::string working_directory_;
         
@@ -1051,6 +1194,7 @@ namespace efb {
                 factory_( factory ),
                 crypto_( factory_.create_ICrypto() ),
                 fec_( factory_.create_IFec() ),
+                string_codec_( factory_.create_IStringCodec() ),
                 id_( id ),
                 working_directory_( working_directory )
             {
@@ -1059,7 +1203,6 @@ namespace efb {
                 std::cout << "Working directory is " << working_directory_ << "." << std::endl;
                 // set the ID within the crypto library
                 crypto_.setUserId( id_ );
-
             }
             
             //! Generate a new cryptographic identity and write out to the filenames provided.
@@ -1290,17 +1433,76 @@ namespace efb {
             }
             
             //! Take a message string and encrypt into a Facebook-ready string. Both will be null terminated.
-            unsigned int encryptString
+            const char* encryptString
             (
                 const char* ids,
-                const char*  input,
-                      char*  output
-            ) {return 0;}
+                const char*  input
+            ) const
+            {
+                // Load IDs into a vector (currently they are semi-colon delimited)
+                std::string id_string;
+                std::vector<FacebookId> ids_vector;
+                unsigned int i = 0;
+                while ( ids[i] != '\0' )
+                {
+                    id_string = "";
+                    while (ids[i] != ';')
+                    {
+                        id_string.push_back( ids[i++] );
+                    }
+                    FacebookId id_object( id_string );
+                    ids_vector.push_back(id_object);
+                    i++;
+                }
+                
+                // Add the user's ID
+                ids_vector.push_back( id_ );
+                
+                // Copy data into a vector<byte> **INCLUDING** the null terminal. Leave room for the header at the start.
+                unsigned int head_size = crypto_.calculateHeaderSize( ids_vector.size() );
+                std::vector<byte> data( head_size, (byte)0);
+                for (unsigned int i=0; i<strlen(input)+1; i++) data.push_back( input[i] );
+                    
+                // Generate header and encrypt the data
+                try {crypto_.encryptMessage(ids_vector, data);}
+                catch (EncryptionException &e) {
+                  std::cout << "Error encrypting: " << e.what() << std::endl;
+                  return "";
+                }
+                
+                // Create Facebook ready string to upload
+                std::string str = string_codec_.binaryToFbReady( data );
+                char* cstr = new char [str.size()+1];
+                strcpy(cstr, str.c_str());
+                
+                return cstr;
+            }
+            
             //! Take string from Facebook and decrypt to a message string. Both will be null terminated.
-            unsigned int decryptString(
-                const char*  input,
-                      char*  output
-            ) {return 0;}
+            const char* decryptString
+            (
+                const char*  input
+            ) const
+            {
+                // Copy input into a std::string (strip null terminal)
+                std::string str( input );
+            
+                // Decode the string into a byte array
+                std::vector<byte> data = string_codec_.fbReadyToBinary( str );
+                
+                // Retrieve the message key from the header and decrypt the data
+                try {crypto_.decryptMessage(data);}
+                catch (DecryptionException &e) {
+                  std::cout << "Error decrypting: " << e.what() << std::endl;
+                  return "";
+                }
+                
+                // Bytes should now be original (UTF8, null terminated) message. We must skip the header.
+                unsigned int head_size = crypto_.retrieveHeaderSize(data);
+                char* cstr = new char [data.size() - head_size];
+                strcpy( cstr, (char*) &data[head_size] );
+                return cstr;
+            }
             
             //! Calculate bit error rate (for debugging purposes).
             unsigned int calculateBitErrorRate
@@ -1375,10 +1577,33 @@ namespace efb {
                 return *(new HaarConduitImage());
             }
             ICrypto& create_ICrypto() const {
-                return *(new BotanCrypto<16,256>());
+                return *(new BotanRSACrypto<16,256>());
             }
             IFec& create_IFec() const {
                 return *(new ReedSolomon255Fec());
+            }
+            IStringCodec& create_IStringCodec() const {
+                return *(new ShiftB0StringCodec());
+            }
+    };
+    
+    //! Haar wavelet AES-256/RSA-2048 based abstract factory pattern.
+    /**
+        This implementation uses the Haar wavelet method to store data in images. Errors are corrected with the Schifra Reed Solomon library using a (255,223) code rate. Cryptographic protocols are provided by the Botan library using AES-256 and 2048-bit public key RSA.
+    */
+    class Haar256Factory : public ILibFactory
+    {
+            IConduitImage& create_IConduitImage() const {
+                return *(new HaarConduitImage());
+            }
+            ICrypto& create_ICrypto() const {
+                return *(new BotanRSACrypto<32,256>());
+            }
+            IFec& create_IFec() const {
+                return *(new ReedSolomon255Fec());
+            }
+            IStringCodec& create_IStringCodec() const {
+                return *(new ShiftB0StringCodec());
             }
     };
 }
