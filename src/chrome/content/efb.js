@@ -130,7 +130,8 @@ eFB = {
             eFB.loadIdKeyPair= lib.declare("c_loadIdKeyPair",
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type                                     
-                                     ctypes.char.ptr // parameter 1
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr // parameter 2
             );
             eFB.encryptString= lib.declare("c_encryptString",
                                      ctypes.default_abi,
@@ -146,9 +147,8 @@ eFB = {
                                      ctypes.default_abi,
                                      ctypes.uint32_t, // return type
                                      ctypes.char.ptr, // parameter 1
-                                     ctypes.uint32_t, // parameter 2
-                                     ctypes.char.ptr, // parameter 3
-                                     ctypes.char.ptr // parameter 4
+                                     ctypes.char.ptr, // parameter 2
+                                     ctypes.char.ptr // parameter 3
             );
             eFB.decryptFileFromImage= lib.declare("c_decryptFileFromImage",
                                      ctypes.default_abi,
@@ -193,25 +193,24 @@ eFB = {
         
         window.alert( eFB.loadIdentity( "keys/user.key", "keys/user.pubkey", "password" ) );
         
-        window.alert( eFB.loadIdKeyPair( "keys/11111111.pubkey" ) );
-        window.alert( eFB.loadIdKeyPair( "keys/123456788888888.pubkey" ) );
-        window.alert( eFB.loadIdKeyPair( "keys/1234567887654321.pubkey" ) );
+        window.alert( eFB.loadIdKeyPair( "11111111", "keys/11111111.pubkey" ) );
+        window.alert( eFB.loadIdKeyPair( "123456788888888", "keys/123456788888888.pubkey" ) );
+        window.alert( eFB.loadIdKeyPair( "1234567887654321", "keys/1234567887654321.pubkey" ) );
         
-        /*
         window.alert( eFB.encryptFileInImage( "1234567887654321;11111111;",
                                             "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/out.bmp"
                                            ));
         
         window.alert( eFB.decryptFileFromImage(
-                                            "/home/chris/Desktop/out.jpg",
+                                            "/home/chris/Desktop/out.bmp",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
         
-        window.alert( eFB.calculateBitErrorRate( "/home/chris/Desktop/hidden.jpg",
+        window.alert( eFB.calculateBitErrorRate(
+                                            "/home/chris/Desktop/hidden.jpg",
                                             "/home/chris/Desktop/hidden2.jpg"
                                    ));
-        */
     },
     
     uploadPhoto : function(path, album_id, callback) {

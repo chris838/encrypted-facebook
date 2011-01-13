@@ -25,6 +25,8 @@
 // Include the Botan crypto library
 #include <botan/botan.h>
 #include <botan/rsa.h>
+#include <botan/pubkey.h>
+#include <botan/look_pk.h>
 
 //! Library interface definition.
 /**
@@ -52,7 +54,8 @@
             //! Load a set of Facebook ID / public key pairs which will be used for encrypting messages/photos.
             virtual unsigned int loadIdKeyPair
             (
-                const char* idkeypair_filename
+                const char* id,
+                const char* key_filename
             ) = 0;
             
             //! Close the library and wipe any sensitive directories/information.
@@ -164,6 +167,8 @@ namespace efb {
             ss << str;
             if ( (ss >> val).fail() ) throw IdException("Error converting Facebook ID to numeric value.");
         }
+        
+        FacebookId() : val(0) {}        
     };
     
     //! Overloaded operator so type can be used in a keymap
@@ -203,8 +208,11 @@ namespace efb {
             //! Load a potential recipient's public key into memory.
             virtual void loadIdKeyPair
             (
-                std::string& idkeypair_filename
+                FacebookId& id,
+                std::string& key_filename
             ) = 0;
+            //! Set the Facebook ID for decryption
+            virtual void setUserId(const FacebookId& id) = 0;
     };
     
     //! Abstract class definining the interface for the error correction algorithms.
@@ -258,11 +266,35 @@ namespace efb {
             {iv_ = Botan::InitializationVector(rng_, N);} // a random N-byte iv
         void generateNewMessageKey()
             {key_ = Botan::SymmetricKey(rng_, N);} // a random N-byte key
+        //! Write out an encypted message key using the public key of the ID provided.
         void getCipheredMessageKey
         (
             FacebookId & id,
-            std::vector<byte> & data
-        ) {}
+            byte data[]
+        )
+        {
+            Botan::RSA_PublicKey pubkey = idkeymap_[ id ];
+            Botan::PK_Encryptor* encryptor = Botan::get_pk_encryptor(pubkey, "EME1(SHA-512)");
+            Botan::SecureVector<byte> mkey_encrypted = encryptor->encrypt(key_.begin(),key_.length(),rng_);
+            for (unsigned int i=0; i<mkey_encrypted.size();i++)
+                data[i] = mkey_encrypted[i];
+        }
+        //! Write the length tag at the start of the data
+        void writeNumIds( byte data[], unsigned short len ) const
+        {
+            data[0] = (unsigned char) (len >> 8) ;
+            data[1] = (unsigned char) len;
+        }
+        //! Read the length tag at the start of the data
+        unsigned short readNumIds( std::vector<byte> data ) const
+        {
+            unsigned short len;
+            unsigned char len_hi, len_lo;
+            len_hi = data[0];
+            len_lo = data[1];
+            len = (((unsigned short) len_hi) << 8) | len_lo;
+            return len;
+        }
         
         //! Create the crypto header using a new IV and message key.
         void createCryptoHeader
@@ -271,14 +303,36 @@ namespace efb {
             std::vector<byte> & data
         )
         {
+            // Randomise key and initialisation vector.
             generateNewIv();
             generateNewMessageKey();
-            // create the header and write to the start of the vector
+            
+            // Set length of output key (same as public key for RSA)
+            unsigned int key_len = M;    
+            
+            // Offset into the header
+            unsigned int offset = 0;
+            
+            // Write tag with the number of IDs to the start of the header.
+            writeNumIds( &data[offset], (unsigned short) ids.size() );
+            offset+=2;
+            
+            // Write IV to the header, in plaintext
             for (unsigned int i=0; i<iv_.length(); i++)
-                data[i] = iv_.begin()[i];
-            // TODO - for now just append the key in plaintext
-            for (unsigned int i=0; i<key_.length(); i++)
-                data[iv_.length()+i] = key_.begin()[i];
+                data[offset+i] = iv_.begin()[i];
+            offset+=iv_.length();
+
+            // For each ID, lookup the public key and encrypt the message key
+            for (unsigned int i=0; i<ids.size();i++) {
+                // Insert the ID
+                FacebookId id = ids[i];
+                for (unsigned int j=0; j<8; j++)
+                    data[offset+j] = (unsigned char) (id.val >> (j*8));
+                offset+=8;                
+                // Insert the encrypted message key
+                getCipheredMessageKey(id, &data[offset]);
+                offset+= key_len;
+            }
         }
         
         //! Attempty to parse a crypto header - this will retrieve and set the message key and IV.
@@ -287,10 +341,41 @@ namespace efb {
             std::vector<byte> & data
         )
         {
-            iv_ =  Botan::InitializationVector( &data[0], iv_.length() );
-            key_ =  Botan::SymmetricKey( &data[iv_.length()], key_.length() );
+            // Offset into the header
+            unsigned int offset = 0;
+            
+            // Set length of output key (same as public key for RSA)
+            unsigned int key_len = M;  
+            
+            // Retrieve the number of recipients
+            unsigned int len = retrieveHeaderSize(data);
+            offset+=2;
+            
+            // Retrieve the IV
+            iv_ =  Botan::InitializationVector( &data[offset], iv_.length() );
+            offset+=iv_.length();
+            
+            // Loop through till we find user's ID (if it exists)
+            for (unsigned int i=0; i<len; i++)
+            {
+                // Extract an ID
+                unsigned long long int id_int = 0;
+                for (unsigned int j=0; j<8; j++)
+                    id_int = id_int | (((unsigned long long int)data[offset+j]) << (j*8));
+                offset+=8;
+                // If we have our ID, extract messsage key
+                if (id_int == id_.val) {
+                    // We can decrypt, so do so
+                    std::string key_str((char*)&data[offset], key_len );
+                    key_ = Botan::SymmetricKey( decryptor_->decrypt( &data[offset], key_len ) );
+                    return;
+                }
+                offset+=key_len;
+            }
+            
+            throw DecryptionException("ID not found - cannot decrypt this message.");
         }
-                    
+        
         //! Botan library attribute members
         Botan::LibraryInitializer init_;
         Botan::AutoSeeded_RNG rng_;
@@ -301,7 +386,10 @@ namespace efb {
         Botan::RSA_PublicKey public_key_;
         // recipient public key dictionary
         std::map<FacebookId,Botan::RSA_PublicKey> idkeymap_;
-        
+        // user's Facebook ID
+        FacebookId id_;
+        // PK encryptor object
+        Botan::PK_Decryptor* decryptor_;
         
         public :
         
@@ -313,10 +401,14 @@ namespace efb {
             }
             
             unsigned int calculateHeaderSize( unsigned int numOfIds ) const
-                {return iv_.length() + key_.length();}
-
+                // Length tag + IV length + number of IDs x (ID length + key length)
+                {return sizeof(short) + iv_.length() + numOfIds*(sizeof(long long int) + M);}
+            
             unsigned int retrieveHeaderSize(std::vector<byte>& data) const
-                {return iv_.length() + key_.length();}
+            {
+                unsigned int numOfIds = readNumIds(data);
+                return calculateHeaderSize(numOfIds);
+            }
                 
             void encryptMessage
             (
@@ -390,25 +482,34 @@ namespace efb {
                 
                 // Downcasting - but we know they are RSA keys so its ok
                 private_key_ = *dynamic_cast<Botan::RSA_PrivateKey*>(private_key_ptr);
-                public_key_ = *dynamic_cast<Botan::RSA_PublicKey*>(public_key_ptr);            
+                public_key_ = *dynamic_cast<Botan::RSA_PublicKey*>(public_key_ptr);
+                
+                // Add public key to key map so it can be used for encryption
+                idkeymap_[id_] = public_key_;
+                
+                // Create the decryption object using our private key
+                decryptor_ = Botan::get_pk_decryptor(private_key_, "EME1(SHA-512)");                
             }
             
             //! Load potential recipients' public keys into memory.
             void loadIdKeyPair
             (
-                std::string& idkeypair_filename
+                FacebookId& id,
+                std::string& key_filename
             )
             {
-                // First get the FacebookId by stripping from the filename.
-                FacebookId id( idkeypair_filename.substr(0, idkeypair_filename.find_last_of('.') ) );
-                
-                // Then read the public key from the file.
+                // Read the public key from the file.
                 Botan::X509_PublicKey* key_ptr(
-                    Botan::X509::load_key(idkeypair_filename) );
+                    Botan::X509::load_key(key_filename) );
                 Botan::RSA_PublicKey key = *dynamic_cast<Botan::RSA_PublicKey*>(key_ptr);
                 
                 // Save the pair in the id/key map.
                 idkeymap_[id] = key;
+            }
+            
+            //! Set the Facebook ID for decryption
+            void setUserId(const FacebookId& id) {
+                id_.val = id.val;
             }
     };
     //! Schifra Reed Solomon error correction library where code rate is (N,M)
@@ -956,6 +1057,9 @@ namespace efb {
                 std::cout << "Library intialised." << std::endl;
                 std::cout << "Facebook ID is " << id_.val << "." << std::endl;
                 std::cout << "Working directory is " << working_directory_ << "." << std::endl;
+                // set the ID within the crypto library
+                crypto_.setUserId( id_ );
+
             }
             
             //! Generate a new cryptographic identity and write out to the filenames provided.
@@ -1020,13 +1124,18 @@ namespace efb {
             //! Load a potential recipient's ID and private key which may be used for encryption.
             unsigned int loadIdKeyPair
             (
-                const char* idkeypair_filename
+                const char* id,
+                const char* key_filename
             )
             {
-                std::string idkeypair_filename_str(idkeypair_filename);
-                std::string idkeypair_filename_full = working_directory_ + idkeypair_filename_str;
+                // Get ID object
+                FacebookId id_obj( id );
                 
-                crypto_.loadIdKeyPair(idkeypair_filename_full);
+                // Get key file string
+                std::string key_filename_str(key_filename);
+                std::string key_filename_full = working_directory_ + key_filename_str;
+                
+                crypto_.loadIdKeyPair(id_obj,key_filename_full);
                 return 0;
             }
     
@@ -1055,6 +1164,7 @@ namespace efb {
                 unsigned int i = 0;
                 while ( ids[i] != '\0' )
                 {
+                    id_string = "";
                     while (ids[i] != ';')
                     {
                         id_string.push_back( ids[i++] );
@@ -1063,6 +1173,9 @@ namespace efb {
                     ids_vector.push_back(id_object);
                     i++;
                 }
+                
+                // Add the user's ID
+                ids_vector.push_back( id_ );
                 
                 // Load the file, leaving room for the encryption header
                 head_size = crypto_.calculateHeaderSize( ids_vector.size() );
@@ -1155,7 +1268,7 @@ namespace efb {
                   std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
                   return 3;
                 }
-            
+                
                 // Retrieve the message key from the header and decrypt the data
                 try {crypto_.decryptMessage(data);}
                 catch (DecryptionException &e) {

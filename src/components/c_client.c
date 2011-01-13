@@ -20,9 +20,9 @@ const unsigned int c_generateIdentity(const char* private_key_filename, const ch
 }
 
 /* Load a set of ID public key pairs for use when encrypting, fron the provided directory. */
-const unsigned int c_loadIdKeyPair(const char* idkeypairs_dir)
+const unsigned int c_loadIdKeyPair(const char* id, const char* key_filename)
 {
-  return loadIdKeyPair(lib, idkeypairs_dir );
+  return loadIdKeyPair(lib, id, key_filename );
 }
 
 /* Encrypt a null terminated string into another null terminated Facebook-ready string, for the supplied set of intended recipients*/

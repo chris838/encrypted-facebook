@@ -26,9 +26,9 @@ const unsigned int generateIdentity(
 }
 
 /* Load a set of Facebook ID / public key pairs from the provided directory, which will be used for encrypting messages/photos. */
-const unsigned int loadIdKeyPair( IeFBLibrary* This, const char* idkeypairs_dir)
+const unsigned int loadIdKeyPair( IeFBLibrary* This, const char* id, const char* key_filename)
 {
-  return This->loadIdKeyPair(idkeypairs_dir);
+  return This->loadIdKeyPair(id,key_filename);
 }
 
 /* Take a null terminated UTF8 string. Remove the null terminal and treat as an array of arbitrary binary data. Encrypt it for the supplied set of intended recipients, prepending the appropriate message header. Encode into a Facebook-ready UTF8 format, treating each two byte pair as a unicode codepoint (with some modifications to avoid certain illegal characters, including null). Terminate with a null character and return. */

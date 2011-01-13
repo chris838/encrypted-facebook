@@ -13,7 +13,7 @@ const unsigned int loadIdentity(IeFBLibrary* This, const char* private_key_filen
 
 const unsigned int generateIdentity(IeFBLibrary* This, const char* private_key_filename, const char* public_key_filename, const char* passphrase);
 
-const unsigned int loadIdKeyPair( IeFBLibrary* This, const char* idkeypairs_dir);
+const unsigned int loadIdKeyPair( IeFBLibrary* This, const char* id, const char* key_filename);
 
 const char* encryptString(IeFBLibrary* This, const char* ids, const char* str);
 
