@@ -1,108 +1,87 @@
 /**
- * Encrypted Facebook authentication and submission methods
- */
-
+    Encrypted Facebook authentication, identity management and message/image submission functions.
+*/
 eFB = {
     /**
-    * Load the preferences XPCOM module, used to share data (i.e. the access token) across
-    * windows.
+        Load the preferences XPCOM module, used to share data (i.e. the access token) across windows.
     */
     prefs : Components.classes["@mozilla.org/preferences-service;1"]
                     .getService(Components.interfaces.nsIPrefService).getBranch("extensions.efb."),
-                    
-
     /**
-    * Initialises the login process, i.e. opens the login prompt.
-    * The process is completed when the login success url is detected,
-    * at which point we intercept the access token.
+        Define some constanst that will be used throughout.
+    */
+    // Subdirectories for storing files
+    cache_dir   :"cache/",
+    temp_dir    :"temp/",
+    keys_dir    :"keys/",
+    // User key filenames
+    privkey_file : "user.key",
+    pubkey_file : "user.pubkey",
+    // Tag formats
+    pubkey_start : "ᐊ✇",
+    pubkey_end : "ᐅ",
+    msg_start : "ᐊ✆",
+    msg_end : "ᐅ",
+    
+    /**
+        Initialise the login process and open the login prompt. Obtain a Facebook ID from the user and initialise the C++ libary with it. The process is completed when the login success url is detected, at which point we intercept the access token.
     */ 
     login : function(aEvent) {
     
         if ( !eFB.prefs.getBoolPref("loggedIn") ) {
             // If we aren't already logged in, open a login window
-            var api_id =    "146278748752732";
+            eFB.api_id = window.prompt("Please enter your Facebook ID." , "146278748752732");
+            // Load the C/C++ binary library functions.
+            eFB.loadLibrary( function() {
+                eFB.initialise( eFB.api_id, eFB.working_dir );
+            } );
+            // Create the login url
             var login_url = "https://graph.facebook.com/oauth/authorize?" +
-                            "client_id=" + api_id + "&" +
+                            "client_id=" + eFB.api_id + "&" +
                             "redirect_uri=http://www.facebook.com/connect/login_success.html&" +
                             "type=user_agent&" +
-                            "scope=publish_stream,read_stream,offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags&" +
+                            "scope=offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_about_me,friends_about_me&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=350,height=250,resizable=0");
         } else {
             // And if we are, nothing to do
-             window.alert( eFB.prefs.getCharPref("token") );
-            return;
+            //window.alert( "You are already logged in." );
+            // TODO - this just for debugging
+            //return;
+            // Load the C/C++ binary library functions.
+            eFB.api_id = "146278748752732";
+            eFB.loadLibrary( function() {
+                eFB.initialise( eFB.api_id, eFB.working_dir );
+            } );
         }
     },
     
     /**
-    * Log out from Facebook
+        Log the application out of Facebook and close the library.
     */
     logout : function(aEvent) {
     
         if ( !eFB.prefs.getBoolPref("loggedIn") ) {
             // If we aren't already logged in, nothing to do
+            window.alert("You are already logged out.");
             return;
 
         } else {
             // Otherwise simply wipe token and status variables
             eFB.prefs.setBoolPref("loggedIn", false);
             eFB.prefs.setCharPref("token", "NO_TOKEN");
-            
+            // And close the C++ libary
+            eFB.close();
             window.alert("You are now logged out from Facebook");
             return;
         }
     },
     
-    /**
-    * Submits a note, returning a tag which links to the notes contents 
-    * 
-    **/
-    submit : function(aEvent) {
-        if ( eFB.prefs.getBoolPref("loggedIn") ) {
-            
-            // The variables we will submit
-            var plaintext = document.getElementById("efb-text").value;
-            //
-            var msg = eFB.encryptString(plaintext).readString(); // No encrytion yet
-
-            var subject_tag = encodeURIComponent( "ˠ" );
-            var params =    "access_token=" + eFB.prefs.getCharPref("token") +
-                            "&message=" + msg +
-                            "&subject=" + subject_tag;
-
-            // Create a new note
-            var http = new XMLHttpRequest();
-            var url = "https://graph.facebook.com/me/notes";
-            http.open("POST", url, true);
-            // Send the proper header information along with the request
-            http.setRequestHeader("Content-type", "text/html; charset=utf-8");
-            http.setRequestHeader("Content-length", params.length);
-            http.setRequestHeader("Connection", "close");
-            //
-            http.onreadystatechange = function() {//Call a function when the state changes.
-                    if(http.readyState == 4) {
-                        if (http.status == 200) {
-                            // Generate a tag to link to the note
-                            var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
-                            var tag = eFB.generateTag( id );
-                            window.alert( tag );
-                        } else {
-                            window.alert("Error sending request, " + http.responseText);
-                        }
-                    }
-            }
-            http.send(params);
-           
-        } else {
-            window.alert("You aren't logged in to Facebook");
-            return;
-        }
-    },
     
-    // Open the C/C++ extension components
-    loadLibs : function( callback ) {
-
+    /**
+        Open the C/C++ extension components.
+    */
+    loadLibrary : function( callback ) {
         var MY_ID = "efb@cl.cam.ac.uk";  
         Components.utils.import("resource://gre/modules/AddonManager.jsm");
         AddonManager.getAddonByID(MY_ID, function(addon) {
@@ -111,7 +90,9 @@ eFB = {
             
             eFB.initialise= lib.declare("initialise",
                                      ctypes.default_abi,
-                                     ctypes.uint32_t  // return type
+                                     ctypes.uint32_t, // return type
+                                     ctypes.char.ptr, // parameter 1
+                                     ctypes.char.ptr // parameter 2
             );
             eFB.generateIdentity= lib.declare("c_generateIdentity",
                                      ctypes.default_abi,
@@ -168,14 +149,14 @@ eFB = {
                                      ctypes.int32_t // return type
             );
             
-            // Find the path for the extension and pass it to the library
-            eFB.cache_dir   = addon.getResourceURI( "" ).path + "cache/";
-            eFB.temp_dir    = addon.getResourceURI( "" ).path + "temp/";
-            callback( eFB.cache_dir, eFB.temp_dir );
-            
+            // Find the path for the extension working directory and pass it to the library
+            eFB.extension_dir = addon.getResourceURI( "" ).path;
+            eFB.working_dir = eFB.extension_dir + eFB.api_id + "/";
+            callback();
         } );
     },
     
+    // C++ library function placeholders.
     initialise : function() {},
     generateIdentity : function() {},
     loadIdentity : function() {},
@@ -187,6 +168,239 @@ eFB = {
     calculateBitErrorRate: function() {},
     close: function() {},
     
+    /**
+        Generate a new private/public key pair and store locally. This will wipe any current keys - be warned as loss of your private key means you lose access to all data encrypted with the corresponding public key.
+    */
+    createId : function(aEvent) {
+        // Check if we already have an identity stored
+        var priv = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.privkey_file );
+        var pub = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.pubkey_file );
+        try {
+            foo = priv.size;
+            if (!window.confirm("A private key was found in your profile folder. This operation will overwrite you current key information. Without your private key you will be permanently unable to access prior encrypted material. We strongly recommend you backup your private key if you have not done so already. Are you sure you wish to continue?")) {
+                window.alert( "Operation cancelled.");
+                return;
+            }
+        } catch(e)  {if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;}
+        try {
+            foo = pub.size;
+            if (!window.confirm("A public key was found in your profile folder. This operation will overwrite you current key information. Are you sure you wish to continue?")) {
+                window.alert( "Operation cancelled.");
+                return;
+            }
+        } catch(e)  {if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;}
+        
+        // We need a passphrase to lock the file
+        pass = window.prompt("Please enter a password to keep your key information safe. Note that forgotten passwords cannot be recovered.");
+        
+        // Go ahead and create the new (local) identity
+        if (eFB.generateIdentity( eFB.keys_dir+eFB.privkey_file, eFB.keys_dir+eFB.pubkey_file, pass) == 0)
+        window.alert("Generation successful");
+        else window.alert("Error: key generation failed.");
+    },
+    
+    /**
+        Upload local key information to Facebook. This will enable others to include you as a recipient in encrypted communications.
+    */
+    uploadId : function(aEvent) {
+        
+        // Check if the key is present on disk and load in to a string. Then find and delete existing keys, and finally append the new key.
+        var priv = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.privkey_file );
+        var pub = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.pubkey_file );
+        try {foo = priv.size;}
+        catch(e)  {
+            if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;
+            window.alert("A private key file was not found on you local system. Operation will abort.");
+            return;
+        }
+        try {
+            foo = pub.size;
+            reader = new FileReader();
+            reader.addEventListener("loadend", function(e) {
+                // Key was found on disk and loaded succesfully
+                // Download "bio" and search for existing keys
+                eFB.abort = false;
+                eFB.downloadProfileAttribute("bio", findExistingKeys);
+        }, false);
+            reader.addEventListener("error", function(e) {window.alert("Error occured reading public key file");}, false);
+            reader.readAsText(pub);
+        } catch(e)  {
+            if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;
+            window.alert("A public key file was not found on you local system. Operation will abort.");
+            return;
+        }
+        
+        // (Function to) check if one or more public keys are already present (and try to delete them).
+        function findExistingKeys(biostring) {
+            var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "gim");
+            biostring = biostring.replace( rx , function(pubkey) {
+                    if (window.confirm("An existing public key was found on your Facebook profile. Do you wish to delete this key before continuing?")) {
+                        return "";
+                    } else {eFB.abort=true; return pubkey;}
+                }
+            )
+            if (eFB.abort) {
+                window.alert("One or more existing public keys were found on your profile and not removed. Check that you are signed in to the correct account, otherwise please remove this key and restart operation.");
+            } else {
+                // We can continue.
+                appendNewKey(biostring);
+            }
+        }
+        
+        // (Function to) append the key on to the bio.
+        function appendNewKey(biostring) {
+            var new_biostring = biostring + "\n\n" + eFB.pubkey_start + reader.result + eFB.pubkey_end;
+            //eFB.uploadProfileAttribute("bio", new_biostring, function() {window.alert("Public key uploaded successfuly.");} );
+            // BEGIN NASTY HACK --------------------------------------------------------------->
+            // Facebook API doesn't let us make updates to the users profile (including the biography) so we create an iFrame and do it manually. What a mess.
+            window.alert("This will upload the public key through your browser. Please do not interrupt the process by using your browser. If asked to 'leave the page' then please click 'yes'. You will receive confirmation when the process is complete. If you do not receive confirmation within 10 seconds, please try again. Click OK to begin.");
+            ifrm = content.document.createElement("iframe");
+            ifrm.setAttribute('style', 'display:none;');
+            ifrm.style.width = 10+"px"; 
+            ifrm.style.height = 10+"px";
+            ifrm.setAttribute("id","unique_iframe_010101");
+            content.document.body.appendChild(ifrm);
+            ifrm.onload = function() {
+                doc = content.document.getElementById('unique_iframe_010101').contentWindow.document;
+                if (doc.getElementsByName("about_me")[0]==undefined) return;
+                doc.getElementsByName("about_me")[0].innerHTML = new_biostring;
+                doc.getElementById("ep_form").submit();
+                window.alert("Public key has been uploaded to profile.");
+                setTimeout( function() {content.document.body.removeChild(ifrm);}, 5000);
+            };
+            ifrm.src = "http://www.facebook.com/editprofile.php";
+            // END NASTY HACK ----------------------------------------------------------------->
+        }
+    },
+    
+    /**
+        Download a specified attribute from the user's Facebook profile and pass it as a variable to the callback function provided.
+    */
+    downloadProfileAttribute : function(attribute, callback) {
+        var params = "access_token=" + eFB.prefs.getCharPref("token");
+        var url = "https://graph.facebook.com/me?" + params;
+        var xhr= new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Extract the "about me" body from the response
+                    callback( eval( '(' + xhr.responseText + ')' )[attribute] );
+                } else {
+                    window.alert("Error sending request: " + xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
+    },
+    
+    /**
+        Upload a given string and write it to the specified attribute on the users profile. On completion call the callback function.
+    */
+    uploadProfileAttribute : function(attribute, value, callback) {
+        var params =    "access_token=" + eFB.prefs.getCharPref("token") + "&" +
+                        attribute + "=" + "sadfj asldjf asldk jf";    
+        var url = "https://graph.facebook.com/me";
+        var xhr= new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "text/html; charset=utf-8");
+        xhr.setRequestHeader("Content-length", params.length );
+        xhr.setRequestHeader("Connection", "close");
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Attribute should have been updated, finished.
+                    callback();
+                } else {
+                    window.alert("Error sending request: " + xhr.responseText);
+                }
+            }
+        }
+        xhr.send(params);
+    },
+    
+    /**
+        Get a local file object by creating an invisible form element....no, I don't know why either.
+    */
+    getFileObject : function(path) {
+        // Create an invisible form
+        var form = content.document.createElement("form");
+        form.setAttribute('style', 'display:none;');
+        
+        // Create a file input element
+        var file_input = content.document.createElement("input");
+        file_input.setAttribute("type", "file");
+        file_input.setAttribute("id", "fileElem");
+        file_input.value = path;
+        
+        // Add input to the form
+        form.appendChild( file_input );
+        
+        // Add the form to the document body
+        content.document.body.appendChild(form);
+        
+        // Grab the file handle
+        var file = content.document.getElementById('fileElem').files[0];
+        
+        // Now delete the form object
+        content.document.body.removeChild(form);
+        
+        return file;
+    },
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+    * Submits a note, returning a tag which links to the notes contents 
+    * 
+    **/
+    submit : function(aEvent) {
+        if ( eFB.prefs.getBoolPref("loggedIn") ) {
+            
+            // The variables we will submit
+            var plaintext = document.getElementById("efb-text").value;
+            //
+            var msg = eFB.encryptString(plaintext).readString(); // No encrytion yet
+
+            var subject_tag = encodeURIComponent( "ˠ" );
+            var params =    "access_token=" + eFB.prefs.getCharPref("token") +
+                            "&message=" + msg +
+                            "&subject=" + subject_tag;
+
+            // Create a new note
+            var http = new XMLHttpRequest();
+            var url = "https://graph.facebook.com/me/notes";
+            http.open("POST", url, true);
+            // Send the proper header information along with the request
+            http.setRequestHeader("Content-type", "text/html; charset=utf-8");
+            http.setRequestHeader("Content-length", params.length);
+            http.setRequestHeader("Connection", "close");
+            //
+            http.onreadystatechange = function() {//Call a function when the state changes.
+                    if(http.readyState == 4) {
+                        if (http.status == 200) {
+                            // Generate a tag to link to the note
+                            var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
+                            var tag = eFB.generateTag( id );
+                            window.alert( tag );
+                        } else {
+                            window.alert("Error sending request, " + http.responseText);
+                        }
+                    }
+            }
+            http.send(params);
+           
+        } else {
+            window.alert("You aren't logged in to Facebook");
+            return;
+        }
+    },    
     
     generateEncryptedPhoto : function(s) {
     
@@ -369,8 +583,3 @@ eFB = {
     img_cache : {}
 
 };
-
-// Load the C/C++ binary library functions
-// ensure that the callback function (i.e. the C/C++ library initilisation)
-// is passed the extension path.
-eFB.loadLibs( function( cache_dir,temp_dir ) {eFB.initialise();} );

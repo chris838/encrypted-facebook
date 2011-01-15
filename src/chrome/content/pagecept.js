@@ -34,6 +34,7 @@ var onPageLoad = function(event) {
             eFB.prefs.setCharPref("token",
                                url.slice( url.indexOf("access_token") ).split('&')[0].split('=')[1]
                              );
+            
             // Change status to logged in
             eFB.prefs.setBoolPref("loggedIn",true)
             
@@ -136,7 +137,7 @@ var replaceImages = function(doc) {
                     // Replace image on page with cached plaintext (if we haven't already).
                     // If replacement is made, exit loop since this will trigger another parseHTML()
                     case 2 :
-                        var file = getFileObject( eFB.cache_dir + id + '_plain.jpg' );
+                        var file = eFB.getFileObject( eFB.cache_dir + id + '_plain.jpg' );
                         x.src = content.window.URL.createObjectURL(file);
                         x.removeAttribute('height');
                         break;
@@ -188,7 +189,7 @@ var replaceImages = function(doc) {
                     // Replace image on page with cached plaintext (if we haven't already).
                     // If replacement is made, exit loop since this will trigger another parseHTML()
                     case 2 :
-                        var file = getFileObject( eFB.cache_dir + id + '_plain.jpg' );
+                        var file = eFB.getFileObject( eFB.cache_dir + id + '_plain.jpg' );
                         var img = content.document.createElement("img");
                         img.src = content.window.URL.createObjectURL(file);
                         img.style.position = "absolute";
@@ -299,26 +300,7 @@ function SaveImageFromURL(url,path,prog_listener) {
 
 }
 
-function getFileObject(path) {
-    
-        // Create an invisible form
-        var form = content.document.createElement("form");
-        form.setAttribute('style', 'display:none;');
-        
-        // Create a file input element
-        var file_input = content.document.createElement("input");
-        file_input.setAttribute("type", "file");
-        file_input.setAttribute("id", "fileElem");
-        file_input.value = path;
-        
-        // Add input to the form
-        form.appendChild( file_input );
-        
-        // Add the form to the document body
-        content.document.body.appendChild(form);
-        
-        return content.document.getElementById('fileElem').files[0];
-}
+
 
 this._loadHandler = function(event) { onPageLoad(event); };
 this._loadHandler2 = function(event) { onPageLoad2(event); };

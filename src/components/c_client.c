@@ -2,8 +2,8 @@
 
 IeFBLibrary* lib;
 
-unsigned int initialise() {  
-  lib = create_IeFBLibrary();
+unsigned int initialise(const char* id, const char* dir) {  
+  lib = create_IeFBLibrary(id,dir);
   return 1;
 }
 

@@ -7,7 +7,7 @@
 
 typedef struct IeFBLibrary IeFBLibrary; /* opaque */
 
-IeFBLibrary* create_IeFBLibrary();
+IeFBLibrary* create_IeFBLibrary(const char* id, const char* dir);
 
 const unsigned int loadIdentity(IeFBLibrary* This, const char* private_key_filename, const char* public_key_filename, const char* passphrase);
 

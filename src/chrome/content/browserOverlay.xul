@@ -25,25 +25,32 @@
         insertbefore="PersonalToolbar">
       <toolbarbutton id="efb-login"
         class="button" 
-        label="Log in"
-        tooltiptext="Log in to Facebook"
+        label="Log in to Facebook"
+        tooltiptext="Log the application into your Facebook account."
         oncommand="eFB.login(event);" />
       <toolbarbutton id="efb-logout"
         class="button" 
-        label="Log out"
-        tooltiptext="Log out of Facebook"
+        label="Log out of Facebook"
+        tooltiptext="Log the application our of your Facebook account."
         oncommand="eFB.logout(event);" />
-      <textbox id="efb-text" value="Enter text here"/>
-      <toolbarbutton id="efb-submit"
+        
+      <spacer flex="1"/>
+        
+      <toolbarbutton id="efb-createid"
         class="button" 
-        label="Create Note Link"
-        tooltiptext="Creates a note, whose content can be linked to in a post or comment."
-        oncommand="eFB.submit(event);" />
-      <toolbarbutton id="efb-picture"
+        label="Create Identity"
+        tooltiptext="Create a new identity locally. This will overwrite any current local identity."
+        oncommand="eFB.createId(event);" />
+      <toolbarbutton id="efb-uploadid"
         class="button" 
-        label="Upload picture"
-        tooltiptext="Encrypts then uploads a picture to Facebook."
-        oncommand="eFB.generateEncryptedPhoto('assdas');" />
+        label="Upload Identity"
+        tooltiptext="Upload local identity to your Facebook prfile."
+        oncommand="eFB.uploadId(event);" />
+      <toolbarbutton id="efb-dloadid"
+        class="button" 
+        label="Download Identity"
+        tooltiptext="Download identity from your Facebook profile. This will overwrite any current local identity."
+        oncommand="eFB.downloadId(event);" />
     </toolbar>
   </toolbox>
 
