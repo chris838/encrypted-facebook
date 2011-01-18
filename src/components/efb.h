@@ -1198,7 +1198,7 @@ namespace efb {
                 id_( id ),
                 working_directory_( working_directory )
             {
-                std::cout << "Library intialised." << std::endl;
+                std::cout << "Library initialised." << std::endl;
                 std::cout << "Facebook ID is " << id_.val << "." << std::endl;
                 std::cout << "Working directory is " << working_directory_ << "." << std::endl;
                 // set the ID within the crypto library

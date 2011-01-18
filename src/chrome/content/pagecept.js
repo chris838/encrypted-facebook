@@ -66,7 +66,7 @@ var onPageLoad2 = function(event) {
             var url = doc.defaultView.location.href;
             var rx=/facebook\.com\//; // TODO - watch out for malicious code injections
             if (rx.test(url)) {
-                
+                /*
                 // Try and replace any text
                 var page = doc.getElementById('content');
                 text = page.innerHTML;
@@ -80,10 +80,80 @@ var onPageLoad2 = function(event) {
                 
                 // Now try replace any images with their plaintext
                 replaceImages(doc);
+                */
                 
+                // Insert user interface overlay
+                if ( /profile\.php/.test(url) ) {
+                    // We are on the profile page and must insert public key grabber
+                    var idstr = url.match( /id=[0-9]*/i );
+                    if (idstr != null ) {
+                        var id = idstr[0].split("=")[1];
+                        parseProfile(doc,id);
+                    }
+                }
             }
-       }
+        }
     }  
+}
+
+/**
+    Parse a profile and decide if it needs a button adding.
+*/  
+var parseProfile = function(doc,id) {
+    // Download the "bio" string
+    eFB.downloadProfileAttribute( "bio", id, function(biostring) {
+            if (biostring==null) return;
+            // extract the first found public key
+            var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "im");
+            var match = biostring.match(rx);
+            if (match==null) return;
+            else addGrabKeyButton(doc,id,match[0]);
+        }
+    );
+}
+/**
+    Add button to profile page.
+*/
+var addGrabKeyButton = function(doc,id,key) {
+    // If we haven't already, add a grab key button
+    if (doc.getElementById("profile_action_add_pubkey")==undefined && doc.getElementById("pagelet_header")!=undefined) { 
+        box = doc.getElementById("pagelet_header").getElementsByClassName("rfloat")[0];
+        box.innerHTML = '<a id="profile_action_add_pubkey" class="uiButton" rel="dialog" href="#"><i class="mrs img sp_6isv8o sx_79a2c2"></i><span class="uiButtonText">Add Public Key</span></a>'
+                        + box.innerHTML;
+        // Set the custom icon
+        file = eFB.getFileObject( eFB.extension_dir + "images/icons.png" );                
+        link = content.window.URL.createObjectURL(file);
+        box.firstChild.firstChild.style.backgroundImage = "url("+link+")";
+        // Check if we already have a key
+        var path = eFB.working_dir + eFB.keys_dir + id + ".pubkey";
+        file = eFB.getFileObject( path );
+        try {var foo = file.size;}
+        catch (e)  {
+            if (e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST") throw e;
+            // File not found so add listener
+            box.firstChild.addEventListener("click",
+                function(aEvent) {
+                    // Save public key to disk
+                    eFB.writeToFile( key , path);
+                    doc.location.reload(true);
+                    window.alert("Public key added to keyring.");
+                }, false );
+            return;
+        }
+        // If we get here then file already exists
+        box.firstChild.lastChild.innerHTML = "Remove Public Key";
+        box.firstChild.addEventListener("click",
+            function(aEvent) {
+                // Create a file handle
+                var file = Components.classes["@mozilla.org/file/local;1"]  
+                            .createInstance(Components.interfaces.nsILocalFile);  
+                file.initWithPath( path );
+                file.remove(false);
+                doc.location.reload(true);
+                window.alert("Key removed from keyring.")
+            }, false);
+        return;
+    }
 }
 
 var replaceImages = function(doc) {
@@ -281,7 +351,7 @@ var getImageSRC = function(id) {
     
 }
 
-function SaveImageFromURL(url,path,prog_listener) {
+var SaveImageFromURL = function(url,path,prog_listener) {
     
     var file = Components.classes["@mozilla.org/file/local;1"]  
                 .createInstance(Components.interfaces.nsILocalFile);  

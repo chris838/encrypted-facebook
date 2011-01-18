@@ -41,16 +41,28 @@
         label="Create Identity"
         tooltiptext="Create a new identity locally. This will overwrite any current local identity."
         oncommand="eFB.createId(event);" />
-      <toolbarbutton id="efb-uploadid"
+        
+      <toolbarbutton id="efb-uploadpk"
         class="button" 
-        label="Upload Identity"
-        tooltiptext="Upload local identity to your Facebook prfile."
-        oncommand="eFB.uploadId(event);" />
-      <toolbarbutton id="efb-dloadid"
+        label="Upload Public Key"
+        tooltiptext="Upload local public key to your Facebook prfile."
+        oncommand="eFB.uploadPk(event);" />
+      <toolbarbutton id="efb-dloadpk"
         class="button" 
-        label="Download Identity"
-        tooltiptext="Download identity from your Facebook profile. This will overwrite any current local identity."
-        oncommand="eFB.downloadId(event);" />
+        label="Download Public Key"
+        tooltiptext="Download public key from your Facebook profile. This will overwrite any current local public keys."
+        oncommand="eFB.downloadPk(event);" />
+        
+      <toolbarbutton id="efb-exportpk"
+        class="button" 
+        label="Export Private Key"
+        tooltiptext="Export you private key file. Please ensure your private key information is kept safe."
+        oncommand="eFB.exportPk(event);" />
+      <toolbarbutton id="efb-importpk"
+        class="button" 
+        label="Import Private Key"
+        tooltiptext="Import your private key from a file. This will overwrite any current local private key."
+        oncommand="eFB.importPk(event);" />
     </toolbar>
   </toolbox>
 

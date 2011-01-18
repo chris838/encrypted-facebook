@@ -10,6 +10,8 @@ eFB = {
     /**
         Define some constanst that will be used throughout.
     */
+    // ID of the applicatoin
+    api_id : "146278748752732",
     // Subdirectories for storing files
     cache_dir   :"cache/",
     temp_dir    :"temp/",
@@ -30,10 +32,10 @@ eFB = {
     
         if ( !eFB.prefs.getBoolPref("loggedIn") ) {
             // If we aren't already logged in, open a login window
-            eFB.api_id = window.prompt("Please enter your Facebook ID." , "146278748752732");
+            eFB.id = window.prompt("Please enter your Facebook ID." , "100001662238279");
             // Load the C/C++ binary library functions.
             eFB.loadLibrary( function() {
-                eFB.initialise( eFB.api_id, eFB.working_dir );
+                eFB.initialise( eFB.id, eFB.working_dir );
             } );
             // Create the login url
             var login_url = "https://graph.facebook.com/oauth/authorize?" +
@@ -49,7 +51,7 @@ eFB = {
             // TODO - this just for debugging
             //return;
             // Load the C/C++ binary library functions.
-            eFB.api_id = "146278748752732";
+            eFB.id = "";
             eFB.loadLibrary( function() {
                 eFB.initialise( eFB.api_id, eFB.working_dir );
             } );
@@ -169,26 +171,47 @@ eFB = {
     close: function() {},
     
     /**
+        Check if we already have key information on disk an thus if we wish to overwrite
+    */
+    checkKeyOverwrite : function() {
+        var path = eFB.working_dir + eFB.keys_dir + eFB.privkey_file ;
+        var msg = "A private key was found in your profile folder. This operation will overwrite you current key information. Without your private key you will be permanently unable to access prior encrypted material. We strongly recommend you backup your private key if you have not done so already. Are you sure you wish to continue?";
+        if (eFB.checkFileOverwrite( path, msg )) return 1;
+        //
+        var path = eFB.working_dir + eFB.keys_dir + eFB.pubkey_file ;
+        var msg = "A public key was found in your profile folder. This operation will overwrite you current key information. Are you sure you wish to continue?";
+        if (eFB.checkFileOverwrite( path, msg )) return 1;
+        // If we're still here then go ahead and overwrite (or doesn't exist)
+        return 0;
+    },
+    
+    //! Check if a single file exists and if we wish to overwrite
+    checkFileOverwrite : function(path, msg) {
+        var file = eFB.getFileObject(path);
+        // Try to open file
+        try {
+            foo = file.size;
+            if (!window.confirm(msg)) {
+                // Don't overwrite
+                return 1;
+            }
+            // Overwrite
+            return 0;
+        } catch(e)  {if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;}
+        // Doesn't exist
+        return 0;
+    },
+    
+    
+    /**
         Generate a new private/public key pair and store locally. This will wipe any current keys - be warned as loss of your private key means you lose access to all data encrypted with the corresponding public key.
     */
     createId : function(aEvent) {
         // Check if we already have an identity stored
-        var priv = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.privkey_file );
-        var pub = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.pubkey_file );
-        try {
-            foo = priv.size;
-            if (!window.confirm("A private key was found in your profile folder. This operation will overwrite you current key information. Without your private key you will be permanently unable to access prior encrypted material. We strongly recommend you backup your private key if you have not done so already. Are you sure you wish to continue?")) {
-                window.alert( "Operation cancelled.");
-                return;
-            }
-        } catch(e)  {if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;}
-        try {
-            foo = pub.size;
-            if (!window.confirm("A public key was found in your profile folder. This operation will overwrite you current key information. Are you sure you wish to continue?")) {
-                window.alert( "Operation cancelled.");
-                return;
-            }
-        } catch(e)  {if ( e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST" ) throw e;}
+        if (eFB.checkKeyOverwrite()) {
+            window.alert("Operation aborted.");
+            return;
+        }
         
         // We need a passphrase to lock the file
         pass = window.prompt("Please enter a password to keep your key information safe. Note that forgotten passwords cannot be recovered.");
@@ -200,9 +223,9 @@ eFB = {
     },
     
     /**
-        Upload local key information to Facebook. This will enable others to include you as a recipient in encrypted communications.
+        Upload local public key information to Facebook. This will enable others to include you as a recipient in encrypted communications.
     */
-    uploadId : function(aEvent) {
+    uploadPk : function(aEvent) {
         
         // Check if the key is present on disk and load in to a string. Then find and delete existing keys, and finally append the new key.
         var priv = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.privkey_file );
@@ -220,7 +243,7 @@ eFB = {
                 // Key was found on disk and loaded succesfully
                 // Download "bio" and search for existing keys
                 eFB.abort = false;
-                eFB.downloadProfileAttribute("bio", findExistingKeys);
+                eFB.downloadProfileAttribute("bio", "me", findExistingKeys);
         }, false);
             reader.addEventListener("error", function(e) {window.alert("Error occured reading public key file");}, false);
             reader.readAsText(pub);
@@ -260,7 +283,7 @@ eFB = {
             ifrm.style.height = 10+"px";
             ifrm.setAttribute("id","unique_iframe_010101");
             content.document.body.appendChild(ifrm);
-            ifrm.onload = function() {
+            var foo = function() {
                 doc = content.document.getElementById('unique_iframe_010101').contentWindow.document;
                 if (doc.getElementsByName("about_me")[0]==undefined) return;
                 doc.getElementsByName("about_me")[0].innerHTML = new_biostring;
@@ -268,17 +291,131 @@ eFB = {
                 window.alert("Public key has been uploaded to profile.");
                 setTimeout( function() {content.document.body.removeChild(ifrm);}, 5000);
             };
+            while (true) {
+                try {
+                    ifrm.onload = foo;
+                    break;
+                } catch (e) { if (e.name!="NS_ERROR_NOT_AVAILABLE") throw e}
+            }
             ifrm.src = "http://www.facebook.com/editprofile.php";
             // END NASTY HACK ----------------------------------------------------------------->
         }
     },
     
     /**
+        Download public key from Facebook profile.
+    */
+    downloadPk : function(aEvent) {
+        // Check if we already have a public key stored
+        var path = eFB.working_dir + eFB.keys_dir + eFB.pubkey_file ;
+        var msg = "A public key was found in your profile folder. This operation will overwrite you current public key. Are you sure you wish to continue?";
+        if (eFB.checkFileOverwrite( path, msg )) {
+            window.alert("Operation aborted.");
+            return;
+        }
+        
+        // Import the public key from Facebook
+        eFB.downloadProfileAttribute("bio", "me", function(biostring) {
+            // Extract key from string
+            var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "im");
+            biostring.replace(rx , function(pubkey) {
+                // Trim tags of either end
+                pubkey = pubkey.substr(eFB.pubkey_start.length, pubkey.length-(eFB.pubkey_end.length+eFB.pubkey_start.length));
+                // Write to a file
+                var path = eFB.working_dir + eFB.keys_dir + eFB.pubkey_file;
+                eFB.writeToFile( pubkey, path);
+            });
+        });
+    },
+    
+    //! Write string out to a file
+    writeToFile : function(string, path) {
+        // Create a file handle
+        var file = Components.classes["@mozilla.org/file/local;1"]  
+                    .createInstance(Components.interfaces.nsILocalFile);  
+        file.initWithPath( path );
+        // Open a fostream object
+        var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].
+                       createInstance(Components.interfaces.nsIFileOutputStream);
+        // 0x02 writing, 0x08 create new file, 0x20 start at begining of file 
+        foStream.init(file, 0x02 | 0x08 | 0x20 , 0666, 0); 
+        var converter = Components.classes["@mozilla.org/intl/converter-output-stream;1"].
+                        createInstance(Components.interfaces.nsIConverterOutputStream);
+        converter.init(foStream, "UTF-8", 0, 0);
+        converter.writeString(string);
+        converter.close();
+    },
+    
+    /**
+        Export private key to a file.
+    */
+    exportPk : function(aEvent) {
+        // Create a file picker component
+        const nsIFilePicker = Components.interfaces.nsIFilePicker;
+        var fp = Components.classes["@mozilla.org/filepicker;1"]
+                 .createInstance(nsIFilePicker);
+        fp.init(window, "Export Private Key", nsIFilePicker.modeSave);
+        var rv = fp.show();
+        // When user selects a file
+        if (rv == nsIFilePicker.returnOK || rv == nsIFilePicker.returnReplace) {
+            // Open the current private key file
+            var src_file = eFB.getFileObject(eFB.working_dir + eFB.keys_dir + eFB.privkey_file);
+            var privkey = src_file.getAsText("UTF-8");
+            // Open destination file
+            var dst_file = fp.file;
+            // Open a fostream object
+            var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].
+                           createInstance(Components.interfaces.nsIFileOutputStream);
+            // 0x02 writing, 0x08 create new file, 0x20 start at begining of file 
+            foStream.init(dst_file, 0x02 | 0x08 | 0x20 , 0666, 0); 
+            var converter = Components.classes["@mozilla.org/intl/converter-output-stream;1"].
+                            createInstance(Components.interfaces.nsIConverterOutputStream);
+            converter.init(foStream, "UTF-8", 0, 0);
+            converter.writeString(privkey);
+            converter.close();
+            window.alert( "Private key exported to: "+dst_file.path+"\n\nPlease keep this information safe." );
+        }
+    },
+    
+    /**
+        Import a private key from a file. This will overwrite any current private key.
+    */
+    importPk : function(aEvent) {
+        // Create the file picker
+        const nsIFilePicker = Components.interfaces.nsIFilePicker;
+        var fp = Components.classes["@mozilla.org/filepicker;1"]
+                 .createInstance(nsIFilePicker);
+        fp.init(window, "Export Private Key", nsIFilePicker.modeOpen);
+        var rv = fp.show();
+        // When user selects a file
+        if (rv == nsIFilePicker.returnOK || rv == nsIFilePicker.returnReplace) {
+            // Open the current private key file
+            var src_file = eFB.getFileObject( fp.file.path );
+            var privkey = src_file.getAsText("UTF-8");
+            // Open destination file
+            var dst_file = Components.classes["@mozilla.org/file/local;1"]  
+                            .createInstance(Components.interfaces.nsILocalFile);  
+            dst_file.initWithPath(eFB.working_dir + eFB.keys_dir + eFB.privkey_file);
+            // Open a fostream object
+            var foStream = Components.classes["@mozilla.org/network/file-output-stream;1"].
+                           createInstance(Components.interfaces.nsIFileOutputStream);
+            // 0x02 writing, 0x08 create new file, 0x20 start at begining of file 
+            foStream.init(dst_file, 0x02 | 0x08 | 0x20 , 0666, 0); 
+            var converter = Components.classes["@mozilla.org/intl/converter-output-stream;1"].
+                            createInstance(Components.interfaces.nsIConverterOutputStream);
+            converter.init(foStream, "UTF-8", 0, 0);
+            converter.writeString(privkey);
+            converter.close();
+            window.alert( "Private key imported from: "+fp.file.path );
+        }
+    },
+    
+    /**
         Download a specified attribute from the user's Facebook profile and pass it as a variable to the callback function provided.
     */
-    downloadProfileAttribute : function(attribute, callback) {
+    downloadProfileAttribute : function(attribute, id, callback) {
         var params = "access_token=" + eFB.prefs.getCharPref("token");
-        var url = "https://graph.facebook.com/me?" + params;
+        var url = "https://graph.facebook.com/" + id + "?" + params;
         var xhr= new XMLHttpRequest();
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function() {
@@ -347,14 +484,6 @@ eFB = {
         
         return file;
     },
-    
-    
-    
-    
-    
-    
-    
-    
     
     /**
     * Submits a note, returning a tag which links to the notes contents 
