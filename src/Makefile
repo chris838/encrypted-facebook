@@ -6,6 +6,10 @@ extension_uuid := efb@cl.cam.ac.uk
 
 # The name of the profile dir where the extension can be installed.
 profile_dir := dev
+profile_dir1 := alice
+profile_dir2 := bob
+profile_dir3 := charlie
+profile_dir4 := dora
 
 # The zip application to be used.
 ZIP := zip
@@ -20,19 +24,30 @@ xpi_file := $(bin_dir)/$(extension_name).xpi
 os_type := $(patsubst darwin%,darwin,$(shell echo $(OSTYPE)))
 
 # The location of the extension profile.
-ifeq ($(os_type), darwin)
-  profile_location := \
-    ~/Library/Application\ Support/Firefox/Profiles/$(profile_dir)/extensions/$(extension_uuid)
-else
-  ifeq ($(os_type), linux-gnu)
-    profile_location := \
-      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
-  else
-    profile_location := \
-      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
-  endif
-endif
+#ifeq ($(os_type), darwin)
+#  profile_location := \
+#    ~/Library/Application\ Support/Firefox/Profiles/$(profile_dir)/extensions/$(extension_uuid)
+#else
+#  ifeq ($(os_type), linux-gnu)
+#    profile_location := \
+#      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
+#  else
+#    profile_location := \
+#      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
+#  endif
+#endif
 # "$(subst \,\\,$(APPDATA))\\Mozilla\\Firefox\\Profiles\\$(profile_dir)\\extensions\\$(extension_uuid)"
+
+profile_location := \
+      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
+profile_location1 := \
+      ~/.mozilla/firefox-4.0/$(profile_dir1)/extensions/$(extension_uuid)
+profile_location2 := \
+      ~/.mozilla/firefox-4.0/$(profile_dir2)/extensions/$(extension_uuid)
+profile_location3 := \
+      ~/.mozilla/firefox-4.0/$(profile_dir3)/extensions/$(extension_uuid)
+profile_location4 := \
+      ~/.mozilla/firefox-4.0/$(profile_dir4)/extensions/$(extension_uuid)
 
 # The temporary location where the extension tree will be copied and built.
 build_dir := $(bin_dir)/build
@@ -89,6 +104,10 @@ xpi_built_no_dir := $(subst $(build_dir)/,,$(xpi_built))
 install: $(build_dir) $(xpi_built)
 	@echo "Installing in profile folder: $(profile_location)"
 	@cp -Rf $(build_dir)/* $(profile_location)
+	@cp -Rf $(build_dir)/* $(profile_location1)
+	@cp -Rf $(build_dir)/* $(profile_location2)
+	@cp -Rf $(build_dir)/* $(profile_location3)
+	@cp -Rf $(build_dir)/* $(profile_location4)
 	@echo "Installing in profile folder. Done!"
 	@echo
 

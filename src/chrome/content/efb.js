@@ -26,15 +26,39 @@ eFB = {
     msg_end : "ᐅ",
     
     /**
+        C++ library function declarations. These will be defined when the libary is actually initialized, which takes place during login.
+    */ 
+    initialise : function() {},
+    generateIdentity : function() {},
+    loadIdentity : function() {},
+    loadIdKeyPair : function() {},
+    encryptString: function() {},
+    decryptString: function() {},
+    encryptFileInImage: function() {},
+    decryptFileFromImage: function() {},
+    calculateBitErrorRate: function() {},
+    close: function() {},
+    
+    /**
         Initialise the login process and open the login prompt. Obtain a Facebook ID from the user and initialise the C++ libary with it. The process is completed when the login success url is detected, at which point we intercept the access token.
     */ 
     login : function(aEvent) {
     
         if ( !eFB.prefs.getBoolPref("loggedIn") ) {
             // If we aren't already logged in, open a login window
-            eFB.id = window.prompt("Please enter your Facebook ID." , "100001662238279");
+            
+            // Harvest the Facebook ID from the user's cookie.
+            eFB.id = eFB.retriveIdFromCookie();
+            if (eFB.id==-1) {
+                window.alert(" You must log in to Facebook through your browser before using Encrypted Facebook.");
+                return;
+            }
+            
             // Load the C/C++ binary library functions.
             eFB.loadLibrary( function() {
+                // If it doesn't already exist create the directory structure
+                eFB.createDirs();
+                // Init C library
                 eFB.initialise( eFB.id, eFB.working_dir );
             } );
             // Create the login url
@@ -44,41 +68,29 @@ eFB = {
                             "type=user_agent&" +
                             "scope=offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_about_me,friends_about_me&" +
                             "display=popup";
-            window.open( login_url, "fb-login-window", "centerscreen,width=350,height=250,resizable=0");
+            window.open( login_url, "fb-login-window", "centerscreen,width=550,resizable=0");
         } else {
             // And if we are, nothing to do
-            //window.alert( "You are already logged in." );
-            // TODO - this just for debugging
-            //return;
-            // Load the C/C++ binary library functions.
-            eFB.id = "";
-            eFB.loadLibrary( function() {
-                eFB.initialise( eFB.api_id, eFB.working_dir );
-            } );
+            window.alert( "You are already logged in." );
+            return;
         }
     },
     
     /**
-        Log the application out of Facebook and close the library.
+        Retrieve the user's Facebook ID from their login cookie.
     */
-    logout : function(aEvent) {
-    
-        if ( !eFB.prefs.getBoolPref("loggedIn") ) {
-            // If we aren't already logged in, nothing to do
-            window.alert("You are already logged out.");
-            return;
-
-        } else {
-            // Otherwise simply wipe token and status variables
-            eFB.prefs.setBoolPref("loggedIn", false);
-            eFB.prefs.setCharPref("token", "NO_TOKEN");
-            // And close the C++ libary
-            eFB.close();
-            window.alert("You are now logged out from Facebook");
-            return;
+    retriveIdFromCookie : function() {
+        var cookieMgr = Components.classes["@mozilla.org/cookiemanager;1"]
+                          .getService(Components.interfaces.nsICookieManager);
+        
+        for (var e = cookieMgr.enumerator; e.hasMoreElements();) {
+          var cookie = e.getNext().QueryInterface(Components.interfaces.nsICookie);
+          if (      ( cookie.host.indexOf("facebook") != -1 )
+                &&  ( cookie.name == "c_user" )   )
+            return cookie.value;
         }
+        return -1;
     },
-    
     
     /**
         Open the C/C++ extension components.
@@ -153,22 +165,77 @@ eFB = {
             
             // Find the path for the extension working directory and pass it to the library
             eFB.extension_dir = addon.getResourceURI( "" ).path;
-            eFB.working_dir = eFB.extension_dir + eFB.api_id + "/";
+            eFB.working_dir = eFB.extension_dir + eFB.id + '/';
             callback();
         } );
     },
     
-    // C++ library function placeholders.
-    initialise : function() {},
-    generateIdentity : function() {},
-    loadIdentity : function() {},
-    loadIdKeyPair : function() {},
-    encryptString: function() {},
-    decryptString: function() {},
-    encryptFileInImage: function() {},
-    decryptFileFromImage: function() {},
-    calculateBitErrorRate: function() {},
-    close: function() {},
+    /**
+        Check if each directory exists. If it doesn't - create it. If it does, in some cases we need to remove and recreate.
+    */
+    createDirs : function() {
+        // File handles
+        wd_file = eFB.getNsiFileObject( eFB.working_dir ); // Working directory
+        // Cache directory for caching images
+        c_file = eFB.getNsiFileObject( eFB.working_dir + eFB.cache_dir );
+        // Temp directory for storing temp files before uploading etc.
+        t_file = eFB.getNsiFileObject( eFB.working_dir + eFB.temp_dir );
+        // Keys directory for storing key information
+        k_file = eFB.getNsiFileObject( eFB.working_dir + eFB.keys_dir );
+        
+        // Working directory
+        if ( !wd_file.exists() || !wd_file.isDirectory() ) {
+            // Create the working directory...
+            wd_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+            // ...and everything in it.
+            c_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+            t_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+            k_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+        }
+        else {
+            if ( c_file.exists() && c_file.isDirectory() ) {
+                // Clean out the cache as it contains decrypted content
+                c_file.remove(true);
+            }
+            // (Re)create
+            c_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+            
+            t_file = eFB.getNsiFileObject( eFB.working_dir + eFB.temp_dir );
+            if ( t_file.exists() && t_file.isDirectory() ) {
+                // Clean out temp as it contains decrypted content
+                t_file.remove(true);
+            }
+            // (Re)create
+            t_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+            
+            if ( k_file.exists() && k_file.isDirectory() ) {
+                // DO NOT clean out temp, since it contains user private/public key 
+            } else
+                k_file.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0777);
+        }
+    
+    },
+    
+    /**
+        Log the application out of Facebook and close the library.
+    */
+    logout : function(aEvent) {
+    
+        if ( !eFB.prefs.getBoolPref("loggedIn") ) {
+            // If we aren't already logged in, nothing to do
+            window.alert("You are already logged out.");
+            return;
+
+        } else {
+            // Otherwise simply wipe token and status variables
+            eFB.prefs.setBoolPref("loggedIn", false);
+            eFB.prefs.setCharPref("token", "NO_TOKEN");
+            // And close the C++ libary
+            eFB.close();
+            window.alert("You are now logged out from Facebook");
+            return;
+        }
+    },
     
     /**
         Check if we already have key information on disk an thus if we wish to overwrite
@@ -227,7 +294,7 @@ eFB = {
     */
     uploadPk : function(aEvent) {
         
-        // Check if the key is present on disk and load in to a string. Then find and delete existing keys, and finally append the new key.
+        // Check if the key is present on disk and load in to a string. Then find and delete existing keys. Finally, append the new key.
         var priv = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.privkey_file );
         var pub = eFB.getFileObject( eFB.working_dir + eFB.keys_dir + eFB.pubkey_file );
         try {foo = priv.size;}
@@ -255,6 +322,7 @@ eFB = {
         
         // (Function to) check if one or more public keys are already present (and try to delete them).
         function findExistingKeys(biostring) {
+            if (biostring==undefined) biostring="";
             var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "gim");
             biostring = biostring.replace( rx , function(pubkey) {
                     if (window.confirm("An existing public key was found on your Facebook profile. Do you wish to delete this key before continuing?")) {
@@ -275,14 +343,16 @@ eFB = {
             var new_biostring = biostring + "\n\n" + eFB.pubkey_start + reader.result + eFB.pubkey_end;
             //eFB.uploadProfileAttribute("bio", new_biostring, function() {window.alert("Public key uploaded successfuly.");} );
             // BEGIN NASTY HACK --------------------------------------------------------------->
-            // Facebook API doesn't let us make updates to the users profile (including the biography) so we create an iFrame and do it manually. What a mess.
+            // Facebook API doesn't let us make updates to the users profile (including the biography) so we create an iframe and do it manually. What a mess.
             window.alert("This will upload the public key through your browser. Please do not interrupt the process by using your browser. If asked to 'leave the page' then please click 'yes'. You will receive confirmation when the process is complete. If you do not receive confirmation within 10 seconds, please try again. Click OK to begin.");
             ifrm = content.document.createElement("iframe");
             ifrm.setAttribute('style', 'display:none;');
-            ifrm.style.width = 10+"px"; 
-            ifrm.style.height = 10+"px";
+            ifrm.style.width = 500+"px"; 
+            ifrm.style.height = 500+"px";
             ifrm.setAttribute("id","unique_iframe_010101");
             content.document.body.appendChild(ifrm);
+            ifrm2 = content.document.getElementById('unique_iframe_010101');
+            ifrm2.src = "http://www.facebook.com/editprofile.php";
             var foo = function() {
                 doc = content.document.getElementById('unique_iframe_010101').contentWindow.document;
                 if (doc.getElementsByName("about_me")[0]==undefined) return;
@@ -291,13 +361,14 @@ eFB = {
                 window.alert("Public key has been uploaded to profile.");
                 setTimeout( function() {content.document.body.removeChild(ifrm);}, 5000);
             };
-            while (true) {
-                try {
-                    ifrm.onload = foo;
-                    break;
-                } catch (e) { if (e.name!="NS_ERROR_NOT_AVAILABLE") throw e}
+            var bar = function(i) {
+                if (ifrm2.contentWindow.document.readyState=="complete") {
+                    foo();
+                } else if (i<100) {
+                    setTimeout( function() {bar(i+1);}, 100);
+                } else window.alert("Failed. Please try again.");
             }
-            ifrm.src = "http://www.facebook.com/editprofile.php";
+            bar(0);
             // END NASTY HACK ----------------------------------------------------------------->
         }
     },
@@ -482,6 +553,16 @@ eFB = {
         // Now delete the form object
         content.document.body.removeChild(form);
         
+        return file;
+    },
+    
+    /**
+        Get a local NSI file object.
+    */
+    getNsiFileObject : function(path) {
+        var file = Components.classes["@mozilla.org/file/local;1"].
+                   createInstance(Components.interfaces.nsILocalFile);
+        file.initWithPath(path);
         return file;
     },
     

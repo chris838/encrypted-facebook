@@ -1484,7 +1484,7 @@ namespace efb {
                 const char*  input
             ) const
             {
-                // Copy input into a std::string (strip null terminal)
+                // Copy input into a std::string (strips null terminal)
                 std::string str( input );
             
                 // Decode the string into a byte array
