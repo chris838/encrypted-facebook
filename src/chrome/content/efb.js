@@ -503,6 +503,27 @@ eFB = {
     },
     
     /**
+        Download a list of attributes from the user's Facebook profile and pass it as a variable to the callback function provided.
+    */
+    downloadProfileAttributes : function(id, callback) {
+        var params = "access_token=" + eFB.prefs.getCharPref("token");
+        var url = "https://graph.facebook.com/" + id + "?" + params;
+        var xhr= new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Extract the "about me" body from the response
+                    callback( eval( '(' + xhr.responseText + ')' ) );
+                } else {
+                    window.alert("Error sending request: " + xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
+    },
+    
+    /**
         Upload a given string and write it to the specified attribute on the users profile. On completion call the callback function.
     */
     uploadProfileAttribute : function(attribute, value, callback) {
