@@ -280,7 +280,7 @@ namespace efb {
     {
         // Generate or set a random IV and random message key
         void generateNewIv()
-            {iv_ = Botan::InitializationVector(rng_, N);} // a random N-byte iv
+            {iv_ = Botan::InitializationVector(rng_, 16);} // a random 16-byte iv
         void generateNewMessageKey()
             {key_ = Botan::SymmetricKey(rng_, N);} // a random N-byte key
         //! Write out an encypted message key using the public key of the ID provided.
@@ -350,6 +350,7 @@ namespace efb {
                 getCipheredMessageKey(id, &data[offset]);
                 offset+= key_len;
             }
+            
         }
         
         //! Attempty to parse a crypto header - this will retrieve and set the message key and IV.
@@ -1277,7 +1278,7 @@ namespace efb {
                 // Get key file string
                 std::string key_filename_str(key_filename);
                 std::string key_filename_full = working_directory_ + key_filename_str;
-                
+
                 crypto_.loadIdKeyPair(id_obj,key_filename_full);
                 return 0;
             }
@@ -1439,6 +1440,7 @@ namespace efb {
                 const char*  input
             ) const
             {
+                            
                 // Load IDs into a vector (currently they are semi-colon delimited)
                 std::string id_string;
                 std::vector<FacebookId> ids_vector;
@@ -1454,7 +1456,7 @@ namespace efb {
                     ids_vector.push_back(id_object);
                     i++;
                 }
-                
+                                
                 // Add the user's ID
                 ids_vector.push_back( id_ );
                 
@@ -1462,7 +1464,7 @@ namespace efb {
                 unsigned int head_size = crypto_.calculateHeaderSize( ids_vector.size() );
                 std::vector<byte> data( head_size, (byte)0);
                 for (unsigned int i=0; i<strlen(input)+1; i++) data.push_back( input[i] );
-                    
+                                        
                 // Generate header and encrypt the data
                 try {crypto_.encryptMessage(ids_vector, data);}
                 catch (EncryptionException &e) {
@@ -1494,7 +1496,7 @@ namespace efb {
                 try {crypto_.decryptMessage(data);}
                 catch (DecryptionException &e) {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
-                  return "";
+                  return "You do not have sufficient privileges to read this message.";
                 }
                 
                 // Bytes should now be original (UTF8, null terminated) message. We must skip the header.

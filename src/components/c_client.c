@@ -25,7 +25,7 @@ const unsigned int c_loadIdKeyPair(const char* id, const char* key_filename)
   return loadIdKeyPair(lib, id, key_filename );
 }
 
-/* Encrypt a null terminated string into another null terminated Facebook-ready string, for the supplied set of intended recipients*/
+/* Encrypt a null terminated string into another null terminated Facebook-ready string, for the supplied set of intended recipients */
 const char* c_encryptString(const char* ids, const char* str)
 {
   return encryptString( lib, ids, str);

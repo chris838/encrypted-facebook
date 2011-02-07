@@ -7,6 +7,7 @@ eFB = {
     */
     prefs : Components.classes["@mozilla.org/preferences-service;1"]
                     .getService(Components.interfaces.nsIPrefService).getBranch("extensions.efb."),
+    
     /**
         Define some constanst that will be used throughout.
     */
@@ -24,6 +25,7 @@ eFB = {
     pubkey_end : "ᐅ",
     msg_start : "ᐊ✆",
     msg_end : "ᐅ",
+    note_title : "ˠ" ,
     
     /**
         C++ library function declarations. These will be defined when the libary is actually initialized, which takes place during login.
@@ -32,12 +34,12 @@ eFB = {
     generateIdentity : function() {},
     loadIdentity : function() {},
     loadIdKeyPair : function() {},
-    encryptString: function() {},
-    decryptString: function() {},
-    encryptFileInImage: function() {},
-    decryptFileFromImage: function() {},
-    calculateBitErrorRate: function() {},
-    close: function() {},
+    encryptString : function() {},
+    decryptString : function() {},
+    encryptFileInImage : function() {},
+    decryptFileFromImage : function() {},
+    calculateBitErrorRate : function() {},
+    close : function() {},
     
     /**
         Initialise the login process and open the login prompt. Obtain a Facebook ID from the user and initialise the C++ libary with it. The process is completed when the login success url is detected, at which point we intercept the access token.
@@ -66,7 +68,7 @@ eFB = {
                             "client_id=" + eFB.api_id + "&" +
                             "redirect_uri=http://www.facebook.com/connect/login_success.html&" +
                             "type=user_agent&" +
-                            "scope=offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_about_me,friends_about_me&" +
+                            "scope=offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_about_me,friends_about_me,create_note,friends_notes,read_stream,publish_stream&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=550,resizable=0");
         } else {
@@ -235,6 +237,57 @@ eFB = {
             window.alert("You are now logged out from Facebook");
             return;
         }
+    },
+    
+    /**
+        Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
+    */
+    cleanProfile : function(aEvent) {
+        // Delete posts on the wall
+        eFB.cleanConnection('feed');
+        // Delete all posts in newsfeed
+        eFB.cleanConnection('home');
+        // Delete all notes
+        eFB.cleanConnection('notes');
+    },
+    
+    /**
+        Delete all elements through a graph API connection.
+    */
+    cleanConnection : function( connection ) {
+        var params =    "access_token=" + eFB.prefs.getCharPref("token");
+        var url = "https://graph.facebook.com/" + eFB.id + "/"+connection+"?" + params;
+        var xhr= new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Go though each result and delete
+                    var r = eval( '(' + xhr.responseText + ')' ).data;
+                    for (var i=0; i<r.length; i++) {
+                        setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 0);
+                        setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 1000);
+                        setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 5000);
+                        setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 10000);
+                    }
+                } else {
+                    window.alert("Error deleting wall posts: " + xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
+    },
+    
+    /**
+        Delete a single Facebook Graph API object given its id
+    */
+    deleteGraphApiObject : function(id) {
+        var params =     "access_token=" + eFB.prefs.getCharPref("token")
+                    +   "&method=delete";
+        var url = "https://graph.facebook.com/" + id + "?" + params;
+        var xhr= new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.send();
     },
     
     /**
@@ -588,22 +641,31 @@ eFB = {
     },
     
     /**
-    * Submits a note, returning a tag which links to the notes contents 
-    * 
+        Submits a note, returning a tag which links to the note's contents 
     **/
-    submit : function(aEvent) {
+    submitNote : function(recipients,input,callback) {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
+            // Load the user's keys in to the library
+            eFB.loadIdentity(
+                eFB.keys_dir + "user.key",
+                eFB.keys_dir + "user.pubkey", "a");
             
-            // The variables we will submit
-            var plaintext = document.getElementById("efb-text").value;
+            // TODO - ensure the public keys are up to date
+            
+            // Load the required public keys in to the library
+            var r_string = "";
+            for (var i=0; i<recipients.length; i++) {
+                eFB.loadIdKeyPair( recipients[i], eFB.keys_dir + recipients[i] + ".pubkey");
+                r_string += recipients[i] + ";";
+            }
+            
+            // Encrypt the message content
+            var msg = eFB.encryptString(r_string,input.getAttribute("value")).readString();
             //
-            var msg = eFB.encryptString(plaintext).readString(); // No encrytion yet
-
-            var subject_tag = encodeURIComponent( "ˠ" );
+            var subject_tag = encodeURIComponent( eFB.note_title);
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
                             "&message=" + msg +
                             "&subject=" + subject_tag;
-
             // Create a new note
             var http = new XMLHttpRequest();
             var url = "https://graph.facebook.com/me/notes";
@@ -619,20 +681,53 @@ eFB = {
                             // Generate a tag to link to the note
                             var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
                             var tag = eFB.generateTag( id );
-                            window.alert( tag );
+                            callback( tag , input);
+                            // Delete the post on the users feed
+                            eFB.deleteNotePosts();
                         } else {
                             window.alert("Error sending request, " + http.responseText);
                         }
                     }
             }
             http.send(params);
-           
+            
         } else {
             window.alert("You aren't logged in to Facebook");
             return;
         }
-    },    
+    },
     
+    /**
+        Delete any posts about new eFB notes on the users wall.
+    */
+    deleteNotePosts : function() {
+    // Delete posts on the wall
+        var params =    "access_token=" + eFB.prefs.getCharPref("token");
+        var url = "https://graph.facebook.com/" + eFB.id + "/feed?" + params;
+        var xhr= new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Go though each result and delete
+                    var r = eval( '(' + xhr.responseText + ')' ).data;
+                    for (var i=0; i<r.length; i++) {
+                        if (r[i].name == eFB.note_title ) {
+                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 0);
+                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 1000);
+                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 5000);
+                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 10000);
+                        }
+                    }
+                    
+                } else {
+                    window.alert("Error deleting note wall posts: " + xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
+    },
+        
     generateEncryptedPhoto : function(s) {
     
         window.alert( eFB.generateIdentity( "keys/user.key", "keys/user.pubkey", "password" ) );
@@ -710,14 +805,20 @@ eFB = {
 
     },
     
+    /**
+        Generate a tag given am id linking to a note
+    */
     generateTag : function(id) {
-        return "ᐊ" + id + "ᐅ";
+        return eFB.msg_start + id + eFB.msg_end;
     },
     
+    /**
+        Retrive the contents of a note given the tag
+    */
     retrieveFromTag : function(doc, tag) {
 
         // extract ID from tag
-        var id = parseInt( tag.substring(1, tag.length-1), 16);
+        var id = parseInt( tag.substring(eFB.msg_start.length, tag.length-eFB.msg_end.length), 16);
         
         if (eFB.cache[ id ] == undefined) {
         
@@ -736,6 +837,9 @@ eFB = {
                         var note = obj.message;
                         var id = parseInt( obj.id, 10 );
                         // decode note
+                        eFB.loadIdentity(
+                            eFB.keys_dir + "user.key",
+                            eFB.keys_dir + "user.pubkey", "a");
                         note = eFB.decryptString(note).readString();
                         
                         // Copy the list of docs (if any) we need to refresh
@@ -747,12 +851,8 @@ eFB = {
                         // save to cache for later use
                         eFB.cache[ id ] = note;
                         
-                        // Add in a random delay to mimic exagerated network latency
-                        setTimeout( function() {
-                            // cycle through documents that need updating and replace tags
-                            for (var i=0; i < doclist.length; i++) eFB.replaceTags( doclist[i], id );
-                        }
-                        , Math.floor(Math.random()*4000));
+                        // Replace the tags
+                        for (var i=0; i < doclist.length; i++) eFB.replaceTags( doclist[i], id );
                         
                     } else {
                         
@@ -770,7 +870,7 @@ eFB = {
             http.send(null);
             
             // Return a temporary tag, for now
-            return "<span style='color: #f00;' class='note_pending_"+ id + "'>Loading. please wait...<\/span>";
+            return "<span style='color: #c00;' class='note_complete note_pending_"+ id + "'>Loading. please wait...<\/span>";
         
         } else if ( eFB.cache[ id ].Status == "PENDING" ) {
             
@@ -778,10 +878,10 @@ eFB = {
             // updated when the the HTTP request returns.
             var doclist = eFB.cache[ id ].Docs;
             if (doclist.indexOf( doc ) != -1 ) doclist.push( doc );
-            return "<span style='color: #f00;' class='note_pending_"+ id + "'>Loading. please wait...<\/span>";
+            return "<span style='color: #c00;' class='note_complete note_pending_"+ id + "'>Loading. please wait...<\/span>";
         
         } else {
-            return "<span style='color: #0f0;' class='note_"+ id + "'>"+ eFB.cache[ id ] +"<\/span>";
+            return "<span style='color: #0;' class='note_complete'>"+ eFB.cache[ id ] +"<\/span>";
         }
     },
 
@@ -795,8 +895,8 @@ eFB = {
         var toReplace = doc.getElementsByClassName( "note_pending_" + id );
         for (var i=0; i < toReplace.length; i++) {
             toReplace[i].innerHTML = eFB.cache[ id ];
-            toReplace[i].setAttribute( "style", "color: #0f0;");
-            toReplace[i].setAttribute( "class", "note_" + id);
+            toReplace[i].setAttribute( "style", "color: #0;");
+            toReplace[i].setAttribute( "class", "note_complete");
         }
 
     },

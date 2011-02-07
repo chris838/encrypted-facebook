@@ -5,7 +5,7 @@ IeFBLibrary* create_IeFBLibrary(const char* id, const char* dir)
 {
 /* For now we use this concrete implementation. Potentially the exact library implementation which is instantiated could be decided at runtime, e.g. by passing parameters (specified in browser) to this function. */
   return (IeFBLibrary*) new efb::BasicLibary(
-      *(new efb::Haar128Factory()),
+      *(new efb::Haar256Factory()),
       id, dir
     );
 }

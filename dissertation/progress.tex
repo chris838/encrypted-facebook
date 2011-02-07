@@ -1,0 +1,87 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[dvipsnames,usenames]{color} 
+
+%Redefine the first level
+\renewcommand{\theenumi}{\emph{(\alph{enumi})}}
+\renewcommand{\labelenumi}{\theenumi}
+
+%Redefine the second level
+\renewcommand{\theenumii}{\emph{(\roman{enumii})}}
+\renewcommand{\labelenumii}{\theenumii}
+
+%Paragraph formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
+\begin{document}
+
+
+\thispagestyle{empty}
+
+\rightline{\large Chris Harding}
+\medskip
+\rightline{\large Queens' College}
+\medskip
+\rightline{\large ch458}
+
+\vfil
+
+\centerline{\large Computer Science Part II Progress Report}
+\vspace{0.4in}
+\centerline{\Large\bf Encrypted Facebook}
+\vspace{0.3in}
+\centerline{\large 3/2/2011}
+
+\vfil
+
+{\bf Project Supervisor:} J. Anderson
+
+\vspace{0.2in}
+
+{\bf Director of Studies:} Dr~R.~D.~H.~Walker
+
+\vspace{0.2in}
+
+{\bf Overseers:} Dr~T.~Griffin  \& Dr~M.~Kuhn
+
+
+\vfil
+\eject
+
+\paragraph{Current project state}
+
+Currently the implementation work is almost complete bar the few exceptions listed in the following section. The application can intercept encrypted content (text and images) in the browser and decrypt and display automatically. It can overlay additional controls (currently text only) for content submission. Controls for managing the users cryptographic identity are also complete.
+
+A skeleton dissertation is complete, with little else other than large amounts of notes taken during development.
+
+\paragraph{Work remaining}
+
+Regarding the implementation, remaining work falls in to four categories:
+\begin{itemize}
+	\item The UI controls for submitting images need to be completed. This is only a small task, since page interception is already taking place and the recipient selection control can be re-used from the text submission code. \textit{Approx. time to complete: 1 day}.
+	
+	\item An optimisation regarding image submission should be implemented to ensure that the success criteria have been achieved. This involves switching from storing target image data within another image (current approach) to storing a tag within an image, which then links to a "Facebook Note" where the target image data is stored. All the separate components of this process already exist - the optimisation simply requires stringing them together and thus should not take up too much additional time. \textit{Approx. time to complete: 1 week}.
+	
+	\item Certain sections of code (in particular the JavaScript code) require cleaning up to improve legibility and aid future extension. There are also several memory leaks in the C++ library which are known but have not yet been dealt with. \textit{Approx. time to complete: 3-4 days}.
+	
+	\item Several sections of code have been labelled as vulnerable to potential security exploits. These include (but are not limited to) the UTF-8 encoder/decoder (which should more strictly reject invalid input) and the text interception, retrieval, decryption and insertion code (where a malicious user could inject code into a user's Facebook page). These are potentially dangerous since, as a Firefox extension, the application runs outside the browser sandbox. An attempt should be made to remove these vulnerabilities. \textit{Approx. time to complete: 3-4 days}.
+\end{itemize}
+In addition, testing and analysis still needs to be carried out and the written work completed.
+
+\paragraph{Adjusted workplan}
+
+According to the original workplan all implementation (including any extensions) should be completed by 18th February. This is still feasible given the completion time estimations given in the previous section.
+
+However, the Introduction and Preparation sections should have been completed by January 18th and the Implementation section now near completion. In reality, no real progress has been made on the written work (though notes have been made during development and a skeleton dissertation exists).
+
+The workplan states that a complete draft should be done by 11th March. This milestone is still feasible and will still be the aim, however given that the written work is behind schedule it is possible that this will slip by around 1-2 weeks. This would put the submission of a complete dissertation to Director of Studies and supervisors on the 9th April - not ideal given the forthcoming exams but still well in advance of the final deadline.
+
+\end{document}

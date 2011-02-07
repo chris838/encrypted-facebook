@@ -53,8 +53,7 @@ pc = {
                 eFB.prefs.setBoolPref("loggedIn",true)
                 
                 // Close the window
-                doc.defaultView.close();
-                
+                doc.defaultView.close();                
             }  
         }  
     },
@@ -82,21 +81,23 @@ pc = {
                 var url = doc.defaultView.location.href;
                 var rx=/facebook\.com\//; // TODO - watch out for malicious code injections
                 if (rx.test(url)) {
-                    /*
+                    
                     // Try and replace any text
                     var page = doc.getElementById('content');
                     text = page.innerHTML;
                     // Find any tags, and call retrieve function on them
+                    var rx2 = new RegExp( eFB.msg_start + "[0-9,a-f]*" + eFB.msg_end );
                     text = text.replace(
-                        /ᐊ[0-9,a-f]*ᐅ/, function(x) { return eFB.retrieveFromTag(doc,x); }
+                        rx2, function(x) { return eFB.retrieveFromTag(doc,x); }
                     );
                     // Write back changes, but ONLY if there are any
                     // (since a rewrite will trigger another page load, and thus another parseHTML)
                     if (page.innerHTML != text) page.innerHTML = text;
+                    // Add a few formatting changes to demark decrypted items
+                    pc.applyFormatting(doc);
                     
                     // Now try replace any images with their plaintext
-                    pc.replaceImages(doc);
-                    */
+                    //pc.replaceImages(doc);
                     
                     // Insert user interface overlay
                     pc.iFaceOverlay(doc,url);
@@ -106,10 +107,22 @@ pc = {
     },
     
     /**
+        Format the messages which have been decrypted.
+    */
+    applyFormatting : function(doc) {
+        // Get all the decrypted message list items and format them
+        var list = doc.getElementsByClassName('note_complete');
+        for (var i=0; i<list.length; i++) {
+            var li = list[i].parentNode.parentNode.parentNode.parentNode.parentNode;
+            li.setAttribute("style",
+                "border-top:1px dotted #c00; border-bottom:1px dotted #c00; background-color: #fff5f5;");
+        }
+    },
+    
+    /**
         Parse the Facebook page and insert Encrypted Facebook UI elements
     */
     iFaceOverlay : function(doc,url) {
-    
         // Profile page might need public key add/remove controls
         if ( /profile\.php/.test(url) ) {
             // We are on the profile page and must try to insert public key grabber
@@ -155,6 +168,51 @@ pc = {
     },
     
     /**
+        Add button to profile page.
+    */
+    addGrabKeyButton : function(doc,id,key) {
+        // If we haven't already, add a grab key button
+        if (doc.getElementById("profile_action_add_pubkey")==undefined && doc.getElementById("pagelet_header")!=undefined) { 
+            box = doc.getElementById("pagelet_header").getElementsByClassName("rfloat")[0];
+            box.innerHTML = '<a id="profile_action_add_pubkey" class="uiButton" rel="dialog" href="#"><i class="mrs img sp_6isv8o sx_79a2c2"></i><span class="uiButtonText">Add Public Key</span></a>'
+                            + box.innerHTML;
+            // Set the custom icon
+            file = eFB.getFileObject( eFB.extension_dir + "images/icons.png" );                
+            link = content.window.URL.createObjectURL(file);
+            box.firstChild.firstChild.style.backgroundImage = "url("+link+")";
+            // Check if we already have a key
+            var path = eFB.working_dir + eFB.keys_dir + id + ".pubkey";
+            file = eFB.getFileObject( path );
+            try {var foo = file.size;}
+            catch (e)  {
+                if (e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST") throw e;
+                // File not found so add listener
+                box.firstChild.addEventListener("click",
+                    function(aEvent) {
+                        // Save public key to disk
+                        eFB.writeToFile( key , path);
+                        doc.location.reload(true);
+                        window.alert("Public key added to keyring.");
+                    }, false );
+                return;
+            }
+            // If we get here then file already exists
+            box.firstChild.lastChild.innerHTML = "Remove Public Key";
+            box.firstChild.addEventListener("click",
+                function(aEvent) {
+                    // Create a file handle
+                    var file = Components.classes["@mozilla.org/file/local;1"]  
+                                .createInstance(Components.interfaces.nsILocalFile);  
+                    file.initWithPath( path );
+                    file.remove(false);
+                    doc.location.reload(true);
+                    window.alert("Key removed from keyring.")
+                }, false);
+            return;
+        }
+    },
+    
+    /**
         Add a drop down of recipients and a submit button for encrypted submission.
     */
     addMessageControls : function(doc,url,btlist) {
@@ -163,64 +221,93 @@ pc = {
         var li = doc.createElement('li');
         li.id = "efb_submit";
         li.className = bt.className;
-        li.innerHTML = bt.innerHTML;
-        
-        // Set label and click handler
-        var input = li.firstChild.firstChild;
-        input.value = "Encrypt & Share";
-        li.addEventListener("click", function() {
-        
-            // Set up some additional CSS needed for the selector
-            var head = doc.getElementsByTagName('head')[0]
-            //;
-            var link = doc.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.media = "all";
-            link.href = 'http://static.ak.fbcdn.net/rsrc.php/ym/r/tRN44tXnLYU.css';
-            //
-            var link2 = doc.createElement('link');
-            link2.rel = 'stylesheet';
-            link2.type = 'text/css';
-            link2.media = "all";
-            link2.href = 'http://static.ak.fbcdn.net/rsrc.php/yi/r/3v5MpCq5nHR.css';
-            //
-            head.appendChild(link);
-            head.appendChild(link2);
-            
-            // Create the "friend selector" popup
-            var popup = doc.createElement('div');
-            popup.className = pc.selector_className;
-            popup.innerHTML = pc.selector_html;
-            doc.getElementById('content').appendChild(popup);
-            // get handle to the friends list
-            var ul = doc.getElementById('all_friends');
-            
-            // Populate the selector
-            var ids = pc.readLocalFriends();
-            for (var i=0; i<ids.length;i++) {
-                pc.requestFriendLiInfo(ids[i], doc, ul);
+        li.innerHTML = "<label for='u983479_9' class='submitBtn uiButton uiButtonConfirm uiButtonLarge'><input value='Encrypt & Share' style='width:120px;'></label>";
+        // Set click handler
+        li.firstChild.addEventListener("click", function() {
+            // Get the message
+            var inputs = this.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('input');
+            for (var i=0; i<inputs.length; i++) {
+                if (inputs[i].getAttribute("name")=="xhpc_message") {
+                    var input = inputs[i];
+                    break;
+                }
             }
-
-            // Define handlers for cancel/save
-            var cancel = 'var popup = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;'
-            + 'popup.parentNode.removeChild( popup );'
-            var save = 'var list = document.getElementById("all_friends").getElementsByTagName("li"); '
-            + 'var ids = [];'
-            + 'for (var i=0; i<list.length; i++) if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );'
-            + '';
-            
-            // Attach handlers
-            buttons = popup.getElementsByTagName('input');
-            for (var i=0; i<buttons.length; i++) {
-                if (buttons[i].name == "cancel") buttons[i].setAttribute( "onClick", cancel );
-                else if (buttons[i].name == "save") buttons[i].setAttribute( "onClick", save );
-            }
-            
+            // Pass text area and doc to friend selector
+            pc.createFriendSelector(doc, input, function() {});
         }, false );
         
         // Append new button to the button list
         btlist.insertBefore( li, btlist.lastChild.nextSibling );
+    },
+    
+    /**
+        Create a friend selector popup. 
+        @param callback Function to call when user clicks submit. Must be of the form f(x,y) where x is the message string and y is an array of recipient IDs.
+    */
+    createFriendSelector : function(doc, input, callback) {
+        // Set up some additional CSS needed for the selector
+        var head = doc.getElementsByTagName('head')[0]
+        //;
+        var link = doc.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.media = "all";
+        link.href = 'http://static.ak.fbcdn.net/rsrc.php/ym/r/tRN44tXnLYU.css';
+        //
+        var link2 = doc.createElement('link');
+        link2.rel = 'stylesheet';
+        link2.type = 'text/css';
+        link2.media = "all";
+        link2.href = 'http://static.ak.fbcdn.net/rsrc.php/yi/r/3v5MpCq5nHR.css';
+        //
+        head.appendChild(link);
+        head.appendChild(link2);
+        
+        // Create the "friend selector" popup
+        var popup = doc.createElement('div');
+        popup.className = pc.selector_className;
+        popup.innerHTML = pc.selector_html;
+        doc.getElementById('content').appendChild(popup);
+        // get handle to the friends list
+        var ul = doc.getElementById('all_friends');
+        
+        // Populate the selector
+        var ids = pc.readLocalFriends();
+        for (var i=0; i<ids.length;i++) {
+            pc.requestFriendLiInfo(ids[i], doc, ul);
+        }
+        
+        // Define handler for cancel button
+        var cancel = function(e) {
+            var popup = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+            popup.parentNode.removeChild( popup );
+        };
+        
+        // Define handler once note has been created and a tag generated
+        var save_callback = function(tag, input) {
+            input.setAttribute("value", tag); 8
+            // submit the form
+            var form =input.parentNode.parentNode.parentNode.parentNode.parentNode;
+            form.submit();
+        }
+        // Define handler for save button
+        var save = function(e) {
+            // get a list of selected recipient ids
+            var list = doc.getElementById("all_friends").getElementsByTagName("li");
+            var ids = [];
+            for (var i=0; i<list.length; i++) {
+                if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+            }
+            // create a note, tag will be passed to save_callback
+            eFB.submitNote(ids, input, save_callback);
+        };
+        
+        // Attach handlers
+        buttons = popup.getElementsByTagName('input');
+        for (var i=0; i<buttons.length; i++) {
+            if (buttons[i].name == "cancel") buttons[i].addEventListener("click", cancel, false);
+            else if (buttons[i].name == "save") buttons[i].addEventListener("click", save, false);
+        }
     },
     
     /**
@@ -271,53 +358,7 @@ pc = {
             "if (this.className=='selected') this.className='';" +
             "else this.className='selected';"
         ); 
-    },
-    
-    /**
-        Add button to profile page.
-    */
-    addGrabKeyButton : function(doc,id,key) {
-        // If we haven't already, add a grab key button
-        if (doc.getElementById("profile_action_add_pubkey")==undefined && doc.getElementById("pagelet_header")!=undefined) { 
-            box = doc.getElementById("pagelet_header").getElementsByClassName("rfloat")[0];
-            box.innerHTML = '<a id="profile_action_add_pubkey" class="uiButton" rel="dialog" href="#"><i class="mrs img sp_6isv8o sx_79a2c2"></i><span class="uiButtonText">Add Public Key</span></a>'
-                            + box.innerHTML;
-            // Set the custom icon
-            file = eFB.getFileObject( eFB.extension_dir + "images/icons.png" );                
-            link = content.window.URL.createObjectURL(file);
-            box.firstChild.firstChild.style.backgroundImage = "url("+link+")";
-            // Check if we already have a key
-            var path = eFB.working_dir + eFB.keys_dir + id + ".pubkey";
-            file = eFB.getFileObject( path );
-            try {var foo = file.size;}
-            catch (e)  {
-                if (e.name != "NS_ERROR_FILE_TARGET_DOES_NOT_EXIST") throw e;
-                // File not found so add listener
-                box.firstChild.addEventListener("click",
-                    function(aEvent) {
-                        // Save public key to disk
-                        eFB.writeToFile( key , path);
-                        doc.location.reload(true);
-                        window.alert("Public key added to keyring.");
-                    }, false );
-                return;
-            }
-            // If we get here then file already exists
-            box.firstChild.lastChild.innerHTML = "Remove Public Key";
-            box.firstChild.addEventListener("click",
-                function(aEvent) {
-                    // Create a file handle
-                    var file = Components.classes["@mozilla.org/file/local;1"]  
-                                .createInstance(Components.interfaces.nsILocalFile);  
-                    file.initWithPath( path );
-                    file.remove(false);
-                    doc.location.reload(true);
-                    window.alert("Key removed from keyring.")
-                }, false);
-            return;
-        }
-    },
-    
+    },   
     replaceImages : function(doc) {
         
         // Try and replace any images

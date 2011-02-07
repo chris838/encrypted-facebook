@@ -25,16 +25,22 @@
         insertbefore="PersonalToolbar">
       <toolbarbutton id="efb-login"
         class="button" 
-        label="Log in to Facebook"
+        label="Start eFB Session"
         tooltiptext="Log the application into your Facebook account."
         oncommand="eFB.login(event);" />
       <toolbarbutton id="efb-logout"
         class="button" 
-        label="Log out of Facebook"
-        tooltiptext="Log the application our of your Facebook account."
+        label="End eFB Session"
+        tooltiptext="Log the application out of your Facebook account."
         oncommand="eFB.logout(event);" />
         
       <spacer flex="1"/>
+      
+      <toolbarbutton id="efb-clean"
+        class="button" 
+        label="Clean Profile"
+        tooltiptext="Remove all notes and wall/newsfeed objects from your profile."
+        oncommand="eFB.cleanProfile(event);" />
         
       <toolbarbutton id="efb-createid"
         class="button" 
