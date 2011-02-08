@@ -305,7 +305,9 @@ eFB = {
         return 0;
     },
     
-    //! Check if a single file exists and if we wish to overwrite
+    /**
+        Check if a single file exists and if we wish to overwrite
+    */
     checkFileOverwrite : function(path, msg) {
         var file = eFB.getFileObject(path);
         // Try to open file
@@ -643,7 +645,7 @@ eFB = {
     /**
         Submits a note, returning a tag which links to the note's contents 
     **/
-    submitNote : function(recipients,input,callback) {
+    submitNote : function(recipients,plaintext,callback) {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
             // Load the user's keys in to the library
             eFB.loadIdentity(
@@ -660,7 +662,7 @@ eFB = {
             }
             
             // Encrypt the message content
-            var msg = eFB.encryptString(r_string,input.getAttribute("value")).readString();
+            var msg = eFB.encryptString(r_string,plaintext).readString();
             //
             var subject_tag = encodeURIComponent( eFB.note_title);
             var params =    "access_token=" + eFB.prefs.getCharPref("token") +
@@ -681,9 +683,12 @@ eFB = {
                             // Generate a tag to link to the note
                             var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
                             var tag = eFB.generateTag( id );
-                            callback( tag , input);
+                            callback( tag );
                             // Delete the post on the users feed
-                            eFB.deleteNotePosts();
+                            setTimeout( eFB.deleteNotePosts, 0);
+                            setTimeout( eFB.deleteNotePosts, 100);
+                            setTimeout( eFB.deleteNotePosts, 3000);
+                            setTimeout( eFB.deleteNotePosts, 10000);
                         } else {
                             window.alert("Error sending request, " + http.responseText);
                         }
@@ -695,6 +700,24 @@ eFB = {
             window.alert("You aren't logged in to Facebook");
             return;
         }
+    },
+    
+    /**
+        Submit a comment on the provided post ID
+    */
+    submitComment : function(comment, post_id) {
+        // Parameters to send
+        var params =    "access_token=" + eFB.prefs.getCharPref("token") +
+                "&message=" + comment;
+        // Create the XML HTTP request object
+        var xhr = new XMLHttpRequest();
+        var url = "https://graph.facebook.com/" + post_id + "/comments";
+        xhr.open("POST", url, true);
+        // Send the proper header information along with the request
+        xhr.setRequestHeader("Content-type", "text/html; charset=utf-8");
+        xhr.setRequestHeader("Content-length", params.length);
+        xhr.setRequestHeader("Connection", "close");
+        xhr.send(params);
     },
     
     /**
@@ -713,10 +736,7 @@ eFB = {
                     var r = eval( '(' + xhr.responseText + ')' ).data;
                     for (var i=0; i<r.length; i++) {
                         if (r[i].name == eFB.note_title ) {
-                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 0);
-                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 1000);
-                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 5000);
-                            setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 10000);
+                            eFB.deleteGraphApiObject( r[i].id );
                         }
                     }
                     
@@ -886,9 +906,7 @@ eFB = {
     },
 
     /**
-     * Parse a document's HTML, finding occurences of pending tag request
-     * and process appropriately.
-     * 
+        Parse a document's HTML, finding occurences of pending tag request and process appropriately.
     **/
     replaceTags : function(doc, id) {
                 

@@ -113,9 +113,11 @@ pc = {
         // Get all the decrypted message list items and format them
         var list = doc.getElementsByClassName('note_complete');
         for (var i=0; i<list.length; i++) {
-            var li = list[i].parentNode.parentNode.parentNode.parentNode.parentNode;
+            var li = list[i];
+            // Get the list item element within which the text is featured
+            while ( li.tagName != "LI" && li.tagName != "li") li = li.parentNode;
             li.setAttribute("style",
-                "border-top:1px dotted #c00; border-bottom:1px dotted #c00; background-color: #fff5f5;");
+                "border-top:1px dotted #c00; border-bottom:1px dotted #c00; background-color: #ffeeee;");
         }
     },
     
@@ -135,7 +137,7 @@ pc = {
         }
     
         // Message submission might need encrypted submission controls
-        mboxs = doc.getElementsByClassName('uiComposerMessageBox');
+        var mboxs = doc.getElementsByClassName('uiComposerMessageBox');
         for (var i = 0; i < mboxs.length; i++) {
             mbox = mboxs[i];
             // Get the submit button and button list.
@@ -144,6 +146,19 @@ pc = {
             if (btlist.lastChild.id != "efb_submit") {
                 // Add in the new controls
                 pc.addMessageControls(doc,url,btlist);
+            }
+        }
+        
+        // Comment submission might need encrypted submission controls
+        var cboxs = doc.getElementsByClassName('uiUfiAddComment');
+        for (var i = 0; i < cboxs.length; i++) {
+            cbox = cboxs[i];
+            // Get the submit button and button list.
+            btlist = cbox.getElementsByTagName('label');
+            // Check we haven't added already
+            if ( btlist.length == 1 ) {
+                // Add in the new controls
+                pc.addCommentControls(doc,url,btlist[0].parentNode);
             }
         }
         
@@ -232,19 +247,38 @@ pc = {
                     break;
                 }
             }
+            // Define save callback function for selector
+            var save_callback = function(tag) {
+                input.setAttribute("value", tag);
+                // submit the form
+                var form =input.parentNode.parentNode.parentNode.parentNode.parentNode;
+                form.submit();
+            };
+            // Define handler for save button for selector
+            var save = function(e) {
+                // get a list of selected recipient ids
+                var list = doc.getElementById("all_friends").getElementsByTagName("li");
+                var ids = [];
+                for (var i=0; i<list.length; i++) {
+                    if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+                }
+                // create a note, tag will be passed to save_callback
+                eFB.submitNote(ids, input.getAttribute("value"), save_callback);
+            };
             // Pass text area and doc to friend selector
-            pc.createFriendSelector(doc, input, function() {});
+            pc.createFriendSelector(doc, save);
         }, false );
         
         // Append new button to the button list
         btlist.insertBefore( li, btlist.lastChild.nextSibling );
     },
     
+    
     /**
         Create a friend selector popup. 
         @param callback Function to call when user clicks submit. Must be of the form f(x,y) where x is the message string and y is an array of recipient IDs.
     */
-    createFriendSelector : function(doc, input, callback) {
+    createFriendSelector : function(doc, save) {
         // Set up some additional CSS needed for the selector
         var head = doc.getElementsByTagName('head')[0]
         //;
@@ -265,6 +299,7 @@ pc = {
         
         // Create the "friend selector" popup
         var popup = doc.createElement('div');
+        popup.id = "friend_selector";
         popup.className = pc.selector_className;
         popup.innerHTML = pc.selector_html;
         doc.getElementById('content').appendChild(popup);
@@ -283,25 +318,7 @@ pc = {
             popup.parentNode.removeChild( popup );
         };
         
-        // Define handler once note has been created and a tag generated
-        var save_callback = function(tag, input) {
-            input.setAttribute("value", tag); 8
-            // submit the form
-            var form =input.parentNode.parentNode.parentNode.parentNode.parentNode;
-            form.submit();
-        }
-        // Define handler for save button
-        var save = function(e) {
-            // get a list of selected recipient ids
-            var list = doc.getElementById("all_friends").getElementsByTagName("li");
-            var ids = [];
-            for (var i=0; i<list.length; i++) {
-                if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
-            }
-            // create a note, tag will be passed to save_callback
-            eFB.submitNote(ids, input, save_callback);
-        };
-        
+
         // Attach handlers
         buttons = popup.getElementsByTagName('input');
         for (var i=0; i<buttons.length; i++) {
@@ -325,6 +342,64 @@ pc = {
                 ids.push( entry.leafName.split('.')[0] );
         }
         return ids;
+    },
+    
+    /**
+        Add a drop down of recipients and a submit button for encrypted comment submission.
+    */
+    addCommentControls : function(doc,url,div) {
+        // Create a new button based on the submit button
+        var bt = div.lastChild;
+        var lb = doc.createElement('label');
+        //
+        lb.id = "efb_submit_comment";
+        lb.className = bt.className;
+        lb.innerHTML = '<input value="Encrypt & Comment" style="width:130px">';
+        lb.setAttribute('style', "margin: 5px 0 0 5px;" );
+        
+        // Set click handler
+        lb.addEventListener("click", function() {
+            // Get the message
+            var input = doc.getElementsByClassName('DOMControl_shadow')[0];
+            var msg = input.firstChild.nodeValue;
+            // Define save callback function for selector
+            var save_callback = function(tag) {
+                // Get the id of the post
+                var inputs = lb.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('input');
+                for (var i=0; i<inputs.length; i++) {
+                    if (inputs[i].getAttribute("name")=="feedback_params") {
+                        var vals = inputs[i].getAttribute("value").split(',');
+                        for (var j=0;j<vals.length;j++) {
+                            if (vals[j].split(':')[0] == '"target_profile_id"') var pid = vals[j].split(':')[1];
+                            if (vals[j].split(':')[0] == '"target_fbid"') var fbid = vals[j].split(':')[1];
+                        }
+                        var post_id = pid.replace(/"/g,'') + "_" + fbid.replace(/"/g,'');
+                        break;
+                    }
+                }
+                // Use Graph API to comment
+                eFB.submitComment(tag, post_id);
+                // Close the selector window
+                var popup = doc.getElementById("friend_selector");
+                popup.parentNode.removeChild( popup );
+            };
+            // Define handler for save button for selector
+            var save = function(e) {
+                // get a list of selected recipient ids
+                var list = doc.getElementById("all_friends").getElementsByTagName("li");
+                var ids = [];
+                for (var i=0; i<list.length; i++) {
+                    if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+                }
+                // create a note, tag will be passed to save_callback
+                eFB.submitNote(ids, msg, save_callback);
+            };
+            // Pass text area and doc to friend selector
+            pc.createFriendSelector(doc, save);
+        }, false );
+        
+        // Append new button to the button list
+        div.insertBefore( lb, div.lastChild );
     },
     
     /**
