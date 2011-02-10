@@ -1386,6 +1386,7 @@ namespace efb {
                 std::vector<byte>   data;       // for data bytes we wish to transfer
                 unsigned int head_size;         // size of header so we can skip
                 
+                
                 // Load the source image file into a CImg object
                 try {img.load( img_in_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
@@ -1419,7 +1420,7 @@ namespace efb {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
-            
+                
                 // Save data to a file, skipping the header
                 head_size = crypto_.retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);
@@ -1428,7 +1429,7 @@ namespace efb {
                   return 1;
                 }
                 data_file.write((char*) &data[head_size], data.size()-head_size );
-
+                
                 // Return with success
                 return 0; 
             }

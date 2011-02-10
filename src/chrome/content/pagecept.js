@@ -97,7 +97,7 @@ pc = {
                     pc.applyFormatting(doc);
 
                     // Now try replace any images with their plaintext
-                    //pc.replaceImages(doc);
+                    pc.replaceImages(doc);
 
                     // Insert user interface overlay
                     pc.iFaceOverlay(doc,url);
@@ -284,7 +284,7 @@ pc = {
 
     /**
         Create a friend selector popup.
-        @param callback Function to call when user clicks submit. Must be of the form f(x,y) where x is the message string and y is an array of recipient IDs.
+        @param save Function to call when user clicks submit.
     */
     createFriendSelector : function(doc, save) {
         // Set up some additional CSS needed for the selector
@@ -443,15 +443,77 @@ pc = {
         Add encryption check boxes to the picture upload form
     */
     addPictureControls : function(doc) {
-        var list = doc.getElementById('files').getElementsByTagName('div');
-        for (var i=0; i<list.length; i++) {
-            var item = list[i];
-            var iput = doc.createElement('input');
-            iput.setAttribute("type", "checkbox" );
-            item.appendChild( iput );
+        var list_wrapper = doc.getElementById('files');
+        if (list_wrapper.getAttribute("done") != "true") {
+            
+            // Add checkboxes
+            var list = list_wrapper.getElementsByTagName('div');
+            for (var i=0; i<list.length; i++) {
+                var item = list[i];
+                // Add label
+                var lb = doc.createElement('label');
+                lb.innerHTML = " Encrypt"
+                item.appendChild( lb );
+                // Add checkbox box
+                var iput_box = doc.createElement('span');
+                iput_box.setAttribute('style', "display:inline-block; vertical-align:middle;" );
+                item.appendChild( iput_box );
+                // Add checkbox
+                var iput = doc.createElement('input');
+                iput.setAttribute("type", "checkbox" );
+                iput.id = "image_checkbox_" + i;
+                iput_box.appendChild( iput );
+            }
+            
+            // Add handler for submit button click
+            var submit =
+                list_wrapper.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName('inputbutton')[0];
+            // Save the on click handler then wipe it
+            var submit_fun = submit.getAttribute("onclick");
+            submit.setAttribute("onclick", "");
+            // Define save handlers for the friend selector
+            var save = function(e) {
+                
+                // get the current url
+                var redirect = "http://www.facebook.com";
+                
+                // get a list of selected recipient ids
+                var list = doc.getElementById("all_friends").getElementsByTagName("li");
+                var ids = [];
+                for (var i=0; i<list.length; i++) {
+                    if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+                }
+                
+                // Loop through the file inputs
+                for (var i=0; i<5; i++) {
+                    var cbox = doc.getElementById( 'image_checkbox_' + i );
+                    if (cbox.checked) {
+                        var ta = cbox.parentNode.parentNode.firstChild;
+                        // get the old path
+                        var old_path = ta.value;
+                        // generate an encrypted image
+                        var new_path = eFB.generateEncryptedPhoto(ids, old_path);
+                        // get the album aid value
+                        var aid = doc.getElementById('aid').getAttribute('value');
+                        // submit the image via Facebook
+                        eFB.uploadPhoto(new_path, aid, redirect)
+                        
+                    }
+                }
+            }
+            // Add new click action to submit button
+            submit.addEventListener("click", function() {
+                pc.createFriendSelector(doc, save );             
+            }, false );
+            
+            // Make sure we don't repeat ourselves
+            list_wrapper.setAttribute("done", "true");
         }
     },
 
+    /**
+        Search for and replace images within a document.  
+    */
     replaceImages : function(doc) {
 
         // Try and replace any images
@@ -503,7 +565,7 @@ pc = {
                         // Replace image on page with cached plaintext (if we haven't already).
                         // If replacement is made, exit loop since this will trigger another parseHTML()
                         case 2 :
-                            var file = eFB.getFileObject( eFB.cache_dir + id + '_plain.jpg' );
+                            var file = eFB.getFileObject( eFB.working_dir + eFB.cache_dir + id + '_plain.jpg' );
                             x.src = content.window.URL.createObjectURL(file);
                             x.removeAttribute('height');
                             break;
@@ -555,7 +617,7 @@ pc = {
                         // Replace image on page with cached plaintext (if we haven't already).
                         // If replacement is made, exit loop since this will trigger another parseHTML()
                         case 2 :
-                            var file = eFB.getFileObject( eFB.cache_dir + id + '_plain.jpg' );
+                            var file = eFB.getFileObject( eFB.working_dir + eFB.cache_dir + id + '_plain.jpg' );
                             var img = content.document.createElement("img");
                             img.src = content.window.URL.createObjectURL(file);
                             img.style.position = "absolute";
@@ -606,8 +668,8 @@ pc = {
                         eFB.img_cache[id].status = 0;
                     } else {
                         // Get the file using the source URL
-                        var path = eFB.cache_dir + id + '.jpg' ;
-                        var path2 = eFB.cache_dir + id + '_plain.jpg' ;
+                        var path = eFB.working_dir + eFB.cache_dir + id + '.jpg' ;
+                        var path2 = eFB.working_dir + eFB.cache_dir + id + '_plain.jpg' ;
 
                         // Define a progress listener for the download
                         var prog_listener = {
@@ -618,6 +680,12 @@ pc = {
                                 // If the download is finished
                                 if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
                                     // Try to decrypt the image
+                                    
+            // Load the user's keys in to the library
+            eFB.loadIdentity(
+                eFB.keys_dir + "user.key",
+                eFB.keys_dir + "user.pubkey", "a");
+                                    
                                     if (!eFB.decryptFileFromImage( path, path2 )) {
                                         // Decryption successful
                                         eFB.img_cache[id].status = 2;
@@ -629,7 +697,7 @@ pc = {
                                 }
                             }
                         };
-                        pc.SaveImageFromURL( response.source, path, prog_listener );
+                        pc.saveImageFromURL( response.source, path, prog_listener );
                     }
                 } else {
                     window.alert("Error sending request, " + xhr.responseText);
@@ -647,7 +715,7 @@ pc = {
 
     },
 
-    SaveImageFromURL : function(url,path,prog_listener) {
+    saveImageFromURL : function(url,path,prog_listener) {
 
         var file = Components.classes["@mozilla.org/file/local;1"]
                     .createInstance(Components.interfaces.nsILocalFile);

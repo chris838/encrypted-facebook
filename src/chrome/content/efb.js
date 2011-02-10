@@ -748,83 +748,116 @@ eFB = {
         xhr.send();
     },
 
-    generateEncryptedPhoto : function(s) {
-
-        window.alert( eFB.generateIdentity( "keys/user.key", "keys/user.pubkey", "password" ) );
-
-        window.alert( eFB.loadIdentity( "keys/user.key", "keys/user.pubkey", "password" ) );
-
-        window.alert( eFB.loadIdKeyPair( "11111111", "keys/11111111.pubkey" ) );
-        window.alert( eFB.loadIdKeyPair( "123456788888888", "keys/123456788888888.pubkey" ) );
-        window.alert( eFB.loadIdKeyPair( "1234567887654321", "keys/1234567887654321.pubkey" ) );
-
-        msg = "Here is my message....";
-        window.alert(msg);
-        msg = eFB.encryptString( "1234567887654321;11111111;", msg ).readString();
-        window.alert(msg);
-        msg = eFB.decryptString( msg ).readString();
-        window.alert(msg);
-
-    /*
-        window.alert( eFB.encryptFileInImage( "1234567887654321;11111111;",
-                                            "/home/chris/Desktop/hidden.jpg",
-                                            "/home/chris/Desktop/out.bmp"
-                                           ));
-
-        window.alert( eFB.decryptFileFromImage(
-                                            "/home/chris/Desktop/out.bmp",
-                                            "/home/chris/Desktop/hidden2.jpg"
-                                   ));
-
-        window.alert( eFB.calculateBitErrorRate(
-                                            "/home/chris/Desktop/hidden.jpg",
-                                            "/home/chris/Desktop/hidden2.jpg"
-                                   ));
+    
+    /**
+        Given a list of recipients, generate an encrypted version of an image. Return the path of the (temporary) encrypted image.
     */
+    generateEncryptedPhoto : function(recipients,target_path) {
+        if ( eFB.prefs.getBoolPref("loggedIn") ) {
+            // Load the user's keys in to the library
+            eFB.loadIdentity(
+                eFB.keys_dir + "user.key",
+                eFB.keys_dir + "user.pubkey", "a");
+
+            // TODO - ensure the public keys are up to date
+
+            // Load the required public keys in to the library
+            var r_string = "";
+            for (var i=0; i<recipients.length; i++) {
+                eFB.loadIdKeyPair( recipients[i], eFB.keys_dir + recipients[i] + ".pubkey");
+                r_string += recipients[i] + ";";
+            }
+            
+            // Create a temp image filename
+            var rand = Math.floor( Math.random()*100000001 );
+            var output_path = eFB.working_dir+eFB.temp_dir + rand + ".bmp";
+            
+            // Encrypt the image
+            eFB.encryptFileInImage(r_string, target_path, output_path);
+            
+            return output_path;
+        }
+        return "NOT/LOGGED/IN";
+    },
+    
+    /**
+        Upload a photo to Facebook via Graph API.
+    */
+    uploadPhoto : function(path, aid, redirect) {
+        
+        // Get the actual album ID from aid
+        eFB.getAlbumId(aid, function(album_id) {
+            // Create a form
+            var form = content.document.createElement("form");
+    
+            // Create a file input element
+            var file_input = content.document.createElement("input");
+            file_input.setAttribute("type", "file");
+            file_input.setAttribute("name", "source");
+            file_input.value = path;
+    
+            // Create an access token input element
+            var token_input = content.document.createElement("input");
+            token_input.setAttribute("type", "text");
+            token_input.setAttribute("name", "access_token");
+            token_input.value = eFB.prefs.getCharPref("token");
+    
+            // Create a submit element
+            var submit_input = content.document.createElement("input");
+            submit_input.setAttribute("type", "submit");
+            submit_input.setAttribute("name", "submit_button");
+            submit_input.value = "Submit me";
+    
+            // Add the inputs to the form
+            form.appendChild( file_input );
+            form.appendChild( token_input );
+            form.appendChild( submit_input );
+    
+            // Add action and method attributes
+            form.setAttribute("id", "efbForm");
+            form.action = "https://graph.facebook.com/" + album_id + "/photos";
+            form.method = "POST";
+            form.enctype = "multipart/form-data";
+    
+            // Add the form to the document body
+            content.document.body.appendChild(form);
+    
+            // Send the form
+            form.submit();
+            
+            // Redirect browser
+            setTimeout( function() {content.document.defaultView.location = redirect;}, 15000 );  
+        });
     },
 
-    uploadPhoto : function(path, album_id, callback) {
-
-        // Create a form
-        var form = content.document.createElement("form");
-
-        // Create a file input element
-        var file_input = content.document.createElement("input");
-        file_input.setAttribute("type", "file");
-        file_input.setAttribute("name", "source");
-        file_input.value = path;
-
-        // Create an access token input element
-        var token_input = content.document.createElement("input");
-        token_input.setAttribute("type", "text");
-        token_input.setAttribute("name", "access_token");
-        token_input.value = eFB.prefs.getCharPref("token");
-
-        // Create a submit element
-        var submit_input = content.document.createElement("input");
-        submit_input.setAttribute("type", "submit");
-        submit_input.setAttribute("name", "submit_button");
-        submit_input.value = "Submit me";
-
-        // Add the inputs to the form
-        form.appendChild( file_input );
-        form.appendChild( token_input );
-        form.appendChild( submit_input );
-
-        // Add action and method attributes
-        form.setAttribute("id", "efbForm");
-        form.action = "https://graph.facebook.com/" + album_id + "/photos";
-        form.method = "POST";
-        form.enctype = "multipart/form-data";
-
-        // Add the form to the document body
-        content.document.body.appendChild(form);
-
-        // Send the form
-        form.submit();
-
+    /**
+        Work out the actual album ID given the aid
+    */
+    getAlbumId : function(aid,callback) {
+        var params = "access_token=" + eFB.prefs.getCharPref("token");
+        var url = "https://graph.facebook.com/" + eFB.id + "/albums?" + params;
+        var xhr= new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Find the correct album and get the album ID
+                    var r = eval( "(" + xhr.responseText + ")" ).data;
+                    for (var i=0; i<r.length; i++) {
+                        if (r[i].link.indexOf( aid ) != -1 ) {
+                            // Found the album
+                            callback( r[i].id );
+                            return;
+                        }
+                    }
+                } else {
+                    window.alert("Error retrieving album list: " + xhr.responseText);
+                }
+            }
+        }
+        xhr.send();
     },
-
+    
     /**
         Generate a tag given am id linking to a note
     */
