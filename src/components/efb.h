@@ -1041,6 +1041,144 @@ namespace efb {
     
    
     
+    
+    //! Conduit image class which stores 4 bits per 8-bit pixel.
+    class DownsampledConduitImage : public IConduitImage
+    {
+        
+        //! Flag to state whether the image has been prepared for implantation
+        bool is_formatted_;
+        
+        //! Format the image in preparation for implantation.
+        /**
+            This operation will resize the image to 720x720x1 and truncate the colour channels, as only data storage in single-channel (greyscale) image is supported. JPEG compression requires an (imperfect) colour space transform from RGB to YCrCb which complicates using colour images for data storage. Even worse - Facebook's JPEG compression process uses chrominance subsampling. However, this does mean that discarding the additional two chrominance channels only results in a %50 reduction in maximum potential data storage capacity.        
+         */
+        void formatForImplantation()
+        {
+            // Format the image to 720x720, greyscale, single slice (resample using Lanczos)
+            resize(720,720,1,-1,6);
+            channel(0);
+            
+            is_formatted_ = true;
+        }
+        
+        //! Encode a single byte in a pair of adjacent pixels.
+        void encodeInPair( byte data, unsigned int i, unsigned int j )
+        {
+            // Split byte into two values
+            byte hi = data & 0xf0;
+            byte lo = (data << 4) & 0xf0;
+            // Encode in pixels
+            encodeInPixel( hi, i, j);
+            encodeInPixel( lo, i, j+1);
+        }
+        
+        //! Encode 4 bits into a single pixel.
+        void encodeInPixel( byte data, unsigned int i, unsigned int j )
+        {
+            operator()(i,j) = data;
+        }
+        
+        //! Decode a byte from a pair of pixels.
+        void decodeFromPair( byte &data, unsigned int i, unsigned int j )
+        {
+            byte hi = operator()(i,j);
+            byte lo = operator()(i,j+1);
+            data = (hi & 0xf0) | ((lo >> 4) & 0x0f);
+        }
+        
+        //! Writes the size of the image (2 bytes) to the last four pixels, using triple modular redundancy.
+        void writeSize
+        (
+            unsigned short len    
+        )
+        {
+            byte len_hi,len_lo;
+            len_hi = (byte) (len >> 8);
+            len_lo = (byte) len;
+            //
+            encodeInPair( len_hi, 719, 716 );
+            encodeInPair( len_lo, 719, 718 )
+        }
+        
+        public :
+            //! Get the maximum ammount of data that can be stored in this implementation.
+            virtual unsigned int getMaxData()
+            {
+                return 720*720*4;
+            }
+            
+            //! Check how much data (if any) is stored in the current image.
+            virtual unsigned short readSize()
+            {
+                byte len_hi,len_lo;
+                decodeFromPair(len_hi, 719, 716 );
+                decodeFromPair(len_lo, 719, 718 );
+            }
+            
+            //! Implant data.
+            virtual void implantData( std::vector<byte>& data )
+            {
+                // Check the image is properly formatted
+                if (!is_formatted_)
+                    formatForImplantation();
+                    
+                // Check the data isn't too large, note down size
+                if (data.size() > getMaxData())
+                    throw ConduitImageImplantException("Too much data");
+                unsigned short len = data.size(); // store this for length tag later
+                std::srand ( time(NULL) );
+                                
+                // Loop through the image in 2-pixel pairs
+                unsigned int idx, i, j;
+                for (unsigned int i=0; i<720; i++) {
+                  for (unsigned int j=0; j<360; j++) {
+                        idx = (i*360) + j;
+                        if ( idx < data.size() ) {
+                            // 1 byte in a pixel pair
+                            encodeInPair( data[idx], i, 2*j);
+                        } else {
+                            // finish with random bytes
+                            encodeInPair( (byte) std::rand() , i, 2*j);
+                        }
+                  }    
+                }
+                
+                // Write the size of the data stored to the last two image blocks
+                writeSize(len);
+            }
+            
+            //! Extract data.
+            virtual void extractData( std::vector<byte>& data )
+            {
+                // Read the length tag from the image, check it is not too large .
+                unsigned short len = readSize();
+                if ( len > getMaxData() )
+                    throw ConduitImageImplantException("Length tag too large.");
+                    
+                // Reserve enough space to store the extracted data
+                data.reserve( len );
+                
+                // Loop through the image in 2-pixel pairs
+                int i, j; unsigned int idx;
+                for (unsigned int i=0; i<720; i++) {
+                    for (unsigned int j=0; j<360; j++) {
+                        idx = (i*360) + j;
+                        
+                        // Write a byte to data from two adjacent pixels.
+                        decodeFromPair(data[idx], i, 2*j);
+                        
+                        // exit if we have enough data
+                        if ( idx+1 > len) i=j=720;
+                    }
+                }
+                
+                // Remove any padding bytes at the end
+                while (data.size() > len) data.pop_back();
+            }
+    };
+    
+    
     //! UTF8 codec which shifts characters by 0xB0 (176) to avoid problem characters.
     class ShiftB0StringCodec : public IStringCodec
     {

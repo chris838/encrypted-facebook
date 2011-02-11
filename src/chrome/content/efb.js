@@ -243,6 +243,26 @@ eFB = {
         Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
     */
     cleanProfile : function(aEvent) {
+        
+        eFB.loadIdentity(
+            eFB.keys_dir + "user.key",
+            eFB.keys_dir + "user.pubkey", "a");
+        
+        // Load the required public keys in to the library
+        eFB.loadIdKeyPair( "100001998702574", eFB.keys_dir + "100001998702574" + ".pubkey");
+        
+        eFB.encryptFileInImage(
+            "100001998702574;",
+            "/home/chris/Desktop/hidden.jpg",
+            "/home/chris/Desktop/out.bmp"
+        );
+        
+        eFB.decryptFileFromImage(
+            "/home/chris/Desktop/out.bmp",
+            "/home/chris/Desktop/hidden2.jpg"
+        );
+                
+        return;
         // Delete posts on the wall
         eFB.cleanConnection('feed');
         // Delete all posts in newsfeed

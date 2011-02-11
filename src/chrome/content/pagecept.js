@@ -556,8 +556,7 @@ pc = {
                         case 0 :
                             break;
 
-                        // 1: Decryption tried but failed - object is not encrypted or we don't have the key.
-                        // Do nothing.
+                        // 1: Decryption tried but failed - object is not encrypted or we don't have the key. Set the image to its original source.
                         case 1 :
                             break;
 
@@ -581,9 +580,7 @@ pc = {
                             break;
                     }
                 } else {
-                    // Object does not exist in cache.
-                    // Create pending cache entry (include reference to this doc) and initiate request.
-                    // Replace image on page with loading image.
+                    // Object does not exist in cache. Create pending cache entry (include reference to this doc) and initiate request. Also store current source in case image cannot be decrypted. Replace image on page with loading image.
                     // Exit loop since replacement this will trigger another parseHTML()
                     eFB.img_cache[id] = { status : 3, docs : [] };
                     eFB.img_cache[id].docs.push( doc );
@@ -681,15 +678,16 @@ pc = {
                                 if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
                                     // Try to decrypt the image
                                     
-            // Load the user's keys in to the library
-            eFB.loadIdentity(
-                eFB.keys_dir + "user.key",
-                eFB.keys_dir + "user.pubkey", "a");
+                                    // Load the user's keys in to the library
+                                    eFB.loadIdentity(
+                                        eFB.keys_dir + "user.key",
+                                        eFB.keys_dir + "user.pubkey", "a");
                                     
                                     if (!eFB.decryptFileFromImage( path, path2 )) {
                                         // Decryption successful
                                         eFB.img_cache[id].status = 2;
                                         eFB.img_cache[id].docs.forEach( pc.replaceImages );
+                                        
                                     } else {
                                         // Decryption failed
                                         eFB.img_cache[id].status = 1;
