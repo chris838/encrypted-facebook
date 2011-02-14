@@ -686,7 +686,6 @@ namespace efb {
     //! Conduit image class which uses the Haar wavelet tranform to store data in low frequency image components.
     class HaarConduitImage : public IConduitImage
     {
-    
         //! Flag to state whether the image has been prepared for implantation
         bool is_formatted_;
         
@@ -1043,7 +1042,7 @@ namespace efb {
     
     
     //! Conduit image class which stores 4 bits per 8-bit pixel.
-    class DownsampledConduitImage : public IConduitImage
+    class DSampledConduitImage : public IConduitImage
     {
         
         //! Flag to state whether the image has been prepared for implantation
@@ -1066,28 +1065,55 @@ namespace efb {
         void encodeInPair( byte data, unsigned int i, unsigned int j )
         {
             // Split byte into two values
-            byte hi = data & 0xf0;
-            byte lo = (data << 4) & 0xf0;
+            byte hi = (data & 0xf0);
+            byte lo = ((data << 4) & 0xf0);
             // Encode in pixels
             encodeInPixel( hi, i, j);
             encodeInPixel( lo, i, j+1);
         }
         
-        //! Encode 4 bits into a single pixel.
+        //! Encode 4 bits into a single pixel, using Gray codes. We assume the lower 4-bits are zeroed.
         void encodeInPixel( byte data, unsigned int i, unsigned int j )
         {
-            operator()(i,j) = data;
+            operator()(i,j) = binaryToGray(data) | 0x08;
         }
         
-        //! Decode a byte from a pair of pixels.
-        void decodeFromPair( byte &data, unsigned int i, unsigned int j )
+        //! Convert binary to 4-bit gray codes. We assume that the lower 4-bits are zeroed.
+        byte binaryToGray( byte num )
         {
-            byte hi = operator()(i,j);
-            byte lo = operator()(i,j+1);
-            data = (hi & 0xf0) | ((lo >> 4) & 0x0f);
+            return ((num>>1) & 0xf0) ^ num;
+        }
+                
+        //! Decode a byte from a pair of pixels.
+        void decodeFromPair( std::vector<byte> & data, unsigned int i, unsigned int j )
+        {
+            byte hi = grayToBinary( operator()(i,j) & 0xf0);
+            byte lo = grayToBinary( operator()(i,j+1) & 0xf0);
+            data.push_back( hi | ((lo >> 4) & 0x0f) );
         }
         
-        //! Writes the size of the image (2 bytes) to the last four pixels, using triple modular redundancy.
+        //! Convert 4-bit gray codes to binary. We assume that the lower 4-bits are zeroed.
+        byte grayToBinary( byte num )
+        {
+            unsigned short temp = num ^ ((num>>8) & 0xf0);
+            temp ^= (temp>>4) & 0xf0 ;
+            temp ^= (temp>>2) & 0xf0 ;
+            temp ^= (temp>>1) & 0xf0 ;
+            return temp;
+        }
+        
+        //! Helper function to decode triple modular redundancy coded bytes
+        byte tripleModR
+        (
+          byte a,
+          byte b,
+          byte c
+        ) const
+        {
+          return ((a&b)|(a&c)|(b&c));
+        }
+        
+        //! Writes the size of the image (2 bytes) to the last twelve pixels, using triple modular redundancy.
         void writeSize
         (
             unsigned short len    
@@ -1097,28 +1123,38 @@ namespace efb {
             len_hi = (byte) (len >> 8);
             len_lo = (byte) len;
             //
+            encodeInPair( len_hi, 719, 708 );
+            encodeInPair( len_lo, 719, 710 );
+            encodeInPair( len_hi, 719, 712 );
+            encodeInPair( len_lo, 719, 714 );
             encodeInPair( len_hi, 719, 716 );
-            encodeInPair( len_lo, 719, 718 )
+            encodeInPair( len_lo, 719, 718 );
         }
         
         public :
             //! Get the maximum ammount of data that can be stored in this implementation.
             virtual unsigned int getMaxData()
             {
-                return 720*720*4;
+                return (720*720*4) - 6;
             }
             
             //! Check how much data (if any) is stored in the current image.
             virtual unsigned short readSize()
             {
-                byte len_hi,len_lo;
-                decodeFromPair(len_hi, 719, 716 );
-                decodeFromPair(len_lo, 719, 718 );
+                std::vector<byte> data;
+                decodeFromPair(data, 719, 708 );
+                decodeFromPair(data, 719, 710 );
+                decodeFromPair(data, 719, 712 );
+                decodeFromPair(data, 719, 714 );
+                decodeFromPair(data, 719, 716 );
+                decodeFromPair(data, 719, 718 );
+                return     (tripleModR(data[0],data[2],data[4]) << 8)
+                        |   tripleModR(data[1],data[3],data[5]);
             }
             
             //! Implant data.
             virtual void implantData( std::vector<byte>& data )
-            {
+            {                
                 // Check the image is properly formatted
                 if (!is_formatted_)
                     formatForImplantation();
@@ -1131,8 +1167,8 @@ namespace efb {
                                 
                 // Loop through the image in 2-pixel pairs
                 unsigned int idx, i, j;
-                for (unsigned int i=0; i<720; i++) {
-                  for (unsigned int j=0; j<360; j++) {
+                for (i=0; i<720; i++) {
+                  for (j=0; j<360; j++) {
                         idx = (i*360) + j;
                         if ( idx < data.size() ) {
                             // 1 byte in a pixel pair
@@ -1144,7 +1180,7 @@ namespace efb {
                   }    
                 }
                 
-                // Write the size of the data stored to the last two image blocks
+                // Write the size of the data stored to the last two image blocks.
                 writeSize(len);
             }
             
@@ -1161,15 +1197,15 @@ namespace efb {
                 
                 // Loop through the image in 2-pixel pairs
                 int i, j; unsigned int idx;
-                for (unsigned int i=0; i<720; i++) {
-                    for (unsigned int j=0; j<360; j++) {
+                for (i=0; i<720; i++) {
+                    for (j=0; j<360; j++) {
                         idx = (i*360) + j;
                         
-                        // Write a byte to data from two adjacent pixels.
-                        decodeFromPair(data[idx], i, 2*j);
+                        // Read a data byte from two adjacent pixels.
+                        decodeFromPair(data, i, 2*j);
                         
                         // exit if we have enough data
-                        if ( idx+1 > len) i=j=720;
+                        if ( idx+1 >= len) i=j=720;
                     }
                 }
                 
@@ -1736,6 +1772,26 @@ namespace efb {
     {
             IConduitImage& create_IConduitImage() const {
                 return *(new HaarConduitImage());
+            }
+            ICrypto& create_ICrypto() const {
+                return *(new BotanRSACrypto<32,256>());
+            }
+            IFec& create_IFec() const {
+                return *(new ReedSolomon255Fec());
+            }
+            IStringCodec& create_IStringCodec() const {
+                return *(new ShiftB0StringCodec());
+            }
+    };
+    
+    //! AES-256/RSA-2048 based abstract factory pattern, using downsampling to store data in images.
+    /**
+        This implementation stores 4 bits in each 8-bit byte. Errors are corrected with the Schifra Reed Solomon library using a (255,223) code rate. Cryptographic protocols are provided by the Botan library using AES-256 and 2048-bit public key RSA.
+    */
+    class DSampled256Factory : public ILibFactory
+    {
+            IConduitImage& create_IConduitImage() const {
+                return *(new DSampledConduitImage());
             }
             ICrypto& create_ICrypto() const {
                 return *(new BotanRSACrypto<32,256>());

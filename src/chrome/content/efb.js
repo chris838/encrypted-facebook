@@ -326,7 +326,7 @@ eFB = {
     },
 
     /**
-        Check if a single file exists and if we wish to overwrite
+        Check if a single file exists and if we wish to overwrite.
     */
     checkFileOverwrite : function(path, msg) {
         var file = eFB.getFileObject(path);
