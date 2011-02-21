@@ -3,6 +3,7 @@
 #include <string>
 #include <bitset>
 #include <vector>
+#include <deque>
 #include <map>
 #include <sstream>
 #include <stdexcept>
@@ -683,6 +684,7 @@ namespace efb {
                 schifra::galois::primitive_polynomial01
             ) {}
     };
+    
     //! Conduit image class which uses the Haar wavelet tranform to store data in low frequency image components.
     class HaarConduitImage : public IConduitImage
     {
@@ -1045,8 +1047,14 @@ namespace efb {
     class DSampledConduitImage : public IConduitImage
     {
         
-        //! Flag to state whether the image has been prepared for implantation
+        //! Flag to state whether the image has been prepared for implantation.
         bool is_formatted_;
+        
+        //! Buffer to store data while reading and writing.
+        std::deque<byte> rbuffer_, wbuffer_;
+        
+        //! Counters indicating the read and write heads.
+        unsigned int rhead_, whead_;
         
         //! Format the image in preparation for implantation.
         /**
@@ -1061,44 +1069,123 @@ namespace efb {
             is_formatted_ = true;
         }
         
-        //! Encode a single byte in a pair of adjacent pixels.
-        void encodeInPair( byte data, unsigned int i, unsigned int j )
+        //! Write a single byte to the image.
+        /**
+            This implementation requires writing three bytes at a time, since each pixel can store three bits of data. Bytes are queued into a buffer which is flushed automatically whenever its size reaches three bytes. The write head indicates the number of bytes already stored in the image - it *DOES NOT* include bytes stored in the buffer.
+        */
+        void write( byte b )
         {
-            // Split byte into two values
-            byte hi = (data & 0xf0);
-            byte lo = ((data << 4) & 0xf0);
-            // Encode in pixels
-            encodeInPixel( hi, i, j);
-            encodeInPixel( lo, i, j+1);
+            wbuffer_.push_back( b );
+            // If we have three bytes, flush the buffer.
+            if ( wbuffer_.size() >= 3 ) flush(); 
         }
         
-        //! Encode 4 bits into a single pixel, using Gray codes. We assume the lower 4-bits are zeroed.
+        //! Flush the buffer. The buffer contents (if not empty) will be written out to the image. Random bytes are used as padding if the buffer is partially full.
+        void flush()
+        {
+            if ( wbuffer_.size() > 0 )
+            {
+                // If partially full, pad with randoms.
+                while (wbuffer_.size() < 3) wbuffer_.push_back( std::rand() );
+                // Calculate the pixel coords based on the write head position
+                unsigned int i,j;
+                j = ((whead_/3)*8);
+                i = j / 720;
+                j = j % 720;
+                // Write out the buffer contents
+                encodeIn8Row(   wbuffer_[0],
+                                wbuffer_[1],
+                                wbuffer_[2],
+                                i,
+                                j
+                             );
+                // Increment write head
+                whead_+=3;
+                // Clear the buffer
+                wbuffer_.clear();
+            }
+        }
+        
+        //! Read a single byte from the image.
+        /**
+            Data must be read three bytes at a time. They are therefore queued into a read buffer. Calls to read return elements from the read buffer until it is empty, at which point it refills.
+        **/
+        byte read( std::vector<byte> & data)
+        {
+            // If buffer is empty, fill it.
+            if ( rbuffer_.size() == 0)
+            {
+                
+            }
+        }
+        
+        //! Encode 3 bytes in a row of 8 adjacent pixels.
+        void encodeIn8Row( byte a, byte b, byte c, unsigned int i, unsigned int j )
+        {
+            // Split 3 bytes into eight 3-bit segments
+            byte r;
+            for (int k=0; k<8; k++)
+            {
+                // take the kth bites of each byte
+                r =     (((a & (0x1<<k)) >> k) << 0)
+                    |   (((b & (0x1<<k)) >> k) << 1)
+                    |   (((c & (0x1<<k)) >> k) << 2) ;
+                // Encode these three bits to a pixel
+                encodeInPixel(r, i, j+k);
+            }
+        }
+        
+        //! Encode 3 bits into a single pixel, using Gray codes.
         void encodeInPixel( byte data, unsigned int i, unsigned int j )
         {
-            operator()(i,j) = binaryToGray(data) | 0x08;
+            operator()(i,j) = binaryToGray(data) * 39;
         }
         
-        //! Convert binary to 4-bit gray codes. We assume that the lower 4-bits are zeroed.
+        //! Convert binary to 8-bit gray codes.
         byte binaryToGray( byte num )
         {
-            return ((num>>1) & 0xf0) ^ num;
+            return (num>>1) ^ num;
         }
                 
-        //! Decode a byte from a pair of pixels.
-        void decodeFromPair( std::vector<byte> & data, unsigned int i, unsigned int j )
+        //! Decode three bytes from a row of 8 pixels.
+        void decodeFrom8Row( std::vector<byte> & data, unsigned int i, unsigned int j )
         {
-            byte hi = grayToBinary( operator()(i,j) & 0xf0);
-            byte lo = grayToBinary( operator()(i,j+1) & 0xf0);
-            data.push_back( hi | ((lo >> 4) & 0x0f) );
+            byte x, a, b, c;
+            for (int k=0; k<8; k++)
+            {
+                // Get the relevant 3 bits
+                x = decodeFromPixel(i,j+k);
+                // OR them into the bytes
+                a |= ((x & (0x1<<0)) >> 0) << k;
+                b |= ((x & (0x1<<1)) >> 1) << k;
+                c |= ((x & (0x1<<2)) >> 2) << k;
+            }
+            // Append the bytes to the data
+            data.push_back( a );
+            data.push_back( b );
+            data.push_back( c );
         }
         
-        //! Convert 4-bit gray codes to binary. We assume that the lower 4-bits are zeroed.
+        // Decode three bits from a single pixel
+        byte decodeFromPixel( unsigned int i, unsigned int j )
+        {
+            byte x = operator()(i,j);
+            byte y = 39;
+            // Round to nearest value
+            byte r = (( x%y <<1) >= y) ? (x/y) + 1 : (x/y);
+            // Cap to max value
+            r = (r > 7) ? 7 : r;
+            // Convert to binary from gray code
+            return grayToBinary( r );
+        }
+        
+        //! Convert 8-bit gray codes to binary.
         byte grayToBinary( byte num )
         {
-            unsigned short temp = num ^ ((num>>8) & 0xf0);
-            temp ^= (temp>>4) & 0xf0 ;
-            temp ^= (temp>>2) & 0xf0 ;
-            temp ^= (temp>>1) & 0xf0 ;
+            unsigned short temp = num ^ (num>>8);
+            temp ^= temp>>4;
+            temp ^= temp>>2;
+            temp ^= temp>>1;
             return temp;
         }
         
@@ -1121,17 +1208,24 @@ namespace efb {
         {
             byte len_hi,len_lo;
             len_hi = (byte) (len >> 8);
-            len_lo = (byte) len;
+            len_lo = (byte) (len & 0x00ff);
             //
-            encodeInPair( len_hi, 719, 708 );
-            encodeInPair( len_lo, 719, 710 );
-            encodeInPair( len_hi, 719, 712 );
-            encodeInPair( len_lo, 719, 714 );
-            encodeInPair( len_hi, 719, 716 );
-            encodeInPair( len_lo, 719, 718 );
+            encodeIn8Row( len_hi, len_hi, len_hi, 719, 704);
+            encodeIn8Row( len_lo, len_lo, len_lo, 719, 712);
         }
         
         public :
+            
+            //! Constructor.
+            DSampledConduitImage() :
+                write_head_(0),
+                read_head_(0),
+                is_formatted_(false)
+            {
+                // Seed the random number generator
+                std::srand ( time(NULL) );
+            }
+            
             //! Get the maximum ammount of data that can be stored in this implementation.
             virtual unsigned int getMaxData()
             {
@@ -1142,14 +1236,12 @@ namespace efb {
             virtual unsigned short readSize()
             {
                 std::vector<byte> data;
-                decodeFromPair(data, 719, 708 );
-                decodeFromPair(data, 719, 710 );
-                decodeFromPair(data, 719, 712 );
-                decodeFromPair(data, 719, 714 );
-                decodeFromPair(data, 719, 716 );
-                decodeFromPair(data, 719, 718 );
-                return     (tripleModR(data[0],data[2],data[4]) << 8)
-                        |   tripleModR(data[1],data[3],data[5]);
+                decodeFrom8Row(data, 719, 704 );
+                decodeFrom8Row(data, 719, 712 );
+                unsigned short len =
+                            (tripleModR(data[0],data[1],data[2]) << 8)
+                        |   tripleModR(data[3],data[4],data[5]);
+                return len;
             }
             
             //! Implant data.
@@ -1163,24 +1255,29 @@ namespace efb {
                 if (data.size() > getMaxData())
                     throw ConduitImageImplantException("Too much data");
                 unsigned short len = data.size(); // store this for length tag later
-                std::srand ( time(NULL) );
-                                
-                // Loop through the image in 2-pixel pairs
-                unsigned int idx, i, j;
-                for (i=0; i<720; i++) {
-                  for (j=0; j<360; j++) {
-                        idx = (i*360) + j;
-                        if ( idx < data.size() ) {
-                            // 1 byte in a pixel pair
-                            encodeInPair( data[idx], i, 2*j);
-                        } else {
-                            // finish with random bytes
-                            encodeInPair( (byte) std::rand() , i, 2*j);
-                        }
-                  }    
-                }
                 
-                // Write the size of the data stored to the last two image blocks.
+                // Seed the random number generator for good measure
+                std::srand ( time(NULL) );
+                
+                // Loop through the vector and write out the data bytes to the image
+                unsigned int idx = 0;
+                while( idx < data.size() )
+                {
+                    // Write a byte to the image
+                    write( data[idx] );
+                    idx++;
+                }
+                // Now pad out with random bytes till we reach capacity
+                while( idx < getMaxData() )
+                {
+                    // Write a (random) byte to the image
+                    write( (byte) std::rand() );
+                    idx++;
+                }
+                // Flush the buffer to ensure all data has actually been written out.
+                flush();
+                
+                // Write the size of the data stored.
                 writeSize(len);
             }
             
@@ -1195,22 +1292,12 @@ namespace efb {
                 // Reserve enough space to store the extracted data
                 data.reserve( len );
                 
-                // Loop through the image in 2-pixel pairs
-                int i, j; unsigned int idx;
-                for (i=0; i<720; i++) {
-                    for (j=0; j<360; j++) {
-                        idx = (i*360) + j;
-                        
-                        // Read a data byte from two adjacent pixels.
-                        decodeFromPair(data, i, 2*j);
-                        
-                        // exit if we have enough data
-                        if ( idx+1 >= len) i=j=720;
-                    }
+                // Keep reading bytes until we have the desired amount
+                while( data.size() < len )
+                {
+                    // Read a single byte into data
+                    read( data );
                 }
-                
-                // Remove any padding bytes at the end
-                while (data.size() > len) data.pop_back();
             }
     };
     
@@ -1496,7 +1583,7 @@ namespace efb {
                 ids_vector.push_back( id_ );
                 
                 // Load the file, leaving room for the encryption header
-                head_size = crypto_.calculateHeaderSize( ids_vector.size() );
+                head_size = 0;// crypto_.calculateHeaderSize( ids_vector.size() );
                 data_file.open( data_filename, std::ios::binary );
                 if(!data_file.is_open()) {
                     std::cout << "Error opening data file." << std::endl;
@@ -1509,7 +1596,7 @@ namespace efb {
                 data = std::vector<byte>( head_size, (byte) '|' );
                 data.resize(head_size + data_size);
                 data_file.read((char*) &data[head_size], data_size);
-                
+                /*
                 // Generate header and encrypt the data
                 try {crypto_.encryptMessage(ids_vector, data);}
                 catch (EncryptionException &e) {
@@ -1523,7 +1610,7 @@ namespace efb {
                   std::cout << "Error adding error correction code: " << e.what() << std::endl;
                   return 2;
                 }
-             
+                */
                 // Load the template image file into a ConduitImage object
                 try {img.load( template_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
@@ -1574,13 +1661,13 @@ namespace efb {
                   return 2;
                 }
                 
-                // Decode from image using Haar DWT
+                // Decode from image 
                 try {img.extractData( data );}
                 catch (ConduitImageExtractException &e) {
                     std::cout << "Error extracting data: " << e.what() << std::endl;
                     return 2;
                 }
-               
+                /*
                 // Correct errors
                 try {fec_.decode( data );}
                 catch (FecDecodeException &e) {
@@ -1594,9 +1681,9 @@ namespace efb {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
-                
+                */
                 // Save data to a file, skipping the header
-                head_size = crypto_.retrieveHeaderSize(data);
+                head_size = 0; //crypto_.retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);
                 if(!data_file.is_open()) {
                   std::cout << "Error creating data file:" << std::endl;

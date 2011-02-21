@@ -258,7 +258,12 @@ eFB = {
         );
         
         eFB.decryptFileFromImage(
-            "/home/chris/Desktop/out.bmp",
+            "/home/chris/Desktop/out.jpg",
+            "/home/chris/Desktop/hidden2.jpg"
+        );
+        
+        eFB.calculateBitErrorRate(
+            "/home/chris/Desktop/hidden.jpg",
             "/home/chris/Desktop/hidden2.jpg"
         );
                 
