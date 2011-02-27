@@ -258,7 +258,7 @@ eFB = {
         );
         
         eFB.decryptFileFromImage(
-            "/home/chris/Desktop/out.jpg",
+            "/home/chris/Desktop/out.bmp",
             "/home/chris/Desktop/hidden2.jpg"
         );
         
