@@ -2,13 +2,13 @@
 
 // Required eFB Libary component includes
 #include "efb/BasicLibary.h"
-#include "efb/Upsampled165Factory.h"
+#include "efb/Upsampled165KiBFactory.h"
 
 IeFBLibrary* create_IeFBLibrary(const char* id, const char* dir)
 {
 /* For now we use this concrete implementation. Potentially the exact library implementation which is instantiated could be decided at runtime, e.g. by passing parameters (specified in browser) to this function. */
   return (IeFBLibrary*) new efb::BasicLibary(
-      *(new efb::Upsampled165Factory()),
+      *(new efb::Upsampled165KiBFactory()),
       id, dir
     );
 }
