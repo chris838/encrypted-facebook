@@ -1,5 +1,5 @@
 #include "c_wrapper.h"
-#include "efb.h"
+#include "efb/eFBLibrary.h"
 
 IeFBLibrary* create_IeFBLibrary(const char* id, const char* dir)
 {
