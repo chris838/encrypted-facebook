@@ -28,7 +28,7 @@ stego = {
     },
     
     /**
-        Edit an array of bytes (integers between 0 and 255) to a hexadecimal string.
+        Convert an array of bytes (integers between 0 and 255) to a hexadecimal string.
     */
     byteArrayToHex : function(byteArray) {
         var result = "", i;
@@ -60,83 +60,75 @@ stego = {
         }
         return byteArray;
     },
+    /*
+        Convert an array of bytes to a base64 string.
+    */
+    byteArrayToBase64 : function(b){
+        var base64code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var b64String = "";
+        var c1,c2,c3,c4;
+        // Cycle through bytes in groups of three, outputting four characters for each.
+        for (i=0; i<b.length; i+=3)
+        {
+            // If we don't have a multiple of three bytes then return empty string (failure).
+            if (i >= b.length) return "";
+            // Otherwise work out the correct four characters
+            c1 = c2 = c3 = c4 = 0;
+            //
+            c1 = b[i] >> 2; 
+            c2 = ((b[i] & 0x03) << 4) | (b[i+1] >> 4); 
+            c3 = ((b[i+1] & 0x0f) << 2) | (b[i+2] >> 6); 
+            c4 = b[i+2] & 0x3f;
+            b64String += base64code.charAt( c1 );
+            b64String += base64code.charAt( c2 );
+            b64String += base64code.charAt( c3 );
+            b64String += base64code.charAt( c4 );
+            // If we have reached 64 characters (48 bytes) then output an end line
+            if ( (i+3)%48 == 0 ) b64String += '\n';
+        }
+        return b64String;
+    },
     
     /**
-        Parse a sequence of base64 digits into an array of bytes.
+        Parse a sequence of base64 digits into an array of bytes. We assume groups of four digits, possibly interspersed by newlines but with no other characters. On failure returns an empty array.
     */
     base64ToByteArray : function(s) {
         var base64code = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    	var b = new Array();
-	var i = 0, j, c, shortgroup = 0, n = 0;
-	var d = new Array();
-	
-	if ((j = s.indexOf(base64sent)) >= 0) {
-	    s = s.substring(j + base64sent.length, s.length);
-	}
-	if ((j = s.indexOf(base64esent)) >= 0) {
-	    s = s.substring(0, j);
-	}
-	
-	/*  Ignore any non-base64 characters before the encoded
-	    data stream and skip the type sentinel if present.  */
-	
-	while (i < s.length) {
-	    if (base64code.indexOf(s.charAt(i)) != -1) {
-	    	break;
-	    }
-	    i++;
-	}
-	
-	/*  Decode the base64 data stream.  The decoder is
-	    terminated by the end of the input string or
-	    the occurrence of the explicit end sentinel.  */
-	
-	while (i < s.length) {
-	    for (j = 0; j < 4; ) {
-	    	if (i >= s.length) {
-		    if (j > 0) {
-		    	alert("Base64 cipher text truncated.");
-		    	return b;
-		    }
-		    break;
-		}
-		c = base64code.indexOf(s.charAt(i));
-		if (c >= 0) {
-		    d[j++] = c;
-		} else if (s.charAt(i) == "=") {
-		    d[j++] = 0;
-		    shortgroup++;
-		} else if (s.substring(i, i + base64esent.length) == base64esent) {
-//dump("s.substring(i, i + base64esent.length)", s.substring(i, i + base64esent.length));
-//dump("esent", i);
-		    i = s.length;
-		    continue;
-		} else {
-//dump("s.substring(i, i + base64esent.length)", s.substring(i, i + base64esent.length));
-//dump("usent", i);
-		       // Might improve diagnosis of improper character in else clause here
-		}
-		i++;
-	    }
-//dump("d0", d[0]); dump("d1", d[1]); dump("d2", d[2]); dump("d3", d[3]); 
-//dump("shortgroup", shortgroup);
-//dump("n", n);
-	    if (j == 4) {
-	    	b[n++] = ((d[0] << 2) | (d[1] >> 4)) & 0xFF;
-		if (shortgroup < 2) {
-		    b[n++] = ((d[1] << 4) | (d[2] >> 2)) & 0xFF;
-//dump("(d[1] << 4) | (d[2] >> 2)", (d[1] << 4) | (d[2] >> 2));
-		    if (shortgroup < 1) {
-		    	b[n++] = ((d[2] << 6) | d[3]) & 0xFF;
-		    }
-		}
-	    }
-    	}
-	return b;
+        var byteArray = new Array();
+        var i,j,b1,b2,b3, t = new Array(0x00,0x00,0x00,0x00);
+        // Cycle through characters, ignoring newlines
+        for (i=0; i<s.length;)
+        {
+            if ( s.charAt(i) != '\n' )
+            {
+                b1 = b2 = b3 = 0x00;
+                // The next four characters...
+                for (j=0;j<4;j++) {
+                    // .. first we check for four valid base64 digits...
+                    if (i+j >= s.length || base64code.indexOf( s.charAt(i+j) ) == -1) {
+                        // Invalid base64 sequence, return empty array
+                        window.alert( s.charAt(i+j) );
+                        return new Array();
+                    }
+                    t[j] = base64code.indexOf( s.charAt(i+j) ) & 0x3f;
+                }
+                // ...if OK, we create three bytes to add.
+                b1 = (t[0] << 2) | (t[1] >> 4);
+                b2 = ((t[1] & 0x0f) << 4) | (t[2] >> 2);
+                b3 = ((t[2] & 0x03) << 6) | t[3];
+                // Add bytes to the byte array
+                byteArray.push(b1);
+                byteArray.push(b2);
+                byteArray.push(b3);
+                i+= 4;
+            }
+            else i++;
+        }
+        return byteArray;
     },
     
     //! Hide text as words
-    hideText : function(msg) {
+    hideText : function(msg, b64) {
         
         //! Sanity check dictionary length.
         if (twords != (1 << 16)) {
@@ -148,7 +140,8 @@ stego = {
         var purng = new stego.LEcuyer((new Date()).getTime());
         
         // We assume msg is a hex string. We now encode it into a byte array.
-        ct = stego.hexToByteArray(msg);
+        if (b64)    ct = stego.base64ToByteArray(msg);
+        else        ct = stego.hexToByteArray(msg);
         
         //  Cipher text should always be an even number of bytes. If it isn't, pad it with a zero and set a flag to indicate we've added a pad.
         if (ct.length & 1) {
@@ -158,7 +151,7 @@ stego = {
         
         //  Walk through cipher text two bytes at a time, assembling each pair into an index into our table of words. Append each word to the hidden text. 
         var i, w, l = "", t = "";
-        var maxLine = 72
+        var maxLine = 72000
             sl = 0, sc = 0, fpar = false,
             parl = purng.nextInt(9) + 3,
             puncture = true;
@@ -217,7 +210,7 @@ stego = {
     },
     
     //! Decode text from words
-    seekText : function(tag) {
+    seekText : function(tag, b64) {
         
         var ct = new Array(), padded = false;
         
@@ -258,7 +251,8 @@ stego = {
             n -= 1;
         }
         
-        return stego.byteArrayToHex( ct );
+        if (b64)    return stego.byteArrayToBase64( ct );
+        else        return stego.byteArrayToHex( ct );
     },
     
     

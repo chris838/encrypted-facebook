@@ -21,12 +21,12 @@ eFB = {
     privkey_file : "user.key",
     pubkey_file : "user.pubkey",
     // Tag formats
-    pubkey_start : "ᐊ✇",
-    pubkey_end : "ᐅ",
-    pubkey_head : "----BEGIN PUBLIC KEY-----",
-    pubkey_tail : "-----END PUBLIC KEY-----",
+    pubkey_start : "The following text is required for the Encrypted Facebook plugin for Firefox. If you accidently modify it you can re-upload your public key through the toolbar button.",
+    pubkey_end : "End of public key information. ✇",
+    pubkey_head : "-----BEGIN PUBLIC KEY-----\n",
+    pubkey_tail : "\n-----END PUBLIC KEY-----",
     msg_start : "Greetings. ",
-    msg_end : " To view this message and communicate on Facebook securely, download the Encrypted Facebook plugin for Firefox. ✆",
+    msg_end : " To view this message and communicate on Facebook securely download the Encrypted Facebook plugin for Firefox. ✆",
     note_title : "ˠ" ,
 
     /**
@@ -244,7 +244,24 @@ eFB = {
     /**
         Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
     */
-    cleanProfile : function(aEvent) {                
+    cleanProfile : function(aEvent) {
+        
+        var pk = eFB.pubkey_head +
+"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAySFpAPwukuxvpqEyIAFC" + "\n" +
+"LYlrDH2onpkzxEmRjCqqG6t2eRmjtUic69OAUOai+0KU0iACuSF08UkvCW2dx84Q" + "\n" +
+"pXvyDFZInYsPLsgqNPANJqheQcS2b4IQTmgmW143FniIIWSMPZQyXQNaztH3b4UI" + "\n" +
+"dCKgAiR/TdirO8mNW0Zmhy2ltoZD5o45g6WEeCT109NZD9WbKO2bMHSlU4RbeJ3E" + "\n" +
+"p/PMXnWgeMDjWn0t6hbAQ9H79ayIGXI7rcxMObmGdQl3IlMHiB6T8v9H8B8MC1I/" + "\n" +
+"xxkW79LxAgDtR75Nl2bVLRULcgq4ZVNMF0iZ3xPkwm2KbS4f9y483lnCAjXLqX2p" + "\n" +
+"oQIDAQAB" + eFB.pubkey_tail;
+        
+        window.alert( pk );
+        pk2 = eFB.generatePubKeyMsg( pk );
+        window.alert( pk2 );
+        pk3 = eFB.parsePubKeyMsg( pk2 );
+        window.alert( pk3 );
+        
+        return;
         // Delete posts on the wall
         eFB.cleanConnection('feed');
         // Delete all posts in newsfeed
@@ -380,7 +397,7 @@ eFB = {
         // (Function to) check if one or more public keys are already present (and try to delete them).
         function findExistingKeys(biostring) {
             if (biostring==undefined) biostring="";
-            var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "gim");
+            var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r ]+" + eFB.pubkey_end, "gim");
             biostring = biostring.replace( rx , function(pubkey) {
                     if (window.confirm("An existing public key was found on your Facebook profile. Do you wish to delete this key before continuing?")) {
                         return "";
@@ -397,7 +414,7 @@ eFB = {
 
         // (Function to) append the key on to the bio.
         function appendNewKey(biostring) {
-            var new_biostring = biostring + "\n\n" + eFB.generatePubKeyMsg(reader.result);
+            var new_biostring = biostring + eFB.generatePubKeyMsg(reader.result);
             //eFB.uploadProfileAttribute("bio", new_biostring, function() {window.alert("Public key uploaded successfuly.");} );
             // BEGIN NASTY HACK --------------------------------------------------------------->
             // Facebook API doesn't let us make updates to the users profile (including the biography) so we create an iframe and do it manually. What a mess.
@@ -429,7 +446,6 @@ eFB = {
             // END NASTY HACK ----------------------------------------------------------------->
         }
     },
-
     
     /**
         Generate a public key message ready to upload.
@@ -439,7 +455,7 @@ eFB = {
         var x = eFB.pubkey_head.length;
         var y = eFB.pubkey_tail.length;
         pk = pk.substr(x, pk.length-(x+y) ); // remove header and footer
-        return eFB.pubkey_start + pk + eFB.pubkey_end;
+        return "\n\n" + eFB.pubkey_start + "\n\n" + stego.hideText(pk,true) + "\n\n" + eFB.pubkey_end;
     },
     
     /**
@@ -457,7 +473,7 @@ eFB = {
         // Import the public key from Facebook
         eFB.downloadProfileAttribute("bio", "me", function(biostring) {
             // Extract key from string
-            var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "im");
+            var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r ]+" + eFB.pubkey_end, "im");
             biostring.replace(rx , function(pubkey) {
                 // Trim tags of either end
                 pubkey = parsePubKeyMsg( pubkey );
@@ -472,8 +488,11 @@ eFB = {
         Extract a public key from an encoded message.
     */
     parsePubKeyMsg : function( pubkey ) {
+        // Remove start and end tags
         var msg = pubkey.substr(eFB.pubkey_start.length, pubkey.length-(eFB.pubkey_end.length+eFB.pubkey_start.length));
-        return eFB.pubkey_head + msg + eFB.pubkey_tail;
+        // Remove break tags
+        msg.replace( /<br>/ , "");
+        return eFB.pubkey_head + stego.seekText( msg , true) + eFB.pubkey_tail;
     },
 
     //! Write string out to a file
