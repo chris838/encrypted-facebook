@@ -23,8 +23,10 @@ eFB = {
     // Tag formats
     pubkey_start : "ᐊ✇",
     pubkey_end : "ᐅ",
-    msg_start : "ᐊ✆",
-    msg_end : "ᐅ",
+    pubkey_head : "----BEGIN PUBLIC KEY-----",
+    pubkey_tail : "-----END PUBLIC KEY-----",
+    msg_start : "Greetings. ",
+    msg_end : " To view this message and communicate on Facebook securely, download the Encrypted Facebook plugin for Firefox. ✆",
     note_title : "ˠ" ,
 
     /**
@@ -242,32 +244,7 @@ eFB = {
     /**
         Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
     */
-    cleanProfile : function(aEvent) {
-        
-        eFB.loadIdentity(
-            eFB.keys_dir + "user.key",
-            eFB.keys_dir + "user.pubkey", "a");
-        
-        // Load the required public keys in to the library
-        eFB.loadIdKeyPair( "100001998702574", eFB.keys_dir + "100001998702574" + ".pubkey");
-        
-        eFB.encryptFileInImage(
-            "100001998702574;",
-            "/home/chris/Desktop/hidden.jpg",
-            "/home/chris/Desktop/out.bmp"
-        );
-        
-        eFB.decryptFileFromImage(
-            "/home/chris/Desktop/out.bmp",
-            "/home/chris/Desktop/hidden2.jpg"
-        );
-        
-        eFB.calculateBitErrorRate(
-            "/home/chris/Desktop/hidden.jpg",
-            "/home/chris/Desktop/hidden2.jpg"
-        );
-                
-        return;
+    cleanProfile : function(aEvent) {                
         // Delete posts on the wall
         eFB.cleanConnection('feed');
         // Delete all posts in newsfeed
@@ -420,7 +397,7 @@ eFB = {
 
         // (Function to) append the key on to the bio.
         function appendNewKey(biostring) {
-            var new_biostring = biostring + "\n\n" + eFB.pubkey_start + reader.result + eFB.pubkey_end;
+            var new_biostring = biostring + "\n\n" + eFB.generatePubKeyMsg(reader.result);
             //eFB.uploadProfileAttribute("bio", new_biostring, function() {window.alert("Public key uploaded successfuly.");} );
             // BEGIN NASTY HACK --------------------------------------------------------------->
             // Facebook API doesn't let us make updates to the users profile (including the biography) so we create an iframe and do it manually. What a mess.
@@ -453,6 +430,18 @@ eFB = {
         }
     },
 
+    
+    /**
+        Generate a public key message ready to upload.
+     */
+    generatePubKeyMsg : function(pk) {
+        // length of header and footer
+        var x = eFB.pubkey_head.length;
+        var y = eFB.pubkey_tail.length;
+        pk = pk.substr(x, pk.length-(x+y) ); // remove header and footer
+        return eFB.pubkey_start + pk + eFB.pubkey_end;
+    },
+    
     /**
         Download public key from Facebook profile.
     */
@@ -464,19 +453,27 @@ eFB = {
             window.alert("Operation aborted.");
             return;
         }
-
+        
         // Import the public key from Facebook
         eFB.downloadProfileAttribute("bio", "me", function(biostring) {
             // Extract key from string
             var rx = new RegExp( eFB.pubkey_start + "[0-9a-z\\+/\\-\\s\\n]*" + eFB.pubkey_end, "im");
             biostring.replace(rx , function(pubkey) {
                 // Trim tags of either end
-                pubkey = pubkey.substr(eFB.pubkey_start.length, pubkey.length-(eFB.pubkey_end.length+eFB.pubkey_start.length));
+                pubkey = parsePubKeyMsg( pubkey );
                 // Write to a file
                 var path = eFB.working_dir + eFB.keys_dir + eFB.pubkey_file;
                 eFB.writeToFile( pubkey, path);
             });
         });
+    },
+    
+    /**
+        Extract a public key from an encoded message.
+    */
+    parsePubKeyMsg : function( pubkey ) {
+        var msg = pubkey.substr(eFB.pubkey_start.length, pubkey.length-(eFB.pubkey_end.length+eFB.pubkey_start.length));
+        return eFB.pubkey_head + msg + eFB.pubkey_tail;
     },
 
     //! Write string out to a file
@@ -884,19 +881,19 @@ eFB = {
     },
     
     /**
-        Generate a tag given am id linking to a note
+        Generate a tag given an id linking to a note
     */
     generateTag : function(id) {
-        return eFB.msg_start + id + eFB.msg_end;
+        return eFB.msg_start + stego.hideText(id) + eFB.msg_end;
     },
-
+    
     /**
         Retrive the contents of a note given the tag
     */
     retrieveFromTag : function(doc, tag) {
 
         // extract ID from tag
-        var id = parseInt( tag.substring(eFB.msg_start.length, tag.length-eFB.msg_end.length), 16);
+        var id = parseInt( eFB.parseTag( tag ), 16);
 
         if (eFB.cache[ id ] == undefined) {
 
@@ -963,6 +960,15 @@ eFB = {
         }
     },
 
+    /**
+        Retrieve a note ID from a tag.
+    */
+    parseTag : function( tag ) {
+        return stego.seekText(
+            tag.substring(eFB.msg_start.length, tag.length-eFB.msg_end.length)
+        );
+    },
+    
     /**
         Parse a document's HTML, finding occurences of pending tag request and process appropriately.
     **/

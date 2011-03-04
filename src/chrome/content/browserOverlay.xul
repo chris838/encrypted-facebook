@@ -10,6 +10,8 @@
 <overlay id="efb-browser-overlay"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <script type="application/x-javascript" src="chrome://efb/content/stegodict.js" />
+  <script type="application/x-javascript" src="chrome://efb/content/stego.js" />
   <script type="application/x-javascript" src="chrome://efb/content/efb.js" />
   <script type="application/x-javascript" src="chrome://efb/content/pagecept.js" />
 

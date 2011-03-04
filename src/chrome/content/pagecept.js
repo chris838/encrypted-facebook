@@ -86,7 +86,7 @@ pc = {
                     var page = doc.getElementById('content');
                     text = page.innerHTML;
                     // Find any tags, and call retrieve function on them
-                    var rx2 = new RegExp( eFB.msg_start + "[0-9,a-f]*" + eFB.msg_end, 'g');
+                    var rx2 = new RegExp( eFB.msg_start + "[a-zA-Z0-9\'\,\.\!\-\? ]+" + eFB.msg_end, 'g');
                     text = text.replace(
                         rx2, function(x) { return eFB.retrieveFromTag(doc,x); }
                     );
@@ -122,7 +122,7 @@ pc = {
     },
 
     /**
-        Parse the Facebook page and insert Encrypted Facebook UI elements
+        Parse the Facebook page and insert Encrypted Facebook UI elements.
     */
     iFaceOverlay : function(doc,url) {
         // Profile page might need public key add/remove controls
@@ -208,7 +208,7 @@ pc = {
                 box.firstChild.addEventListener("click",
                     function(aEvent) {
                         // Save public key to disk
-                        eFB.writeToFile( key , path);
+                        eFB.writeToFile( eFB.parsePubKeyMsg(key) , path);
                         doc.location.reload(true);
                         window.alert("Public key added to keyring.");
                     }, false );
