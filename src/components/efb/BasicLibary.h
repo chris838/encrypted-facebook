@@ -175,7 +175,7 @@ namespace efb {
                 data = std::vector<byte>( head_size, (byte) '|' );
                 data.resize(head_size + data_size);
                 data_file.read((char*) &data[head_size], data_size);
-                /*
+                
                 // Generate header and encrypt the data
                 try {crypto_.encryptMessage(ids_vector, data);}
                 catch (EncryptionException &e) {
@@ -189,7 +189,7 @@ namespace efb {
                   std::cout << "Error adding error correction code: " << e.what() << std::endl;
                   return 2;
                 }
-                */
+                
                 // Load the template image file into a ConduitImage object
                 try {img.load( template_filename );}
                 catch (cimg_library::CImgInstanceException &e) {
@@ -246,7 +246,7 @@ namespace efb {
                     std::cout << "Error extracting data: " << e.what() << std::endl;
                     return 2;
                 }
-                /*
+                
                 // Correct errors
                 try {fec_.decode( data );}
                 catch (FecDecodeException &e) {
@@ -260,7 +260,7 @@ namespace efb {
                   std::cout << "Error decrypting: " << e.what() << std::endl;
                   return 4;
                 }
-                */
+                
                 // Save data to a file, skipping the header
                 head_size = 0; //crypto_.retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);

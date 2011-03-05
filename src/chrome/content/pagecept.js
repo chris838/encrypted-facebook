@@ -86,7 +86,7 @@ pc = {
                     var page = doc.getElementById('content');
                     text = page.innerHTML;
                     // Find any tags, and call retrieve function on them
-                    var rx2 = new RegExp( eFB.msg_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r ]+" + eFB.msg_end, 'g');
+                    var rx2 = new RegExp( eFB.msg_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r úíüáñóé]+" + eFB.msg_end, 'g');
                     text = text.replace(
                         rx2, function(x) { return eFB.retrieveFromTag(doc,x); }
                     );
@@ -177,7 +177,7 @@ pc = {
         eFB.downloadProfileAttribute( "bio", id, function(biostring) {
                 if (biostring==null) return;
                 // extract the first found public key
-                var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r ]+" + eFB.pubkey_end, "im");
+                var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r úíüáñóé]+" + eFB.pubkey_end, "im");
                 var match = biostring.match(rx);
                 if (match==null) return;
                 else pc.addGrabKeyButton(doc,id,match[0]);

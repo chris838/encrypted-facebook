@@ -1,5 +1,5 @@
-#ifndef EFB_EXCEPTIONS_H
-#define EFB_EXCEPTIONS_H
+#ifndef EFB_COMMON_H
+#define EFB_COMMON_H
 
 /**
 ################################################################################
@@ -57,4 +57,4 @@ namespace efb {
     }
 }
 
-#endif //EFB_EXCEPTIONS_H
+#endif //EFB_COMMON_H

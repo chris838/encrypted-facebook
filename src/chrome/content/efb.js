@@ -25,7 +25,7 @@ eFB = {
     pubkey_end : "End of public key information. ✇",
     pubkey_head : "-----BEGIN PUBLIC KEY-----\n",
     pubkey_tail : "\n-----END PUBLIC KEY-----",
-    msg_start : "Greetings. ",
+    msg_start : "¿Que tal? ",
     msg_end : " To view this message and communicate on Facebook securely download the Encrypted Facebook plugin for Firefox. ✆",
     note_title : "ˠ" ,
 
@@ -245,23 +245,6 @@ eFB = {
         Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
     */
     cleanProfile : function(aEvent) {
-        
-        var pk = eFB.pubkey_head +
-"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAySFpAPwukuxvpqEyIAFC" + "\n" +
-"LYlrDH2onpkzxEmRjCqqG6t2eRmjtUic69OAUOai+0KU0iACuSF08UkvCW2dx84Q" + "\n" +
-"pXvyDFZInYsPLsgqNPANJqheQcS2b4IQTmgmW143FniIIWSMPZQyXQNaztH3b4UI" + "\n" +
-"dCKgAiR/TdirO8mNW0Zmhy2ltoZD5o45g6WEeCT109NZD9WbKO2bMHSlU4RbeJ3E" + "\n" +
-"p/PMXnWgeMDjWn0t6hbAQ9H79ayIGXI7rcxMObmGdQl3IlMHiB6T8v9H8B8MC1I/" + "\n" +
-"xxkW79LxAgDtR75Nl2bVLRULcgq4ZVNMF0iZ3xPkwm2KbS4f9y483lnCAjXLqX2p" + "\n" +
-"oQIDAQAB" + eFB.pubkey_tail;
-        
-        window.alert( pk );
-        pk2 = eFB.generatePubKeyMsg( pk );
-        window.alert( pk2 );
-        pk3 = eFB.parsePubKeyMsg( pk2 );
-        window.alert( pk3 );
-        
-        return;
         // Delete posts on the wall
         eFB.cleanConnection('feed');
         // Delete all posts in newsfeed
@@ -397,7 +380,7 @@ eFB = {
         // (Function to) check if one or more public keys are already present (and try to delete them).
         function findExistingKeys(biostring) {
             if (biostring==undefined) biostring="";
-            var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r ]+" + eFB.pubkey_end, "gim");
+            var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r úíüáñóé]+" + eFB.pubkey_end, "gim");
             biostring = biostring.replace( rx , function(pubkey) {
                     if (window.confirm("An existing public key was found on your Facebook profile. Do you wish to delete this key before continuing?")) {
                         return "";
@@ -473,7 +456,7 @@ eFB = {
         // Import the public key from Facebook
         eFB.downloadProfileAttribute("bio", "me", function(biostring) {
             // Extract key from string
-            var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r ]+" + eFB.pubkey_end, "im");
+            var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r úíüáñóé]+" + eFB.pubkey_end, "im");
             biostring.replace(rx , function(pubkey) {
                 // Trim tags of either end
                 pubkey = parsePubKeyMsg( pubkey );
@@ -684,7 +667,7 @@ eFB = {
     },
 
     /**
-        Submits a note, returning a tag which links to the note's contents
+        Submits a note, returning a tag which links to the note's contents.
     **/
     submitNote : function(recipients,plaintext,callback) {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
@@ -744,7 +727,21 @@ eFB = {
     },
 
     /**
-        Submit a comment on the provided post ID
+        Cycles through the local cache of public keys, updating them from Facebook if possible.
+    */
+    refreshPubKeys : function() {
+        
+    },
+    
+    /**
+        Loads key information from local storage in to the application. 
+    */
+    loadCryptoState : function() {
+        
+    },
+    
+    /**
+        Submit a comment on the supplied post ID.
     */
     submitComment : function(comment, post_id) {
         // Parameters to send
@@ -799,9 +796,9 @@ eFB = {
             eFB.loadIdentity(
                 eFB.keys_dir + "user.key",
                 eFB.keys_dir + "user.pubkey", "a");
-
+            
             // TODO - ensure the public keys are up to date
-
+            
             // Load the required public keys in to the library
             var r_string = "";
             for (var i=0; i<recipients.length; i++) {

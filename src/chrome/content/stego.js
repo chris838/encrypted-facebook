@@ -223,7 +223,7 @@ stego = {
         }
         
         var t = tag, n = 0, v;
-        var wpat = /\W*(\w+)\w*/i;
+        var wpat = /[^\wúíüáñóé]*([\wúíüáñóé]+)[\wúíüáñóé]*/im;
         while (wpat.test(t)) {
             //	Extract next word from text and determine its length
             t = t.replace(wpat, "");
@@ -238,7 +238,7 @@ stego = {
                 v = (v / l) + awords[l];
             }
             if (v == -1) {
-                stego.dump("Bogus word", w);
+                //stego.dump("Bogus word", w);
             } else {
                 ct[n++] = (v >> 8) & 0xFF;
                 ct[n++] = v & 0xFF;
