@@ -36,22 +36,26 @@ pc = {
             var url = doc.defaultView.location.href;
             var rx=/facebook\.com\/connect\/login_success\.html#access_token/;
             if (rx.test(url)) {
-
+                
                 // First check we didn't get an error
                 if ( url.indexOf("error_reason")  != -1 ) {
                     var e = url.slice( url.indexOf("error_reason") ).split('&')[0];
                     window.alert("Error logging in : " + e);
                     return;
                 }
-
+                
                 // Save the access token
                 eFB.prefs.setCharPref("token",
                                    url.slice( url.indexOf("access_token") ).split('&')[0].split('=')[1]
                                  );
-
+                
+                // Request the user's private key password
+                var pass = window.prompt("Please enter your passphrase to unlock your private key.");
+                eFB.loadCryptoState(pass);
+                
                 // Change status to logged in
                 eFB.prefs.setBoolPref("loggedIn",true)
-
+                
                 // Close the window
                 doc.defaultView.close();
             }
@@ -677,12 +681,6 @@ pc = {
                                 // If the download is finished
                                 if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
                                     // Try to decrypt the image
-                                    
-                                    // Load the user's keys in to the library
-                                    eFB.loadIdentity(
-                                        eFB.keys_dir + "user.key",
-                                        eFB.keys_dir + "user.pubkey", "a");
-                                    
                                     if (!eFB.decryptFileFromImage( path, path2 )) {
                                         // Decryption successful
                                         eFB.img_cache[id].status = 2;

@@ -671,19 +671,8 @@ eFB = {
     **/
     submitNote : function(recipients,plaintext,callback) {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
-            // Load the user's keys in to the library
-            eFB.loadIdentity(
-                eFB.keys_dir + "user.key",
-                eFB.keys_dir + "user.pubkey", "a");
-
-            // TODO - ensure the public keys are up to date
-
-            // Load the required public keys in to the library
-            var r_string = "";
-            for (var i=0; i<recipients.length; i++) {
-                eFB.loadIdKeyPair( recipients[i], eFB.keys_dir + recipients[i] + ".pubkey");
-                r_string += recipients[i] + ";";
-            }
+            // Refresh public keys and load them in to the library.
+            var r_string = eFB.refreshPubKeys(recipients);
 
             // Encrypt the message content
             var msg = eFB.encryptString(r_string,plaintext).readString();
@@ -727,17 +716,49 @@ eFB = {
     },
 
     /**
-        Cycles through the local cache of public keys, updating them from Facebook if possible.
+        Cycles through the suplied list of public keys, updating them from Facebook if possible. Returns a string which can be used when encrypting;
     */
-    refreshPubKeys : function() {
+    refreshPubKeys : function(recipients) {
+        // Load the required public keys in to the library
+        var r_string = "";
+        for (var i=0; i<recipients.length; i++) {
+            /* Ignore this for now
+            // Download the "bio" string
+            eFB.downloadProfileAttribute( "bio", recipients[i], function(biostring) {
+                    if (biostring!=null) {
+                        // extract the first found public key
+                        var rx = new RegExp( eFB.pubkey_start + "[a-zA-Z0-9\'\,\.\!\-\?\n\r úíüáñóé]+" + eFB.pubkey_end, "im");
+                        var match = biostring.match(rx);
+                        // If we find a key update it, otherwise just have to move on.
+                        if (match!=null) {
+                            var path = eFB.keys_dir + recipients[i] + ".pubkey";
+                            eFB.writeToFile( eFB.parsePubKeyMsg( match[0] ) , path);
+                        }
+                    }
+                    
+                    // Load the refreshed key in to the application
+                    eFB.loadIdKeyPair( recipients[i], eFB.keys_dir + recipients[i] + ".pubkey");
+                }
+            );
+            */
+            // Load the refreshed key in to the application
+            eFB.loadIdKeyPair( recipients[i], eFB.keys_dir + recipients[i] + ".pubkey");
+            // Build up the recipient string
+            r_string += recipients[i] + ";";
+        }
         
+        // return string to use for encryption
+        return r_string;
     },
     
     /**
-        Loads key information from local storage in to the application. 
+        Unlock and load key information from local storage in to the application. 
     */
-    loadCryptoState : function() {
-        
+    loadCryptoState : function(password) {
+            // Load the user's keys in to the library
+            eFB.loadIdentity(
+                eFB.keys_dir + "user.key",
+                eFB.keys_dir + "user.pubkey", password);
     },
     
     /**
@@ -792,19 +813,9 @@ eFB = {
     */
     generateEncryptedPhoto : function(recipients,target_path) {
         if ( eFB.prefs.getBoolPref("loggedIn") ) {
-            // Load the user's keys in to the library
-            eFB.loadIdentity(
-                eFB.keys_dir + "user.key",
-                eFB.keys_dir + "user.pubkey", "a");
             
-            // TODO - ensure the public keys are up to date
-            
-            // Load the required public keys in to the library
-            var r_string = "";
-            for (var i=0; i<recipients.length; i++) {
-                eFB.loadIdKeyPair( recipients[i], eFB.keys_dir + recipients[i] + ".pubkey");
-                r_string += recipients[i] + ";";
-            }
+            // Refresh public keys and load them in to the library.
+            var r_string = eFB.refreshPubKeys(recipients);
             
             // Create a temp image filename
             var rand = Math.floor( Math.random()*100000001 );
@@ -928,9 +939,6 @@ eFB = {
                         var note = obj.message;
                         var id = parseInt( obj.id, 10 );
                         // decode note
-                        eFB.loadIdentity(
-                            eFB.keys_dir + "user.key",
-                            eFB.keys_dir + "user.pubkey", "a");
                         note = eFB.decryptString(note).readString();
 
                         // Copy the list of docs (if any) we need to refresh
