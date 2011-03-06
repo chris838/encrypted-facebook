@@ -1,0 +1,96 @@
+%********************************************************************
+%   University of Cambridge Computer Science BSc
+%   Chris Harding, Part II (third year) Project
+%********************************************************************
+\documentclass[12pt,twoside,notitlepage]{report}
+\usepackage{a4}
+\usepackage{verbatim}
+
+\usepackage[british,english,greek]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{tgpagella}
+
+\usepackage{soul}
+
+\usepackage{relsize}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{titlesec}
+
+%********************************************************************
+%   Re-usable information
+%********************************************************************
+\newcommand{\myName}{C.~L.~Harding\xspace}
+\newcommand{\myCollege}{Queens' College\xspace}
+\newcommand{\myTitle}{Encrypted Facebook\xspace}
+\newcommand{\myExam}{Computer Science Part II Project\xspace}
+\newcommand{\mySupervisor}{J.~Anderson\xspace}
+\newcommand{\myDOS}{Dr R.~D.~H.~Walker\xspace}
+\newcommand{\myOverseerA}{Dr T.~G.~Griffin\xspace}
+\newcommand{\myOverseerB}{Dr M.~Kuhn\xspace}
+\newcommand{\myUni}{University of Cambridge\xspace}
+\newcommand{\myTime}{March 2011\xspace}
+
+%********************************************************************
+%   Load styles
+%********************************************************************
+\usepackage{customstyles}
+
+%********************************************************************
+%   Layout settings
+%********************************************************************
+% Try to avoid widows and orphans
+\raggedbottom                           
+\sloppy
+\clubpenalty1000%
+\widowpenalty1000%
+% Spacing
+\frenchspacing
+
+%********************************************************************
+%   Start of document
+%********************************************************************
+\begin{document}
+\selectlanguage{english}
+\pagenumbering{roman}
+\pagestyle{plain}
+
+%********************************************************************
+% Frontmatter
+%********************************************************************
+%\include{FrontBackmatter/DirtyTitlepage}
+%\include{FrontBackmatter/Titlepage}
+%\include{FrontBackmatter/Titleback}
+%\cleardoublepage\include{FrontBackmatter/Dedication}
+%\cleardoublepage\include{FrontBackmatter/Abstract}
+%\cleardoublepage\include{FrontBackmatter/Publication}
+%\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+%\pagestyle{scrheadings}
+%\cleardoublepage\include{FrontBackmatter/Contents}
+
+%********************************************************************
+% Mainmatter
+%********************************************************************
+\pagenumbering{arabic}
+%\setcounter{page}{90}
+\include{Chapters/Chapter01}
+\include{Chapters/Chapter02}
+
+% *******************************************************************
+%   Appendix
+%********************************************************************
+%\appendix
+%\include{Chapters/Chapter0A}
+
+%********************************************************************
+%   Other Stuff in the Back
+%********************************************************************
+%\cleardoublepage\include{FrontBackmatter/Bibliography}
+%\cleardoublepage\include{FrontBackmatter/Colophon}
+%\cleardoublepage\include{FrontBackmatter/Declaration}
+
+%********************************************************************
+%   End of document
+%********************************************************************
+\end{document}

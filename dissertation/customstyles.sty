@@ -1,0 +1,34 @@
+%********************************************************************
+%   Fonts and styles for body and headings
+%********************************************************************
+
+\sodef\hso{}{0.075em}{0.4em}{2em}{}
+\newcommand{\secformat}[1]{\hso{#1}}%
+
+% chapters
+\titleformat{\chapter}
+        {\usefont{T1}{futura_lt_bold}{m}{n} \Huge}{\thechapter}{1em}{}
+% sections
+\titleformat{\section}
+        { \usefont{T1}{futura_lt_heavy}{m}{n} \Large}{\thesection}{1em}{\secformat}
+% subsections
+\titleformat{\subsection}
+        { \usefont{T1}{futura_lt_heavy}{m}{n} \large}{\thesubsection}{1em}{\secformat}
+% subsubsections
+\titleformat{\subsubsection}
+    { \usefont{T1}{futura_lt_heavy}{m}{n} \normalsize}{}{1em}{\secformat}       
+% paragraphs
+\titleformat{\paragraph}[runin]
+    { \usefont{T1}{futura_lt_heavy}{m}{n} \normalsize}{\theparagraph}{1em}{\secformat}    
+% descriptionlabels
+    \renewcommand{\descriptionlabel}[1]{
+        \fontfamily{futura_lt_heavy}
+        \selectfont
+        \bfseries\hspace*{\labelsep}\hso{#1}
+    }
+  
+%********************************************************************
+%   All floats will be aligned this way
+%********************************************************************
+
+\newcommand{\myfloatalign}{\centering}
