@@ -1,0 +1,19 @@
+\ProvidesFile{t1futura_lt_heavy.fd}[Lucida-Handwriting font]
+
+\DeclareFontFamily{T1}{futura_lt_heavy}{}
+
+\DeclareFontShape{T1}{futura_lt_heavy}{m}{n}{
+   <-> futura_lt_heavy
+}{}
+
+\DeclareFontShape{T1}{futura_lt_heavy}{bx}{n}{<->ssub * futura_lt_heavy/m/n}{}
+
+\DeclareFontShape{T1}{futura_lt_heavy}{m}{it}{<->ssub * ptm/m/it}{}
+\DeclareFontShape{T1}{futura_lt_heavy}{m}{sl}{<->ssub * ptm/m/sl}{}
+\DeclareFontShape{T1}{futura_lt_heavy}{m}{sc}{<->ssub * ptm/m/sc}{}
+
+\DeclareFontShape{T1}{futura_lt_heavy}{bx}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{T1}{futura_lt_heavy}{bx}{sl}{<->ssub * ptm/b/sl}{}
+\DeclareFontShape{T1}{futura_lt_heavy}{bx}{sc}{<->ssub * ptm/b/sc}{}
+
+\pdfmapline{+futura_lt_heavy\space <futura_lt_heavy.ttf\space <T1-WGL4.enc}

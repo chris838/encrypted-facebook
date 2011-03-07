@@ -2,7 +2,7 @@
 %   Fonts and styles for body and headings
 %********************************************************************
 
-\sodef\hso{}{0.075em}{0.4em}{2em}{}
+\sodef\hso{}{0.075em}{0.4em}{0.3em}{}
 \newcommand{\secformat}[1]{\hso{#1}}%
 
 % chapters
@@ -24,7 +24,7 @@
     \renewcommand{\descriptionlabel}[1]{
         \fontfamily{futura_lt_heavy}
         \selectfont
-        \bfseries\hspace*{\labelsep}\hso{#1}
+        \hso{#1}
     }
   
 %********************************************************************
@@ -32,3 +32,10 @@
 %********************************************************************
 
 \newcommand{\myfloatalign}{\centering}
+
+\newcommand{\tocEntry}[1]{% for bib, etc.
+    \ifpdf\texorpdfstring{ \so{#1} }{#1}%
+    \else{#1}\fi%
+}
+
+\newcommand{\cauthor}[1]{\person{\citeauthor{#1}}}

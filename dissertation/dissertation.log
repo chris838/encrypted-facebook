@@ -1,0 +1,509 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.1.16)  7 MAR 2011 02:10
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**dissertation.tex pdf
+(./dissertation.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
+ak, danish, dutch, finnish, french, basque, ngerman, german, german-x-2009-06-1
+9, ngerman-x-2009-06-19, ibycus, monogreek, greek, ancientgreek, hungarian, san
+skrit, italian, latin, latvian, lithuanian, mongolian2a, mongolian, bokmal, nyn
+orsk, romanian, irish, coptic, serbian, turkish, welsh, esperanto, uppersorbian
+, estonian, indonesian, interlingua, icelandic, kurmanji, slovenian, polish, po
+rtuguese, spanish, galician, catalan, swedish, ukenglish, pinyin, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size12.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-texlive/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+)
+(/usr/share/texmf-texlive/tex/latex/tools/verbatim.sty
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks14
+\verbatim@line=\toks15
+\verbatim@in@stream=\read1
+)
+(/var/lib/texmf/tex/generic/babel/babel.sty
+Package: babel 2008/07/06 v3.8l The Babel package
+
+(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
+Language: english 2005/03/30 v3.3o English support from the babel system
+
+(/usr/share/texmf-texlive/tex/generic/babel/babel.def
+File: babel.def 2008/07/06 v3.8l Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen103
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+)
+(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
+Language: english 2005/03/30 v3.3o English support from the babel system
+)
+(/usr/share/texmf-texlive/tex/generic/babel/greek.ldf
+Language: greek 2005/03/30 v1.3l Greek support from the babel system
+
+Loading the definitions for the Greek font encoding
+(/usr/share/texmf-texlive/tex/generic/babel/lgrenc.def
+File: lgrenc.def 2008/06/17 v2.3 Greek Encoding
+)))
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+))
+(/usr/share/texmf/tex/latex/tex-gyre/tgpagella.sty
+Package: tgpagella 2009/09/27 v1.2 TeX Gyre Pagella as default roman family
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
+t (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+))))
+(/usr/share/texmf-texlive/tex/latex/soul/soul.sty
+Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
+\SOUL@word=\toks17
+\SOUL@lasttoken=\toks18
+\SOUL@cmds=\toks19
+\SOUL@buffer=\toks20
+\SOUL@token=\toks21
+\SOUL@spaceskip=\skip43
+\SOUL@ttwidth=\dimen104
+\SOUL@uldp=\dimen105
+\SOUL@ulht=\dimen106
+)
+(/usr/share/texmf-texlive/tex/latex/koma-script/scrpage2.sty
+Package: scrpage2 2008/12/08 v2.3 LaTeX2e KOMA-Script package
+)
+(/usr/share/texmf-texlive/tex/latex/acronym/acronym.sty
+Package: acronym 2009/01/25 v1.34 Support for acronyms (Tobias Oetiker)
+
+(/usr/share/texmf-texlive/tex/latex/bigfoot/suffix.sty
+Package: suffix 2006/07/15 1.5 Variant command support
+)
+\AC@clearlist=\toks22
+) (./named.sty
+Named Citation Style, version of 30 November 1994
+) (./relsize.sty
+Package: relsize 1995/03/15 ver 2.0
+) (/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/hycolor.sty
+Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
+O)
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
+Package: xcolor-patch 2009/10/02 xcolor patch
+))
+\@linkdim=\dimen107
+\Hy@linkcounter=\count89
+\Hy@pagecounter=\count90
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texmf-texlive/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 2975.
+Package hyperref Info: Link nesting OFF on input line 2980.
+Package hyperref Info: Hyper index ON on input line 2983.
+Package hyperref Info: Plain pages OFF on input line 2990.
+Package hyperref Info: Backreferencing OFF on input line 2995.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 3191.
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 3428.
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bitset.sty
+Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/intcalc.sty
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bigintcalc.sty
+Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
+ (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
+)
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+)))
+\Fld@menulength=\count91
+\Field@Width=\dimen108
+\Fld@charsize=\dimen109
+\Field@toks=\toks23
+Package hyperref Info: Hyper figures OFF on input line 4377.
+Package hyperref Info: Link nesting OFF on input line 4382.
+Package hyperref Info: Hyper index ON on input line 4385.
+Package hyperref Info: backreferencing OFF on input line 4392.
+Package hyperref Info: Link coloring OFF on input line 4397.
+Package hyperref Info: Link coloring with OCG OFF on input line 4402.
+Package hyperref Info: PDF/A mode OFF on input line 4407.
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
+)
+\Hy@abspage=\count92
+\c@Item=\count93
+\c@Hfootnote=\count94
+)
+*hyperref using default driver hpdftex*
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
+\Fld@listcount=\count95
+)
+(/usr/share/texmf-texlive/tex/latex/tools/tabularx.sty
+Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
+
+(/usr/share/texmf-texlive/tex/latex/tools/array.sty
+Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen110
+\extrarowheight=\dimen111
+\NC@list=\toks24
+\extratabsurround=\skip44
+\backup@length=\skip45
+)
+\TX@col@width=\dimen112
+\TX@old@table=\dimen113
+\TX@old@col=\dimen114
+\TX@target=\dimen115
+\TX@delta=\dimen116
+\TX@cols=\count96
+\TX@ftn=\toks25
+)
+(/usr/share/texmf-texlive/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen117
+\lightrulewidth=\dimen118
+\cmidrulewidth=\dimen119
+\belowrulesep=\dimen120
+\belowbottomsep=\dimen121
+\aboverulesep=\dimen122
+\abovetopsep=\dimen123
+\cmidrulesep=\dimen124
+\cmidrulekern=\dimen125
+\defaultaddspace=\dimen126
+\@cmidla=\count97
+\@cmidlb=\count98
+\@aboverulesep=\dimen127
+\@belowrulesep=\dimen128
+\@thisruleclass=\count99
+\@lastruleclass=\count100
+\@thisrulewidth=\dimen129
+)
+(/usr/share/texmf-texlive/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2007/08/12 v2.8 Sectioning titles
+\ttl@box=\box26
+\beforetitleunit=\skip46
+\aftertitleunit=\skip47
+\ttl@plus=\dimen130
+\ttl@minus=\dimen131
+\ttl@toksa=\toks26
+\titlewidth=\dimen132
+\titlewidthlast=\dimen133
+\titlewidthfirst=\dimen134
+) (./customstyles.sty) (./dissertation.aux)
+\openout1 = `dissertation.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 59.
+LaTeX Font Info:    Try loading font information for LGR+cmr on input line 59.
+ (/usr/share/texmf-texlive/tex/latex/cbfonts/lgrcmr.fd
+File: lgrcmr.fd 2008/01/04 v1.0 Greek Computer Modern
+)
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Try loading font information for T1+qpl on input line 59.
+
+(/usr/share/texmf/tex/latex/tex-gyre/t1qpl.fd
+File: t1qpl.fd 2009/09/25 v1.2 font definition file for T1/qpl
+)
+LaTeX Font Info:    Try loading font information for LGR+qpl on input line 59.
+LaTeX Font Info:    No file LGRqpl.fd. on input line 59.
+
+
+LaTeX Font Warning: Font shape `LGR/qpl/m/n' undefined
+(Font)              using `LGR/cmr/m/n' instead on input line 59.
+
+
+Package scrpage2 Warning: seems you are using a constant headheight.
+(scrpage2)                If you get overfull \vbox warnings at almost every
+(scrpage2)                page, you should increase headheight e.g. writing
+(scrpage2)                 \setlength{\headheight}{1.1\baselineskip}
+(scrpage2)                into the preamble of your document.
+(scrpage2)                A better solution would be to use typearea package.
+
+Package hyperref Info: Link coloring OFF on input line 59.
+(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
+)
+\c@section@level=\count101
+)
+LaTeX Info: Redefining \ref on input line 59.
+LaTeX Info: Redefining \pageref on input line 59.
+ (./dissertation.out) (./dissertation.out)
+\@outlinefile=\write3
+\openout3 = `dissertation.out'.
+
+\AtBeginShipoutBox=\box27
+\openout2 = `frontbackmatter/contents.aux'.
+
+ (./frontbackmatter/contents.tex
+LaTeX Font Info:    Try loading font information for T1+futura_lt_bold on input
+ line 9.
+ (./t1futura_lt_bold.fd
+File: t1futura_lt_bold.fd Lucida-Handwriting font
+{/home/chris/.texmf-var/fonts/map/pdftex/updmap/pdftex.map})
+
+Package hyperref Warning: old toc file detected, not used; run LaTeX again.
+
+\tf@toc=\write4
+\openout4 = `dissertation.toc'.
+
+[1
+
+
+
+
+]
+
+Package hyperref Warning: old lof file detected, not used; run LaTeX again.
+
+\tf@lof=\write5
+\openout5 = `dissertation.lof'.
+
+
+Package hyperref Warning: old lot file detected, not used; run LaTeX again.
+
+\tf@lot=\write6
+\openout6 = `dissertation.lot'.
+
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 62.
+(/usr/share/texmf-texlive/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+
+LaTeX Font Warning: Font shape `T1/cmss/b/n' undefined
+(Font)              using `T1/cmss/m/n' instead on input line 62.
+
+[2
+
+]) [90
+
+
+
+]
+\openout2 = `chapters/chapter01.aux'.
+
+ (./chapters/chapter01.tex
+Chapter 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 20.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 20.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 20.
+(/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Try loading font information for T1+futura_lt_heavy on inpu
+t line 50.
+ (./t1futura_lt_heavy.fd
+File: t1futura_lt_heavy.fd Lucida-Handwriting font
+)
+[91
+
+
+]
+LaTeX Font Info:    Try loading font information for OMS+qpl on input line 55.
+LaTeX Font Info:    No file OMSqpl.fd. on input line 55.
+
+
+LaTeX Font Warning: Font shape `OMS/qpl/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 55.
+
+[92] [93] [94]) [95] [96
+
+
+]
+\openout2 = `chapters/chapter02.aux'.
+
+ (./chapters/chapter02.tex
+Chapter 2.
+
+Underfull \hbox (badness 1515) in paragraph at lines 17--22
+\T1/qpl/m/n/12 Lorem ip-sum at nusquam ap-pel-lan-tur his, ut eos er-ant homero
+ con-clu-
+ []
+
+[97
+
+
+] [98]
+
+LaTeX Warning: Reference `fig:example' on page 99 undefined on input line 124.
+
+) [99] [100
+
+
+]
+\openout2 = `chapters/chapter0a.aux'.
+
+ (./chapters/chapter0a.tex
+Appendix A.
+
+Underfull \hbox (badness 1515) in paragraph at lines 7--12
+\T1/qpl/m/n/12 Lorem ip-sum at nusquam ap-pel-lan-tur his, ut eos er-ant homero
+ con-clu-
+ []
+
+) [101
+
+
+] [102
+
+
+]
+\openout2 = `frontbackmatter/bibliography.aux'.
+
+ (./frontbackmatter/bibliography.tex
+No file dissertation.bbl.
+)
+\openout2 = `frontbackmatter/colophon.aux'.
+
+ (./frontbackmatter/colophon.tex
+Underfull \hbox (badness 1460) in paragraph at lines 43--45
+\T1/qpl/m/n/12 Please see the file \T1/cmtt/m/n/12 classicthesis.sty \T1/qpl/m/
+n/12 for some pre-cal-cu-lated val-ues for
+ []
+
+) [103
+
+
+
+
+] (./dissertation.aux (./frontbackmatter/contents.aux)
+(./chapters/chapter01.aux) (./chapters/chapter02.aux) (./chapters/chapter0a.aux
+) (./frontbackmatter/bibliography.aux) (./frontbackmatter/colophon.aux))
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 5524 strings out of 493848
+ 79590 string characters out of 1152823
+ 158841 words of memory out of 3000000
+ 8600 multiletter control sequences out of 15000+50000
+ 34902 words of font info for 41 fonts, out of 3000000 for 9000
+ 714 hyphenation exceptions out of 8191
+ 38i,9n,36p,282b,408s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{dummy.6} has been referenced but does not exist, 
+replaced by a fixed one
+
+{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}{/usr/share/texmf/fonts/
+enc/dvips/tex-gyre/q-ec.enc}{/usr/share/texmf-texlive/fonts/enc/ttf2pk/base/T1-
+WGL4.enc}<futura_lt_heavy.ttf>{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-sup
+er-t1.enc}<futura_lt_bold.ttf></usr/share/texmf-texlive/fonts/type1/public/amsf
+onts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cms
+y10.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texm
+f/fonts/type1/public/tex-gyre/qplr.pfb></usr/share/texmf/fonts/type1/public/tex
+-gyre/qplri.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss1200.pfb></us
+r/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sftt1200.pfb>
+Output written on dissertation.pdf (16 pages, 217579 bytes).
+PDF statistics:
+ 241 PDF objects out of 1000 (max. 8388607)
+ 53 named destinations out of 1000 (max. 500000)
+ 177 words of extra memory for PDF output out of 10000 (max. 10000000)
+
