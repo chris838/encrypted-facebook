@@ -1,0 +1,19 @@
+\ProvidesFile{t1futura_lt_medium_oblique.fd}[Lucida-Handwriting font]
+
+\DeclareFontFamily{T1}{futura_lt_medium_oblique}{}
+
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{m}{n}{
+   <-> futura_lt_medium_oblique
+}{}
+
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{bx}{n}{<->ssub * futura_lt_medium_oblique/m/n}{}
+
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{m}{it}{<->ssub * ptm/m/it}{}
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{m}{sl}{<->ssub * ptm/m/sl}{}
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{m}{sc}{<->ssub * ptm/m/sc}{}
+
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{bx}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{bx}{sl}{<->ssub * ptm/b/sl}{}
+\DeclareFontShape{T1}{futura_lt_medium_oblique}{bx}{sc}{<->ssub * ptm/b/sc}{}
+
+\pdfmapline{+futura_lt_medium_oblique\space <futura_lt_medium_oblique.ttf\space <T1-WGL4.enc}

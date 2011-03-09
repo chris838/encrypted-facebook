@@ -2,23 +2,23 @@
 
 PDF_DIR = pdf
 
-SRCS=$(wildcard *.tex)
-
 CHAPTERS=$(wildcard chapters/*.tex)
 
-FBM=$(wildcard frontbackbmatter/*.tex)
+FBM=$(wildcard frontbackmatter/*.tex)
 
-OBJS=$(patsubst %.tex, $(PDF_DIR)/%.pdf, $(SRCS))
+STY=$(wildcard *.sty)
 
-all: $(OBJS)
 
-$(PDF_DIR)/%: %
-	@cp -f $< $@
+all: $(PDF_DIR)/dissertation.pdf
+
+$(PDF_DIR)/%: % $(PDF_DIR)
+	@cp -f $< $@	
 	
-%.pdf : %.tex customstyles.sty $(CHAPTERS) $(FBM) $(PDF_DIR)
+%.pdf : %.tex $(CHAPTERS) $(FBM) $(STY)
 	@echo "Generating $*.pdf"
-	pdflatex $*.tex $(PDF_DIR)
-	#@rm -r *.log *.aux *.toc *.lot *.out *.lof
+	pdflatex $*
+	#bibtex $*
+	rm -r *.aux chapters/*.aux frontbackmatter/*.aux
 
 $(PDF_DIR):
 	@if [ ! -x $(PDF_DIR) ]; \

@@ -5,27 +5,66 @@
 \sodef\hso{}{0.075em}{0.4em}{0.3em}{}
 \newcommand{\secformat}[1]{\hso{#1}}%
 
+\DeclareRobustCommand{\hZero}{\usefont{T1}{futura_lt_bold}{m}{n} \fontsize{32}{38}\selectfont}%
+\DeclareRobustCommand{\hA}{\usefont{T1}{futura_lt_bold}{m}{n} \Huge}%
+\DeclareRobustCommand{\hB}{\usefont{T1}{futura_lt_heavy}{m}{n} \Large}%
+\DeclareRobustCommand{\hC}{\usefont{T1}{futura_lt_heavy}{m}{n} \large}%
+\DeclareRobustCommand{\hD}{\usefont{T1}{futura_lt_medium}{m}{n} \large}%
+\DeclareRobustCommand{\hE}{\usefont{T1}{futura_lt_heavy}{m}{n} \normalsize}%
+
+% parts
+\titleformat{\part}
+        {\hZero }{\thepart}{1em}{}
 % chapters
 \titleformat{\chapter}
-        {\usefont{T1}{futura_lt_bold}{m}{n} \Huge}{\thechapter}{1em}{}
+        {\hA }{\thechapter}{1em}{}
 % sections
 \titleformat{\section}
-        { \usefont{T1}{futura_lt_heavy}{m}{n} \Large}{\thesection}{1em}{\secformat}
+        { \hB }{\thesection}{1em}{\secformat}
 % subsections
 \titleformat{\subsection}
-        { \usefont{T1}{futura_lt_heavy}{m}{n} \large}{\thesubsection}{1em}{\secformat}
+        { \hC }{\thesubsection}{1em}{\secformat}
 % subsubsections
 \titleformat{\subsubsection}
-    { \usefont{T1}{futura_lt_heavy}{m}{n} \normalsize}{}{1em}{\secformat}       
+    { \hD }{}{1em}{\secformat}       
 % paragraphs
 \titleformat{\paragraph}[runin]
-    { \usefont{T1}{futura_lt_heavy}{m}{n} \normalsize}{\theparagraph}{1em}{\secformat}    
+    { \hE }{\theparagraph}{1em}{\secformat}    
 % descriptionlabels
     \renewcommand{\descriptionlabel}[1]{
         \fontfamily{futura_lt_heavy}
         \selectfont
         \hso{#1}
     }
+    
+%********************************************************************
+%   Fonts and styles for table of contents and other listings
+%********************************************************************
+
+% parts
+\renewcommand{\cftpartfont}{ \hB }
+\setlength{ \cftpartnumwidth}{2em}
+\setlength{\cftbeforepartskip}{2.5em}
+% chapters
+\renewcommand{\cftchapfont}{ \hC }
+\setlength{ \cftchapnumwidth}{2em}
+\setlength{\cftbeforechapskip}{1.5em}
+% sections
+\renewcommand{\cftsecfont}{ \hD }
+\setlength{\cftsecnumwidth}{3em}
+\setlength{\cftbeforesecskip}{1.3em}
+% subsections
+\setlength{ \cftsubsecnumwidth}{4em}
+\setlength{\cftbeforesubsecskip}{0.6em}
+\renewcommand{\cftsubsecdotsep}{\cftnodots}
+% page numbers
+\cftpagenumbersoff{subsec}
+\renewcommand{\cftchappagefont}{    \normalsize \usefont{T1}{futura_lt_heavy}{m}{n} }
+\renewcommand{\cftsecpagefont}{     \normalsize \usefont{T1}{futura_lt_medium}{m}{n} }
+\renewcommand{\cftsubsecpagefont}{  \normalsize \usefont{T1}{futura_lt_medium}{m}{n} }
+
+
+
   
 %********************************************************************
 %   All floats will be aligned this way
@@ -37,5 +76,3 @@
     \ifpdf\texorpdfstring{ \so{#1} }{#1}%
     \else{#1}\fi%
 }
-
-\newcommand{\cauthor}[1]{\person{\citeauthor{#1}}}

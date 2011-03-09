@@ -1,0 +1,19 @@
+\ProvidesFile{t1futura_lt_extra_bold.fd}[Lucida-Handwriting font]
+
+\DeclareFontFamily{T1}{futura_lt_extra_bold}{}
+
+\DeclareFontShape{T1}{futura_lt_extra_bold}{m}{n}{
+   <-> futura_lt_extra_bold
+}{}
+
+\DeclareFontShape{T1}{futura_lt_extra_bold}{bx}{n}{<->ssub * futura_lt_extra_bold/m/n}{}
+
+\DeclareFontShape{T1}{futura_lt_extra_bold}{m}{it}{<->ssub * ptm/m/it}{}
+\DeclareFontShape{T1}{futura_lt_extra_bold}{m}{sl}{<->ssub * ptm/m/sl}{}
+\DeclareFontShape{T1}{futura_lt_extra_bold}{m}{sc}{<->ssub * ptm/m/sc}{}
+
+\DeclareFontShape{T1}{futura_lt_extra_bold}{bx}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{T1}{futura_lt_extra_bold}{bx}{sl}{<->ssub * ptm/b/sl}{}
+\DeclareFontShape{T1}{futura_lt_extra_bold}{bx}{sc}{<->ssub * ptm/b/sc}{}
+
+\pdfmapline{+futura_lt_extra_bold\space <futura_lt_extra_bold.ttf\space <T1-WGL4.enc}

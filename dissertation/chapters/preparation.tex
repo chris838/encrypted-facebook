@@ -1,0 +1,89 @@
+%*****************************************
+\chapter{Preparation}\label{ch:preparation}
+%*****************************************
+
+\section{Approaches}
+    \begin{itemize}
+	\item Approaches in existing work
+        
+	\item Model of where the app could sit
+        \begin{itemize}
+                \item Proxy server (remote)
+        
+                \item Facebook application (client JavaScript)
+        
+		\item Bookmark button (client JavaScript + remote state on server)
+                
+		\item Greasemonkey (client JavaScript)
+                
+		\item Extension (client JavaScript + native code + local state)
+        \end{itemize}
+        
+	\item Why good/bad? Try to be quantatative
+        
+	\item Leads on to lanugage and library choices
+        
+	\item How to call C++ from JavaScript (binding, linking, compilation, marshalling).
+                
+	\item Facebook Graph API (JavaScript API etc.)
+    \end{itemize}
+
+\section{Broadcast encryption}
+    \begin{itemize}
+	\item Naive implementation
+	\item More advanced schemes (and why I don't use them)
+	\item Key management and size (NIST recommendations)
+    \end{itemize}
+    
+\section{Storing data in images}
+    \begin{itemize}
+	\item Description of Facebook/JPEG compression process (problem statement)
+	\item Analysis of theoretical capacity
+	\item Evaluation of naive implementations (MATLAB demonstrations)
+            \begin{itemize}
+		\item Completely naive (encode in RGB values)
+		\item Even less so (encode in DST with bit masks)
+             \end{itemize}
+	\item Possible approaches (refer to research on Haar stuff etc.)
+    \end{itemize}
+
+\section{Testing plan}
+    \begin{itemize}
+	\item What kinds of testing will I use?
+	\item How can I make these tests possible?
+	\item Test bed or framework that needs to be in place
+    \end{itemize}
+    
+    
+\section{Proffesional practice stuff}
+    \begin{itemize}
+	\item Software development model
+	\item Version/source control
+	\item Performance bounds
+    \end{itemize}
+    
+    
+\section{Requirements analysis}
+    \begin{itemize}
+	\item Functional and non-functional
+	\item Same as success criteria, but *derive* them
+	\item Possible requirements:
+            \begin{itemize}
+                \item it works (for small groups)
+                    \begin{itemize}
+                        \item must be able to do X,Y,Z.
+                        \item encryption must be sound (refer to NIST etc.)
+                    \end{itemize}
+                \item it *would* work for lots of people
+                    \begin{itemize}
+                        \item image method must be modular - allow choice max capacity, future upgrade.
+                        \item UI and text input must also scale to X number of recipients
+                    \end{itemize}
+                \item the above without affecting normal FB/browsing
+                    \begin{itemize}
+                        \item doesn't add massive timing loads
+                        \item doesn't introduce any security holes
+                    \end{itemize}
+                \item the above and doesn't negatively affect people without the extension.
+            \end{itemize}
+    \end{itemize}

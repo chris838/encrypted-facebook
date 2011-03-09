@@ -1,0 +1,19 @@
+\ProvidesFile{t1futura_lt_light.fd}[Lucida-Handwriting font]
+
+\DeclareFontFamily{T1}{futura_lt_light}{}
+
+\DeclareFontShape{T1}{futura_lt_light}{m}{n}{
+   <-> futura_lt_light
+}{}
+
+\DeclareFontShape{T1}{futura_lt_light}{bx}{n}{<->ssub * futura_lt_light/m/n}{}
+
+\DeclareFontShape{T1}{futura_lt_light}{m}{it}{<->ssub * ptm/m/it}{}
+\DeclareFontShape{T1}{futura_lt_light}{m}{sl}{<->ssub * ptm/m/sl}{}
+\DeclareFontShape{T1}{futura_lt_light}{m}{sc}{<->ssub * ptm/m/sc}{}
+
+\DeclareFontShape{T1}{futura_lt_light}{bx}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{T1}{futura_lt_light}{bx}{sl}{<->ssub * ptm/b/sl}{}
+\DeclareFontShape{T1}{futura_lt_light}{bx}{sc}{<->ssub * ptm/b/sc}{}
+
+\pdfmapline{+futura_lt_light\space <futura_lt_light.ttf\space <T1-WGL4.enc}
