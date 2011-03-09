@@ -1,0 +1,5 @@
+[1] biber:183> INFO - Logfile is 'dissertation..blg'
+[1] biber:189> INFO - === Biber version 0.5.7
+[2] biber:190> INFO - === Wed Mar  9, 2011, 22:41:30
+[105] Utils.pm:83> INFO - Found 'dissertation..bcf'
+[106] Biber.pm:187> FATAL - Cannot find control file 'dissertation..bcf'! - did you pass the "backend=biber" option to BibLaTeX? at script/biber line 233

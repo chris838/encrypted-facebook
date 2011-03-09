@@ -17,8 +17,8 @@ $(PDF_DIR)/%: % $(PDF_DIR)
 %.pdf : %.tex $(CHAPTERS) $(FBM) $(STY)
 	@echo "Generating $*.pdf"
 	pdflatex $*
-	#bibtex $*
-	rm -r *.aux chapters/*.aux frontbackmatter/*.aux
+	# biber $*
+	#rm -r *.aux chapters/*.aux frontbackmatter/*.aux
 
 $(PDF_DIR):
 	@if [ ! -x $(PDF_DIR) ]; \

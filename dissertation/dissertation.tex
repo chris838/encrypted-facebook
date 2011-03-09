@@ -6,25 +6,30 @@
 \usepackage{a4}
 \usepackage{verbatim}
 
-% Use the TEX Gyre Pagella font based on Palladio
-\usepackage[british,english,greek]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{tgpagella}
-
 \usepackage{soul}
 \usepackage{scrpage2}
 \usepackage{acronym}
-\usepackage{named}
 \usepackage{relsize}
 \usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage{cite}
-\usepackage{hyperref}
+
+% Bibliography and links
+\usepackage{csquotes}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{bibliography.bib}
 
 % Customize layout and formatting
 \usepackage{titlesec} % headings
 \usepackage[titles]{tocloft} % listings
 \usepackage[top=100pt, inner=146pt, width=360pt, height=583pt]{geometry} % margins
+
+% PDF hyperlinks
+\usepackage{hyperref}
+
+% Use the TEX Gyre Pagella font based on Palladio
+\usepackage[british,english,greek]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{tgpagella}
 
 %********************************************************************
 %   Re-usable information
@@ -88,7 +93,7 @@
 %   Appendix and bibliography
 %********************************************************************
 \addcontentsline{toc}{chapter}{Bibliography}
-\cleardoublepage\include{frontbackmatter/bibliography}
+\cleardoublepage\printbibliography
 \cleardoublepage\part*{Appendix}
 \appendix
 \cleardoublepage\include{chapters/appendix_a}

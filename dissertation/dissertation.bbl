@@ -1,8 +1,50 @@
-\begin{thebibliography}{0}
-\providecommand{\natexlab}[1]{#1}
-\providecommand{\url}[1]{\texttt{#1}}
-\expandafter\ifx\csname urlstyle\endcsname\relax
-  \providecommand{\doi}[1]{doi: #1}\else
-  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+% $ biblatex auxiliary file $
+% $ biblatex version 1.2 $
+% $ biber version 0.5.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber or bibtex as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
 
-\end{thebibliography}
+\preamble{%
+\RequireBiber[2]%
+}
+
+
+\refsection{0}
+  \entry{aksin}{article}{}
+    \name{author}{7}{%
+      {{Aksın}{A.}{Özge}{Ö.}{}{}{}{}}%
+      {{Türkmen}{T.}{Hayati}{H.}{}{}{}{}}%
+      {{Artok}{A.}{Levent}{L.}{}{}{}{}}%
+      {{C̨etinkaya}{C.}{Bekir}{B.}{}{}{}{}}%
+      {{Ni}{N.}{Chaoying}{C.}{}{}{}{}}%
+      {{Büyükgüngör}{B.}{Orhan}{O.}{}{}{}{}}%
+      {{Özkal}{Ö.}{Erhan}{E.}{}{}{}{}}%
+    }
+    \strng{namehash}{AÖ+1}
+    \strng{fullhash}{AÖTHALCBNCBOÖE1}
+    \field{sortinit}{A}
+    \field{year}{2006}
+    \field{title}{Effect of immobilization on catalytic characteristics of saturated Pd-N-heterocyclic carbenes in Mizoroki-Heck reactions}
+    \field{indextitle}{Effect of immobilization on catalytic characteristics}
+    \field{journaltitle}{J.~Organomet. Chem.}
+    \field{number}{13}
+    \field{volume}{691}
+    \field{pages}{3027\bibrangedash 3036}
+  \endentry
+
+\endrefsection
+\endinput
+
