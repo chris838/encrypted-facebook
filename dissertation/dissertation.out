@@ -3,17 +3,18 @@
 \BOOKMARK [1][-]{section.1.2}{Existing work}{chapter.1}
 \BOOKMARK [0][-]{chapter.2}{Preparation}{}
 \BOOKMARK [1][-]{section.2.1}{Approaches}{chapter.2}
-\BOOKMARK [1][-]{section.2.2}{Broadcast encryption}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Facebook}{chapter.2}
 \BOOKMARK [1][-]{section.2.3}{Storing data in images}{chapter.2}
-\BOOKMARK [1][-]{section.2.4}{Testing plan}{chapter.2}
-\BOOKMARK [1][-]{section.2.5}{Proffesional practice stuff}{chapter.2}
-\BOOKMARK [1][-]{section.2.6}{Requirements analysis}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{Encryption schemes}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{Testing plan}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{Proffesional practice stuff}{chapter.2}
+\BOOKMARK [1][-]{section.2.7}{Requirements analysis}{chapter.2}
 \BOOKMARK [0][-]{chapter.3}{Implementation}{}
 \BOOKMARK [1][-]{section.3.1}{Project overview}{chapter.3}
-\BOOKMARK [1][-]{section.3.2}{Interfacing with Facebook}{chapter.3}
-\BOOKMARK [1][-]{section.3.3}{Modifying the Facebook UI}{chapter.3}
-\BOOKMARK [1][-]{section.3.4}{Encoding decoding data}{chapter.3}
-\BOOKMARK [1][-]{section.3.5}{Storing data in images}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{Encoding decoding data}{chapter.3}
+\BOOKMARK [1][-]{section.3.3}{Storing data in images}{chapter.3}
+\BOOKMARK [1][-]{section.3.4}{Interfacing with Facebook}{chapter.3}
+\BOOKMARK [1][-]{section.3.5}{Modifying the Facebook UI}{chapter.3}
 \BOOKMARK [1][-]{section.3.6}{Testing}{chapter.3}
 \BOOKMARK [0][-]{chapter.4}{Evaluation}{}
 \BOOKMARK [0][-]{chapter.5}{Conclusion}{}

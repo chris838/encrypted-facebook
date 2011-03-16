@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.1.16)  9 MAR 2011 22:41
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.1.16)  16 MAR 2011 09:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -897,9 +897,9 @@ File: t1futura_lt_medium.fd Lucida-Handwriting font
 
 ]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 47.
+(Font)              <14.4> on input line 49.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 47.
+(Font)              <7> on input line 49.
 )
 \tf@toc=\write5
 \openout5 = `dissertation.toc'.
@@ -982,8 +982,8 @@ nikita / papers /
  (./chapters/preparation.tex
 Chapter 2.
 
-Underfull \hbox (badness 1484) in paragraph at lines 15--16
-[]\T1/qpl/m/n/12 Bookmark but-ton (client JavaScript + re-mote state on
+Underfull \hbox (badness 1189) in paragraph at lines 28--29
+[]\T1/qpl/m/n/12 Locally (re-quires per-form-ing de-cryp-tion lo-cally or
  []
 
 [3
@@ -991,7 +991,34 @@ Underfull \hbox (badness 1484) in paragraph at lines 15--16
 
 
 
-] [4]) [5] [6
+]
+Underfull \hbox (badness 4805) in paragraph at lines 51--52
+\T1/qpl/m/n/12 mon-key or ex-ten-sion. Maybe Flash aswell since
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--52
+\T1/qpl/m/n/12 can ac-cess lo-cal filesys-tem but Chrome sand-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--52
+\T1/qpl/m/n/12 boxes []$\T1/cmtt/m/n/12 http : / / blog . chromium . org / 2010
+ / 12 /
+ []
+
+[4] [5] [6]
+Underfull \hbox (badness 3291) in paragraph at lines 113--114
+[]\T1/qpl/m/n/12 Underlying sym-met-ric/asymmetric schemes. Maybe I
+ []
+
+[7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
+\T1/qpl/m/n/12 as []$\T1/cmtt/m/n/12 http : / / www . useit . com / papers / re
+sponsetime .
+ []
+
+) [9] [10
 
 
 ]
@@ -999,20 +1026,20 @@ Underfull \hbox (badness 1484) in paragraph at lines 15--16
 
  (./chapters/implementation.tex
 Chapter 3.
-[7
+[11
 
 
-]) [8]
+]) [12]
 \openout2 = `chapters/evaluation.aux'.
 
  (./chapters/evaluation.tex
 Chapter 4.
-) [9
+) [13
 
 
 
 
-] [10
+] [14
 
 
 ]
@@ -1020,29 +1047,29 @@ Chapter 4.
 
  (./chapters/conclusion.tex
 Chapter 5.
-) [11
+) [15
 
-
-] [12
-
-
-] [13
-
-] [14
-
-] [15
 
 ] [16
+
+
+] [17
+
+] [18
+
+] [19
+
+] [20
 
 ]
 \openout2 = `chapters/appendix_a.aux'.
 
  (./chapters/appendix_a.tex
 Appendix A.
-[17
+[21
 
 
-]) [18]
+]) [22]
 \openout2 = `frontbackmatter/proposal.aux'.
 
  (./frontbackmatter/proposal.tex
@@ -1052,7 +1079,7 @@ Underfull \hbox (badness 1406) in paragraph at lines 11--12
 []\T1/qpl/m/n/12 A fur-ther (and po-ten-tially much more com-pli-cated) method
  []
 
-[19
+[23
 
 
 
@@ -1063,7 +1090,7 @@ Underfull \hbox (badness 1057) in paragraph at lines 27--28
 .
  []
 
-[20] [21]
+[24] [25]
 Underfull \hbox (badness 10000) in paragraph at lines 78--79
 []\T1/qpl/m/n/12 Assuming the pre-vi-ous re-quire-ment is met; un-der
  []
@@ -1093,7 +1120,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 78--79
 \T1/qpl/m/n/12 http://www.useit.com/papers/responsetime.html). Tar-get
  []
 
-[22] [23]
+[26] [27]
 Underfull \hbox (badness 10000) in paragraph at lines 112--112
 |\T1/futura_lt_heavy/m/n/14.4 N o v e m -b e r 1 5 t h  []  D e -c e m -b e r 3
  r d ( e n d o f M i c h a e l -
@@ -1111,19 +1138,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 131--131
  t h ( W i n -t e r v a -c a -t i o n
  []
 
-[24]
+[28]
 Underfull \hbox (badness 2005) in paragraph at lines 151--152
 \T1/qpl/m/n/12 leav-ing only test-ing, anal-y-sis and writ-ing up left to com-p
 lete.
  []
 
-[25]
+[29]
 Underfull \hbox (badness 10000) in paragraph at lines 166--166
 |\T1/futura_lt_heavy/m/n/14.4 M a r c h 1 9 t h ( s t a r t o f E a s t e r v a
  -c a -t i o n )  []  M a r c h
  []
 
-) [26] (./dissertation.aux (./frontbackmatter/proforma.aux)
+) [30] (./dissertation.aux (./frontbackmatter/proforma.aux)
 (./frontbackmatter/declaration.aux) (./frontbackmatter/contents.aux)
 (./frontbackmatter/acknowledgments.aux) (./chapters/introduction.aux)
 (./chapters/preparation.aux) (./chapters/implementation.aux)
@@ -1140,27 +1167,24 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 11165 strings out of 493848
- 172038 string characters out of 1152823
- 378988 words of memory out of 3000000
+ 11169 strings out of 493848
+ 172070 string characters out of 1152823
+ 379988 words of memory out of 3000000
  14090 multiletter control sequences out of 15000+50000
  30574 words of font info for 45 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  38i,9n,36p,849b,1743s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{part*.8} has been referenced but does not exist, 
-replaced by a fixed one
-
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fo
-nts/enc/dvips/tex-gyre/q-ec.enc}{/usr/share/texmf-texlive/fonts/enc/ttf2pk/base
-/T1-WGL4.enc}<futura_lt_medium.ttf><futura_lt_heavy.ttf><futura_lt_bold.ttf></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
-xmf/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texmf/fonts/type1/public/t
-ex-gyre/qplr.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplri.pfb></usr/
-share/texmf/fonts/type1/public/cm-super/sfss1200.pfb></usr/share/texmf/fonts/ty
-pe1/public/cm-super/sftt1200.pfb>
-Output written on dissertation.pdf (34 pages, 200609 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/
+fonts/enc/dvips/tex-gyre/q-ec.enc}{/usr/share/texmf-texlive/fonts/enc/ttf2pk/ba
+se/T1-WGL4.enc}<futura_lt_medium.ttf><futura_lt_heavy.ttf><futura_lt_bold.ttf><
+/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/
+texmf/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texmf/fonts/type1/public
+/tex-gyre/qplr.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplri.pfb></us
+r/share/texmf/fonts/type1/public/cm-super/sfss1200.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sftt1200.pfb>
+Output written on dissertation.pdf (38 pages, 213746 bytes).
 PDF statistics:
- 296 PDF objects out of 1000 (max. 8388607)
- 92 named destinations out of 1000 (max. 500000)
+ 325 PDF objects out of 1000 (max. 8388607)
+ 96 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
