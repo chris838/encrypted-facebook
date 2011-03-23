@@ -39,15 +39,15 @@ os_type := $(patsubst darwin%,darwin,$(shell echo $(OSTYPE)))
 # "$(subst \,\\,$(APPDATA))\\Mozilla\\Firefox\\Profiles\\$(profile_dir)\\extensions\\$(extension_uuid)"
 
 profile_location := \
-      ~/.mozilla/firefox-4.0/$(profile_dir)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox/$(profile_dir)/extensions/$(extension_uuid)
 profile_location1 := \
-      ~/.mozilla/firefox-4.0/$(profile_dir1)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox/$(profile_dir1)/extensions/$(extension_uuid)
 profile_location2 := \
-      ~/.mozilla/firefox-4.0/$(profile_dir2)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox/$(profile_dir2)/extensions/$(extension_uuid)
 profile_location3 := \
-      ~/.mozilla/firefox-4.0/$(profile_dir3)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox/$(profile_dir3)/extensions/$(extension_uuid)
 profile_location4 := \
-      ~/.mozilla/firefox-4.0/$(profile_dir4)/extensions/$(extension_uuid)
+      ~/.mozilla/firefox/$(profile_dir4)/extensions/$(extension_uuid)
 
 # The temporary location where the extension tree will be copied and built.
 build_dir := $(bin_dir)/build
