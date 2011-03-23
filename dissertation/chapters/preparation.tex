@@ -67,9 +67,10 @@
 \section{Facebook}
 
 \begin{itemize}
-    \item Interacting with Facebook. Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
+   
+    \item What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are propably on there somewhere - again we don't care.
     
-    \item Relevant Facebook objects and their limitations:
+    \item Some limitations on objects: 
     \begin{itemize}
         \item Status update, 144 chars
         \item Post
@@ -77,6 +78,7 @@
         \item Note, 66,000 chars or so
         \item Image, 720x720 3 channel 8 bit colour. Not really because of chrominance subsampling.
     \end{itemize}
+    Clearly images and notes are the most information dense so we use these.
     
     \item Connectedness.
     \begin{itemize}
@@ -84,6 +86,11 @@
         \item Theoretical limits - Dunbar number of 150, others suggest higher at ~300. So it perhaps won't increase with Facebook's expansion.
         \item Conclusion - 400 if we can make it work, but anything as low as 100 we could probably get away with.
     \end{itemize}
+    
+    \item Interacting with Facebook. Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
+
+    \item Notes on application deployment. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users.
+
 
 \end{itemize}
     
@@ -110,10 +117,10 @@
         \begin{itemize}
             \item Naive implementation.
             \item More advanced schemes (and why I don't use them). Mainly due to no server side code, can't ask users to perform operations and expect a reply any time soon (or at all). We could reuse headers which would reduce a lot of size. In many ways this is a great idea, have a big linked list of notes containing links to headers, move frequently accessed entries to the front etc. However this means reusing message keys which is bad practice/NIST recommends against.
-            \item Underlying symmetric/asymmetric schemes. Maybe I could have improved the block size here but explain why it looked to hard (or at least time consuming).
+            \item Underlying symmetric/asymmetric schemes. Maybe I could have improved the block size but ECC patents mean its not really found in open libraries.
         \end{itemize}
 	\item Key management and size (NIST recommendations).
-        \item Conclusion : simple bcast encryption using AES and RSA underneath. However, modularity and extensibility would be useful because there are improvements. In particular ECC would give dramatically smaller overheads.
+        \item Conclusion : simple bcast encryption using AES and RSA underneath. However, modularity and extensibility would be useful because there are improvements. In particular ECC would give dramatically smaller overheads. 
     \end{itemize}
 
 \section{Testing plan}
@@ -124,11 +131,12 @@
         \begin{itemize}
             \item Need a method of simulating the Facebook JPEG compression process. Use libjpeg since it most closely matches the compression signature.
             \item Need a BER (bit error rate) calculator. Again coded as a C function.
-            \item 
+            \item FireBug and FireUnit for unit testing and profiling JavaScript functions.
+            \item gprof for profiling C/C++ functions.
         \end{itemize}
         \item Security testing \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint 4080/2006/12.20.12.15/doc/v1.pdf}
         \begin{itemize}
-            \item Threat analysis
+            \item Threat analysis. Must compromise since full security audit beyond scope of project. Look only at UTF8 decoder and message retrieval process. As an extension expand threat model to include public key and image retrieval.
             \item Risk analysis
             \item Test plan elabouration
         \end{itemize}
