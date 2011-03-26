@@ -96,6 +96,7 @@ namespace efb {
                 std::string public_key_filename_full =
                     working_directory_ + *(new std::string(public_key_filename));
                 
+                
                 crypto_.loadKeys(
                     private_key_filename_full,
                     public_key_filename_full,
@@ -162,7 +163,7 @@ namespace efb {
                 ids_vector.push_back( id_ );
                 
                 // Load the file, leaving room for the encryption header
-                head_size = 0;// crypto_.calculateHeaderSize( ids_vector.size() );
+                head_size = crypto_.calculateHeaderSize( ids_vector.size() );
                 data_file.open( data_filename, std::ios::binary );
                 if(!data_file.is_open()) {
                     std::cout << "Error opening data file." << std::endl;
@@ -262,7 +263,7 @@ namespace efb {
                 }
                 
                 // Save data to a file, skipping the header
-                head_size = 0; //crypto_.retrieveHeaderSize(data);
+                head_size = crypto_.retrieveHeaderSize(data);
                 data_file.open( data_filename, std::ios::binary);
                 if(!data_file.is_open()) {
                   std::cout << "Error creating data file:" << std::endl;

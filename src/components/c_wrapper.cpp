@@ -2,20 +2,19 @@
 
 // Required eFB Libary component includes
 #include "efb/BasicLibary.h"
-#include "efb/Haar20KiBFactory.h"
+#include "efb/Upsampled165KiBFactory.h"
 
 IeFBLibrary* create_IeFBLibrary(const char* id, const char* dir)
 {
 /* For now we use this concrete implementation. Potentially the exact library implementation which is instantiated could be decided at runtime, e.g. by passing parameters (specified in browser) to this function. */
   return (IeFBLibrary*) new efb::BasicLibary(
-      *(new efb::Haar20KiBFactory()),
+      *(new efb::Upsampled165KiBFactory()),
       id, dir
     );
 }
 
 /* Load a cryptographic identity from the filenames provided. */
-const unsigned int loadIdentity(
-   IeFBLibrary* This, const char* private_key_filename, const char* public_key_filename, const char* passphrase)
+const unsigned int loadIdentity(IeFBLibrary* This, const char* private_key_filename, const char* public_key_filename, const char* passphrase)
 {
   return This->loadIdentity(private_key_filename, public_key_filename, passphrase);
 }

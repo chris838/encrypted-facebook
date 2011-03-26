@@ -78,7 +78,7 @@ namespace efb {
             
             // Offset into the header
             unsigned int offset = 0;
-            
+
             // Write tag with the number of IDs to the start of the header.
             writeNumIds( &data[offset], (unsigned short) ids.size() );
             offset+=2;
@@ -90,6 +90,7 @@ namespace efb {
 
             // For each ID, lookup the public key and encrypt the message key
             for (unsigned int i=0; i<ids.size();i++) {
+
                 // Insert the ID
                 FacebookId id = ids[i];
                 for (unsigned int j=0; j<8; j++)
@@ -253,7 +254,7 @@ namespace efb {
                 
                 // Add public key to key map so it can be used for encryption
                 idkeymap_[id_] = public_key_;
-                
+
                 // Create the decryption object using our private key
                 decryptor_ = Botan::get_pk_decryptor(private_key_, "EME1(SHA-512)");                
             }

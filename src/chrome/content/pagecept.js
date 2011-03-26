@@ -49,10 +49,6 @@ pc = {
                                    url.slice( url.indexOf("access_token") ).split('&')[0].split('=')[1]
                                  );
                 
-                // Request the user's private key password
-                var pass = window.prompt("Please enter your passphrase to unlock your private key.");
-                eFB.loadCryptoState(pass);
-                
                 // Change status to logged in
                 eFB.prefs.setBoolPref("loggedIn",true)
                 
@@ -409,20 +405,23 @@ pc = {
             var msg = input.firstChild.nodeValue;
             // remove elipsis at end of msg
             msg = msg.substring(0, msg.length - 3);
-
+            
             // Define save callback function for selector
             var save_callback = function(tag) {
                 // Set the text area text to the tag
-                bt.parentNode.getElementsByTagName('textarea')[0].value = tag;
-
+                var ips = bt.parentNode.getElementsByTagName('input')
+                for (var i=0; i<ips.length; i++) {
+                    if (ips[i].name == "add_comment_text") ips[i].value = tag;
+                }
+                
                 // Simulate form submission
                 bt.firstChild.click();
-
+                
                 // Close the selector window
                 var popup = doc.getElementById("friend_selector");
                 popup.parentNode.removeChild( popup );
             };
-
+            
             // Define handler for save button for selector
             var save = function(e) {
                 // get a list of selected recipient ids
@@ -434,11 +433,11 @@ pc = {
                 // create a note, tag will be passed to save_callback
                 eFB.submitNote(ids, msg, save_callback);
             };
-
+            
             // Pass doc and handler to friend selector
             pc.createFriendSelector(doc, save);
         }, false );
-
+        
         // Append new button to the button list
         div.insertBefore( lb, div.lastChild );
     },

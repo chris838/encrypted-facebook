@@ -25,7 +25,7 @@ eFB = {
     pubkey_end : "End of public key information. ✇",
     pubkey_head : "-----BEGIN PUBLIC KEY-----\n",
     pubkey_tail : "\n-----END PUBLIC KEY-----",
-    msg_start : "¿Que tal? ",
+    msg_start : "Hola. ",
     msg_end : " To view this message and communicate on Facebook securely download the Encrypted Facebook plugin for Firefox. ✆",
     note_title : "ˠ" ,
 
@@ -64,6 +64,9 @@ eFB = {
                 eFB.createDirs();
                 // Init C library
                 eFB.initialise( eFB.id, eFB.working_dir );
+                // Request the user's private key password
+                var pass = window.prompt("Please enter your passphrase to unlock your private key.");
+                eFB.loadCryptoState(pass);
             } );
             // Create the login url
             var login_url = "https://graph.facebook.com/oauth/authorize?" +
@@ -171,6 +174,7 @@ eFB = {
             eFB.extension_dir = addon.getResourceURI( "" ).path;
             eFB.working_dir = eFB.extension_dir + eFB.id + '/';
             callback();
+            
         } );
     },
 
@@ -245,6 +249,10 @@ eFB = {
         Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
     */
     cleanProfile : function(aEvent) {
+        
+        
+        
+        return;
         // Delete posts on the wall
         eFB.cleanConnection('feed');
         // Delete all posts in newsfeed
