@@ -9,13 +9,24 @@ Facebook is most common social network with X million users and Y daily hits. Cu
 \begin{itemize}
 
     \item General context - recent media coverage of Facebook, privacy and security concerns. Data (user passwords) stolen from web sites by hackers. Privacy a big issue for the 21st century?
-    
-    Problems with confusing users and complicated interfaces (e.g. Facebook defaults). Problems with intrusiveness (e.g. SSL and Google, Facebook). Must be UNOBTRUSIVE and TRANSPARENT.
-    
-    \item Context in the field of Computer Science - new social networking services being launched (Diaspora etc.). Networking effects and Facebook user base make it hard to compete. Idea : keep using Facebook, add encryption layer on top. 
-    
-    \item Limitations - does not hide the social graph. Arguably this is Facebook's real asset.
+  
+    \item Problems with confusing users and complicated interfaces (e.g. Facebook defaults). Problems with intrusiveness (e.g. SSL and Google, Facebook). Demand for privacy/security soutions that are UNOBTRUSIVE and TRANSPARENT.
 
+    \item New social networking services being launched (Diaspora etc.). Some have excellent security properites. Problem: networking effects and Facebook user base make it hard to compete.
+    
+    \item Idea : keep using Facebook, add encryption layer on top, seamlessly integrate in to normal Facebook experience.
+    
+\end{itemize}
+
+\section{Limitations}
+
+What the application does not do:
+\begin{itemize}
+    \item Does not hide the social graph. Arguably this is Facebook's real asset. But that's another story...
+    \item Does not ensure integrity of data. Facebook employees could swap your messages.
+    \item Does not ensure availability. Facebook could easily wipe your notes or images.
+    \item Does not ensure authenticity or non-repudiation. Not from the employees of Facebook anyway.
+    \item Threat model not comprehensive due to project limitations. You can turn off images, which haven't been audited. Would obviously change this if deployed.
 \end{itemize}
 
 

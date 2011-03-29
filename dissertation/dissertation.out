@@ -1,14 +1,17 @@
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}
-\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}
-\BOOKMARK [1][-]{section.1.2}{Existing work}{chapter.1}
+\BOOKMARK [1][-]{section.1.1}{Background}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{Limitations}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Existing work}{chapter.1}
 \BOOKMARK [0][-]{chapter.2}{Preparation}{}
 \BOOKMARK [1][-]{section.2.1}{Approaches}{chapter.2}
-\BOOKMARK [1][-]{section.2.2}{Facebook}{chapter.2}
-\BOOKMARK [1][-]{section.2.3}{Storing data in images}{chapter.2}
-\BOOKMARK [1][-]{section.2.4}{Encryption schemes}{chapter.2}
-\BOOKMARK [1][-]{section.2.5}{Testing plan}{chapter.2}
-\BOOKMARK [1][-]{section.2.6}{Proffesional practice stuff}{chapter.2}
-\BOOKMARK [1][-]{section.2.7}{Requirements analysis}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Firefox}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{Facebook}{chapter.2}
+\BOOKMARK [1][-]{section.2.4}{Storing data in images}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{Encryption schemes}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{Testing plan}{chapter.2}
+\BOOKMARK [1][-]{section.2.7}{Security testing}{chapter.2}
+\BOOKMARK [1][-]{section.2.8}{Proffesional practice stuff}{chapter.2}
+\BOOKMARK [1][-]{section.2.9}{Requirements analysis}{chapter.2}
 \BOOKMARK [0][-]{chapter.3}{Implementation}{}
 \BOOKMARK [1][-]{section.3.1}{Project overview}{chapter.3}
 \BOOKMARK [1][-]{section.3.2}{Encoding decoding data}{chapter.3}
@@ -17,8 +20,15 @@
 \BOOKMARK [1][-]{section.3.5}{Modifying the Facebook UI}{chapter.3}
 \BOOKMARK [1][-]{section.3.6}{Testing}{chapter.3}
 \BOOKMARK [0][-]{chapter.4}{Evaluation}{}
+\BOOKMARK [1][-]{section.4.1}{Comparative analyis of conduit image implementations}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{Cognitive walkthrough}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{Profiling submission and retrieval operations}{chapter.4}
 \BOOKMARK [0][-]{chapter.5}{Conclusion}{}
-\BOOKMARK [0][-]{chapter.5}{Bibliography}{}
+\BOOKMARK [1][-]{section.5.1}{Evaluation of Requirements}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Retrospective}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Future work}{chapter.5}
+\BOOKMARK [1][-]{section.5.4}{Potential deployment}{chapter.5}
+\BOOKMARK [0][-]{section.5.4}{Bibliography}{}
 \BOOKMARK [-1][-]{part*.9}{Appendix}{}
 \BOOKMARK [0][-]{appendix.A}{Graph API}{part*.9}
 \BOOKMARK [1][-]{section.A.1}{Appendix Section Test}{appendix.A}

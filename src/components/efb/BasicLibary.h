@@ -144,6 +144,7 @@ namespace efb {
                 IConduitImage& img = factory_.create_IConduitImage(); // conduit image object
                 data.reserve( img.getMaxData() ); // we know the max number of items possible to store
                 unsigned int head_size, data_size; // size of the raw data we are sending
+                unsigned int final_size=0; // size before we insert into image
                 
                 // Load IDs into a vector (currently they are semi-colon delimited)
                 std::string id_string;
@@ -185,6 +186,22 @@ namespace efb {
                   std::cout << "Error encrypting: " << e.what() << std::endl;
                     return 4;
                 }
+                
+                // Pad the data to full length
+                final_size = data.size();
+                if (fec_.codeLength(final_size+3) > img.getMaxData()) {
+                    std::cout << "File is too big." << std::endl;
+                    return 1;
+                }
+                srand( time(NULL) );
+                while ( fec_.codeLength( data.size()+3+1 ) < img.getMaxData() )
+                {
+                    data.push_back( (byte) rand() );
+                }
+                // Add the length to the end
+                data.push_back( (final_size >> 0) & 0x000000ff );
+                data.push_back( (final_size >> 8) & 0x000000ff );
+                data.push_back( (final_size >> 16) & 0x000000ff );
                 
                 // Add error correction code
                 try {fec_.encode( data );}
@@ -250,12 +267,25 @@ namespace efb {
                     return 2;
                 }
                 
+                // Remove padding outside FEC blocksize
+                while ( fec_.codeLength( fec_.dataLength( data.size() ) ) != data.size() )
+                {
+                    data.pop_back();
+                }
+                
                 // Correct errors
                 try {fec_.decode( data );}
                 catch (FecDecodeException &e) {
                   std::cout << "Error decoding FEC codes: " << e.what() << std::endl;
                   return 3;
                 }
+                
+                // Remove padding
+                unsigned int final_size =
+                    0   |   (data[data.size()-3] << 0)
+                        |   (data[data.size()-2] << 8)
+                        |   (data[data.size()-1] << 16);
+                while (data.size() > final_size) data.pop_back();
                 
                 // Retrieve the message key from the header and decrypt the data
                 try {crypto_.decryptMessage(data);}
@@ -435,21 +465,28 @@ namespace efb {
                 std::vector<unsigned int> terrors, ttotal, enctime, dectime;
                 struct timeval start, end;
                 long mtime, seconds, useconds;
-                
-                // Create log file
                 std::ofstream log_file;
-                log_file.open( "/home/chris/Desktop/test.log", std::ios::binary);
-                if(!log_file.is_open()) {
-                  std::cout << "Error creating log file:" << std::endl;
-                  return 1;
-                }
-                log_file << "Quality Factor" << ", ";
-                log_file << "Errors/GiB" << std::endl;
                 
                 // For each JPEG quality factor
                 for (int jpeg_rate = 80; jpeg_rate <=90; jpeg_rate ++ ) {
                     
+                    // Create log file
+                    std::stringstream s("");
+                    s  << "/home/chris/Desktop/testing/upsampled3_results_" << jpeg_rate << ".log";
+                    std::cout << s.str().c_str();
+                    log_file.open( s.str().c_str() , std::ios::binary);
+                    if(!log_file.is_open()) {
+                      std::cout << "Error creating log file:" << std::endl;
+                      return 1;
+                    }
+                    log_file << "Image ID" << ", ";
+                    log_file << "Size" << ", ";
+                    log_file << "Errors" << ", ";
+                    log_file << "Encoding time" << ", ";
+                    log_file << "Decoding time" << std::endl;
+                    
                     data_left = 1024*1024*1024; // 1 GiB
+                    data_left = data_left - (data_left % cap);
                     count = 0;
                     terrors.clear();
                     ttotal.clear();
@@ -549,12 +586,16 @@ namespace efb {
                         std::cout << "Processed image " << count;
                         std::cout << ". Bytes left: " << data_left;
                         std::cout << ". Last errors: " << errors << " in " << total << " bits." << std::endl;
+                        
+                        // Log all the error rates and timing measurements
+                        log_file << count << ", ";
+                        log_file << total << ", ";
+                        log_file << errors << ", ";
+                        log_file << enctime.back() << ", ";
+                        log_file << dectime.back() << std::endl;
+                        
                         count++;
                     }
-                        
-                    // Aggregate all the error rates and timing measurements
-                    log_file << jpeg_rate << ", ";
-                    log_file << std::accumulate( terrors.begin(), terrors.end(), 0 ) << std::endl;
                  
                 }
                 

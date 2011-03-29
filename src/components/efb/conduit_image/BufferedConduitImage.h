@@ -91,19 +91,10 @@ namespace efb {
         //! Decode block_size_ bytes from a block of pixels. (i,j) indicates the pixel at the start of the block.
         virtual void decodeFromBlock( std::deque<byte> & data, unsigned int i, unsigned int j ) = 0;
         
-        //! Write out the size of the data stored to the image.
-        virtual void writeSize(unsigned int len) = 0;
-        
         protected :
             
             //! Variable to determine how many bytes are stored per block
             const unsigned int block_size_;
-            
-            //! Helper function to decode triple modular redundancy coded bytes
-            byte tripleModR( byte a, byte b, byte c) const
-            {
-                return ((a&b)|(a&c)|(b&c));
-            }
         
         public :
             
@@ -147,18 +138,13 @@ namespace efb {
                 }
                 // Flush the buffer to ensure all data has actually been written out.
                 flush();
-                
-                // Write the size of the data stored.
-                writeSize( data.size() );
             }
             
             //! Extract data.
             virtual void extractData( std::vector<byte>& data )
             {
                 // Read the length tag from the image, check it is not too large .
-                unsigned int len = readSize();
-                if ( len > getMaxData() )
-                    throw ConduitImageImplantException("Length tag too large.");
+                unsigned int len = getMaxData();
                     
                 // Reserve enough space to store the extracted data
                 data.reserve( len );

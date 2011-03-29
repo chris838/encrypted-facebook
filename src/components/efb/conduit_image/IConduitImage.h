@@ -27,8 +27,6 @@ namespace efb {
         public :
             //! Get the maximum ammount of data that can be stored in this implementation.
             virtual unsigned int getMaxData() = 0;
-            //! Check how much data (if any) is stored in the current image.
-            virtual unsigned int readSize() = 0;
             //! Implant data.
             virtual void implantData( std::vector<byte>& data ) = 0;
             //! Extract data.

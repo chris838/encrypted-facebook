@@ -3,7 +3,6 @@
 
 // Library sub-component includes
 #include "UpsampledConduitImage.h"
-#include "Hamming.h"
 
 namespace efb {
     
@@ -41,30 +40,6 @@ namespace efb {
             data.push_back( (hi << 4) | lo );
         }
         
-        //! Writes the size of the image (3 bytes) to the last twelve pixels, using Hamming codes
-        void writeSize
-        (
-            unsigned int len    
-        )
-        {
-                // Encode with Hamming (8,4) SECDEC codes.
-                hamming::InitEncode(4);
-                std::deque<byte> data1,data2,data3,data4,data5,data6;
-                data1.push_back( (byte) hamming::Encode( (len >> 0) & 0x0000000f ) );
-                data2.push_back( (byte) hamming::Encode( (len >> 4) & 0x0000000f ) );
-                data3.push_back( (byte) hamming::Encode( (len >> 8) & 0x0000000f ) );
-                data4.push_back( (byte) hamming::Encode( (len >> 12) & 0x0000000f ) );
-                data5.push_back( (byte) hamming::Encode( (len >> 16) & 0x0000000f ) );
-                data6.push_back( (byte) hamming::Encode( (len >> 20) & 0x0000000f ) );
-                //
-                encodeInBlock( data1, 719, 708 );
-                encodeInBlock( data2, 719, 710 );
-                encodeInBlock( data3, 719, 712 );
-                encodeInBlock( data4, 719, 714 );
-                encodeInBlock( data5, 719, 716 );
-                encodeInBlock( data6, 719, 718 );
-        }
-        
         public :
             
             //! Constructor.
@@ -75,28 +50,7 @@ namespace efb {
             //! Get the maximum ammount of data (in bytes) that can be stored in this implementation.
             virtual unsigned int getMaxData()
             {
-                return (720*720*4)/8 - 6;
-            }
-            
-            //! Check how much data (if any) is stored in the current image.
-            virtual unsigned int readSize()
-            {
-                hamming::InitEncode(4);
-                std::deque<byte> data1,data2,data3,data4,data5,data6;
-                decodeFromBlock( data1, 719, 708 );
-                decodeFromBlock( data2, 719, 710 );
-                decodeFromBlock( data3, 719, 712 );
-                decodeFromBlock( data4, 719, 714 );
-                decodeFromBlock( data5, 719, 716 );
-                decodeFromBlock( data6, 719, 718 );
-                unsigned int len =
-                    0   |   ( hamming::Decode( data1[0] ) << 0)
-                        |   ( hamming::Decode( data2[0] ) << 4)
-                        |   ( hamming::Decode( data3[0] ) << 8)
-                        |   ( hamming::Decode( data4[0] ) << 12)
-                        |   ( hamming::Decode( data5[0] ) << 16)
-                        |   ( hamming::Decode( data6[0] ) << 20);
-                return len;
+                return (720*720*4)/8;
             }
     };
     

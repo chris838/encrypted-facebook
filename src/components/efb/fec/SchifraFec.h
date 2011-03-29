@@ -55,6 +55,20 @@ namespace efb {
                 decoder_(field_,generator_polynommial_index_)
             {}
             
+            //! Calculate the overall size after adding error correction.
+            unsigned int codeLength( unsigned int data_length) const
+            {
+                unsigned int blocks = (data_length / M) + (data_length % M == 0 ? 0 : 1);
+                return blocks * N;
+            }
+            
+            //! Calculate the data size before adding error correction.
+            unsigned int dataLength( unsigned int code_length) const
+            {
+                unsigned int blocks = code_length / N;
+                return blocks * M;
+            }
+            
             //! Encode data by appending error correction codes.
             void encode( std::vector<byte>& data) const
             {

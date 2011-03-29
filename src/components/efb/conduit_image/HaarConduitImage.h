@@ -204,23 +204,6 @@ namespace efb {
             data.push_back( c );
         }
         
-        //! Writes the size of the image (2 bytes) to the last blocks using triple modular redundancy.
-        void writeSize
-        (
-            unsigned int len    
-        )
-        {
-            std::deque<byte> data1, data2;
-            byte hi = (byte) (len >> 8);
-            byte lo = (byte) (len & 0x00ff);
-            // Create three copies of the hi and lo bytes
-            for (unsigned int i=0;i<3;i++) data1.push_back( hi );
-            for (unsigned int i=0;i<3;i++) data2.push_back( lo );
-            // Write out to the last blocks
-            encodeInBlock( data1, 712, 704 );
-            encodeInBlock( data2, 712, 712 );
-        }
-        
         public :
             
             //! Constructor.
@@ -231,19 +214,7 @@ namespace efb {
             //! Get the maximum ammount of data (in bytes) that can be stored in this implementation.
             virtual unsigned int getMaxData()
             {
-                return (90*90*3) - 6;
-            }
-            
-            //! Check how much data (if any) is stored in the current image.
-            virtual unsigned int readSize()
-            {
-                std::deque<byte> data1,data2;
-                decodeFromBlock(data1, 712, 704 );
-                decodeFromBlock(data2, 712, 712 );
-                unsigned int len =
-                            (tripleModR(data1[0],data1[1],data2[2]) << 8 )
-                        |   (tripleModR(data2[0],data2[1],data2[2]) << 0 );
-                return len;
+                return (90*90*3);
             }
     };
     

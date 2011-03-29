@@ -2,27 +2,57 @@
 \chapter{Evaluation}\label{ch:evaluation}
 %*****************************************
 
-Hypothesis - Upsampled3 is the best method
-Testing -	MATLAB or actual code (or both??) 	
-                How long it takes
-                Capacity
-                Error rate
-Conclude - yes Upsampled3 is the best method
+\section{Comparative analyis of conduit image implementations}
 
-Cognitive walkthrough 
-        Creating a group of users
-        Migrating profile information
-        Public key management
-        Text submission and retrieval
-        Image submission
-        Image retrieval
+\begin{itemize}
+\item First test Haar wavelet method WITH gray codes. Calculate max capacity from implementation. Create X bytes of random noise split accross N files of max capacity. Encode in JPEG, decode from JPEG. Repeat for all files. Log BER. Also log per byte encode/decode time. Repeat for different levels of JPEG compression, 80 through 90. Plot BER against compression level.
 
-*! MAYBE - just do one walkthrough with lots of users !*
-*! OR - split walkthrough in to two halves !*
-*! ALSO - could include non-users in walkthrough for last reqirement!*
+\item Repeat this test for Scaled4 and Scaled3 methods, again both WITH gray codes. Use X bytes of noise again, but this time split across different number of files.
 
-Hypothesis - Waiting times are not a problem
-Testing -	How long does each bit take
-                Not including the image bit, already done
-                Break down of what takes how long
-Conclude - look at literature on perceptual waiting loading times, its all fine.
+\item Model as a binary symmetric channel. Calculate the capacity (refer to MacKays books), multiply by the number of bits they can effectively store per image. This is the effective, per image, capacity. Compare.
+
+\item An $(n,k)$ Reed Solomon code will always decode a block correctly providing the number of symbol errors is less than $t = 1 + \lfloor (n-k)/2  \rfloor$. When we get $t$ or more symbol errors the decoder either fails or decodes the wrong output sequence with some non-zero probability - we will henceforth use the term 'unsuccessful decode' to refer either of these events. In the worst case this will occur with only $t$ bit errors in the decoder input, one in each symbol. Therefore, the probability of an unsuccesful decode fo a single block is bounded by:
+
+\begin{equation}
+    \sum_{i=t}^{8n} {{8n}\choose{i}} p^i (1-p)^{8n-i}
+\end{equation}
+
+where $p$ is the bit error probability. Using our measured BER as an approximations of the bit error probability, we calculate an upper bound probability of an unsuccesful decode for each of our conduit image methods.
+
+Should be millions of Gb. This NASA document url{http://ipnpr.jpl.nasa.gov/progress\_report/42-84/84F.PDF} shows what they used for the Voyager space probe. Also this approaches hard drive read/write error rates. Calculate the final capacity of each method.
+
+\item Conclude - Scaled3 gives highest capacity, however you look at it. Effective error rates might be better for other methods, but who cares since as we have discussed, beyond $10^{-13}$ no one cares.
+\end{itemize} 
+
+
+\section{Cognitive walkthrough}
+
+Use Upsampled3 since we've shown its the best
+
+For one user, X:
+
+\begin{itemize}
+    \item Create a crypto identity.
+    \item Migrate profile information.
+\end{itemize}
+
+Now create 15 more users, friends of user X. (group A). Also have one user who is not a recipient (group B). And one more user who doesn't have application at all (group C). Repeat encryption headers 28 times so we simulate group of size 400. Also repeat entries in UI controls.
+
+\begin{itemize}
+    \item Public key management - add keys of group A to user X.
+    \item Text submission - from X to group A.
+    \item Image submission - from X to group A.
+    \item Text and image retrieval - for user X.
+    \item Text and image retrieval - for one member of group A.
+    \item Text and image retrieval - for group B.
+    \item Text and image retrieval - for group C.
+\end{itemize}
+
+\section{Profiling submission and retrieval operations}
+
+\begin{itemize}
+    \item How long does the C++ code take? Gives lower bound on overall times.
+    \item Profile JavaScript functions.
+    \item Actually we can probably profile both at once.
+    \item Compare what's taking the longest, bottlenecks etc.
+\end{itemize}

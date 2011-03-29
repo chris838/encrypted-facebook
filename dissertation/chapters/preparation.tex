@@ -5,45 +5,32 @@
 \section{Approaches}
     \begin{itemize}
         
-        \item First, assume all communication with Facebook and any third party server is done securely. Can't we just store message on a server, authenticate and server will let you download? No. This just defers the problem (uProtect.it does this). We actually want cryptographicly secure communication - if the server contents were made public we would still be OK.
+        \item Can't we just store message on a server, authenticate and server will let you download? No. This just defers the problem (uProtect.it does this). We actually want cryptographicly secure communication - if the server contents were made public we would still be OK. So we MUST execute crypto functions locally (since homomorphic encryption is shit).
         
         \item Choices we have, based mainly on existing work:
         \begin{itemize}
-        
-        \item Where are the cryptographic functions executed?
-            \begin{itemize}
-                \item On the client computer
-                \item On a remote server (uProtect.it do this. If we perform encryption/decryption remotely we place trust in the remote party. Bad bad bad).
-            \end{itemize}
-                
-        \item If any code is run locally, by what mechanism do we obtain it?
-            \begin{itemize}
-                \item JavaScript downloaded from a site (uProtect, FB apps) every time we run.
-                \item Downloaded and installed once, maybe from trusted source (package manager, Firefox extension library, App store etc.)
-            \end{itemize}
                 
         \item Where are the private keys stored?
             \begin{itemize}
-                \item Not at all (relies on memorised passwords). Can't have big enough keyspace.
-                \item Locally (requires performing decryption locally or sending keys over a secure connection). 
-                \item Remotely (requires performing decryption remotely or recieving keys over a secure connection). More portable but less secure.
+                \item Rely on memorised passwords. Means we can store keys remotely, authenticate, download and unlock. Or, we could just hash the password or something. More portable BUT can't have big enough keyspace.
+                \item Locally.
             \end{itemize}
                 
-        \item Where are public keys stored and distrubuted?
+        \item Where are public keys stored and how are they distrubuted?
             \begin{itemize}
-                \item Locally, and distributed manually. Not really useable.
-                \item Through/from a trusted keychain.
-                \item With a Facebook or other third party.
+                \item Locally, and distributed manually. Not really useable. Must be unobtrusive remember?
+                \item Through/from a trusted keychain. Nice but we would need to set something up, have a third party service which was registered. 
+                \item With Facebook.
             \end{itemize}
                 
         \item Where do we store messages?
             \begin{itemize}
-                \item Locally isn't feasible
+                \item Locally isn't feasible (unobtrusive).
                 \item On Facebook
                 \item On a third party server.
             \end{itemize}
                 
-        \item Where do we intercept Facebook interaction? Show a nice diagram.
+        \item Where do we intercept Facebook interaction? This is the crucial question. Show a nice diagram.
             \begin{itemize}
                 \item Behind the browser (remotely) (e.g. a remotely hosted Facebook client running server side code)
                 \item Behind the browser (locally) (e.g. proxy server on localhost)
@@ -55,18 +42,28 @@
         
 	\item The conclusion:
             \begin{itemize}
-                \item Minimal third party reliance - not much benefit since trust is just defered. Plus downsides - can't scale, reliability, complexity. Everything stored/performed on Facebook or locally. One exception is app itself.
+                \item Minimal third party reliance - can't scale, reliability, complexity. Everything stored/performed on Facebook or locally. One exception is app itself.
                 \item If we want to store local state i.e. private keys, we can't use remote client, Greasemonkey or sandbox browser stuff. Custom client and proxy server just too complex. So extension all thats left.
                 \item Due to JavaScript being shit we need some native code. Only choices are Python or C/C++. Speed is in our criteria. Do a side by side speed comparison (and of JavaScript as well). C is faster => we use C.
             \end{itemize}
         
-	\item How to call C++ from JavaScript (binding, linking, compilation, marshalling). You should probably find out how this works. Note that we need Gecko 2.0 so we can avoid all that XPCOM nonsense.
                 
     \end{itemize}
     
+    So to sumerise - initially we have a Firefox extension with a C/C++ library doing all the heavy work.
+
+\section{Firefox}
+
+\begin{itemize}
+    \item Basics on how to build an extension, why we had to use Gecko 2.0 (I think it was to do with better file handling and better native code support).
+
+    \item How to call C++ from JavaScript (binding, linking, compilation, marshalling). You should probably find out how this works. Note that we need Gecko 2.0 so we can avoid all that XPCOM nonsense.
+\end{itemize}
+
 \section{Facebook}
 
 \begin{itemize}
+
    
     \item What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are propably on there somewhere - again we don't care.
     
@@ -79,6 +76,9 @@
         \item Image, 720x720 3 channel 8 bit colour. Not really because of chrominance subsampling.
     \end{itemize}
     Clearly images and notes are the most information dense so we use these.
+
+
+    \item Notes on general application deployment. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this.
     
     \item Connectedness.
     \begin{itemize}
@@ -89,9 +89,6 @@
     
     \item Interacting with Facebook. Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
 
-    \item Notes on application deployment. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users.
-
-
 \end{itemize}
     
 \section{Storing data in images}
@@ -99,11 +96,11 @@
     \begin{itemize}
 	\item Description of Facebook/JPEG compression process (problem statement)
 	\item Analysis of theoretical capacity
-	\item Evaluation of naive implementations (MATLAB demonstrations)
+	\item Evaluation of naive implementations (MATLAB demonstrations). Obiously use gray codes to begin with.
             \begin{itemize}
 		\item Completely naive (encode in RGB values)
 		\item Slightly less so (encode in DST with bit masks)
-                \item Preliminary testing with Haar wavelets (but no lifting scheme)
+                \item Possible better schemes: Haar and Scale.
                 \item Optimal scheme? Dirty paper coding or similair? Its just too hard a problem but future work could be interesting.
              \end{itemize}
 	\item Conclusion: possible approaches : Haar and Scale. Modularity and extensibility useful though since we don't know which is best and both are sub-optimal.
@@ -116,7 +113,7 @@
         \item Broadcast encryption.
         \begin{itemize}
             \item Naive implementation.
-            \item More advanced schemes (and why I don't use them). Mainly due to no server side code, can't ask users to perform operations and expect a reply any time soon (or at all). We could reuse headers which would reduce a lot of size. In many ways this is a great idea, have a big linked list of notes containing links to headers, move frequently accessed entries to the front etc. However this means reusing message keys which is bad practice/NIST recommends against.
+            \item More advanced schemes (and why I don't use them). Mainly due to no server side code, can't ask users to perform operations and expect a reply any time soon (or at all). We could reuse headers which would reduce a lot of size. In many ways this is a great idea, have a big linked list of notes containing links to headers, move frequently accessed entries to the front etc. However this means reusing message keys which is bad practice/NIST recommends against. Also, since we can only add and delete (not edit) notes (not through the API anyway, how fucking annoying) we might run into performance issues. 
             \item Underlying symmetric/asymmetric schemes. Maybe I could have improved the block size but ECC patents mean its not really found in open libraries.
         \end{itemize}
 	\item Key management and size (NIST recommendations).
@@ -126,78 +123,85 @@
 \section{Testing plan}
     \begin{itemize}
 	\item What kinds of testing will I use?
-	\item How can I make these tests possible?
-	\item Test bed or framework that needs to be in place
         \begin{itemize}
-            \item Need a method of simulating the Facebook JPEG compression process. Use libjpeg since it most closely matches the compression signature.
+            \item Unit testing , anything else??
+            \item Cognitive walkthrough - does this count as usability testing?
+            \item Security testing, since potential for exploits and project is security based - important enough to warrant its own section.
+        \end{itemize}
+	\item How can I make these tests possible? Test bed or framework that needs to be in place?
+        \begin{itemize}
+            \item Need a method of simulating the Facebook JPEG compression process. Use libjpeg since it most closely matches the compression signature (table of compression signatures).
             \item Need a BER (bit error rate) calculator. Again coded as a C function.
             \item FireBug and FireUnit for unit testing and profiling JavaScript functions.
             \item gprof for profiling C/C++ functions.
         \end{itemize}
-        \item Security testing \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint 4080/2006/12.20.12.15/doc/v1.pdf}
-        \begin{itemize}
-            \item Threat analysis. Must compromise since full security audit beyond scope of project. Look only at UTF8 decoder and message retrieval process. As an extension expand threat model to include public key and image retrieval.
-            \item Risk analysis
-            \item Test plan elabouration
-        \end{itemize}
     \end{itemize}
+
+\section{Security testing}
+
+Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint\%4080/2006/12.20.12.15/doc/v1.pdf}. Must compromise since full security audit beyond scope of project. Look only at text retrieval process and public key management. We ignore images, and general attacks (e.g. setting up a spoof Facebook site). As an extension expand threat model.
+
+        \begin{itemize}
+            \item Threat analysis. Threat = Agent x Mechanism x Asset.
+            \begin{itemize}
+                \item Facebook user creates a tag, which when decryption is attempted, causes denial of service (by locking up resources).
+                \item Facebook user creates a tag which when decrypted injects script in to page, gains control of users browser, can exectute arbitraty scripts within the Facebook domain (XSS) gains access to Facebook cookies.
+                \item Facebook user exploits UTF8 encoder/decoder to smuggle illegal characters past sanitization, gains control of users browser, can exectute arbitraty scripts within the Facebook domain (XSS) gains access to Facebook cookies.
+                \item Facebook user injects text which is run by JavaScripts eval() function, can execute arbitrary JavaScript outside the sandbox. Very Very bad!
+                \item Facebook user creates public key which, when parsed, creates a malicious file on the users local system.
+            \end{itemize}
+            \item Risk analysis. Risk = (Vulnrability x Threat x Impact) / Security Measures.
+            \begin{itemize}
+                \item Highest impact is running code outside the sandbox. True it maybe unlikely so long as we aren't stupid, but still. Basically we ban use of the eval function except for when we need it (retrieving JSON objects) then we replace it by a secureEval() which only allows valid Facebook object things.
+                \item Access to Facebook cookies can impact our security guarantees (since they could then change the public key). Also vulnrability is high. Thus we take time to sanitize inputs, and we ensure our UTF8 codec doesn't break sanitisation.
+                \item Denial of service is low impact - plus low vulnrability since the decoding process is built to fail. So no additional measures needed other than thourough testing.
+                \item Public keys we can limit to Base64 characters of a certain length. Done.
+            \end{itemize}
+            \item Test plan elabouration. From the above we want:
+            \begin{itemize}
+                \item Testing of text sanitiser.
+                \item Testing of UTF8 de/codec.
+                \item Testing of secureEval. Overide or ban eval().
+                \item Testing of public key downloader.
+            \end{itemize}
+        \end{itemize}
     
     
 \section{Proffesional practice stuff}
     \begin{itemize}
-	\item Software development model. Rapid application development. Create a rough protoype. Test, fix bugs, refactor, then rough out new functionality and repeat.
+	\item Software development methodology. Iterative prototyping. Work plan spells out which prototypes with what functionality should be completed when.
 	\item Version/source control. Git and project locker.
 	\item Performance bounds. Of what???
     \end{itemize}
     
 \section{Requirements analysis}
+        
+\begin{itemize}
 
-    Broadly speaking we want the program to enable confidential sharing of messages and images, even given large scale adoption. It should also do this without negatively effecting the normal Facebook/browsing experience for both users and non-users. For users - this means no signifantly longer waiting times and security vulnerabilites. For non-users this mean no garbage posts filling up their newsfeeds.
-    
-    There are uncertainties and/or tradoffs associated with certain approaches to encryption and encoding data in images (and to a lesser extent error correction). It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, it is highly important that we adopt a modular structure that fascillitates switching between differing schemes and permits future extension.
-    
-    So from this we derive the requirements in detail:
+    \item Encryption should be available on the most commonly used tasks (apart from those otherwise ruled out in section XXX). The user must therefore be able to broadcast-encrypt, submit, retrieve and decipher the following objects.
     
     \begin{itemize}
-    
-        \item User requirements
-        
-        The user must be able to carry out the following tasks:
-        \begin{itemize}
-            \item Specify a group of recipients and carry out a broadcast-encrypted conversation. This should extend to (at least) status updates, posts and comments.
-            \item Specify a group of recipients and upload a broadcast-encrypted image.
-            \item Recover a broadcast-encrypted image.
-            \item Move to another device and retain the ability to perform all of the above.
-        \end{itemize}
-        
-        For non-users, interaction with application users should have minimal 
-        
-        \item Functional requirements
-        
-        \begin{itemize}
-            \item Must meet security requirements - lets say ensures confidentiality from Facebook up till 2030. To meet this we would want a formal proof of the scheme and point to use of NIST recommendations for key size and management.
-            \item Must not introduce security holes in the browser sandbox - though we can only satisfy this to an extent. This is a bad requirement, but we still need it really?
-            \item Encryption, FEC and images - must be able to switch implementations and add new ones. If not at run time then at least at design time.
-        \end{itemize}
-            
-        \item Performance requirements
-        
-        Due to limitations we only test on a single PC (my laptop). However this is acceptable since its only moderately specifed, point to some proof.
-        
-        \begin{itemize}
-        
-            \item User base
-            \begin{itemize}
-                \item Should work with recipient group sizes of up to 400.
-            \end{itemize}
-            
-            \item Waiting times
-            \begin{itemize}
-                \item Encrypted message and images should load within acceptable time limits. Define acceptable as \url{http://www.useit.com/papers/responsetime.html}.
-                
-                \item Submission times for encrypted messages and images should be within acceptable limits. Define acceptable as \url{http://www.useit.com/papers/responsetime.html}.
-            \end{itemize}
-            
-        \end{itemize}
-    
+        \item status updates
+        \item wall posts
+        \item comments
+        \item messages
+        \item images
     \end{itemize}
+    
+    Specifically, encryption should ensure confidentiality of data with at least 128 bits of security.
+    
+    \item All requirements should be met with recipient groups of size up to 400, which is a reasonable number - refer to discussion.
+    
+    \item Should be unobtrusive (refer to introduction) i.e. must not negatively affect browsing/Facebook experience of users. From this we derive the following:
+    \begin{itemize}
+        \item Should try not to introduce any security holes. Up to a point, given scope of project. We have already declared a threat model and testing strategy etc.
+        \item Retrieval and submission times should be within acceptable limits. Define acceptable as \url{http://www.useit.com/papers/responsetime.html}.
+        \item Must not confine users to one computer. Should be portable. Securely transporting private keys is up to the user however.
+    \end{itemize}
+    
+    \item User activity should not negatively affect the activity of non-users (because of XXX refer to rest of preparation). We know there has to be some increase due to, for example, broadcast encryption overhead and status update's tiny length. Lets say maximum of twice number of objects generated compared to a normal user for the same activity.
+
+    \item There are uncertainties and/or tradoffs associated with certain approaches to encryption and encoding data in images (and to a lesser extent error correction). It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, it is highly important that we adopt a modular structure that fascillitates switching between differing schemes and permits future extension. This need not extend to simultaneously supporting different schemes - this would introduce much reduntant complexity.
+    
+    
+\end{itemize}
