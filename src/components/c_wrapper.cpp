@@ -69,7 +69,7 @@ const unsigned int decryptFileFromImage
 }
 
 /* Helper function calculates bit error rate. */
-const unsigned int calculateBitErrorRate( const IeFBLibrary* This, const char file1[], const char file2[] )
+const unsigned int calculateBitErrorRate( IeFBLibrary* This, const char file1[], const char file2[] )
 {
   return This->calculateBitErrorRate( file1,file2 );
 }

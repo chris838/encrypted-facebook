@@ -9,7 +9,7 @@ profile_dir := dev
 profile_dir1 := alice
 profile_dir2 := bob
 profile_dir3 := charlie
-profile_dir4 := dora
+profile_dir4 := group
 
 # The zip application to be used.
 ZIP := zip
@@ -91,9 +91,9 @@ include components/Makefile.in
 xpi_built := $(build_dir)/$(install_rdf) \
              $(build_dir)/$(chrome_manifest) \
              $(chrome_jar_file) \
-             #$(components_js_targets) \
-             #$(components_xpt) \
-	     #$(components_so) \
+             $(components_js_targets) \
+             $(components_xpt) \
+	     $(components_so) \
              $(build_dir)/$(preferences_dir)/$(extension_name).js
 
 xpi_built_no_dir := $(subst $(build_dir)/,,$(xpi_built))

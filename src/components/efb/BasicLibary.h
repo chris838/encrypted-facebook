@@ -5,6 +5,8 @@
 #include <bitset>
 #include <iostream>
 #include <fstream>
+#include <iterator>
+#include <numeric>
 
 // eFB Library sub-component includes
 #include "IeFBLibrary.h"
@@ -352,8 +354,10 @@ namespace efb {
             (
                 const char*  file1_path,
                 const char*  file2_path
-            ) const
+            )
             {
+                return testImageCoding();
+            
                 // ifstream objects
                 std::ifstream file1, file2;
                 // open file 1
@@ -416,6 +420,148 @@ namespace efb {
             const IStringCodec& string_codec_;
             const FacebookId id_;
             const std::string working_directory_;
+            
+            //! Testing function for image coding methods
+            unsigned int testImageCoding()
+            {
+                // Initialise
+                IConduitImage& img = factory_.create_IConduitImage();
+                unsigned int cap = img.getMaxData();
+                std::vector<byte> data1, data2;
+                srand( time(NULL) );
+                //
+                unsigned long data_left;
+                unsigned int count;
+                std::vector<unsigned int> terrors, ttotal, enctime, dectime;
+                struct timeval start, end;
+                long mtime, seconds, useconds;
+                
+                // Create log file
+                std::ofstream log_file;
+                log_file.open( "/home/chris/Desktop/test.log", std::ios::binary);
+                if(!log_file.is_open()) {
+                  std::cout << "Error creating log file:" << std::endl;
+                  return 1;
+                }
+                log_file << "Quality Factor" << ", ";
+                log_file << "Errors/GiB" << std::endl;
+                
+                // For each JPEG quality factor
+                for (int jpeg_rate = 80; jpeg_rate <=90; jpeg_rate ++ ) {
+                    
+                    data_left = 1024*1024*1024; // 1 GiB
+                    count = 0;
+                    terrors.clear();
+                    ttotal.clear();
+                    enctime.clear();
+                    dectime.clear();
+                    
+                    // For each test
+                    while ( data_left > 0 ) {
+                        
+                        // Create a conduit image object
+                        delete &img;
+                        img = factory_.create_IConduitImage();
+                        const char* template_filename =  "/home/chris/Desktop/src.bmp";
+                        // Load the template image file into a ConduitImage object
+                        try {img.load( template_filename );}
+                        catch (cimg_library::CImgInstanceException &e) {
+                            std::cout << "Error loading template image: " << e.what() << std::endl;
+                            return 3;
+                        }
+                        
+                        // Create work file
+                        std::string img_out_filename = "/home/chris/Desktop/testing/file.jpg";      
+                        std::string img_in_filename = "/home/chris/Desktop/testing/file.jpg";      
+                        
+                        // Create a randomised byte vector to encode
+                        data1.clear();
+                        if (data_left > cap) {
+                            // create a full cap file
+                            data1.resize(cap);
+                            for (unsigned int i=0; i<cap; i++) data1[i] = rand();
+                            data_left -= cap;
+                        } else {
+                            // create a partial cap file
+                            data1.resize(data_left);
+                            for (unsigned int i=0; i<data_left; i++) data1[i] = rand();
+                            data_left = 0;
+                        }
+                        
+                        // Encode that file, timing how long this takes
+                        // START TIMING
+                        gettimeofday(&start, NULL);
+                        try {img.implantData( data1 );}
+                        catch (ConduitImageImplantException &e) {
+                            std::cout << "Error implanting data: " << e.what() << std::endl;
+                            return 4;
+                        }
+                        // STOP TIMING
+                        gettimeofday(&end, NULL);
+                        seconds  = end.tv_sec  - start.tv_sec;
+                        useconds = end.tv_usec - start.tv_usec;
+                        mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+                        enctime.push_back( mtime );
+                        
+                        // Save our final image (in a lossless format)
+                        try {img.save_jpeg( img_out_filename.c_str(), jpeg_rate );}
+                        catch (cimg_library::CImgInstanceException &e) {
+                          std::cout << "Error saving output image: " << e.what() << std::endl;
+                          return 3;
+                        }
+                        
+                        // Decode that file, timing how long this takes
+                        delete &img;
+                        img = factory_.create_IConduitImage();
+                        // Load the image file into a CImg object
+                        try {img.load( img_in_filename.c_str() );}
+                        catch (cimg_library::CImgInstanceException &e) {
+                          std::cout <<  "Error loading source image: " << e.what() << std::endl;
+                          return 1;
+                        }
+                        // Decode from image
+                        data2.clear();
+                        // START TIMING
+                        gettimeofday(&start, NULL);
+                        try {img.extractData( data2 );}
+                        catch (ConduitImageExtractException &e) {
+                            std::cout << "Error extracting data: " << e.what() << std::endl;
+                            return 2;
+                        }
+                        // STOP TIMING
+                        gettimeofday(&end, NULL);
+                        seconds  = end.tv_sec  - start.tv_sec;
+                        useconds = end.tv_usec - start.tv_usec;
+                        mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+                        dectime.push_back( mtime );
+                        
+                        // Calculate the bit error rate (BER)
+                        unsigned int total=0, errors=0; std::vector<byte> e;
+                        for (unsigned int i=0; i<data1.size(); i++) {
+                          byte error = data1[i] ^ data2[i];
+                          e.push_back( error );
+                          std::bitset<8> bs( error );
+                          errors += bs.count();
+                          total += 8;
+                        }
+                        terrors.push_back( errors );
+                        ttotal.push_back( total );
+                        std::cout << "Processed image " << count;
+                        std::cout << ". Bytes left: " << data_left;
+                        std::cout << ". Last errors: " << errors << " in " << total << " bits." << std::endl;
+                        count++;
+                    }
+                        
+                    // Aggregate all the error rates and timing measurements
+                    log_file << jpeg_rate << ", ";
+                    log_file << std::accumulate( terrors.begin(), terrors.end(), 0 ) << std::endl;
+                 
+                }
+                
+                // Store in log file
+                
+                return 0;
+            }
     };
 }
 

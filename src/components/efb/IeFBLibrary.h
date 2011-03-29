@@ -64,7 +64,7 @@ class IeFBLibrary
         (
             const char*  file1_path,
             const char*  file2_path
-        ) const = 0;
+        ) = 0;
 };
 
 #endif //IEFBLIBRARY_H

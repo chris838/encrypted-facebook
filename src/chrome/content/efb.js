@@ -65,8 +65,12 @@ eFB = {
                 // Init C library
                 eFB.initialise( eFB.id, eFB.working_dir );
                 // Request the user's private key password
-                var pass = window.prompt("Please enter your passphrase to unlock your private key.");
-                eFB.loadCryptoState(pass);
+                if (eFB.getNsiFileObject(  eFB.working_dir + eFB.keys_dir + "user.key" ).exists()) {
+                    var pass = window.prompt("Please enter your passphrase to unlock your private key.");
+                    eFB.loadCryptoState(pass);
+                } else {
+                    
+                }
             } );
             // Create the login url
             var login_url = "https://graph.facebook.com/oauth/authorize?" +
@@ -250,7 +254,7 @@ eFB = {
     */
     cleanProfile : function(aEvent) {
         
-        
+        eFB.calculateBitErrorRate("","");
         
         return;
         // Delete posts on the wall

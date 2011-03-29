@@ -3,6 +3,7 @@
 
 // Library sub-component includes
 #include "UpsampledConduitImage.h"
+#include "Hamming.h"
 
 namespace efb {
     
@@ -21,20 +22,24 @@ namespace efb {
             //! Get the maximum ammount of data (in bytes) that can be stored in this implementation.
             virtual unsigned int getMaxData()
             {
-                return (720*720*3)/8 - 9;
+                return (720*720*3)/8 - 6;
             }
             
             //! Check how much data (if any) is stored in the current image.
             virtual unsigned int readSize()
             {
-                std::deque<byte> data;
-                decodeFromBlock(data, 719, 696 );
-                decodeFromBlock(data, 719, 704 );
-                decodeFromBlock(data, 719, 712 );
+                hamming::InitEncode(4);
+                std::deque<byte> data1, data2;
+                decodeFromBlock(data1, 719, 704 );
+                decodeFromBlock(data2, 719, 712 );
+                //
                 unsigned int len =
-                            (tripleModR(data[0],data[3],data[6]) << 16)
-                        |   (tripleModR(data[1],data[4],data[7]) << 8 )
-                        |   (tripleModR(data[2],data[5],data[8]) << 0 );
+                    0   |   ( hamming::Decode( data1[0] ) << 0)
+                        |   ( hamming::Decode( data1[1] ) << 4)
+                        |   ( hamming::Decode( data1[2] ) << 8)
+                        |   ( hamming::Decode( data2[0] ) << 12)
+                        |   ( hamming::Decode( data2[1] ) << 16)
+                        |   ( hamming::Decode( data2[2] ) << 20);
                 return len;
             }
             
@@ -83,20 +88,25 @@ namespace efb {
                 data.push_back( c );
             }
             
-            //! Writes the size of the image (3 bytes) to the last twelve pixels, using triple modular redundancy.
+            //! Writes the size of the image (3 bytes) to the last eight pixels, using Hamming codes.
             void writeSize
             (
                 unsigned int len    
             )
             {
-                std::deque<byte> data;
-                data.push_back( (byte) (len >> 16) );
-                data.push_back( (byte) (len >> 8) );
-                data.push_back( (byte) (len & 0x00ff) );
+                // Encode with Hamming (8,4) SECDEC codes.
+                hamming::InitEncode(4);
+                std::deque<byte> data1;
+                std::deque<byte> data2;
+                data1.push_back( (byte) hamming::Encode( (len >> 0) & 0x0000000f ) );
+                data1.push_back( (byte) hamming::Encode( (len >> 4) & 0x0000000f ) );
+                data1.push_back( (byte) hamming::Encode( (len >> 8) & 0x0000000f ) );
+                data2.push_back( (byte) hamming::Encode( (len >> 12) & 0x0000000f ) );
+                data2.push_back( (byte) hamming::Encode( (len >> 16) & 0x0000000f ) );
+                data2.push_back( (byte) hamming::Encode( (len >> 20) & 0x0000000f ) );
                 //
-                encodeInBlock( data, 719, 696 );
-                encodeInBlock( data, 719, 704 );
-                encodeInBlock( data, 719, 712 );
+                encodeInBlock( data1, 719, 704 );
+                encodeInBlock( data2, 719, 712 );
             }
     };
     

@@ -23,7 +23,7 @@ const unsigned int encryptFileInImage(IeFBLibrary* This, const char* ids, const 
 
 const unsigned int decryptFileFromImage(IeFBLibrary* This, const char* img_in_filename, const char* data_out_filename);
 
-const unsigned int calculateBitErrorRate( const IeFBLibrary* This, const char* file1, const char* file2 );
+const unsigned int calculateBitErrorRate( IeFBLibrary* This, const char* file1, const char* file2 );
 
 void destroy_object( IeFBLibrary* This ) ;
 
