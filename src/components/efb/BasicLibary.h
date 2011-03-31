@@ -468,11 +468,11 @@ namespace efb {
                 std::ofstream log_file;
                 
                 // For each JPEG quality factor
-                for (int jpeg_rate = 81; jpeg_rate <=90; jpeg_rate ++ ) {
+                for (int jpeg_rate = 80; jpeg_rate <=90; jpeg_rate ++ ) {
                     
                     // Create log file
                     std::stringstream s("");
-                    s  << "/home/chris/Desktop/testing/upsampled3_results_" << jpeg_rate << ".log";
+                    s  << "/home/chris/Desktop/testing/haar_results_" << jpeg_rate << ".log";
                     if (log_file.is_open()) log_file.close();
                     log_file.open( s.str().c_str() , std::ios::binary);
                     if(!log_file.is_open()) {
