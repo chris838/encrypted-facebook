@@ -11,17 +11,33 @@
 
 \item Model as a binary symmetric channel. Calculate the capacity (refer to MacKays books), multiply by the number of bits they can effectively store per image. This is the effective, per image, capacity. Compare.
 
-\item An $(n,k)$ Reed Solomon code will always decode a block correctly providing the number of symbol errors is less than $t = 1 + \lfloor (n-k)/2  \rfloor$. When we get $t$ or more symbol errors the decoder either fails or decodes the wrong output sequence with some non-zero probability - we will henceforth use the term 'unsuccessful decode' to refer either of these events. In the worst case this will occur with only $t$ bit errors in the decoder input, one in each symbol. Therefore, the probability of an unsuccesful decode fo a single block is bounded by:
+\item An $(n,k)$ Reed Solomon code will always decode a block correctly providing the number of symbol errors is less than $t = 1 + \lfloor (n-k)/2  \rfloor$. When we get $t$ or more symbol errors the decoder either fails or decodes the wrong output sequence with some non-zero probability. We will henceforth use the term 'unsuccessful decode' to refer either of these events, since detecting an error gives us no advantage over undetecting an error (we can't request a fresh copy of the data even if we know it is corrupt). In the worst case an unsuccesful decode will occur with only $t$ bit errors in the decoder input, one in each symbol. Therefore, the probability of an unsuccesful decode for a single block is bounded by:
 
 \begin{equation}
     \sum_{i=t}^{8n} {{8n}\choose{i}} p^i (1-p)^{8n-i}
 \end{equation}
 
-where $p$ is the bit error probability. Using our measured BER as an approximations of the bit error probability, we calculate an upper bound probability of an unsuccesful decode for each of our conduit image methods.
+where $p$ is the bit error probability. Using our estimate of the bit error probability, we calculate an upper bound on the probability of an unsuccesful block decode for each of our conduit image methods. Dividing by the block size give us the new bit error probability after error correction encoding. Multiplying by the image size we get the probability of creating an image which can't be decoded.
 
-Should be millions of Gb. This NASA document url{http://ipnpr.jpl.nasa.gov/progress\_report/42-84/84F.PDF} shows what they used for the Voyager space probe. Also this approaches hard drive read/write error rates. Calculate the final capacity of each method.
+Should on in a million Gb, or one in a trillion images. This NASA document url{http://ipnpr.jpl.nasa.gov/progress\_report/42-84/84F.PDF} shows what they used for the Voyager space probe. Also this approaches hard drive read/write error rates.
 
-\item Conclude - Scaled3 gives highest capacity, however you look at it. Effective error rates might be better for other methods, but who cares since as we have discussed, beyond $10^{-13}$ no one cares.
+\item Calculate the final capacity of each method based on the actual FEC they use.
+
+\item To summerise we do the following...
+
+\item ... two graphs with enc/decode times for quality factors 80-90, curves for each of the three image methods. Times should be normalised per image.
+
+\item ... a graph with bit error rates for quality factors 80-90, curves for each of the three image methods.
+
+\item .. a table with: Image method; Max data per image (bytes); Bit error probability; Theoretical max (error-free ) capacity per image;
+
+\item ...and another table based on what FEC we actually used. Image method; FEC used in implementation; Resultant capacity (per image); Theoretical min bit error probability; Actual bit error probability; Per image error probability;
+
+\item ...our conclusion is that final error rate doesn't matter because its all negligable both theoretical and actual. So we finish with a graph of the actual capacity plus error code as a bar chart thing.
+
+\item Conclude - Scaled3 gives highest capacity, however you look at it. Effective error rates might be better for other methods, but no matter since as we have discussed, beyond $10^{-13}$ no one cares. Might get faster codec, refer to section XXX which gives full breakdown of times and show this isn't important.
+
+\item From now on we use Scaled3 for all tests.
 \end{itemize} 
 
 

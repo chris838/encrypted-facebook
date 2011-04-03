@@ -25,12 +25,12 @@
                 
         \item Where do we store messages?
             \begin{itemize}
-                \item Locally isn't feasible (unobtrusive).
-                \item On Facebook
-                \item On a third party server.
+                \item Locally isn't feasible (unobtrusive, transparent).
+                \item On Facebook.
+                \item On a third party server. Can we scale this?
             \end{itemize}
                 
-        \item Where do we intercept Facebook interaction? This is the crucial question. Show a nice diagram.
+        \item Where do we intercept Facebook interaction? This is the crucial question, can probably slim the content on the previous ones. Show a nice diagram.
             \begin{itemize}
                 \item Behind the browser (remotely) (e.g. a remotely hosted Facebook client running server side code)
                 \item Behind the browser (locally) (e.g. proxy server on localhost)
@@ -44,30 +44,33 @@
             \begin{itemize}
                 \item Minimal third party reliance - can't scale, reliability, complexity. Everything stored/performed on Facebook or locally. One exception is app itself.
                 \item If we want to store local state i.e. private keys, we can't use remote client, Greasemonkey or sandbox browser stuff. Custom client and proxy server just too complex. So extension all thats left.
-                \item Due to JavaScript being shit we need some native code. Only choices are Python or C/C++. Speed is in our criteria. Do a side by side speed comparison (and of JavaScript as well). C is faster => we use C.
             \end{itemize}
-        
-                
+         
     \end{itemize}
-    
-    So to sumerise - initially we have a Firefox extension with a C/C++ library doing all the heavy work.
 
-\section{Firefox}
+\section{Firefox and extensions}
 
 \begin{itemize}
-    \item Basics on how to build an extension, why we had to use Gecko 2.0 (I think it was to do with better file handling and better native code support).
+    
+    \item Basics on how to build an extension.
+
+    \item Due to JavaScript being shit we need some native code. Only choices are Python or C/C++. Speed is in our criteria. Do a side by side speed comparison (and of JavaScript as well). C is faster => we use C.
+
+    \item Why we had to use Gecko 2.0 (I think it was to do with better file handling and better native code support).
 
     \item How to call C++ from JavaScript (binding, linking, compilation, marshalling). You should probably find out how this works. Note that we need Gecko 2.0 so we can avoid all that XPCOM nonsense.
+    
+    \item Conclusion: Firefox 4/Gecko 2.0 extension with C/C++ backend, avoiding XPCOM.
+    
 \end{itemize}
 
 \section{Facebook}
 
 \begin{itemize}
-
    
-    \item What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are propably on there somewhere - again we don't care.
+    \item Activity we need to support. What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are propably on there somewhere - again we don't care.
     
-    \item Some limitations on objects: 
+    \item Objects and their sizes:
     \begin{itemize}
         \item Status update, 144 chars
         \item Post
@@ -75,10 +78,11 @@
         \item Note, 66,000 chars or so
         \item Image, 720x720 3 channel 8 bit colour. Not really because of chrominance subsampling.
     \end{itemize}
-    Clearly images and notes are the most information dense so we use these.
-
-
-    \item Notes on general application deployment. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this.
+    Clearly images and notes are the most information dense so we use these. To summerise we must support the most popular activities and will likely need to make use of the most dense objects.
+    
+    \item Deleting objects. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this. This might require deleting objects
+    
+    \item Communicating with Facebook. Now we know what we need to interact with, how do we do it? Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
     
     \item Connectedness.
     \begin{itemize}
@@ -86,8 +90,8 @@
         \item Theoretical limits - Dunbar number of 150, others suggest higher at ~300. So it perhaps won't increase with Facebook's expansion.
         \item Conclusion - 400 if we can make it work, but anything as low as 100 we could probably get away with.
     \end{itemize}
-    
-    \item Interacting with Facebook. Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
+
+    \item Conclusion: we must be able to send objects X,Y and Z, and will probably need to make use of A,B and C. Three different ways needed to connect to Facebook to achieve this. No JavaScript SDK; must not significantly increase signal to noise ratio; must suport at least 400 friends/recipients.
 
 \end{itemize}
     
@@ -116,9 +120,19 @@
             \item More advanced schemes (and why I don't use them). Mainly due to no server side code, can't ask users to perform operations and expect a reply any time soon (or at all). We could reuse headers which would reduce a lot of size. In many ways this is a great idea, have a big linked list of notes containing links to headers, move frequently accessed entries to the front etc. However this means reusing message keys which is bad practice/NIST recommends against. Also, since we can only add and delete (not edit) notes (not through the API anyway, how fucking annoying) we might run into performance issues. 
             \item Underlying symmetric/asymmetric schemes. Maybe I could have improved the block size but ECC patents mean its not really found in open libraries.
         \end{itemize}
-	\item Key management and size (NIST recommendations).
-        \item Conclusion : simple bcast encryption using AES and RSA underneath. However, modularity and extensibility would be useful because there are improvements. In particular ECC would give dramatically smaller overheads. 
+	
+        \item Conclusion : simple broadcast encryption using AES and RSA underneath. However, modularity and extensibility would be useful because there are improvements. In particular ECC would give dramatically smaller overheads. 
     \end{itemize}
+    
+\section{Further security considerations}
+
+\begin{itemize}
+    \item Key management and size (NIST recommendations).
+    \item Message key and IVs, don't reuse. Ensure good source of entrophy.
+    \item Private key policy. Find a good reference, but basically we just mimic SSH and the like.
+    \item Public key policy. Good idea to warn the user of the risks when they add public keys, check SSL is enabled etc.
+\end{itemize}
+
 
 \section{Testing plan}
     \begin{itemize}
@@ -130,7 +144,7 @@
         \end{itemize}
 	\item How can I make these tests possible? Test bed or framework that needs to be in place?
         \begin{itemize}
-            \item Need a method of simulating the Facebook JPEG compression process. Use libjpeg since it most closely matches the compression signature (table of compression signatures).
+            \item Need a method of simulating the Facebook JPEG compression process. Use libjpeg since it most closely matches the compression signature (table of compression signatures). Show coefficient table.
             \item Need a BER (bit error rate) calculator. Again coded as a C function.
             \item FireBug and FireUnit for unit testing and profiling JavaScript functions.
             \item gprof for profiling C/C++ functions.
@@ -139,7 +153,7 @@
 
 \section{Security testing}
 
-Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint\%4080/2006/12.20.12.15/doc/v1.pdf}. Must compromise since full security audit beyond scope of project. Look only at text retrieval process and public key management. We ignore images, and general attacks (e.g. setting up a spoof Facebook site). As an extension expand threat model.
+Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint\%4080/2006/12.20.12.15/doc/v1.pdf}. Must compromise since full security audit beyond scope of project. Look only at text retrieval process and public key management. We ignore images, and general attacks (e.g. setting up a spoof Facebook site). We also ignore threats that would be present ANYWAY e.g. if you haven't got SSL on. As an extension expand threat model.
 
         \begin{itemize}
             \item Threat analysis. Threat = Agent x Mechanism x Asset.
@@ -153,15 +167,15 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
             \item Risk analysis. Risk = (Vulnrability x Threat x Impact) / Security Measures.
             \begin{itemize}
                 \item Highest impact is running code outside the sandbox. True it maybe unlikely so long as we aren't stupid, but still. Basically we ban use of the eval function except for when we need it (retrieving JSON objects) then we replace it by a secureEval() which only allows valid Facebook object things.
-                \item Access to Facebook cookies can impact our security guarantees (since they could then change the public key). Also vulnrability is high. Thus we take time to sanitize inputs, and we ensure our UTF8 codec doesn't break sanitisation.
-                \item Denial of service is low impact - plus low vulnrability since the decoding process is built to fail. So no additional measures needed other than thourough testing.
+                \item Access to Facebook cookies can impact our security guarantees (since they could then change the public key). Also vulnrability is high. Thus we take time to sanitize before we inject into the browser.
+                \item Denial of service is low impact, but high vulnrability since the user need not do anyting to initate the decoding process other browsing to a site with a malicious post. So, test UTF8 decoder a lot, ensure that UTF8 decode, FEC decode, decrypt, all fail gracefully. Not image decode since out of scope, as mentioned above.
                 \item Public keys we can limit to Base64 characters of a certain length. Done.
             \end{itemize}
             \item Test plan elabouration. From the above we want:
             \begin{itemize}
+                \item Testing of secureEval. Overide or otherwise ban eval().
                 \item Testing of text sanitiser.
-                \item Testing of UTF8 de/codec.
-                \item Testing of secureEval. Overide or ban eval().
+                \item Testing of UTF8 de/codec. Complicated given the large range of i/o.
                 \item Testing of public key downloader.
             \end{itemize}
         \end{itemize}
@@ -170,6 +184,7 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
 \section{Proffesional practice stuff}
     \begin{itemize}
 	\item Software development methodology. Iterative prototyping. Work plan spells out which prototypes with what functionality should be completed when.
+        \item Coding conventions, const correctedness etc.
 	\item Version/source control. Git and project locker.
 	\item Performance bounds. Of what???
     \end{itemize}
@@ -181,11 +196,11 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
     \item Encryption should be available on the most commonly used tasks (apart from those otherwise ruled out in section XXX). The user must therefore be able to broadcast-encrypt, submit, retrieve and decipher the following objects.
     
     \begin{itemize}
-        \item status updates
-        \item wall posts
-        \item comments
-        \item messages
-        \item images
+        \item Status updates
+        \item Wall posts
+        \item Comments
+        \item Messages
+        \item Images
     \end{itemize}
     
     Specifically, encryption should ensure confidentiality of data with at least 128 bits of security.
@@ -201,7 +216,7 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
     
     \item User activity should not negatively affect the activity of non-users (because of XXX refer to rest of preparation). We know there has to be some increase due to, for example, broadcast encryption overhead and status update's tiny length. Lets say maximum of twice number of objects generated compared to a normal user for the same activity.
 
-    \item There are uncertainties and/or tradoffs associated with certain approaches to encryption and encoding data in images (and to a lesser extent error correction). It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, it is highly important that we adopt a modular structure that fascillitates switching between differing schemes and permits future extension. This need not extend to simultaneously supporting different schemes - this would introduce much reduntant complexity.
+    \item There are uncertainties and/or tradoffs associated with certain approaches to encryption and encoding data in images (and to a lesser extent error correction). It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, it is highly important that we adopt a modular structure that fascillitates switching between differing schemes and permits future extension. This need not extend to simultaneously supporting different schemes - this would introduce much redundant complexity.
     
     
 \end{itemize}

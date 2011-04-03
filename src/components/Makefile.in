@@ -64,6 +64,6 @@ $(components_target_dir)/%.o : $(components_dir)/%.cpp $(components_target_dir)
 
 $(components_target_dir)/libtest.so : $(components_target_dir)/c_client.o $(components_target_dir)/c_wrapper.o $(components_target_dir) 
 	@gcc -lbotan -ljpeg -shared -Wl,-soname,$(components_target_dir)/libtest.so -o $(components_target_dir)/libtest.so $(components_target_dir)/c_wrapper.o $(components_target_dir)/c_client.o
-	@rm $(components_target_dir)/*.o
+	#@rm $(components_target_dir)/*.o
 	@echo "Created shared library libtest.so"
 

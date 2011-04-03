@@ -1,0 +1,82 @@
+\hypertarget{classefb_1_1ICrypto}{
+\section{ICrypto Class Reference}
+\label{classefb_1_1ICrypto}\index{efb::ICrypto@{efb::ICrypto}}
+}
+
+
+Abstract class definining the interface for the cryptographic algorithms.  
+
+
+Inheritance diagram for ICrypto:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classefb_1_1ICrypto}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual unsigned int \hyperlink{classefb_1_1ICrypto_a1d1ef41942f8d5c114ffd8180fbe547f}{calculateHeaderSize} (unsigned int numOfIds) const =0
+\begin{DoxyCompactList}\small\item\em Returns the predicted header size so we can leave room before encryption. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classefb_1_1ICrypto_a258cb59b2942fbac3615b14207dbdf78}{encryptMessage} (std::vector$<$ \hyperlink{structefb_1_1FacebookId}{FacebookId} $>$ \&ids, std::vector$<$ \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} $>$ \&data)=0
+\begin{DoxyCompactList}\small\item\em Writes header and encrypts message. Assumes there is a header-\/size offset before data bytes begin. \item\end{DoxyCompactList}\item 
+virtual void \hyperlink{classefb_1_1ICrypto_ac7d12b1021fd2f4bef93aac3169a35db}{decryptMessage} (std::vector$<$ \hyperlink{namespaceefb_a0c8186d9b9b7880309c27230bbb5e69d}{byte} $>$ \&data)=0
+\begin{DoxyCompactList}\small\item\em Parses any data header and attempts to decrypt the data. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstract class definining the interface for the cryptographic algorithms. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classefb_1_1ICrypto_a1d1ef41942f8d5c114ffd8180fbe547f}{
+\index{efb::ICrypto@{efb::ICrypto}!calculateHeaderSize@{calculateHeaderSize}}
+\index{calculateHeaderSize@{calculateHeaderSize}!efb::ICrypto@{efb::ICrypto}}
+\subsubsection[{calculateHeaderSize}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned int calculateHeaderSize (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{ numOfIds}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1ICrypto_a1d1ef41942f8d5c114ffd8180fbe547f}
+
+
+Returns the predicted header size so we can leave room before encryption. 
+
+
+
+Implemented in \hyperlink{classefb_1_1BotanCrypto_aaaaf0d310c60207d6c545ed3a8b72fcd}{BotanCrypto$<$ N, M $>$}.
+
+\hypertarget{classefb_1_1ICrypto_a258cb59b2942fbac3615b14207dbdf78}{
+\index{efb::ICrypto@{efb::ICrypto}!encryptMessage@{encryptMessage}}
+\index{encryptMessage@{encryptMessage}!efb::ICrypto@{efb::ICrypto}}
+\subsubsection[{encryptMessage}]{\setlength{\rightskip}{0pt plus 5cm}virtual void encryptMessage (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ {\bf FacebookId} $>$ \&}]{ ids, }
+\item[{std::vector$<$ {\bf byte} $>$ \&}]{ data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1ICrypto_a258cb59b2942fbac3615b14207dbdf78}
+
+
+Writes header and encrypts message. Assumes there is a header-\/size offset before data bytes begin. 
+
+
+
+Implemented in \hyperlink{classefb_1_1BotanCrypto_ace3300e249bf4305ddffeee43c13d844}{BotanCrypto$<$ N, M $>$}.
+
+\hypertarget{classefb_1_1ICrypto_ac7d12b1021fd2f4bef93aac3169a35db}{
+\index{efb::ICrypto@{efb::ICrypto}!decryptMessage@{decryptMessage}}
+\index{decryptMessage@{decryptMessage}!efb::ICrypto@{efb::ICrypto}}
+\subsubsection[{decryptMessage}]{\setlength{\rightskip}{0pt plus 5cm}virtual void decryptMessage (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ {\bf byte} $>$ \&}]{ data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classefb_1_1ICrypto_ac7d12b1021fd2f4bef93aac3169a35db}
+
+
+Parses any data header and attempts to decrypt the data. 
+
+
+
+Implemented in \hyperlink{classefb_1_1BotanCrypto_acb98871622014be1ac47d2126c04d4de}{BotanCrypto$<$ N, M $>$}.
+

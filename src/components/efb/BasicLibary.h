@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iterator>
 #include <numeric>
+#include <sys/stat.h> 
 
 // eFB Library sub-component includes
 #include "IeFBLibrary.h"
@@ -468,13 +469,19 @@ namespace efb {
                 std::ofstream log_file;
                 
                 // For each JPEG quality factor
-                for (int jpeg_rate = 80; jpeg_rate <=90; jpeg_rate ++ ) {
+                for (int jpeg_rate = 90; jpeg_rate >=80; jpeg_rate -- ) {
                     
                     // Create log file
                     std::stringstream s("");
                     s  << "/home/chris/Desktop/testing/haar_results_" << jpeg_rate << ".log";
+                    struct stat stFileInfo;
+                    int intStat = stat( s.str().c_str(),&stFileInfo);
+                    if (intStat==0) continue;
+                    
                     if (log_file.is_open()) log_file.close();
                     log_file.open( s.str().c_str() , std::ios::binary);
+                    
+                    
                     if(!log_file.is_open()) {
                       std::cout << "Error creating log file:" << std::endl;
                       return 1;
@@ -497,8 +504,6 @@ namespace efb {
                     while ( data_left > 0 ) {
                         
                         // Create a conduit image object
-                        delete &img;
-                        img = factory_.create_IConduitImage();
                         const char* template_filename =  "/home/chris/Desktop/src.bmp";
                         // Load the template image file into a ConduitImage object
                         try {img.load( template_filename );}
@@ -508,8 +513,10 @@ namespace efb {
                         }
                         
                         // Create work file
-                        std::string img_out_filename = "/home/chris/Desktop/testing/file.jpg";      
-                        std::string img_in_filename = "/home/chris/Desktop/testing/file.jpg";      
+                        std::stringstream ss("");
+                        ss << "/home/chris/Desktop/testing/file" << jpeg_rate << ".jpg";
+                        std::string img_out_filename = ss.str();      
+                        std::string img_in_filename = ss.str();      
                         
                         // Create a randomised byte vector to encode
                         data1.clear();
@@ -548,8 +555,6 @@ namespace efb {
                         }
                         
                         // Decode that file, timing how long this takes
-                        delete &img;
-                        img = factory_.create_IConduitImage();
                         // Load the image file into a CImg object
                         try {img.load( img_in_filename.c_str() );}
                         catch (cimg_library::CImgInstanceException &e) {
@@ -602,6 +607,13 @@ namespace efb {
                 // Store in log file
                 
                 return 0;
+            }
+    
+            //! Testing function for UTF-8 encoding
+            unsigned int testUTF8Decode(std::vector<byte> data)
+            {
+                string_codec_.binaryToFbReady(data);
+                
             }
     };
 }

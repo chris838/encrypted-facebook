@@ -1,0 +1,165 @@
+\hypertarget{classefb_1_1SchifraFec}{
+\section{SchifraFec$<$ N, M $>$ Class Template Reference}
+\label{classefb_1_1SchifraFec}\index{efb::SchifraFec@{efb::SchifraFec}}
+}
+
+
+Schifra Reed Solomon error correction library where code rate is (N,M).  
+
+
+Inheritance diagram for SchifraFec$<$ N, M $>$:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classefb_1_1SchifraFec}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classefb_1_1SchifraFec_a352db1b7b8e96bb147f25eb286c9969b}{SchifraFec} (std::size\_\-t field\_\-descriptor, std::size\_\-t generator\_\-polynommial\_\-index, std::size\_\-t generator\_\-polynommial\_\-root\_\-count)
+\begin{DoxyCompactList}\small\item\em Default constructor. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classefb_1_1SchifraFec_abfa614d594bf4d7c86b6a8817f35dec5}{encodeBlock} (std::string \&message, std::string \&fec) const 
+\begin{DoxyCompactList}\small\item\em Generate FEC code from a message. \item\end{DoxyCompactList}\item 
+void \hyperlink{classefb_1_1SchifraFec_a00958e2a880e71ba6a8b6a0e8f560c45}{decodeBlock} (std::string \&message\_\-plus\_\-errors, std::string \&fec, std::string \&message) const 
+\begin{DoxyCompactList}\small\item\em Try and fix any errors in a block-\/size message using FEC code. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std::size\_\-t \hyperlink{classefb_1_1SchifraFec_aab1a6051362d9a8b9dc1bf66162743ba}{field\_\-descriptor\_\-}
+\item 
+const std::size\_\-t \hyperlink{classefb_1_1SchifraFec_a0151caad93dcee8fd76042845c7761d1}{generator\_\-polynommial\_\-index\_\-}
+\item 
+const std::size\_\-t \hyperlink{classefb_1_1SchifraFec_a187b4bde8c8d1626ee351ad9d8a10efb}{generator\_\-polynommial\_\-root\_\-count\_\-}
+\item 
+const std::size\_\-t \hyperlink{classefb_1_1SchifraFec_aec880d94a65f32e64736d21ecc62caee}{code\_\-length\_\-}
+\item 
+const std::size\_\-t \hyperlink{classefb_1_1SchifraFec_a560cb28c8a918c24356967a3c35604ad}{fec\_\-length\_\-}
+\item 
+const std::size\_\-t \hyperlink{classefb_1_1SchifraFec_a780eb0b73c725bab3470002b4746d07e}{data\_\-length\_\-}
+\item 
+schifra::galois::field \hyperlink{classefb_1_1SchifraFec_a770e111002e7a8b19041c4f3a972b2c1}{field\_\-}
+\item 
+schifra::galois::field\_\-polynomial \hyperlink{classefb_1_1SchifraFec_a80fe940d7742c12811d27cbb50d605dc}{generator\_\-polynomial\_\-}
+\item 
+schifra::sequential\_\-root\_\-generator\_\-polynomial\_\-creator \hyperlink{classefb_1_1SchifraFec_a6dd291fa5e301f1d88eba72e486c22d3}{polynomial\_\-creator\_\-}
+\item 
+schifra::reed\_\-solomon::encoder$<$ N, M-\/N $>$ \hyperlink{classefb_1_1SchifraFec_a48add19c7145ddef42b214f772508c0f}{encoder\_\-}
+\item 
+schifra::reed\_\-solomon::decoder$<$ N, M-\/N $>$ \hyperlink{classefb_1_1SchifraFec_acddab8a0f72a511d8b03ffecfe77735a}{decoder\_\-}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int N, int M$>$ class efb::SchifraFec$<$ N, M $>$}
+
+Schifra Reed Solomon error correction library where code rate is (N,M). 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classefb_1_1SchifraFec_a352db1b7b8e96bb147f25eb286c9969b}{
+\index{efb::SchifraFec@{efb::SchifraFec}!SchifraFec@{SchifraFec}}
+\index{SchifraFec@{SchifraFec}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{SchifraFec}]{\setlength{\rightskip}{0pt plus 5cm}{\bf SchifraFec} (
+\begin{DoxyParamCaption}
+\item[{std::size\_\-t}]{ field\_\-descriptor, }
+\item[{std::size\_\-t}]{ generator\_\-polynommial\_\-index, }
+\item[{std::size\_\-t}]{ generator\_\-polynommial\_\-root\_\-count}
+\end{DoxyParamCaption}
+)}}
+\label{classefb_1_1SchifraFec_a352db1b7b8e96bb147f25eb286c9969b}
+
+
+Default constructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classefb_1_1SchifraFec_abfa614d594bf4d7c86b6a8817f35dec5}{
+\index{efb::SchifraFec@{efb::SchifraFec}!encodeBlock@{encodeBlock}}
+\index{encodeBlock@{encodeBlock}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{encodeBlock}]{\setlength{\rightskip}{0pt plus 5cm}void encodeBlock (
+\begin{DoxyParamCaption}
+\item[{std::string \&}]{ message, }
+\item[{std::string \&}]{ fec}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_abfa614d594bf4d7c86b6a8817f35dec5}
+
+
+Generate FEC code from a message. 
+
+\hypertarget{classefb_1_1SchifraFec_a00958e2a880e71ba6a8b6a0e8f560c45}{
+\index{efb::SchifraFec@{efb::SchifraFec}!decodeBlock@{decodeBlock}}
+\index{decodeBlock@{decodeBlock}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{decodeBlock}]{\setlength{\rightskip}{0pt plus 5cm}void decodeBlock (
+\begin{DoxyParamCaption}
+\item[{std::string \&}]{ message\_\-plus\_\-errors, }
+\item[{std::string \&}]{ fec, }
+\item[{std::string \&}]{ message}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a00958e2a880e71ba6a8b6a0e8f560c45}
+
+
+Try and fix any errors in a block-\/size message using FEC code. 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classefb_1_1SchifraFec_aab1a6051362d9a8b9dc1bf66162743ba}{
+\index{efb::SchifraFec@{efb::SchifraFec}!field\_\-descriptor\_\-@{field\_\-descriptor\_\-}}
+\index{field\_\-descriptor\_\-@{field\_\-descriptor\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{field\_\-descriptor\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const std::size\_\-t {\bf field\_\-descriptor\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_aab1a6051362d9a8b9dc1bf66162743ba}
+\hypertarget{classefb_1_1SchifraFec_a0151caad93dcee8fd76042845c7761d1}{
+\index{efb::SchifraFec@{efb::SchifraFec}!generator\_\-polynommial\_\-index\_\-@{generator\_\-polynommial\_\-index\_\-}}
+\index{generator\_\-polynommial\_\-index\_\-@{generator\_\-polynommial\_\-index\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{generator\_\-polynommial\_\-index\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const std::size\_\-t {\bf generator\_\-polynommial\_\-index\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a0151caad93dcee8fd76042845c7761d1}
+\hypertarget{classefb_1_1SchifraFec_a187b4bde8c8d1626ee351ad9d8a10efb}{
+\index{efb::SchifraFec@{efb::SchifraFec}!generator\_\-polynommial\_\-root\_\-count\_\-@{generator\_\-polynommial\_\-root\_\-count\_\-}}
+\index{generator\_\-polynommial\_\-root\_\-count\_\-@{generator\_\-polynommial\_\-root\_\-count\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{generator\_\-polynommial\_\-root\_\-count\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const std::size\_\-t {\bf generator\_\-polynommial\_\-root\_\-count\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a187b4bde8c8d1626ee351ad9d8a10efb}
+\hypertarget{classefb_1_1SchifraFec_aec880d94a65f32e64736d21ecc62caee}{
+\index{efb::SchifraFec@{efb::SchifraFec}!code\_\-length\_\-@{code\_\-length\_\-}}
+\index{code\_\-length\_\-@{code\_\-length\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{code\_\-length\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const std::size\_\-t {\bf code\_\-length\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_aec880d94a65f32e64736d21ecc62caee}
+\hypertarget{classefb_1_1SchifraFec_a560cb28c8a918c24356967a3c35604ad}{
+\index{efb::SchifraFec@{efb::SchifraFec}!fec\_\-length\_\-@{fec\_\-length\_\-}}
+\index{fec\_\-length\_\-@{fec\_\-length\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{fec\_\-length\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const std::size\_\-t {\bf fec\_\-length\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a560cb28c8a918c24356967a3c35604ad}
+\hypertarget{classefb_1_1SchifraFec_a780eb0b73c725bab3470002b4746d07e}{
+\index{efb::SchifraFec@{efb::SchifraFec}!data\_\-length\_\-@{data\_\-length\_\-}}
+\index{data\_\-length\_\-@{data\_\-length\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{data\_\-length\_\-}]{\setlength{\rightskip}{0pt plus 5cm}const std::size\_\-t {\bf data\_\-length\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a780eb0b73c725bab3470002b4746d07e}
+\hypertarget{classefb_1_1SchifraFec_a770e111002e7a8b19041c4f3a972b2c1}{
+\index{efb::SchifraFec@{efb::SchifraFec}!field\_\-@{field\_\-}}
+\index{field\_\-@{field\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{field\_\-}]{\setlength{\rightskip}{0pt plus 5cm}schifra::galois::field {\bf field\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a770e111002e7a8b19041c4f3a972b2c1}
+\hypertarget{classefb_1_1SchifraFec_a80fe940d7742c12811d27cbb50d605dc}{
+\index{efb::SchifraFec@{efb::SchifraFec}!generator\_\-polynomial\_\-@{generator\_\-polynomial\_\-}}
+\index{generator\_\-polynomial\_\-@{generator\_\-polynomial\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{generator\_\-polynomial\_\-}]{\setlength{\rightskip}{0pt plus 5cm}schifra::galois::field\_\-polynomial {\bf generator\_\-polynomial\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a80fe940d7742c12811d27cbb50d605dc}
+\hypertarget{classefb_1_1SchifraFec_a6dd291fa5e301f1d88eba72e486c22d3}{
+\index{efb::SchifraFec@{efb::SchifraFec}!polynomial\_\-creator\_\-@{polynomial\_\-creator\_\-}}
+\index{polynomial\_\-creator\_\-@{polynomial\_\-creator\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{polynomial\_\-creator\_\-}]{\setlength{\rightskip}{0pt plus 5cm}schifra::sequential\_\-root\_\-generator\_\-polynomial\_\-creator {\bf polynomial\_\-creator\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a6dd291fa5e301f1d88eba72e486c22d3}
+\hypertarget{classefb_1_1SchifraFec_a48add19c7145ddef42b214f772508c0f}{
+\index{efb::SchifraFec@{efb::SchifraFec}!encoder\_\-@{encoder\_\-}}
+\index{encoder\_\-@{encoder\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{encoder\_\-}]{\setlength{\rightskip}{0pt plus 5cm}schifra::reed\_\-solomon::encoder$<$N,M-\/N$>$ {\bf encoder\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_a48add19c7145ddef42b214f772508c0f}
+\hypertarget{classefb_1_1SchifraFec_acddab8a0f72a511d8b03ffecfe77735a}{
+\index{efb::SchifraFec@{efb::SchifraFec}!decoder\_\-@{decoder\_\-}}
+\index{decoder\_\-@{decoder\_\-}!efb::SchifraFec@{efb::SchifraFec}}
+\subsubsection[{decoder\_\-}]{\setlength{\rightskip}{0pt plus 5cm}schifra::reed\_\-solomon::decoder$<$N,M-\/N$>$ {\bf decoder\_\-}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classefb_1_1SchifraFec_acddab8a0f72a511d8b03ffecfe77735a}

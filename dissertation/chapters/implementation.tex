@@ -19,7 +19,7 @@
         \item *Keeping key material safe*. Shredding RNG seeds and keys. Using SecureVector. Refer to NIST
         \item Forward error correction
         \item UTF8 encoding/decoding
-        \item Text steganography. Keep this short.
+        \item Text steganography. Keep this short. Stuff about it in testing anyway.
     \end{itemize}
 
 \section{Storing data in images}
@@ -55,4 +55,59 @@
         \item Integration
         \item Security/penetration testing?
     \end{itemize}
+    
+    Security tests
+    
+    \begin{itemize}
+    
+    \item Use of the eval() and secureEval() functions
+    \begin{itemize}
+        \item First - try and use eval(). Ensure you get an error.
+        \item Next - test secureEval(). Should only decode JSON objects. Should only do so from Facbook API requests.
+    \end{itemize}
+    
+    \item Insertion of text in to page. Easy since we can use JavaScript and RegExp.
+    \begin{itemize}
+        \item We allow all uppercase lowercase letters and numerals. Also allow .,?!(). That's it, better safe than sorry. Means no linking to malicious pages. Fully test all boundary cases etc etc.
+    \end{itemize}
+    
+    \item UTF-decoder. Slightly harder since have to look at bytes not characters. Using the following rules we conformance test, test all boundaries etc etc. Put list of test inputs in appendix.
+    \begin{itemize}
+        \item We accept any valid, non-overlong, UTF8 byte sequences, max length 4-bytes, with scalar value:
+        \begin{itemize}
+            \item 0xB0 - 0xD7FF
+            \item 0xE000 - 0x100AF
+            \item 0x1B000 - 0x1BFFE (would-be surrogate pairs)
+            \item 0x10F0000 (indicates a padding byte was added, only one allowed per decode)
+        \end{itemize}
+        \item We therefore must throw an exception whenever a valid UTF8 byte sequence is presented with scalar value:
+        \begin{itemize}
+            \item 0x0 - 0xAF (out of range)
+            \item 0xD800 - 0xDFFF (surrogate pair characters)
+            \item 0x100B0 - 0x1AFFF (out of range)
+            \item 0x1BFFF - 0x10EFFFF (out of range)
+            \item 0x10F001 - 0x1FFFFF (out of range)
+        \end{itemize}
+        \item We also throw and exception for valid UTF8 sequences when:
+        \begin{itemize}
+            \item They have an overlong form i.e. the same scalar value can be represented using a shorter byte sequence.
+            \item They have scalar value 0x10F0000 (padding character) but this has already been seen during decoding.
+            \item They have scalar value 0x10F0000 (padding character) but the final decoded byte sequence (before padding removal) has length less than 2.
+            \item The final decoded byte sequence has length less than 1.
+            \item They are longer than 4-bytes.
+        \end{itemize}
+        \item Naturally we reject any (invalid) UTF8 byte sequences with:
+        \begin{itemize}
+            \item Unexpected continuation bytes when we expect a start character.
+            \item A start character which is not followed by the appropriate amount of valid continuation bytes - including start characters right at the end of a sequence.
+        \end{itemize}
+            
+    \end{itemize}
+    
+    \item Public key downloader. Simply limit size, don't use exact size since other implementation might use different key sizes.
+    
+    \end{itemize}
+    
+    
+    
 

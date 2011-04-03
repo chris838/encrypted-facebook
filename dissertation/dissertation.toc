@@ -16,7 +16,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.1}Approaches}{3}{section.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.2}Firefox}{4}{section.2.2}
+\contentsline {section}{\numberline {2.2}Firefox and extensions}{4}{section.2.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.3}Facebook}{5}{section.2.3}
 \defcounter {refsection}{0}\relax 
@@ -30,7 +30,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.8}Proffesional practice stuff}{9}{section.2.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.9}Requirements analysis}{9}{section.2.9}
+\contentsline {section}{\numberline {2.9}Requirements analysis}{10}{section.2.9}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Implementation}{13}{chapter.3}
 \defcounter {refsection}{0}\relax 
@@ -46,32 +46,32 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.6}Testing}{14}{section.3.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Evaluation}{15}{chapter.4}
+\contentsline {chapter}{\numberline {4}Evaluation}{17}{chapter.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}Comparative analyis of conduit image implementations}{15}{section.4.1}
+\contentsline {section}{\numberline {4.1}Comparative analyis of conduit image implementations}{17}{section.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}Cognitive walkthrough}{16}{section.4.2}
+\contentsline {section}{\numberline {4.2}Cognitive walkthrough}{18}{section.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.3}Profiling submission and retrieval operations}{17}{section.4.3}
+\contentsline {section}{\numberline {4.3}Profiling submission and retrieval operations}{19}{section.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Conclusion}{19}{chapter.5}
+\contentsline {chapter}{\numberline {5}Conclusion}{21}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}Evaluation of Requirements}{19}{section.5.1}
+\contentsline {section}{\numberline {5.1}Evaluation of Requirements}{21}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}Retrospective}{19}{section.5.2}
+\contentsline {section}{\numberline {5.2}Retrospective}{21}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}Future work}{19}{section.5.3}
+\contentsline {section}{\numberline {5.3}Future work}{22}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}Potential deployment}{20}{section.5.4}
+\contentsline {section}{\numberline {5.4}Potential deployment}{22}{section.5.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{21}{section.5.4}
+\contentsline {chapter}{Bibliography}{23}{section.5.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{Appendix}{23}{part*.9}
+\contentsline {part}{Appendix}{25}{part*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Graph API}{25}{appendix.A}
+\contentsline {chapter}{\numberline {A}Graph API}{27}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.1}Appendix Section Test}{25}{section.A.1}
+\contentsline {section}{\numberline {A.1}Appendix Section Test}{27}{section.A.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.2}Another Appendix Section Test}{25}{section.A.2}
+\contentsline {section}{\numberline {A.2}Another Appendix Section Test}{27}{section.A.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Project Proposal}{27}{appendix.B}
+\contentsline {chapter}{\numberline {B}Project Proposal}{29}{appendix.B}

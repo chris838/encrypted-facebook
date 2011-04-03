@@ -113,6 +113,7 @@ namespace efb {
             {                
                 // Format the image for implantation
                 formatForImplantation();
+                rhead_ = whead_ = 0;
                                 
                 // Check the data isn't too large, note down size
                 if (data.size() > getMaxData())
@@ -145,6 +146,7 @@ namespace efb {
             {
                 // Read the length tag from the image, check it is not too large .
                 unsigned int len = getMaxData();
+                rhead_ = whead_ = 0;
                     
                 // Reserve enough space to store the extracted data
                 data.reserve( len );
