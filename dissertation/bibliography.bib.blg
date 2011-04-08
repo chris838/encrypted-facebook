@@ -1,0 +1,5 @@
+[2] biber:183> INFO - Logfile is 'bibliography.bib.blg'
+[2] biber:189> INFO - === Biber version 0.5.7
+[3] biber:190> INFO - === Thu Apr  7, 2011, 19:30:03
+[100] Utils.pm:83> INFO - Found 'bibliography.bib.bcf'
+[101] Biber.pm:187> FATAL - Cannot find control file 'bibliography.bib.bcf'! - did you pass the "backend=biber" option to BibLaTeX? at script/biber line 233

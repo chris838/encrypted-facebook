@@ -8,17 +8,19 @@ FBM=$(wildcard frontbackmatter/*.tex)
 
 STY=$(wildcard *.sty)
 
+GFX=$(wildcard gfx/*.tex)
 
 all: $(PDF_DIR)/dissertation.pdf
 
 $(PDF_DIR)/%: % $(PDF_DIR)
 	@cp -f $< $@	
 	
-%.pdf : %.tex $(CHAPTERS) $(FBM) $(STY)
+%.pdf : %.tex $(CHAPTERS) $(FBM) $(STY) $(GFX)
 	@echo "Generating $*.pdf"
-	pdflatex $*
+	pdflatex -shell-escape $*
 	# biber $*
 	#rm -r *.aux chapters/*.aux frontbackmatter/*.aux
+
 
 $(PDF_DIR):
 	@if [ ! -x $(PDF_DIR) ]; \

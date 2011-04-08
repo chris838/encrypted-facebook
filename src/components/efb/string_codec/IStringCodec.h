@@ -11,7 +11,7 @@ namespace efb {
     
     // String decode exception
     struct StringDecodeException : public ExtractException {
-        StringDecodeException(const std::string &err) : StringDecodeException(err) {} };
+        StringDecodeException(const std::string &err) : ExtractException(err) {} };
     
     //! Abstract class defining a codec to encode and decode strings to and from Facebook.
     class IStringCodec

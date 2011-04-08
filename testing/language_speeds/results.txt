@@ -1,0 +1,6 @@
+Approximate average time taken to perform 256-bit AES encryption of 1000 different 16 x 10^5 byte random messages, using the same random key. Time taken to generate random keys and messages is not included. Cipher mode is ECB. For JavaScript the average time to encrypt one message was multiplied by 1000.
+
+Language; Library; Time per 1000 messages
+Python 2.6.6; pycryptopp 0.5.17; 1,220 ms
+C++ 98; Botan 1.8.11, 92 ms
+JavaScript 1.6 (in Chrome 12.0.712); JavaScrypt (last updated December 2005); 1,685,000 ms

@@ -2,21 +2,24 @@
 \chapter{Introduction}\label{ch:introduction}
 %************************************************
 
-Facebook is most common social network with X million users and Y daily hits. Currently all communication in plaintext. Single sentence description of project and what it does. Single sentence definition of broadcast encryption.
+Facebook is, at the time of writing, the world's most popular social network service, with over 500 million users active in the last 30 days \cite{fb-factsheet}. Currently all communication on Facebook is in plaintext. This project implements a Firefox extension which adds a broadcast encryption layer over the Facebook interface without significantly impacting the typical Facebook user experience.
 
 \section{Background}
 
-\begin{itemize}
+Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}.
 
-    \item General context - recent media coverage of Facebook, privacy and security concerns. Data (user passwords) stolen from web sites by hackers. Privacy a big issue for the 21st century?
+General context - recent media coverage of Facebook, privacy and security concerns. Data (user passwords) stolen from web sites by hackers. Privacy a big issue for the 21st century?
   
-    \item Problems with confusing users and complicated interfaces (e.g. Facebook defaults). Problems with intrusiveness (e.g. SSL and Google, Facebook). Demand for privacy/security soutions that are UNOBTRUSIVE and TRANSPARENT.
+  
+  
+Problems with confusing users and complicated interfaces (e.g. Facebook defaults). Problems with intrusiveness (e.g. SSL and Google, Facebook).
 
-    \item New social networking services being launched (Diaspora etc.). Some have excellent security properites. Problem: networking effects and Facebook user base make it hard to compete.
-    
-    \item Idea : keep using Facebook, add encryption layer on top, seamlessly integrate in to normal Facebook experience.
-    
-\end{itemize}
+ Clearly any privacy/security solution must be unobtrusive and transparent. In 2010, pressure from users and the media eventually lead to Facebook themselves streamlining their privacy controls \cite{fb-priv} to make them simpler and more intuitive.
+  
+  
+Recently there have been attempts to create alternatives to Facebook \cite{pidder} which provide better protection for user privacy by encrypting shared content. Some propose to go further \cite{diaspora} and decentralize hosting of the social network platform. Unfortunately, network externalities make it very difficult to compete with an established social network service \cite{fb-network}. 
+
+Here we avoid this problem by providing enhanced privacy for existing Facebook users. By adding a broadcast encryption layer on top of the Facebook social networking service we can ensure confidentiality of shared content to a select set of recipients.
 
 \section{Limitations}
 

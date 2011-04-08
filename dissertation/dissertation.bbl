@@ -23,26 +23,18 @@
 
 
 \refsection{0}
-  \entry{aksin}{article}{}
-    \name{author}{7}{%
-      {{Aksın}{A.}{Özge}{Ö.}{}{}{}{}}%
-      {{Türkmen}{T.}{Hayati}{H.}{}{}{}{}}%
-      {{Artok}{A.}{Levent}{L.}{}{}{}{}}%
-      {{C̨etinkaya}{C.}{Bekir}{B.}{}{}{}{}}%
-      {{Ni}{N.}{Chaoying}{C.}{}{}{}{}}%
-      {{Büyükgüngör}{B.}{Orhan}{O.}{}{}{}{}}%
-      {{Özkal}{Ö.}{Erhan}{E.}{}{}{}{}}%
+  \entry{fb-factsheet}{online}{}
+    \name{author}{1}{%
+      {{Facebook}{F.}{Inc}{I.}{}{}{}{}}%
     }
-    \strng{namehash}{AÖ+1}
-    \strng{fullhash}{AÖTHALCBNCBOÖE1}
-    \field{sortinit}{A}
-    \field{year}{2006}
-    \field{title}{Effect of immobilization on catalytic characteristics of saturated Pd-N-heterocyclic carbenes in Mizoroki-Heck reactions}
-    \field{indextitle}{Effect of immobilization on catalytic characteristics}
-    \field{journaltitle}{J.~Organomet. Chem.}
-    \field{number}{13}
-    \field{volume}{691}
-    \field{pages}{3027\bibrangedash 3036}
+    \strng{namehash}{FI1}
+    \strng{fullhash}{FI1}
+    \field{sortinit}{F}
+    \field{year}{2011}
+    \field{title}{The official Facebook.com statistics factsheet.}
+    \verb{url}
+    \verb http://www.facebook.com/press/info.php?factsheet
+    \endverb
   \endentry
 
 \endrefsection

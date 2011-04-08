@@ -1,16 +1,16 @@
 [1] biber:183> INFO - Logfile is 'dissertation.blg'
 [1] biber:189> INFO - === Biber version 0.5.7
-[2] biber:190> INFO - === Wed Mar  9, 2011, 22:41:34
+[2] biber:190> INFO - === Thu Apr  7, 2011, 19:31:08
 [2] Utils.pm:83> INFO - Found 'dissertation.bcf'
 [2] Biber.pm:249> INFO - Reading dissertation.bcf
-[85] Biber.pm:272> WARN - Warning: You are using biblatex version 1.2 :
+[89] Biber.pm:272> WARN - Warning: You are using biblatex version 1.2 :
 biber is more likely to work with version 0.9e.
-[126] Biber.pm:463> INFO - Found 1 citekeys in bib section 0
-[142] Biber.pm:1521> INFO - Processing bib section 0
-[143] Utils.pm:83> INFO - Found 'bibliography.bib'
-[143] Biber.pm:514> INFO - Processing file 'bibliography.bib' for section 0
-[149] Biber.pm:542> INFO - Decoding LaTeX character macros into UTF-8
-[2219] Biber.pm:1406> INFO - Sorting entries with Unicode::Collate (level => 3, upper_before_lower => 1, locale => en_GB.UTF-8, UCA version: 5.2.0)
-[2220] Biber.pm:1409> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
-[2294] BBL.pm:426> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
-[2295] BBL.pm:450> INFO - Output to dissertation.bbl
+[148] Biber.pm:463> INFO - Found 1 citekeys in bib section 0
+[169] Biber.pm:1521> INFO - Processing bib section 0
+[169] Utils.pm:83> INFO - Found 'bibliography.bib'
+[171] Biber.pm:514> INFO - Processing file 'bibliography.bib' for section 0
+[186] Biber.pm:542> INFO - Decoding LaTeX character macros into UTF-8
+[2204] Biber.pm:1406> INFO - Sorting entries with Unicode::Collate (level => 3, upper_before_lower => 1, locale => en_GB.UTF-8, UCA version: 5.2.0)
+[2204] Biber.pm:1409> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
+[2277] BBL.pm:426> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
+[2278] BBL.pm:450> INFO - Output to dissertation.bbl

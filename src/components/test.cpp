@@ -10,7 +10,7 @@ int main( int argc, const char* argv[] )
       
       
       
-    // calculateBitErrorRate( lib,"","" );
+    calculateBitErrorRate( lib,"","" );
 
 }
 

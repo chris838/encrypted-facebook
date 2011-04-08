@@ -452,6 +452,7 @@ namespace efb {
             const FacebookId id_;
             const std::string working_directory_;
             
+            
             //! Testing function for image coding methods
             unsigned int testImageCoding()
             {
@@ -467,13 +468,16 @@ namespace efb {
                 struct timeval start, end;
                 long mtime, seconds, useconds;
                 std::ofstream log_file;
+                std::vector<byte> e;
                 
                 // For each JPEG quality factor
-                for (int jpeg_rate = 90; jpeg_rate >=80; jpeg_rate -- ) {
+                for (int jpeg_rate = 80; jpeg_rate <=90; jpeg_rate ++ ) {
+                    
+                    
                     
                     // Create log file
                     std::stringstream s("");
-                    s  << "/home/chris/Desktop/testing/haar_results_" << jpeg_rate << ".log";
+                    s  << "/home/chris/Desktop/testing/scaled4_results_" << jpeg_rate << ".log";
                     struct stat stFileInfo;
                     int intStat = stat( s.str().c_str(),&stFileInfo);
                     if (intStat==0) continue;
@@ -486,19 +490,21 @@ namespace efb {
                       std::cout << "Error creating log file:" << std::endl;
                       return 1;
                     }
-                    log_file << "Image ID" << ", ";
-                    log_file << "Size" << ", ";
-                    log_file << "Errors" << ", ";
-                    log_file << "Encoding time" << ", ";
-                    log_file << "Decoding time" << std::endl;
+                    //log_file << "Image ID" << ", ";
+                    //log_file << "Size" << ", ";
+                    //log_file << "Errors" << ", ";
+                    //log_file << "Encoding time" << ", ";
+                    //log_file << "Decoding time" << std::endl;
                     
-                    data_left = 1024*1024*1024; // 1 GiB
+                    data_left = 1024*1024*10; // 10 MiB
                     data_left = data_left - (data_left % cap);
                     count = 0;
                     terrors.clear();
                     ttotal.clear();
                     enctime.clear();
                     dectime.clear();
+                    
+                    
                     
                     // For each test
                     while ( data_left > 0 ) {
@@ -578,7 +584,7 @@ namespace efb {
                         dectime.push_back( mtime );
                         
                         // Calculate the bit error rate (BER)
-                        unsigned int total=0, errors=0; std::vector<byte> e;
+                        unsigned int total=0, errors=0;
                         for (unsigned int i=0; i<data1.size(); i++) {
                           byte error = data1[i] ^ data2[i];
                           e.push_back( error );
@@ -593,11 +599,14 @@ namespace efb {
                         std::cout << ". Last errors: " << errors << " in " << total << " bits." << std::endl;
                         
                         // Log all the error rates and timing measurements
-                        log_file << count << ", ";
-                        log_file << total << ", ";
-                        log_file << errors << ", ";
-                        log_file << enctime.back() << ", ";
-                        log_file << dectime.back() << std::endl;
+                        //log_file << count << ", ";
+                        //log_file << total << ", ";
+                        //log_file << errors << ", ";
+                        //log_file << enctime.back() << ", ";
+                        //log_file << dectime.back() << std::endl;
+                        // Write out errors to a file
+                        log_file.write((char*) &e[0], e.size() );
+                        e.clear();
                         
                         count++;
                     }
@@ -614,6 +623,7 @@ namespace efb {
             {
                 string_codec_.binaryToFbReady(data);
                 
+                return 0;
             }
     };
 }

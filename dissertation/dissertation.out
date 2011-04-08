@@ -21,7 +21,11 @@
 \BOOKMARK [1][-]{section.3.5}{Modifying the Facebook UI}{chapter.3}
 \BOOKMARK [1][-]{section.3.6}{Testing}{chapter.3}
 \BOOKMARK [0][-]{chapter.4}{Evaluation}{}
-\BOOKMARK [1][-]{section.4.1}{Comparative analyis of conduit image implementations}{chapter.4}
+\BOOKMARK [1][-]{section.4.1}{Conduit image performance}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.1.1}{Method}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.2}{Codec speed}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.3}{Theoretical capacity}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.4}{Results after error correction}{section.4.1}
 \BOOKMARK [1][-]{section.4.2}{Cognitive walkthrough}{chapter.4}
 \BOOKMARK [1][-]{section.4.3}{Profiling submission and retrieval operations}{chapter.4}
 \BOOKMARK [0][-]{chapter.5}{Conclusion}{}
@@ -30,8 +34,8 @@
 \BOOKMARK [1][-]{section.5.3}{Future work}{chapter.5}
 \BOOKMARK [1][-]{section.5.4}{Potential deployment}{chapter.5}
 \BOOKMARK [0][-]{section.5.4}{Bibliography}{}
-\BOOKMARK [-1][-]{part*.2}{Appendix}{}
-\BOOKMARK [0][-]{appendix.A}{Graph API}{part*.2}
+\BOOKMARK [-1][-]{part*.5}{Appendix}{}
+\BOOKMARK [0][-]{appendix.A}{Graph API}{part*.5}
 \BOOKMARK [1][-]{section.A.1}{Appendix Section Test}{appendix.A}
 \BOOKMARK [1][-]{section.A.2}{Another Appendix Section Test}{appendix.A}
-\BOOKMARK [0][-]{appendix.B}{Project Proposal}{part*.2}
+\BOOKMARK [0][-]{appendix.B}{Project Proposal}{part*.5}

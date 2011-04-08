@@ -2,7 +2,120 @@
 \chapter{Evaluation}\label{ch:evaluation}
 %*****************************************
 
-\section{Comparative analyis of conduit image implementations}
+\section{Conduit image performance}
+
+Each conduit image implementation can be classified according to how long it takes to encode or decode an image ($720 \times 720 \times 8$-bit greyscale), how many bits it can store per $8 \times 8$ pixel block and how many bit errors occur in the result. We model the compression/decompression process as a binary symmetric channel and thus calculate the per-image channel capacity for arbitrarily small error probability. We then analyse two of the implementations in conjunction with two forward error correction schemes, presenting the resultant per-image transfer rate and output decoder error probability. To evaluate the accuracy of our findings we compare with actual decoder error rates after adding error correction codes.
+
+\subsection{Method}
+
+The relevant library components are loaded into a test C++ file. A standalone conduit image instance is created and a random byte vector generated and encoded. The result is saved to disk as a JPEG at a given quality factor, reloaded and the data decoded. We log the Hamming distance between the input and output data and the time taken to perform each encode and decode. This process is repeated until the cumulative amount of data processed exceeds 1 GiB. The test was repeated for each of the three conduit image classes and also for quality factors 80-90. Timings were recorded using CPU time and excluded time spent generating random numbers, performing compression or writing out to/reading from disk.
+
+\begin{table}[tbp]
+  \begin{center}
+        \begin{tabular}{l l l l l}
+        &\textbf{Bits per} &\textbf{Test set size} & \textbf{Test set size} &\textbf{Possible unique} \\ 
+            &\textbf{block} &\textbf{(images)} &\textbf{(blocks)} &\textbf{blocks} \\ [0.1ex] \hline \\ [-1.5ex]
+        Scaled3	&192	&5,523	&44,736,300	& $6.28 \times 10^{57}$ \\
+        Scaled4	&256	&4,142	&33,550,200	& $1.16 \times 10^{77}$ \\
+        Haar	&24	&44,186	&357,906,600	& $1.68 \times 10^{7}$ \\
+        \end{tabular}
+        \caption{Details of the testing process. Although \textasciitilde 1 GiB of data was used for every test run, the criteria for ensuring the sample input/output is representative must take into account the number of possible inputs, which differs for each method.}
+        \label{tab:img-test}
+    \end{center}
+\end{table}
+
+
+Table \ref{tab:img-test} summerises the number of useful bits each method can store in a single 64 x 8 bit greyscale JPEG luminance block along with the effective sample size (number of images/blocks processed during the test) and population size (total number of possible unique blocks) we are sampling from. Due to the size of the samples the standard error is negligable, even before applying finite population correction where appropriate (see appendix XXX for details); error bars are consequently ommitted from the graphs and tables in the following section XXX.
+
+The results in section XXX were obtained by repeating the first test (ignoring timing) with an additional encode and decode stage at which point error correction codes were added.
+
+\subsection{Codec speed}
+
+Figure \ref{graph:codec-speeds} graphs the mean time spent decoding and encoding for one image. The Haar wavelet-based class (labelled Haar) performs fastest for both decoding and encoding, across all quality factors. Similiarly, the 4-bit scaling class (labelled Scaled4) performed worst in all tests. 
+
+\begin{figure}[tbp]
+  \begin{center}
+    
+\subfigure{
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Encoding time (ms),
+    height=9cm,width=11cm,legend style={at={(1.28,1.0)},anchor=north east}]
+    
+    \addplot
+        table[x=QF,y=e_Sc3] {gfx/encoding_time.data};
+    
+    \addplot
+        table[x=QF,y=e_Sc4] {gfx/encoding_time.data};
+        
+    \addplot
+        table[x=QF,y=e_Haar] {gfx/encoding_time.data};
+        
+    \legend{Scaled3,Scaled4,Haar}
+    
+    \end{axis}
+\end{tikzpicture}
+}
+\subfigure{
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Decoding time (ms),
+    height=9cm,width=11cm,legend style={at={(1.28,1.0)},anchor=north east}]
+    
+    \addplot
+        table[x=QF,y=d_Sc3] {gfx/encoding_time.data};
+    
+    \addplot
+        table[x=QF,y=d_Sc4] {gfx/encoding_time.data};
+        
+    \addplot
+        table[x=QF,y=d_Haar] {gfx/encoding_time.data};
+        
+    \legend{Scaled3,Scaled4,Haar}
+    
+    \end{axis}
+\end{tikzpicture}
+}
+
+    \caption{Per image encode and decode times for each of the three conduit image implementations, for varying JPEG quality factors.}
+    \label{graph:codec-speeds}
+  \end{center}
+\end{figure}
+
+\subsection{Theoretical capacity}
+
+We model each conduit image as a binary symmetric channel: we know the encoding/decoding process does not result in bit errors; we make the assumption that the bit error probability $p_e$ is the same for every bit. Transfer rates are expressed in units of information per symbol - in this case KiB per image. 
+
+\begin{figure}[tbp]
+  \begin{center}
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Capacity (KiB/image),
+    height=9cm,width=11cm,legend style={at={(1.28,1.0)},anchor=north east}]
+    
+    \addplot
+        table[x=QF,y=Sc3] {gfx/encoding_time.data};
+    
+    \addplot
+        table[x=QF,y=Sc4] {gfx/encoding_time.data};
+        
+    \addplot
+        table[x=QF,y=Haar] {gfx/encoding_time.data};
+        
+    \legend{Scaled3,Scaled4,Haar}
+    
+    \end{axis}
+\end{tikzpicture}
+    \caption{Per-image channel capacity (measured in KiB/image) for varying quality factors.}
+    \label{graph:capacity}
+  \end{center}
+\end{figure}
+
+\subsection{Results after error correction}
+
+When actually implementing an error correction scheme we observe two key differences to our theoretical analysis:
+\begin{itemize}
+    \item There will exist a finite output error probability (though it may be very small) which we must consider.
+    \item Unless the coding scheme is a ideal (which in our case it is not) the data rate achieved is below the theoretical capacity.
+\end{itemize}
+
 
 \begin{itemize}
 \item First test Haar wavelet method WITH gray codes. Calculate max capacity from implementation. Create X bytes of random noise split accross N files of max capacity. Encode in JPEG, decode from JPEG. Repeat for all files. Log BER. Also log per byte encode/decode time. Repeat for different levels of JPEG compression, 80 through 90. Plot BER against compression level.
@@ -27,13 +140,13 @@ Should on in a million Gb, or one in a trillion images. This NASA document url{h
 
 \item ... two graphs with enc/decode times for quality factors 80-90, curves for each of the three image methods. Times should be normalised per image.
 
-\item ... a graph with bit error rates for quality factors 80-90, curves for each of the three image methods.
+\item ... a graph with capacity (bytes per symbol i.e. bytes per image) for quality factors 80-90, curves for each of the three image methods.
 
-\item .. a table with: Image method; Max data per image (bytes); Bit error probability; Theoretical max (error-free ) capacity per image;
+\item ...A table based on the FEC codes we have available. Each image method with each FEC. Image method; FEC used in implementation; Resultant capacity (per image); Decoder bit error probability; 
 
-\item ...and another table based on what FEC we actually used. Image method; FEC used in implementation; Resultant capacity (per image); Theoretical min bit error probability; Actual bit error probability; Per image error probability;
+\item ...our conclusion is that Scaled3+255,223 is better than Haar+15,9 both in capacity and decoded error rates, though Haar has faster decode and encode. Scaled4 has no implementation for error correction but is has similair theoretical capacity to Scaled3 if we could find an appropriate FEC. Since it enc/decodes slower though there is little point.
 
-\item ...our conclusion is that final error rate doesn't matter because its all negligable both theoretical and actual. So we finish with a graph of the actual capacity plus error code as a bar chart thing.
+\item Little test of our hypothesis - encode a gigabyte of random data, with FEC, and see how many codeword decode failures we get.
 
 \item Conclude - Scaled3 gives highest capacity, however you look at it. Effective error rates might be better for other methods, but no matter since as we have discussed, beyond $10^{-13}$ no one cares. Might get faster codec, refer to section XXX which gives full breakdown of times and show this isn't important.
 
