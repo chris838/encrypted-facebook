@@ -362,9 +362,14 @@ namespace efb {
             {
                 // Copy input into a std::string (strips null terminal)
                 std::string str( input );
-            
+                
                 // Decode the string into a byte array
-                std::vector<byte> data = string_codec_.fbReadyToBinary( str );
+                std::vector<byte> data;
+                try {
+                    data = string_codec_.fbReadyToBinary( str );
+                } catch (StringDecodeException &e) {
+                    std::cout << "UTF8 decode failed: " << e.what() << std::endl;
+                }
                 
                 // Retrieve the message key from the header and decrypt the data
                 try {crypto_.decryptMessage(data);}
@@ -625,6 +630,7 @@ namespace efb {
                 
                 return 0;
             }
+            
     };
 }
 

@@ -37,6 +37,7 @@ namespace efb {
                 std::vector<Unicode2Bytes> input( data.begin(), data.end() );
                 for(unsigned int i=0; i < input.size(); i++)
                    {
+                    
                       // First we add an offset of 0x00b0
                       // so no dealing with control or null characters
                       unsigned int in = ((unsigned int) input[i]) + 0x00b0;
@@ -75,12 +76,19 @@ namespace efb {
                          output.push_back((byte)(MASKBYTE | (in >> 6 & MASKBITS)));
                          output.push_back((byte)(MASKBYTE | (in & MASKBITS)));
                       }
+                      
                    }
+                   
+                   
                 return output;
             }
             
             std::vector<byte> fbReadyToBinary( std::string& input ) const
             {
+                
+                //std::cout << input << std::endl;
+                //std::cout << (unsigned int) input[ input.size() - 1 ] << std::endl;
+                
             bool padded = false;
             std::vector<Unicode2Bytes> output;
             for(unsigned int i=0; i < input.size();)
@@ -91,10 +99,10 @@ namespace efb {
                 if((input[i] & MASK4BYTES) == MASK4BYTES)
                 {
                     // check for valid continuation bytes
-                    if (input.size() <= i+3) throw new StringDecodeException("Invalid continuation byte");;
-                    if ((input[i+1] & ~MASKBITS) != 0x8000) throw new StringDecodeException("Invalid continuation byte");;
-                    if ((input[i+2] & ~MASKBITS) != 0x8000) throw new StringDecodeException("Invalid continuation byte");;
-                    if ((input[i+3] & ~MASKBITS) != 0x8000) throw new StringDecodeException("Invalid continuation byte");;
+                    if (input.size() <= i+3) throw StringDecodeException("Not enough continuation bytes");
+                    if ((input[i+1] & 0xc0) != MASKBYTE) throw StringDecodeException("Invalid continuation byte1");
+                    if ((input[i+2] & 0xc0) != MASKBYTE) throw StringDecodeException("Invalid continuation byte2");
+                    if ((input[i+3] & 0xc0) != MASKBYTE) throw StringDecodeException("Invalid continuation byte3");
                     //
                     if (input[i] > 0xf2 && input[i] < 0x100) 
                     {
@@ -111,7 +119,7 @@ namespace efb {
                              ((input[i+3] & MASKBITS));
                     }
                     // check for overlong sequence
-                    if (ch < 0x1 << 16) throw new StringDecodeException("Overlong sequence");;
+                    if (ch < 0x1 << 16) throw StringDecodeException("Overlong sequence");
                     i += 4;
                 }
                
@@ -119,17 +127,17 @@ namespace efb {
                 else if((input[i] & MASK3BYTES) == MASK3BYTES)
                 {
                     // check for valid continuation bytes
-                    if (input.size() <= i+2) throw new StringDecodeException("Invalid continuation byte");;
-                    if ((input[i+1] & ~MASKBITS) != 0x8000) throw new StringDecodeException("Invalid continuation byte");;
-                    if ((input[i+2] & ~MASKBITS) != 0x8000) throw new StringDecodeException("Invalid continuation byte");;
+                    if (input.size() <= i+2) throw StringDecodeException("Not enough continuation bytes");
+                    if ((input[i+1] & 0xc0) != MASKBYTE) throw StringDecodeException("Invalid continuation byte4");
+                    if ((input[i+2] & 0xc0) != MASKBYTE) throw StringDecodeException("Invalid continuation byte5");
                     //
                     ch = ((input[i] & 0x0F) << 12) | (
                           (input[i+1] & MASKBITS) << 6)
                          | (input[i+2] & MASKBITS);
                     // check for surrogate character
-                    if (ch >= 0xd000 && ch <= 0xdfff) throw new StringDecodeException("Surrogate character");;
+                    if (ch >= 0xd000 && ch <= 0xdfff) throw StringDecodeException("Surrogate character");
                     // check for overlong sequence
-                    if (ch < 0x1 << 11) throw new StringDecodeException("Overlong sequence");;
+                    if (ch < 0x1 << 11) throw StringDecodeException("Overlong sequence");
                     i += 3;
                 }
                
@@ -137,12 +145,12 @@ namespace efb {
                 else if((input[i] & MASK2BYTES) == MASK2BYTES)
                 {
                     // check for valid continuation byte
-                    if (input.size() <= i+1) throw new StringDecodeException("Invalid continuation byte");;
-                    if ((input[i+1] & ~MASKBITS) != 0x8000) throw new StringDecodeException("Invalid continuation byte");;
+                    if (input.size() <= i+1) throw StringDecodeException("Not enough continuation bytes");
+                    if ((input[i+1] & 0xc0) != MASKBYTE) {throw StringDecodeException("Invalid continuation byte6"); }
                     //
                     ch = ((input[i] & 0x1F) << 6) | (input[i+1] & MASKBITS);
                     // check for overlong sequence
-                    if (ch < 0x1 << 7) throw new StringDecodeException("Overlong sequence");;
+                    if (ch < 0x1 << 7) throw StringDecodeException("Overlong sequence");
                     i += 2;
                 }
                
@@ -150,21 +158,21 @@ namespace efb {
                 else if(input[i] < MASKBYTE)
                 {
                     ch = input[i];
-                    if (ch < 176) throw new StringDecodeException("Unshifted byte decoded (i.e. charcode less than 176)");;
+                    if (ch < 0xb0) throw StringDecodeException("Unshifted byte decoded (i.e. charcode less than 176)");
                     i += 1;
                 }
                 
                 // Bad UTF8 start byte, possibly unexpected continuation byte
                 else
                 {
-                    throw new StringDecodeException("Unexpected continuation byte or bad start byte (only four-byte sequences or shorter are permitted)");;
+                    throw StringDecodeException("Unexpected continuation byte or bad start byte (only four-byte sequences or shorter are permitted)");
                 }
                 
                 // check for padding character
                 if (ch == 0x10F000) {
                     if (!padded) padded = true;
                     // Otherwise, we already have seen a padding character
-                    else throw new StringDecodeException("Multiple padding characters found");;
+                    else throw StringDecodeException("Multiple padding characters found");
                 }
                 else if ((ch >= 176) && (ch <= ((0x01<<16) + 175)))
                 {
@@ -172,7 +180,7 @@ namespace efb {
                 }
                 else // bad byte decoded
                 {
-                    throw new StringDecodeException("Byte decoded to number out of range (should be within 0 to (2^16-1) after final decoding)");;
+                    throw StringDecodeException("Byte decoded to number out of range (should be within 0 to (2^16-1) after final decoding)");
                 }
                
             }
@@ -181,7 +189,7 @@ namespace efb {
             // If we found a padding character, remove last byte
             if (padded) {
                 if ( data.size() > 1) data.pop_back();
-                else throw new StringDecodeException("Not enough data");;
+                else throw StringDecodeException("Not enough data");
             }
             return data;
         }
