@@ -2,6 +2,8 @@
 \chapter{Evaluation}\label{ch:evaluation}
 %*****************************************
 
+Computer used was a laptop with XXX CPU, memory etc etc. 8 Mbps internet connection. 
+
 \section{Conduit image performance}
 
 Each conduit image implementation can be classified according to how long it takes to encode or decode an image ($720 \times 720 \times 8$-bit greyscale), how many bits it can store per $8 \times 8$ pixel block and how many bit errors occur in the result. We model the compression/decompression process as a binary symmetric channel and thus calculate the per-image channel capacity for arbitrarily small error probability. We then analyse two of the implementations in conjunction with two forward error correction schemes, presenting the resultant per-image transfer rate and output decoder error probability. To evaluate the accuracy of our findings we compare with actual decoder error rates after adding error correction codes.
@@ -31,7 +33,7 @@ The results in section XXX were obtained by repeating the first test (ignoring t
 
 \subsection{Codec speed}
 
-Figure \ref{graph:codec-speeds} graphs the mean time spent decoding and encoding for one image. The Haar wavelet-based class (labelled Haar) performs fastest for both decoding and encoding, across all quality factors. Similiarly, the 4-bit scaling class (labelled Scaled4) performed worst in all tests. 
+Figure \ref{graph:codec-speeds} graphs the mean time spent decoding and encoding for one image. The Haar DWT based class (labelled Haar) performs fastest for both decoding and encoding, across all quality factors. Similairly, the 4-bit scaling method class (labelled Scaled4) performed worst in all tests. 
 
 \begin{figure}[tbp]
   \begin{center}
@@ -82,7 +84,15 @@ Figure \ref{graph:codec-speeds} graphs the mean time spent decoding and encoding
 
 \subsection{Theoretical capacity}
 
-We model each conduit image as a binary symmetric channel: we know the encoding/decoding process does not result in bit errors; we make the assumption that the bit error probability $p_e$ is the same for every bit. Transfer rates are expressed in units of information per symbol - in this case KiB per image. 
+We model each conduit image as a binary symmetric channel: we know the encoding/decoding process does not result in bit erasures; we make the assumption that the probability of error $p_e$ is independant and equal for each bit. Given the large sample sizes, we assume that the measured bit error rate is a reasonable estimate of the actual bit error probability.
+
+The formula used to calculate the capacity is obtained by taking the typical capacity calculation for a binary symmetric channel and multiplying by the number of bits available per image $A$, to obtain:
+
+\begin{equation}
+    C = A \cdot (1 + H(p_e))
+\end{equation}
+
+Where $H(x)$ is the binary entropy function. This provides the capacity in units of information per symbol - in this case KiB per image. Figure \ref{graph:capacity} compares the calculated capacity for each of the three conduit images implementations. At quality factor 85, which most closely matches the profile of the Facebook JPEG compression proccess, we see both scaling methods performing approximately the same with capacities of over 180 KiB in a single image.
 
 \begin{figure}[tbp]
   \begin{center}
@@ -110,10 +120,10 @@ We model each conduit image as a binary symmetric channel: we know the encoding/
 
 \subsection{Results after error correction}
 
-When actually implementing an error correction scheme we observe two key differences to our theoretical analysis:
+When actually implementing an error correction scheme we observe that
 \begin{itemize}
     \item There will exist a finite output error probability (though it may be very small) which we must consider.
-    \item Unless the coding scheme is a ideal (which in our case it is not) the data rate achieved is below the theoretical capacity.
+    \item Unless the coding scheme is a ideal (which in our case it is not) the data (rate per image) achieved is below the theoretical capacity.
 \end{itemize}
 
 
@@ -165,7 +175,7 @@ For one user, X:
     \item Migrate profile information.
 \end{itemize}
 
-Now create 15 more users, friends of user X. (group A). Also have one user who is not a recipient (group B). And one more user who doesn't have application at all (group C). Repeat encryption headers 28 times so we simulate group of size 400. Also repeat entries in UI controls.
+Now create 15 more users, friends of user X. (group A). Also have one user who is not a recipient (group B). And one more user who doesn't have application at all (group C). Repeat encryption headers 28 times so we simulate group of size 405. Also repeat entries in UI controls.
 
 \begin{itemize}
     \item Public key management - add keys of group A to user X.
@@ -177,11 +187,31 @@ Now create 15 more users, friends of user X. (group A). Also have one user who i
     \item Text and image retrieval - for group C.
 \end{itemize}
 
-\section{Profiling submission and retrieval operations}
+\section{Profiling submission and retrieval}
+
+To measure mean encode/decode and upload/download times automated tests were ran programmatically from the extension, with each submission and retrieval round being allowed to complete before beginning the next.
+
+To obtain results which tested real-world performance and included the full set of DOM tree navigation/insertion operations and browser pageload times additional submission tests were performed manually through the browser. Retrieval was also tested by repeatedly loading pages containing multiple items of encrypted content to be decoded in parallel. For comparison these tests were then repeated with the extension disabled.
+
+\subsection{Method}
+
+All encryption was performed with a simulated group size of 405 as detailed in section XXX. Test images were duplicate copies of a (approximately) 50 KiB JPEG image (see section XXX). Test messages were randomly generated strings of mixed-case letter and numeral characters. With the exception of the last test where strings were limited by the 420 character status update length limit, messages were 10,000 characters in length - the limit for private messages. 
+
+A modified version of the Chromebug Firefox extension was used to record results.
+
+\subsubsection{Automated testing}
+
+For textual content, 1000 messages were generated. The note submission function was then called with each message using a 60 second delay in between each run \footnote{Since parts of the process are performed asynchronously, we leave enough time for one submission and retrieval round to complete before beginning another.}. The tags required to retrieve these notes are saved and the time spent in each submission phase profiled. When the HTTP request for sumbmission completes, retrieval is triggered and the download and decoding time logged. The same test was repeated, using a set of 1000 images.
+
+\subsubsection{Manual testing}
+
+Manual submission of 50 images and 50 messages was performed: first with the plugin disabled; then with full encryption. Images were again 50 KiB in size and messages 10,000 random ASCII characters. Times spent in the relevant functions were recorded.
+
+To evaluate retrieval, sample newsfeeds were generated with 15 status update entries, as this is the number of newsfeed entries Facebook first loads \footnote{More are loaded dynamically when the user scrolls to the bottom of the page.}. Status update messages were random ASCII text 420 characters in length, the maximum permitted. One newsfeed contained plaintext entries and the other contained encrypted entries generated through the plugin. The pages were loaded (using a forced browser cache refresh) repeatedly 10,000 times and the loading and retrieval times logged. This test itself was repeated, this time with the extension caches also being wiped between loads. The entire process was then repeated for a newsfeed containing image entries, once again random images of size 50 KiB, instead of status messages.
+
+\subsection{Results}
 
 \begin{itemize}
-    \item How long does the C++ code take? Gives lower bound on overall times.
-    \item Profile JavaScript functions.
-    \item Actually we can probably profile both at once.
-    \item Compare what's taking the longest, bottlenecks etc.
+    \item Automated results. Mean times for submit and retrive, highlight what portion spent processing and what spent waiting for rest i.e. waiting for HTTP requests to come back.
+    \item 
 \end{itemize}

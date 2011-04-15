@@ -2,7 +2,7 @@
 \chapter{Introduction}\label{ch:introduction}
 %************************************************
 
-Facebook is, at the time of writing, the world's most popular social network service, with over 500 million users active in the last 30 days \cite{fb-factsheet}. Currently all communication on Facebook is in plaintext. This project implements a Firefox extension which adds a broadcast encryption layer over the Facebook interface without significantly impacting the typical Facebook user experience.
+Facebook, at the time of writing, is the world's most popular social network service, with over 500 million users active in the last 30 days \cite{fb-factsheet}. Currently all communication on Facebook is in plaintext. This project implements a Firefox extension which adds a broadcast encryption layer over the Facebook interface without significantly impacting the typical Facebook user experience.
 
 \section{Background}
 
@@ -10,16 +10,12 @@ Since its inception, Facebook has come under criticism in relation to online pri
 
 General context - recent media coverage of Facebook, privacy and security concerns. Data (user passwords) stolen from web sites by hackers. Privacy a big issue for the 21st century?
   
-  
-  
-Problems with confusing users and complicated interfaces (e.g. Facebook defaults). Problems with intrusiveness (e.g. SSL and Google, Facebook).
 
- Clearly any privacy/security solution must be unobtrusive and transparent. In 2010, pressure from users and the media eventually lead to Facebook themselves streamlining their privacy controls \cite{fb-priv} to make them simpler and more intuitive.
+Despite growing concern around issues of online privacy (and the related issue of security) even where counter measures are available adoption rates have often been slow. An example is HTTPS (HTTP Secure) support being either disabled by default or unavailale completely on several prominent search, email and social network providers. This is partly due to an unwillingness to add SSL latency overheads \footnote{The other reason is due to the server side computation required (less a problem now than it used to be) and also problems with delivering advertisements over a secure connection.}. Clearly there is a requirement for privacy solutions which operate transparently without detrimenting the typical user experience.
   
-  
-Recently there have been attempts to create alternatives to Facebook \cite{pidder} which provide better protection for user privacy by encrypting shared content. Some propose to go further \cite{diaspora} and decentralize hosting of the social network platform. Unfortunately, network externalities make it very difficult to compete with an established social network service \cite{fb-network}. 
+Recently there have been attempts to create alternatives to Facebook \cite{pidder} which provide better privacy protection by encrypting shared content. Some propose to go further and decentralize hosting of the social network platform \cite{diaspora}. Unfortunately, network externalities make it very difficult to compete \cite{fb-network} since the utility of such a social network service is coupled to the size of the userbase.
 
-Here we avoid this problem by providing enhanced privacy for existing Facebook users. By adding a broadcast encryption layer on top of the Facebook social networking service we can ensure confidentiality of shared content to a select set of recipients.
+The aim of this project is to provide enhanced privacy for existing Facebook users. By incorporating a broadcast encryption scheme via a Firefox extension we ensure confidentiality of shared content to a select set of recipients, without otherwise impacting browsing and with minal user supervision required.
 
 \section{Limitations}
 

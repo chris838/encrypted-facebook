@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.4)  7 APR 2011 19:31
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.4)  15 APR 2011 06:42
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1509,16 +1509,49 @@ t line 7.
  (./t1futura_lt_heavy.fd
 File: t1futura_lt_heavy.fd Lucida-Handwriting font
 )
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 11.
 
+LaTeX Warning: Citation 'fb-cipc' on page 1 undefined on input line 9.
 
-(/usr/share/texmf-texlive/tex/latex/fourier/ts1futs.fd
-File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 9.
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 14
+.
+(/usr/share/texmf-texlive/tex/latex/fourier/fmlfutmi.fd
+File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
-Underfull \hbox (badness 1275) in paragraph at lines 13--14
-\T1/futs/m/n/12 Face-book de-faults). Prob-lems with in-tru-sive-ness (e.g. SSL
- and
- []
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 11.03998pt on input line 14.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 14.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.43999pt on input line 14.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 11.03998pt on input line 14.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 14.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.43999pt on input line 14.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 14.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 14.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 14.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 14.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 14.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 14.
+
+
+LaTeX Warning: Citation 'pidder' on page 1 undefined on input line 16.
+
+
+LaTeX Warning: Citation 'diaspora' on page 1 undefined on input line 16.
+
+
+LaTeX Warning: Citation 'fb-network' on page 1 undefined on input line 16.
 
 [1
 
@@ -1527,54 +1560,42 @@ Underfull \hbox (badness 1275) in paragraph at lines 13--14
 
 
 ]
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 38.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 38.
- (/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 24.
+
+ (/usr/share/texmf-texlive/tex/latex/fourier/ts1futs.fd
+File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
+)
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 37.
+
+(/usr/share/texmf-texlive/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for FML+futmi on input line 38
-.
-
-(/usr/share/texmf-texlive/tex/latex/fourier/fmlfutmi.fd
-File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
-)
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 38.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 38.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 38.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 38.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 38.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 38.
-
-Underfull \hbox (badness 10000) in paragraph at lines 38--39
+Underfull \hbox (badness 10000) in paragraph at lines 37--38
 []\T1/futs/m/n/12 FireGPG - []$\T1/cmtt/m/n/12 http : / / blog . fortinet . com
  /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
+Underfull \hbox (badness 10000) in paragraph at lines 39--40
 []\T1/futs/m/n/12 TextCrypt - []$\T1/cmtt/m/n/12 http : / / subrosasoft . com /
  OSXSoftware /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
+Underfull \hbox (badness 10000) in paragraph at lines 39--40
 \T1/cmtt/m/n/12 index . php ? main _ page = product _ info&cPath =
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 48--49
 []\T1/futs/m/n/12 flyByNight - []$\T1/cmtt/m/n/12 http : / / hatswitch . org / 
 ~nikita / papers /
  []
 
-) [2]
+) [3] [4
+
+
+]
 \openout2 = `chapters/preparation.aux'.
 
  (./chapters/preparation.tex
@@ -1589,9 +1610,7 @@ Underfull \hbox (badness 1122) in paragraph at lines 21--22
 []\T1/futs/m/n/12 Locally, and dis-tributed man-u-ally. Not re-ally use-able.
  []
 
-[3
-
-
+[5
 
 
 ]
@@ -1615,19 +1634,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 38--39
 0 / 12 /
  []
 
-[4]
+[6]
 Underfull \hbox (badness 10000) in paragraph at lines 71--72
 []$\T1/cmtt/m/n/12 http : / / www . onlineschools . org / blog / facebook-[]obs
 ession/$[]\T1/futs/m/n/12 .
  []
 
-[5]
+[7]
 Underfull \hbox (badness 2503) in paragraph at lines 101--102
 []\T1/futs/m/n/12 Description of Face-book/JPEG com-pres-sion pro-cess (prob-le
 m
  []
 
-[6] [7]
+[8] [9]
 Underfull \hbox (badness 10000) in paragraph at lines 156--157
 \T1/cmtt/m/n/12 col / sid . inpe . br / ePrint % 4080 / 2006 / 12 . 20 . 12 . 1
 5 / doc / v1 . pdf$[]\T1/futs/m/n/12 .
@@ -1639,12 +1658,12 @@ Underfull \hbox (badness 1248) in paragraph at lines 163--164
  users
  []
 
-[8] [9]
+[10] [11]
 Underfull \hbox (badness 1072) in paragraph at lines 213--214
 []\T1/futs/m/n/12 Retrieval and sub-mis-sion times should be within ac-cept-
  []
 
-[10]) [11] [12
+[12]) [13] [14
 
 
 ]
@@ -1652,15 +1671,15 @@ Underfull \hbox (badness 1072) in paragraph at lines 213--214
 
  (./chapters/implementation.tex
 Chapter 3.
-[13
+[15
 
 
-] [14] [15]) [16]
+] [16] [17]) [18]
 \openout2 = `chapters/evaluation.aux'.
 
  (./chapters/evaluation.tex
 Chapter 4.
-[17
+[19
 
 
 
@@ -1743,7 +1762,9 @@ Overfull \hbox (31.9759pt too wide) in paragraph at lines 57--77
  [][] 
  []
 
+[20] [21]
 PGFPlots: reading {gfx/encoding_time.data}
+
 ! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
 n name 'a'. Only the first occurence can be accessed via column names.
 ! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
@@ -1777,68 +1798,68 @@ n name 'a'. Only the first occurence can be accessed via column names.
 ! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
 n name 'a'. Only the first occurence can be accessed via column names.
 
-Overfull \hbox (26.79791pt too wide) in paragraph at lines 105--106
+Overfull \hbox (26.79791pt too wide) in paragraph at lines 113--114
  [] 
  []
 
-[18] [19] [20]
-Underfull \hbox (badness 1527) in paragraph at lines 129--130
+[22]
+Underfull \hbox (badness 1527) in paragraph at lines 143--144
 []\T1/futs/m/n/12 Should on in a mil-lion Gb, or one in a tril-lion im-ages. Th
 is
  []
 
-[21] [22]
-Underfull \hbox (badness 10000) in paragraph at lines 174--174
- |[]\T1/futura_lt_heavy/m/n/17.28 P r o -f i l -i n g s u b -m i s -s i o n a n
- d r e -t r i e v a l
- []
-
-) [23] [24
+[23] [24]
+LaTeX Font Info:    Try loading font information for T1+futura_lt_medium on inp
+ut line 200.
+ (./t1futura_lt_medium.fd
+File: t1futura_lt_medium.fd Lucida-Handwriting font
+) [25] [26]) [27] [28
 
 
 ]
 \openout2 = `chapters/conclusion.aux'.
 
- (./chapters/conclusion.tex
+
+(./chapters/conclusion.tex
 Chapter 5.
-[25
+[29
 
 
-]) [26] [27
+]) [30] [31
 
 
 
-] [28
+] [32
 
-] [29
+] [33
 
-] [30
+] [34
 
 ]
 \openout2 = `chapters/appendix_a.aux'.
 
  (./chapters/appendix_a.tex
 Appendix A.
-[31
+[35
 
 
-]) [32]
+]) [36]
 \openout2 = `frontbackmatter/proposal.aux'.
 
  (./frontbackmatter/proposal.tex
 Appendix B.
-[33
+[37
 
 
 
 
-] [34] [35]
+] [38] [39]
 Underfull \hbox (badness 1107) in paragraph at lines 78--79
 \T1/futs/m/n/12 ity (greater than 95%) of tar-get users in re-gard to page load
 -
  []
 
-[36]
+[40]
 Underfull \hbox (badness 10000) in paragraph at lines 112--112
 |\T1/futura_lt_heavy/m/n/14.4 N o v e m -b e r 1 5 t h  []  D e -c e m -b e r 3
  r d ( e n d o f M i c h a e l -
@@ -1850,48 +1871,59 @@ Underfull \hbox (badness 10000) in paragraph at lines 121--121
 t i o n s t a r t s )  []  D e -c e m -b e r
  []
 
-[37]
+[41]
 Underfull \hbox (badness 10000) in paragraph at lines 131--131
 |\T1/futura_lt_heavy/m/n/14.4 D e -c e m -b e r 2 6 t h  []  J a n -u a r y 1 7
  t h ( W i n -t e r v a -c a -t i o n
  []
 
-[38]
+[42]
 Underfull \hbox (badness 10000) in paragraph at lines 166--166
 |\T1/futura_lt_heavy/m/n/14.4 M a r c h 1 9 t h ( s t a r t o f E a s t e r v a
  -c a -t i o n )  []  M a r c h
  []
 
-[39]) [40] (./dissertation.aux (./chapters/introduction.aux)
+[43]) [44] (./dissertation.aux (./chapters/introduction.aux)
 (./chapters/preparation.aux) (./chapters/implementation.aux)
 (./chapters/evaluation.aux) (./chapters/conclusion.aux)
 (./chapters/appendix_a.aux) (./frontbackmatter/proposal.aux))
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                dissertation
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'dissertation.run.xml'.
 \openout1 = `dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 23737 strings out of 493848
- 448921 string characters out of 1152824
- 660578 words of memory out of 3000000
- 26328 multiletter control sequences out of 15000+50000
- 54801 words of font info for 71 fonts, out of 3000000 for 9000
+ 23793 strings out of 493848
+ 449882 string characters out of 1152824
+ 655577 words of memory out of 3000000
+ 26367 multiletter control sequences out of 15000+50000
+ 78022 words of font info for 95 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 54i,21n,75p,849b,1634s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts
-/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf-texlive/fonts/enc/ttf2pk/
-base/T1-WGL4.enc}<futura_lt_heavy.ttf><futura_lt_bold.ttf></usr/share/texmf-tex
-live/fonts/type1/public/fourier/fourier-mex.pfb></usr/share/texmf-texlive/fonts
-/type1/public/fourier/fourier-ms.pfb></usr/share/texmf-texlive/fonts/type1/adob
-e/utopia/putb8a.pfb></usr/share/texmf-texlive/fonts/type1/adobe/utopia/putr8a.p
-fb></usr/share/texmf-texlive/fonts/type1/adobe/utopia/putri8a.pfb></usr/share/t
-exmf/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on dissertation.pdf (40 pages, 220316 bytes).
+ 54i,21n,75p,902b,1634s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/ttf2pk/base/T1-WGL4.enc}<futura_lt_medium
+.ttf>{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fo
+nts/enc/dvips/cm-super/cm-super-t1.enc}<futura_lt_heavy.ttf><futura_lt_bold.ttf
+></usr/share/texmf-texlive/fonts/type1/public/fourier/fourier-mex.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/fourier/fourier-ms.pfb></usr/share/texmf-te
+xlive/fonts/type1/adobe/utopia/putb8a.pfb></usr/share/texmf-texlive/fonts/type1
+/adobe/utopia/putr8a.pfb></usr/share/texmf-texlive/fonts/type1/adobe/utopia/put
+ri8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on dissertation.pdf (44 pages, 236186 bytes).
 PDF statistics:
- 448 PDF objects out of 1000 (max. 8388607)
- 109 named destinations out of 1000 (max. 500000)
- 341 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 482 PDF objects out of 1000 (max. 8388607)
+ 118 named destinations out of 1000 (max. 500000)
+ 357 words of extra memory for PDF output out of 10000 (max. 10000000)
 
