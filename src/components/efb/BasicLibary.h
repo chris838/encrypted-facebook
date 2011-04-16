@@ -232,6 +232,9 @@ namespace efb {
                   return 3;
                 }
                 
+                // delete the image object
+                delete &img;
+                
                 // Return with succes
                 return 0;
             }
@@ -303,6 +306,9 @@ namespace efb {
                   return 1;
                 }
                 data_file.write((char*) &data[head_size], data.size()-head_size );
+                
+                // delete the image object
+                delete &img;
                 
                 // Return with success
                 return 0; 

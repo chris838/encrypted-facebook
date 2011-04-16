@@ -680,15 +680,19 @@ pc = {
                                 // If the download is finished
                                 if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
                                     // Try to decrypt the image
+                                    console.time("0, decode");
                                     if (!eFB.decryptFileFromImage( path, path2 )) {
+                                        console.timeEnd("0, decode");
                                         // Decryption successful
                                         eFB.img_cache[id].status = 2;
                                         eFB.img_cache[id].docs.forEach( pc.replaceImages );
                                         
                                     } else {
+                                        console.timeEnd("0, decode");
                                         // Decryption failed
                                         eFB.img_cache[id].status = 1;
                                     }
+                                    console.timeEnd("0, retrieve");
                                 }
                             }
                         };

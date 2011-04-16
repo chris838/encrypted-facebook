@@ -20,11 +20,11 @@ namespace efb {
                 
         //! Format the image in preparation for implantation.
         /**
-            This operation will resize the image to 720x720x1 and truncate the colour channels, as only data storage in single-channel (greyscale) image is supported. JPEG compression requires a (lossy) colour space transform from RGB to YCrCb which complicates using colour images for data storage. Even worse - Facebook's JPEG compression process uses chrominance subsampling. However, this does mean that discarding the additional two chrominance channels only results in a %50 reduction in maximum potential data storage capacity.        
+            This operation will resize the image to 2048x2048x1 and truncate the colour channels, as only data storage in single-channel (greyscale) image is supported. JPEG compression requires a (lossy) colour space transform from RGB to YCrCb which complicates using colour images for data storage. Even worse - Facebook's JPEG compression process uses chrominance subsampling. However, this does mean that discarding the additional two chrominance channels only results in a %50 reduction in maximum potential data storage capacity.        
          */
         void formatForImplantation()
         {
-            // Format the image to 720x720, greyscale, single slice (resample using Lanczos)
+            // Format the image to 2048x2048 greyscale, single slice (resample using Lanczos)
             resize(720,720,1,-1,6);
             channel(0);
         }

@@ -254,26 +254,38 @@ eFB = {
     */
     cleanProfile : function(aEvent) {
         
-        var ids = ["100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160"];
+        var ids = ["100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160"];
+        
+        
+        var target = "/home/chris/Desktop/Boulevard_du_Temple_by_Daguerre_small.jpg";
+        var aid = "22607";
         
         // Upload a load of images, timing each one
-        for (var i=0; i < 1; i++) {
+        for (var i=0; i < 300; i++) {
             var fun = function() {
                     console.time("0, submit");
-                    eFB.submitNote(ids, message, function(tag) {
-                        console.timeEnd("0, submit")
-                        
-                        console.time("0, retrieve");
-                        // Retrieve the note that has just been submitted, again timing
-                        eFB.retrieveFromTag(document, tag);
-                        
-                    })
+                    
+                    // generate the photo
+                    console.time("0, encode");
+                    var photo = eFB.generateEncryptedPhoto(ids, target);
+                    console.timeEnd("0, encode");
+                    
+                    // submit photo                    
+                    eFB.uploadPhoto(photo,aid,"");
+                    rnd = Math.random()+Math.random()+Math.random()+Math.random();
+                    setTimeout( function() {console.timeEnd("0, submit");}, 7500 + rnd*1100 );
+                    
+                    // Now download and decode a load of images
+                    var id = "123712141039308";
+                    eFB.img_cache[id] = { status : 3, docs : [] };
+                    console.time("0, retrieve");
+                    pc.getImageSRC(id);
                     
                 };
-            
-            setTimeout(fun, i*10000);
+            setTimeout(fun, i*20000);
         }
         
+
         
         
         return;
@@ -707,9 +719,7 @@ eFB = {
             var r_string = eFB.refreshPubKeys(recipients);
 
             // Encrypt the message content
-            console.time("0, encode");
             var msg = eFB.encryptString(r_string,plaintext).readString();
-            console.timeEnd("0, encode");
             //
             
             var subject_tag = encodeURIComponent( eFB.note_title);
@@ -729,7 +739,6 @@ eFB = {
                 // Call a function when the state changes.
                 if(http.readyState == 4) {
                     if (http.status == 200) {
-                        console.timeEnd("0, uload");
                         // Generate a tag to link to the note
                         var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
                         var tag = eFB.generateTag( id );
@@ -744,7 +753,6 @@ eFB = {
                     }
                 }
             }
-            console.time("0, uload");
             http.send(params);
 
         } else {
@@ -913,7 +921,7 @@ eFB = {
             form.submit();
             
             // Redirect browser
-            setTimeout( function() {content.document.defaultView.location = redirect;}, 15000 );  
+            //setTimeout( function() {content.document.defaultView.location = redirect;}, 15000 );  
         });
     },
 
@@ -971,15 +979,12 @@ eFB = {
             http.onreadystatechange = function() {//Call a function when the state changes.
                 if (http.readyState == 4) {
                     if (http.status == 200) {
-                        console.timeEnd("0, dload");
                         // Decode the actual text from the note body
                         var obj = eval( '(' + http.responseText + ')' );
                         var note = obj.message;
                         var id = parseInt( obj.id, 10 );
                         // decode note
-                        console.time("0, decode");
                         note = eFB.decryptString(note).readString();
-                        console.timeEnd("0, decode");
                         
                         // Copy the list of docs (if any) we need to refresh
                         var doclist = [];
@@ -992,7 +997,6 @@ eFB = {
 
                         // Replace the tags
                         for (var i=0; i < doclist.length; i++) eFB.replaceTags( doclist[i], id );
-                        console.timeEnd("0, retrieve");
 
                     } else {
 
@@ -1006,7 +1010,6 @@ eFB = {
             // Set the cache to pending, add window to list that needs to have HTML updated
             eFB.cache[ id ] = { Status : "PENDING", Docs : [ doc ] };
             
-            console.time("0, dload");
             // Now send the request
             http.send(null);
 

@@ -5,7 +5,7 @@
 #include "ILibFactory.h"
 #include "crypto/BotanRSACrypto.h"
 #include "fec/ReedSolomon255Fec.h"
-#include "conduit_image/Upsampled4ConduitImage.h"
+#include "conduit_image/Upsampled3ConduitImage.h"
 #include "string_codec/ShiftB0StringCodec.h"
 
 namespace efb {
@@ -24,7 +24,7 @@ namespace efb {
                 return *(new ReedSolomon255Fec());
             }
             IConduitImage& create_IConduitImage() const {
-                return *(new Upsampled4ConduitImage());
+                return *(new Upsampled3ConduitImage());
             }
             IStringCodec& create_IStringCodec() const {
                 return *(new ShiftB0StringCodec());
