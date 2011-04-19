@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.4)  15 APR 2011 06:42
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.4)  18 APR 2011 00:32
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1339,54 +1339,54 @@ File: lgrcmr.fd 2008/01/04 v1.0 Greek Computer Modern
 (./chapters/appendix_a.aux) (./frontbackmatter/proposal.aux))
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 75.
-LaTeX Font Info:    Try loading font information for FML+futm on input line 75.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 76.
+LaTeX Font Info:    Try loading font information for FML+futm on input line 76.
 
 
 (/usr/share/texmf-texlive/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 75.
-LaTeX Font Info:    Try loading font information for FMS+futm on input line 75.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 76.
+LaTeX Font Info:    Try loading font information for FMS+futm on input line 76.
 
 
 (/usr/share/texmf-texlive/tex/latex/fourier/fmsfutm.fd
 File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
 )
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 75.
-LaTeX Font Info:    Try loading font information for FMX+futm on input line 75.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 76.
+LaTeX Font Info:    Try loading font information for FMX+futm on input line 76.
 
 
 (/usr/share/texmf-texlive/tex/latex/fourier/fmxfutm.fd
 File: fmxfutm.fd futm-extension
 )
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 75.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 75.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 76.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 76.
 
 (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Try loading font information for T1+futs on input line 75.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 76.
 
 (/usr/share/texmf-texlive/tex/latex/fourier/t1futs.fd
 File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
@@ -1421,8 +1421,8 @@ Package caption Info: End \AtBeginDocument code.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'dissertation.bbl' found.
  (./dissertation.bbl)
-Package biblatex Info: Reference section=0 on input line 75.
-Package biblatex Info: Reference segment=0 on input line 75.
+Package biblatex Info: Reference section=0 on input line 76.
+Package biblatex Info: Reference segment=0 on input line 76.
 
 *geometry auto-detecting driver*
 *geometry detected driver: pdftex*
@@ -1465,7 +1465,7 @@ driver: pdftex
 \@twosidetrue \@mparswitchtrue 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-Package hyperref Info: Link coloring OFF on input line 75.
+Package hyperref Info: Link coloring OFF on input line 76.
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
@@ -1474,20 +1474,20 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count282
 )
-LaTeX Info: Redefining \ref on input line 75.
-LaTeX Info: Redefining \pageref on input line 75.
+LaTeX Info: Redefining \ref on input line 76.
+LaTeX Info: Redefining \pageref on input line 76.
  (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write6
 \openout6 = `dissertation.out'.
 
 \AtBeginShipoutBox=\box36
-LaTeX Font Info:    Try loading font information for LGR+futs on input line 75.
+LaTeX Font Info:    Try loading font information for LGR+futs on input line 76.
 
-LaTeX Font Info:    No file LGRfuts.fd. on input line 75.
+LaTeX Font Info:    No file LGRfuts.fd. on input line 76.
 
 
 LaTeX Font Warning: Font shape `LGR/futs/m/n' undefined
-(Font)              using `LGR/cmr/m/n' instead on input line 75.
+(Font)              using `LGR/cmr/m/n' instead on input line 76.
 
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
@@ -1671,7 +1671,8 @@ Underfull \hbox (badness 1072) in paragraph at lines 213--214
 
  (./chapters/implementation.tex
 Chapter 3.
-[15
+File: class.1 Graphic file (type mps)
+[MP to PDF] (./class.1) [15
 
 
 ] [16] [17]) [18]
@@ -1753,12 +1754,12 @@ n name 'a'. Only the first occurence can be accessed via column names.
 ! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
 n name 'a'. Only the first occurence can be accessed via column names.
 
-Overfull \hbox (31.9759pt too wide) in paragraph at lines 57--77
+Overfull \hbox (31.9759pt too wide) in paragraph at lines 59--79
  [] 
  []
 
 
-Overfull \hbox (31.9759pt too wide) in paragraph at lines 57--77
+Overfull \hbox (31.9759pt too wide) in paragraph at lines 59--79
  [][] 
  []
 
@@ -1798,68 +1799,66 @@ n name 'a'. Only the first occurence can be accessed via column names.
 ! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
 n name 'a'. Only the first occurence can be accessed via column names.
 
-Overfull \hbox (26.79791pt too wide) in paragraph at lines 113--114
+Overfull \hbox (26.79791pt too wide) in paragraph at lines 115--116
  [] 
  []
 
 [22]
-Underfull \hbox (badness 1527) in paragraph at lines 143--144
+Underfull \hbox (badness 1527) in paragraph at lines 145--146
 []\T1/futs/m/n/12 Should on in a mil-lion Gb, or one in a tril-lion im-ages. Th
 is
  []
 
 [23] [24]
 LaTeX Font Info:    Try loading font information for T1+futura_lt_medium on inp
-ut line 200.
+ut line 202.
  (./t1futura_lt_medium.fd
 File: t1futura_lt_medium.fd Lucida-Handwriting font
-) [25] [26]) [27] [28
-
-
-]
+) [25]) [26]
 \openout2 = `chapters/conclusion.aux'.
 
-
-(./chapters/conclusion.tex
+ (./chapters/conclusion.tex
 Chapter 5.
-[29
+[27
 
 
-]) [30] [31
 
 
+]) [28] [29
+
+
+
+] [30
+
+] [31
 
 ] [32
-
-] [33
-
-] [34
 
 ]
 \openout2 = `chapters/appendix_a.aux'.
 
  (./chapters/appendix_a.tex
 Appendix A.
-[35
+[33
 
 
-]) [36]
+]) [34]
 \openout2 = `frontbackmatter/proposal.aux'.
 
  (./frontbackmatter/proposal.tex
 Appendix B.
-[37
+[35
 
 
 
 
-] [38] [39]
+] [36] [37]
 Underfull \hbox (badness 1107) in paragraph at lines 78--79
 \T1/futs/m/n/12 ity (greater than 95%) of tar-get users in re-gard to page load
 -
  []
 
-[40]
+[38]
 Underfull \hbox (badness 10000) in paragraph at lines 112--112
 |\T1/futura_lt_heavy/m/n/14.4 N o v e m -b e r 1 5 t h  []  D e -c e m -b e r 3
  r d ( e n d o f M i c h a e l -
@@ -1871,19 +1870,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 121--121
 t i o n s t a r t s )  []  D e -c e m -b e r
  []
 
-[41]
+[39]
 Underfull \hbox (badness 10000) in paragraph at lines 131--131
 |\T1/futura_lt_heavy/m/n/14.4 D e -c e m -b e r 2 6 t h  []  J a n -u a r y 1 7
  t h ( W i n -t e r v a -c a -t i o n
  []
 
-[42]
+[40]
 Underfull \hbox (badness 10000) in paragraph at lines 166--166
 |\T1/futura_lt_heavy/m/n/14.4 M a r c h 1 9 t h ( s t a r t o f E a s t e r v a
  -c a -t i o n )  []  M a r c h
  []
 
-[43]) [44] (./dissertation.aux (./chapters/introduction.aux)
+[41]) [42] (./dissertation.aux (./chapters/introduction.aux)
 (./chapters/preparation.aux) (./chapters/implementation.aux)
 (./chapters/evaluation.aux) (./chapters/conclusion.aux)
 (./chapters/appendix_a.aux) (./frontbackmatter/proposal.aux))
@@ -1892,9 +1891,6 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
 Package biblatex Warning: Please (re)run Biber on the file:
@@ -1906,13 +1902,13 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 23793 strings out of 493848
- 449882 string characters out of 1152824
- 655577 words of memory out of 3000000
- 26367 multiletter control sequences out of 15000+50000
- 78022 words of font info for 95 fonts, out of 3000000 for 9000
+ 23823 strings out of 493848
+ 450086 string characters out of 1152824
+ 655603 words of memory out of 3000000
+ 26394 multiletter control sequences out of 15000+50000
+ 79100 words of font info for 96 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 54i,21n,75p,902b,1634s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 54i,21n,75p,891b,1634s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/ttf2pk/base/T1-WGL4.enc}<futura_lt_medium
 .ttf>{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fo
 nts/enc/dvips/cm-super/cm-super-t1.enc}<futura_lt_heavy.ttf><futura_lt_bold.ttf
@@ -1920,10 +1916,11 @@ nts/enc/dvips/cm-super/cm-super-t1.enc}<futura_lt_heavy.ttf><futura_lt_bold.ttf
 re/texmf-texlive/fonts/type1/public/fourier/fourier-ms.pfb></usr/share/texmf-te
 xlive/fonts/type1/adobe/utopia/putb8a.pfb></usr/share/texmf-texlive/fonts/type1
 /adobe/utopia/putr8a.pfb></usr/share/texmf-texlive/fonts/type1/adobe/utopia/put
-ri8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on dissertation.pdf (44 pages, 236186 bytes).
+ri8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr/share
+/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb>
+Output written on dissertation.pdf (42 pages, 245236 bytes).
 PDF statistics:
- 482 PDF objects out of 1000 (max. 8388607)
- 118 named destinations out of 1000 (max. 500000)
+ 477 PDF objects out of 1000 (max. 8388607)
+ 116 named destinations out of 1000 (max. 500000)
  357 words of extra memory for PDF output out of 10000 (max. 10000000)
 

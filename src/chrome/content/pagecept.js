@@ -10,7 +10,11 @@ pc = {
     selector_className : 'generic_dialog pop_dialog full_bleed',
     selector_html : "<div class='generic_dialog pop_dialog full_bleed'><div style='top: 0px; width: 467px;' class='generic_dialog_popup'><div class='pop_container_advanced'><div class='pop_content' id='pop_content'><h2 class='dialog_title'><span>Select Recipients</span></h2><div class='dialog_content'><div class='dialog_body'><div class='ListEditor_Container'><form id='friend_suggester_popup_form' action='/'><div id='fb_multi_friend_selector' class='resetstyles num_cols_3'><div id='fb_multi_friend_selector_wrapper' class='clearfix' style><div id='fb_mfs_container'><div id='fb_mfs_body'><div id='fb_multi_friend_selector_notice' style='display:none;'></div><div id='fs_current_filter' style='display:none;' class='clearfix'></div><ul id='friends' style='height:280px;'><div id='all_friends'>" +
 
- "</div></ul></div></div></div></div></form></div></div><div class='dialog_buttons clearfix'><label class='uiButton uiButtonLarge uiButtonConfirm'><input type='button' value='Send Message' name='save'></label><label class='uiButton uiButtonLarge '><input type='button' value='Cancel' name='cancel'></label></div></div></div></div></div></div>",
+"</div></ul></div></div></div></div></form></div></div><div class='dialog_buttons clearfix'>" 
++
+"<span style='margin-right: 210px;' id='sall'><input type='checkbox'><label>Select All</label></span>"
++
+"<label class='uiButton uiButtonLarge uiButtonConfirm'><input type='button' value='Submit' name='save'></label><label class='uiButton uiButtonLarge '><input type='button' value='Cancel' name='cancel'></label></div></div></div></div></div></div>",
 
     /**
         First handler looks for a login.
@@ -267,8 +271,9 @@ pc = {
                 // get a list of selected recipient ids
                 var list = doc.getElementById("all_friends").getElementsByTagName("li");
                 var ids = [];
+                var sall = doc.getElementById("sall").firstChild.checked;
                 for (var i=0; i<list.length; i++) {
-                    if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+                    if (list[i].className=="selected" || sall) ids.push( list[i].getAttribute( "userid" ) );
                 }
                 // create a note, tag will be passed to save_callback
                 eFB.submitNote(ids, input.getAttribute("value"), save_callback);
@@ -427,8 +432,9 @@ pc = {
                 // get a list of selected recipient ids
                 var list = doc.getElementById("all_friends").getElementsByTagName("li");
                 var ids = [];
+                var sall = doc.getElementById("sall").firstChild.checked;
                 for (var i=0; i<list.length; i++) {
-                    if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+                    if (list[i].className=="selected" || sall) ids.push( list[i].getAttribute( "userid" ) );
                 }
                 // create a note, tag will be passed to save_callback
                 eFB.submitNote(ids, msg, save_callback);
@@ -483,8 +489,9 @@ pc = {
                 // get a list of selected recipient ids
                 var list = doc.getElementById("all_friends").getElementsByTagName("li");
                 var ids = [];
+                var sall = doc.getElementById("sall").firstChild.checked;
                 for (var i=0; i<list.length; i++) {
-                    if (list[i].className=="selected") ids.push( list[i].getAttribute( "userid" ) );
+                    if (list[i].className=="selected" || sall) ids.push( list[i].getAttribute( "userid" ) );
                 }
                 
                 // Loop through the file inputs
@@ -650,8 +657,7 @@ pc = {
         );
     },
 
-    getImageSRC : function(id) {
-
+    getImageSRC : function(id) {     
         // Create a new XML HTTP request
         var token = eFB.prefs.getCharPref("token");
         var xhr = new XMLHttpRequest();
@@ -662,7 +668,7 @@ pc = {
             if(xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     // Check if we have a valid image
-                    var response = eval( '(' + xhr.responseText + ')' );
+                    var response = eFB.secureEval( xhr );
                     if ( response == false ) {
                         // Not a valid image, write status 0 in cache
                         eFB.img_cache[id].status = 0;
@@ -670,29 +676,23 @@ pc = {
                         // Get the file using the source URL
                         var path = eFB.working_dir + eFB.cache_dir + id + '.jpg' ;
                         var path2 = eFB.working_dir + eFB.cache_dir + id + '_plain.jpg' ;
-
                         // Define a progress listener for the download
                         var prog_listener = {
                             onProgressChange: function (aWebProgress, aRequest, aCurSelfProgress, aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress) {
-
                             },
                             onStateChange: function(aWebProgress, aRequest, aStateFlags, aStatus) {
                                 // If the download is finished
                                 if (aStateFlags & Components.interfaces.nsIWebProgressListener.STATE_STOP) {
                                     // Try to decrypt the image
-                                    console.time("0, decode");
                                     if (!eFB.decryptFileFromImage( path, path2 )) {
-                                        console.timeEnd("0, decode");
                                         // Decryption successful
                                         eFB.img_cache[id].status = 2;
                                         eFB.img_cache[id].docs.forEach( pc.replaceImages );
-                                        
                                     } else {
-                                        console.timeEnd("0, decode");
                                         // Decryption failed
                                         eFB.img_cache[id].status = 1;
                                     }
-                                    console.timeEnd("0, retrieve");
+                                    var dt = new Date();
                                 }
                             }
                         };

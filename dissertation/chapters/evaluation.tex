@@ -92,7 +92,7 @@ The formula used to calculate the capacity is obtained by taking the typical cap
     C = A \cdot (1 + H(p_e))
 \end{equation}
 
-Where $H(x)$ is the binary entropy function. This provides the capacity in units of information per symbol - in this case KiB per image. Figure \ref{graph:capacity} compares the calculated capacity for each of the three conduit images implementations. At quality factor 85, which most closely matches the profile of the Facebook JPEG compression proccess, we see both scaling methods performing approximately the same with capacities of over 180 KiB in a single image.
+Where $H(x)$ is the binary entropy function. This provides the capacity in units of information per symbol - in this case KiB per image. Figure \ref{graph:capacity} compares the calculated capacity for each of the three conduit images implementations. At quality factor 85, which most closely matches the profile of the Facebook JPEG compression proccess, we see both scaling methods performing approximately the same with capacities of over 180 KiB per image.
 
 \begin{figure}[tbp]
   \begin{center}
@@ -189,25 +189,23 @@ Now create 15 more users, friends of user X. (group A). Also have one user who i
 
 \section{Profiling submission and retrieval}
 
-To measure mean encode/decode and upload/download times automated tests were ran programmatically from the extension, with each submission and retrieval round being allowed to complete before beginning the next.
+To measure mean encode/decode and upload/download times for a single object automated tests were ran programmatically from the extension, with each submission and retrieval round being allowed to complete before beginning the next.
 
-To obtain results which tested real-world performance and included the full set of DOM tree navigation/insertion operations and browser pageload times additional submission tests were performed manually through the browser. Retrieval was also tested by repeatedly loading pages containing multiple items of encrypted content to be decoded in parallel. For comparison these tests were then repeated with the extension disabled.
+To obtain results which tested real-world performance and included the full set of DOM tree navigation/insertion operations and browser pageload times additional retrieval tests were performed. Pages containing multiple items of encrypted content were loaded, triggering asynchronous retrieval and deocoding. For comparison these tests were repeated with the extension disabled.
 
 \subsection{Method}
 
-All encryption was performed with a simulated group size of 405 as detailed in section XXX. Test images were duplicate copies of a (approximately) 50 KiB JPEG image (see section XXX). Test messages were randomly generated strings of mixed-case letter and numeral characters. With the exception of the last test where strings were limited by the 420 character status update length limit, messages were 10,000 characters in length - the limit for private messages. 
+All encryption was performed with a simulated group size of 405 as detailed in section XXX. Test images were duplicate copies of a (approximately) 50 KiB JPEG image (see section XXX). Test messages were randomly generated strings of mixed-case letter and numeral characters. With the exception of the last test where strings were limited by the 420 character status update length limit, messages were 10,000 characters in length - the limit for private messages.
 
-A modified version of the Chromebug Firefox extension was used to record results.
+A modified version of the Chromebug Firefox extension was used to record all results.
 
 \subsubsection{Automated testing}
 
-For textual content, 1000 messages were generated. The note submission function was then called with each message using a 60 second delay in between each run \footnote{Since parts of the process are performed asynchronously, we leave enough time for one submission and retrieval round to complete before beginning another.}. The tags required to retrieve these notes are saved and the time spent in each submission phase profiled. When the HTTP request for sumbmission completes, retrieval is triggered and the download and decoding time logged. The same test was repeated, using a set of 1000 images.
+For textual content, 1000 messages were generated. The note submission function was then called with each message using a 60 second delay in between each run \footnote{Since parts of the process are performed asynchronously, we leave enough time for one submission and retrieval round to complete before beginning another.}. The tags required to retrieve these notes are saved and the time spent in each submission phase profiled. When the HTTP request for sumbmission completes, retrieval is triggered and the download and decoding time logged. The same test was repeated using a set of 1000 images.
 
 \subsubsection{Manual testing}
 
-Manual submission of 50 images and 50 messages was performed: first with the plugin disabled; then with full encryption. Images were again 50 KiB in size and messages 10,000 random ASCII characters. Times spent in the relevant functions were recorded.
-
-To evaluate retrieval, sample newsfeeds were generated with 15 status update entries, as this is the number of newsfeed entries Facebook first loads \footnote{More are loaded dynamically when the user scrolls to the bottom of the page.}. Status update messages were random ASCII text 420 characters in length, the maximum permitted. One newsfeed contained plaintext entries and the other contained encrypted entries generated through the plugin. The pages were loaded (using a forced browser cache refresh) repeatedly 10,000 times and the loading and retrieval times logged. This test itself was repeated, this time with the extension caches also being wiped between loads. The entire process was then repeated for a newsfeed containing image entries, once again random images of size 50 KiB, instead of status messages.
+Sample newsfeeds were generated with 15 status update entries, as this is the number of newsfeed entries Facebook first loads \footnote{More are loaded dynamically when the user scrolls to the bottom of the page.}. Status update messages were random ASCII text 420 characters in length, the maximum permitted. One newsfeed contained plaintext entries and the other contained encrypted entries generated through the plugin. The pages were loaded repeatedly 10,000 times and the loading and retrieval times logged. In between each load both the browser cache and extension cache were deleted. The entire process was then repeated for a newsfeed containing 15 image entries, once again random images of size 50 KiB, instead of status messages.
 
 \subsection{Results}
 

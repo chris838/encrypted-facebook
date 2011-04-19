@@ -248,45 +248,35 @@ eFB = {
             return;
         }
     },
-
+    
+    counter : 0,
+    ttt : 0,
+    
+    /**
+        We only want to use eval when we have to, for JSON objects retrieved from Facebook.
+    */
+    secureEval : function( xmlHttpRequestObject ) {
+        return eval( '(' + xmlHttpRequestObject.responseText + ')' );
+    },
+    
     /**
         Clean the user's Facebook profile. All notes and wall/newsfeed posts will be removed.
     */
     cleanProfile : function(aEvent) {
         
-        var ids = ["100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160","100002257060508","100002222860424","100002271851160","100002214491226","100002234050469","100002280220410","100001998702574","100002249590448","100002250550397","100002214160234","100002257210300","100002269931146","100002257060508","100002222860424","100002271851160"];
-        
-        
-        var target = "/home/chris/Desktop/Boulevard_du_Temple_by_Daguerre_small.jpg";
-        var aid = "22607";
-        
-        // Upload a load of images, timing each one
-        for (var i=0; i < 300; i++) {
-            var fun = function() {
-                    console.time("0, submit");
-                    
-                    // generate the photo
-                    console.time("0, encode");
-                    var photo = eFB.generateEncryptedPhoto(ids, target);
-                    console.timeEnd("0, encode");
-                    
-                    // submit photo                    
-                    eFB.uploadPhoto(photo,aid,"");
-                    rnd = Math.random()+Math.random()+Math.random()+Math.random();
-                    setTimeout( function() {console.timeEnd("0, submit");}, 7500 + rnd*1100 );
-                    
-                    // Now download and decode a load of images
-                    var id = "123712141039308";
-                    eFB.img_cache[id] = { status : 3, docs : [] };
-                    console.time("0, retrieve");
-                    pc.getImageSRC(id);
-                    
-                };
-            setTimeout(fun, i*20000);
+        for (var i=0; i<1000; i++) {
+            var f = function() {
+                eFB.img_cache = {};
+                eFB.cache = {};
+                eFB.counter++;
+                var dt = new Date();
+                eFB.ttt = dt.getTime();
+                console.log("----------------------------------------------------");
+                console.log("0, Test"+eFB.counter+", 0: BEGIN");
+                content.document.defaultView.location.reload(true);
+            }
+            setTimeout(f, i*10000);
         }
-        
-
-        
         
         return;
         // Delete posts on the wall
@@ -309,7 +299,7 @@ eFB = {
             if(xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     // Go though each result and delete
-                    var r = eval( '(' + xhr.responseText + ')' ).data;
+                    var r = eFB.secureEval( xhr ).data;
                     for (var i=0; i<r.length; i++) {
                         setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 0);
                         setTimeout( eFB.deleteGraphApiObject( r[i].id ) , 1000);
@@ -616,7 +606,7 @@ eFB = {
             if(xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     // Extract the "about me" body from the response
-                    callback( eval( '(' + xhr.responseText + ')' )[attribute] );
+                    callback( eFB.secureEval( xhr )[attribute] );
                 } else {
                     window.alert("Error sending request: " + xhr.responseText);
                 }
@@ -637,7 +627,7 @@ eFB = {
             if(xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     // Extract the "about me" body from the response
-                    callback( eval( '(' + xhr.responseText + ')' ) );
+                    callback( eFB.secureEval( xhr ) );
                 } else {
                     window.alert("Error sending request: " + xhr.responseText);
                 }
@@ -740,7 +730,7 @@ eFB = {
                 if(http.readyState == 4) {
                     if (http.status == 200) {
                         // Generate a tag to link to the note
-                        var id = parseInt( eval( '(' + http.responseText + ')' ).id ).toString(16);
+                        var id = parseInt( eFB.secureEval( http ).id ).toString(16);
                         var tag = eFB.generateTag( id );
                         callback( tag );
                         // Delete the post on the users feed
@@ -838,7 +828,7 @@ eFB = {
             if(xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     // Go though each result and delete
-                    var r = eval( '(' + xhr.responseText + ')' ).data;
+                    var r = eFB.secureEval( xhr ).data;
                     for (var i=0; i<r.length; i++) {
                         if (r[i].name == eFB.note_title ) {
                             eFB.deleteGraphApiObject( r[i].id );
@@ -937,7 +927,7 @@ eFB = {
             if(xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     // Find the correct album and get the album ID
-                    var r = eval( "(" + xhr.responseText + ")" ).data;
+                    var r = eFB.secureEval( xhr ).data;
                     for (var i=0; i<r.length; i++) {
                         if (r[i].link.indexOf( aid ) != -1 ) {
                             // Found the album
@@ -961,7 +951,7 @@ eFB = {
     },
     
     /**
-        Retrive the contents of a note given the tag
+        Retrieve the contents of a note given the tag
     */
     retrieveFromTag : function(doc, tag) {
 
@@ -980,7 +970,7 @@ eFB = {
                 if (http.readyState == 4) {
                     if (http.status == 200) {
                         // Decode the actual text from the note body
-                        var obj = eval( '(' + http.responseText + ')' );
+                        var obj = eFB.secureEval( http );
                         var note = obj.message;
                         var id = parseInt( obj.id, 10 );
                         // decode note
@@ -997,6 +987,8 @@ eFB = {
 
                         // Replace the tags
                         for (var i=0; i < doclist.length; i++) eFB.replaceTags( doclist[i], id );
+                        var dt = new Date();
+                        console.log("0, Test"+eFB.counter+", "+ (dt.getTime() - eFB.ttt) +": NOTE" + id+ " DECODED");
 
                     } else {
 
