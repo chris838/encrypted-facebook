@@ -1,0 +1,50 @@
+\chapter{Codec Timing}
+
+Figure \ref{graph:codec-speeds} shows a comparison of encode and decode times across varying quality factors for each of the conduit image implementations. Due to limited testing equipment CPU load was not uniform across tests - these results give only an approximation of the timing involved. Section XXX gives a more accurate overview of time spent encoding and decoding during an actual submission and retrieval operation.
+
+\begin{figure}[h]
+  \begin{center}
+    
+\subfigure{
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Encoding time (ms),
+    height=5cm,width=10cm,legend style={legend pos=outer north east}]
+    
+    \addplot
+        table[x=QF,y=e_Sc3] {gfx/encoding_time.data};
+    
+    \addplot
+        table[x=QF,y=e_Sc4] {gfx/encoding_time.data};
+        
+    \addplot
+        table[x=QF,y=e_Haar] {gfx/encoding_time.data};
+        
+    \legend{Scaled3,Scaled4,Haar}
+    
+    \end{axis}
+\end{tikzpicture}
+}
+\subfigure{
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Decoding time (ms),
+    height=5cm,width=10cm,legend style={legend pos=outer north east}]
+    
+    \addplot
+        table[x=QF,y=d_Sc3] {gfx/encoding_time.data};
+    
+    \addplot
+        table[x=QF,y=d_Sc4] {gfx/encoding_time.data};
+        
+    \addplot
+        table[x=QF,y=d_Haar] {gfx/encoding_time.data};
+        
+    \legend{Scaled3,Scaled4,Haar}
+    
+    \end{axis}
+\end{tikzpicture}
+}
+
+    \caption{Per image encode and decode times for each of the three conduit image implementations, for varying JPEG quality factors.}
+    \label{graph:codec-speeds}
+  \end{center}
+\end{figure}

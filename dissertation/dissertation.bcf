@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bcf:controlfile version="1.2" xmlns:bcf="https://sourceforge.net/projects/biblatex">
+<bcf:controlfile version="1.4" xmlns:bcf="https://sourceforge.net/projects/biblatex">
   <!-- BIBER OPTIONS -->
   <bcf:options component="biber" type="global">
     <bcf:option type="singlevalued">
@@ -86,7 +86,7 @@
       <bcf:value>1</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
-      <bcf:key>terseinits</bcf:key>
+      <bcf:key>uniquelist</bcf:key>
       <bcf:value>0</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
@@ -273,5 +273,7 @@
     <bcf:citekey>pidder</bcf:citekey>
     <bcf:citekey>diaspora</bcf:citekey>
     <bcf:citekey>fb-network</bcf:citekey>
+    <bcf:citekey>rsfec-decode</bcf:citekey>
+    <bcf:citekey>cogwalk</bcf:citekey>
   </bcf:section>
 </bcf:controlfile>

@@ -398,7 +398,7 @@ namespace efb {
                 const char*  file2_path
             )
             {
-                return testImageCoding();
+                //return testImageCoding();
             
                 // ifstream objects
                 std::ifstream file1, file2;

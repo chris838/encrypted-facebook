@@ -1,6 +1,6 @@
 % $ biblatex auxiliary file $
-% $ biblatex version 1.2 $
-% $ biber version 0.5.7 $
+% $ biblatex version 1.4 $
+% $ biber version 0.9 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -23,19 +23,80 @@
 
 
 \refsection{0}
-  \entry{fb-factsheet}{online}{}
-    \name{author}{1}{%
-      {{Facebook}{F.}{Inc}{I.}{}{}{}{}}%
+  \entry{fb-cipc}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
     }
-    \strng{namehash}{FI1}
-    \strng{fullhash}{FI1}
-    \field{sortinit}{F}
-    \field{year}{2011}
+    \name{author}{1}{}{%
+      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{EDApcoC1}
+    \strng{fullhash}{EDApcoC1}
+    \field{sortinit}{E}
+    \field{title}{Report of findings into the complaint filed by the Canadian internet policy and public interest clinic against Facebook Inc.}
+    \field{year}{2009}
+    \verb{url}
+    \verb http://www.priv.gc.ca/cf-dc/2009/2009_008_0716_e.pdf
+    \endverb
+  \endentry
+
+  \entry{fb-factsheet}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Inc.}{I\bibinitperiod}{Facebook}{F\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Inc.}{I\bibinitperiod}{Facebook}{F\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{IF1}
+    \strng{fullhash}{IF1}
+    \field{sortinit}{I}
+    \field{month}{06}
     \field{title}{The official Facebook.com statistics factsheet.}
+    \field{year}{2011}
     \verb{url}
     \verb http://www.facebook.com/press/info.php?factsheet
     \endverb
   \endentry
+
+  \entry{rsfec-decode}{book}{}
+    \name{labelname}{1}{}{%
+      {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Linkabit Corporation}%
+    }
+    \strng{namehash}{OJP1}
+    \strng{fullhash}{OJP1}
+    \field{sortinit}{O}
+    \field{title}{Error Control Coding Handbook}
+    \field{year}{1976}
+  \endentry
+
+  \entry{fb-network}{book}{}
+    \name{labelname}{1}{}{%
+      {{}{Varian}{V\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Varian}{V\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Harvard Business School Press}%
+    }
+    \strng{namehash}{VH1}
+    \strng{fullhash}{VH1}
+    \field{sortinit}{V}
+    \field{title}{Information rules}
+    \field{year}{1998}
+    \verb{url}
+    \verb http://www.utdallas.edu/~liebowit/palgrave/network.html
+    \endverb
+  \endentry
+
+  \lossort
+  \endlossort
 
 \endrefsection
 \endinput

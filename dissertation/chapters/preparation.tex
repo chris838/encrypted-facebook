@@ -68,16 +68,38 @@
 
 \begin{itemize}
    
-    \item Activity we need to support. What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are propably on there somewhere - again we don't care.
-    
-    \item Objects and their sizes:
-    \begin{itemize}
-        \item Status update, 144 chars
-        \item Post
-        \item Comment
-        \item Note, 66,000 chars or so
-        \item Image, 720x720 3 channel 8 bit colour. Not really because of chrominance subsampling.
-    \end{itemize}
+    \item Activity we need to support. What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are probably on there somewhere - again we don't care.
+
+\begin{table}[h]
+  \begin{center}
+        \definecolor{lgray}{hsb}{0.1, 0, 0.9}
+        \rowcolors{3}{white}{lgray}
+        \begin{tabular}{l l l l}
+            
+            \textbf{Activity} & \textbf{ Frequency } & \textbf{Limitations} & \textbf{Notes} \\
+            & \textbf{(per second)} & & \\
+            
+            \midrule
+            
+            Comment         & 8,507    & 8,000 chars.   & \\ 
+            Message         & 2,263    & 10,000 chars.  & \\
+            Image           & 2,263    & $720 \times 720$ pixels   & \parbox[t][][t]{20ex}{\raggedright 3-channel 8-bit colour. JPEG compressed (see section XXX). } \\ [9ex]
+            Friend request  & 1,643    &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\ [3ex]
+            Status update   & 1,320    & 420 chars.     & \\
+            Wall post       & 1,323    & 1,000 chars.   & \\
+            Event invite    & 1,237    &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
+            Photo tag       & 1,103    &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
+            Link            & 833      &                & \parbox[t][][t]{20ex}{\raggedright }  \\
+            Like            & unknown  &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
+            Note            & unknown  & 65,536 chars.  & \parbox[t][][t]{20ex}{\raggedright Used for blog-style posts.} \\[3ex]
+            
+        \end{tabular}
+        \caption{Facebook objects, their limitations and approximate frequency of creation. Frequency is measured in number of submissions per second.}
+        \label{tab:fb-activities}
+    \end{center}
+\end{table}
+
+
     Clearly images and notes are the most information dense so we use these. To summerise we must support the most popular activities and will likely need to make use of the most dense objects.
     
     \item Deleting objects. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this. This might require deleting objects
@@ -194,6 +216,7 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
 \begin{itemize}
 
     \item Encryption should be available on the most commonly used tasks (apart from those otherwise ruled out in section XXX). The user must therefore be able to broadcast-encrypt, submit, retrieve and decipher the following objects.
+
     
     \begin{itemize}
         \item Status updates

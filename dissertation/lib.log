@@ -1,6 +1,6 @@
-This is MetaPost, version 1.211 (TeX Live 2010) (kpathsea version 6.0.0) (mem=mpost 2011.04.19)  22 APR 2011 04:18
-**class.mp
-(./class.mp (/usr/local/texlive/2010/texmf-dist/metapost/metauml/metauml.mp
+This is MetaPost, version 1.211 (TeX Live 2010) (kpathsea version 6.0.0) (mem=mpost 2011.04.19)  22 APR 2011 06:28
+**lib.mp
+(./lib.mp (/usr/local/texlive/2010/texmf-dist/metapost/metauml/metauml.mp
 (/usr/local/texlive/2010/texmf-dist/metapost/metauml/util_infrastructure.mp
 (/usr/local/texlive/2010/texmf-dist/metapost/metauml/util_log.mp))
 (/usr/local/texlive/2010/texmf-dist/metapost/metauml/util_object.mp)
@@ -40,4 +40,4 @@ mp) (/usr/local/texlive/2010/texmf-dist/metapost/metauml/metauml_activity.mp)
 (/usr/local/texlive/2010/texmf-dist/metapost/metauml/metauml_component_relation
 s.mp) (/usr/local/texlive/2010/texmf-dist/metapost/metauml/metauml_templates.mp
 )) [1] )
-1 output file written: class.1
+1 output file written: lib.1

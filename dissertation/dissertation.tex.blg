@@ -1,0 +1,5 @@
+[1] biber:197> INFO - This is biber 0.9
+[2] biber:198> INFO - Logfile is 'dissertation.tex.blg'
+[2] biber:205> INFO - === Biber version 0.9
+[2] biber:206> INFO - === Thu Apr 21, 2011, 00:26:35
+[168] Biber.pm:197> FATAL - Cannot find control file 'dissertation.tex.bcf'! - did you pass the "backend=biber" option to BibLaTeX?

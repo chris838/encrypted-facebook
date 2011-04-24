@@ -1,18 +1,20 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.1.16)  9 MAR 2011 22:38
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.4.19)  21 APR 2011 00:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**0v
-(/usr/share/texmf-texlive/tex/latex/tools/x.tex
+**small2e.
+(/usr/local/texlive/2010/texmf-dist/tex/latex/tools/x.tex
 LaTeX2e <2009/09/24>
-Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
-ak, danish, dutch, finnish, french, basque, ngerman, german, german-x-2009-06-1
-9, ngerman-x-2009-06-19, ibycus, monogreek, greek, ancientgreek, hungarian, san
-skrit, italian, latin, latvian, lithuanian, mongolian2a, mongolian, bokmal, nyn
-orsk, romanian, irish, coptic, serbian, turkish, welsh, esperanto, uppersorbian
-, estonian, indonesian, interlingua, icelandic, kurmanji, slovenian, polish, po
-rtuguese, spanish, galician, catalan, swedish, ukenglish, pinyin, loaded.
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2009-06-19, ngerman-x-2009-06-19, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, galician, german, ngerman, swissgerman, monogreek, greek, hungarian,
+ icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, marathi, or
+iya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, kurmanji,
+ lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, pol
+ish, portuguese, romanian, russian, sanskrit, serbian, slovak, slovenian, spani
+sh, swedish, turkish, turkmen, ukrainian, uppersorbian, welsh, loaded.
 
 ! .
 l.34   \batchmode \errmessage{}
@@ -24,17 +26,12 @@ and deduce the truth by order and method.
 
  ) 
 Here is how much of TeX's memory you used:
- 7 strings out of 493848
- 232 string characters out of 1152823
- 47808 words of memory out of 3000000
- 3381 multiletter control sequences out of 15000+50000
+ 8 strings out of 493764
+ 261 string characters out of 3144998
+ 49091 words of memory out of 3000000
+ 3404 multiletter control sequences out of 15000+200000
  3640 words of font info for 14 fonts, out of 3000000 for 9000
- 714 hyphenation exceptions out of 8191
- 5i,0n,1p,82b,8s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 715 hyphenation exceptions out of 8191
+ 5i,0n,1p,88b,8s stack positions out of 5000i,500n,10000p,200000b,50000s
 
 No pages of output.
-PDF statistics:
- 0 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
-

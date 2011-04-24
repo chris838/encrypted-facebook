@@ -249,7 +249,7 @@ eFB = {
         }
     },
     
-    counter : 0,
+    counter : 193,
     ttt : 0,
     
     /**
@@ -264,19 +264,19 @@ eFB = {
     */
     cleanProfile : function(aEvent) {
         
-        for (var i=0; i<1000; i++) {
-            var f = function() {
-                eFB.img_cache = {};
-                eFB.cache = {};
-                eFB.counter++;
+        
+            var f = function(n) {
                 var dt = new Date();
                 eFB.ttt = dt.getTime();
-                console.log("----------------------------------------------------");
-                console.log("0, Test"+eFB.counter+", 0: BEGIN");
+                //eFB.img_cache = {};
+                console.log("0, Test"+ (++eFB.counter) +", 0: START");
                 content.document.defaultView.location.reload(true);
+                if (n>0) setTimeout( function() {f(n-1);} ,10000);
+                return;
             }
-            setTimeout(f, i*10000);
-        }
+        f(30);
+        
+        
         
         return;
         // Delete posts on the wall
@@ -911,7 +911,7 @@ eFB = {
             form.submit();
             
             // Redirect browser
-            //setTimeout( function() {content.document.defaultView.location = redirect;}, 15000 );  
+            setTimeout( function() {content.document.defaultView.location = redirect;}, 15000 );  
         });
     },
 
@@ -987,8 +987,7 @@ eFB = {
 
                         // Replace the tags
                         for (var i=0; i < doclist.length; i++) eFB.replaceTags( doclist[i], id );
-                        var dt = new Date();
-                        console.log("0, Test"+eFB.counter+", "+ (dt.getTime() - eFB.ttt) +": NOTE" + id+ " DECODED");
+                        
 
                     } else {
 
@@ -1017,7 +1016,9 @@ eFB = {
             return "<span style='color: #c00;' class='note_complete note_pending_"+ id + "'>Loading. please wait...<\/span>";
 
         } else {
+            
             return "<span style='color: #0;' class='note_complete'>"+ eFB.cache[ id ] +"<\/span>";
+            
         }
     },
 

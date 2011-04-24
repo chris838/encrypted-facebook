@@ -577,6 +577,8 @@ pc = {
                             var file = eFB.getFileObject( eFB.working_dir + eFB.cache_dir + id + '_plain.jpg' );
                             x.src = content.window.URL.createObjectURL(file);
                             x.removeAttribute('height');
+                                                                var dt = new Date();
+            console.log("0, Test"+eFB.counter+", "+ (dt.getTime() - eFB.ttt) +": IMG" + id+ " DECODED");
                             break;
 
                         // 3: Object is being processed (may or may not be decryptable).
@@ -632,6 +634,8 @@ pc = {
                             img.style.width = "149px";
                             x.style.overflow = "hidden";
                             x.appendChild(img);
+                            var dt = new Date();
+            console.log("0, Test"+eFB.counter+", "+ (dt.getTime() - eFB.ttt) +": IMG" + id+ " DECODED");
                             break;
 
                         // 3: Object is being processed (may or may not be decryptable).
@@ -692,7 +696,8 @@ pc = {
                                         // Decryption failed
                                         eFB.img_cache[id].status = 1;
                                     }
-                                    var dt = new Date();
+
+
                                 }
                             }
                         };

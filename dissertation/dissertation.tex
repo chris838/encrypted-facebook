@@ -10,6 +10,7 @@
 \usepackage{scrpage2}
 \usepackage{acronym}
 \usepackage{relsize}
+\usepackage[table]{xcolor}
 \usepackage{tabularx}
 
 % Graphics and graphs
@@ -18,8 +19,11 @@
 \usepackage{pgfplots}
 \usepackage{subfigure}
 \usepackage[center]{caption}
-\renewcommand{\captionfont}{\it\footnotesize}
+\renewcommand{\captionfont}{\it\small}
 
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{booktabs}
 
 % Bibliography and links
 %\usepackage{csquotes}
@@ -105,7 +109,7 @@
 \cleardoublepage\printbibliography
 \cleardoublepage\part*{Appendix}
 \appendix
-\cleardoublepage\include{chapters/appendix_a}
+\cleardoublepage\include{chapters/app_times}
 \cleardoublepage\include{frontbackmatter/proposal}
 
 

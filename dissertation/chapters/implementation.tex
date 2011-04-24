@@ -3,11 +3,9 @@
 %*****************************************
 
 \section{Project overview}
+    
     \begin{itemize}
         \item UML diagrams
-        
-        \includegraphics{class.1}
-        
         \item Class diagrams
         \item Orchestration diagrams
         \item Directory structure
@@ -17,6 +15,23 @@
 % First all the C/C++ stuff
 
 \section{Encoding decoding data}
+
+    \begin{figure}[tbp]
+        \begin{center}
+                \includegraphics{lib.1}
+            \caption{UML class diagrams for the library and its sub-components.}
+            \label{uml:lib-classes}
+        \end{center}
+    \end{figure}
+
+    \begin{figure}[tbp]
+        \begin{center}
+                \includegraphics{fec.1}
+            \caption{UML class diagrams for the forward error correction libary component.}
+            \label{uml:fec-classes}
+        \end{center}
+    \end{figure}
+
     \begin{itemize}
         \item Encryption and decryption
         \item *Keeping key material safe*. Shredding RNG seeds and keys. Using SecureVector. Refer to NIST
@@ -26,6 +41,15 @@
     \end{itemize}
 
 \section{Storing data in images}
+
+    \begin{figure}[tbp]
+        \begin{center}
+                \includegraphics{img.1}
+            \caption{UML class diagrams for the conduit image implementation.}
+            \label{uml:img-classes}
+        \end{center}
+    \end{figure}
+    
     \begin{itemize}
         \item Abstractions
         \item Using the Haar wavelet transform
