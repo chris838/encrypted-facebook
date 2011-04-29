@@ -2,8 +2,8 @@
 %   Fonts and styles for body and headings
 %********************************************************************
 
-\sodef\hso{}{0.075em}{0.4em}{0.3em}{}
-\newcommand{\secformat}[1]{\hso{#1}}%
+\sodef\hso{}{0.065em}{0.4em}{0.3em}{}
+\newcommand{\secformat}[1]{{#1}}%
 
 \DeclareRobustCommand{\hZero}{\usefont{T1}{futura_lt_bold}{m}{n} \fontsize{32}{38}\selectfont}%
 \DeclareRobustCommand{\hA}{\usefont{T1}{futura_lt_bold}{m}{n} \Huge}%
@@ -17,16 +17,27 @@
         {\hZero }{\thepart}{1em}{}
 % chapters
 \titleformat{\chapter}
-        {\hA }{\thechapter}{1em}{}
+        {\hA }{%
+            \makebox[0pt][r]{%
+            \thechapter\enskip}%
+	}{0em}{}
 % sections
-\titleformat{\section}
-        { \hB }{\thesection}{1em}{\secformat}
+\titleformat{\section}{ \hB }
+        {%
+            \makebox[0pt][r]{%
+            \thesection\enskip}%
+	}{0em}{\secformat}
+        
 % subsections
-\titleformat{\subsection}
-        { \hC }{\thesubsection}{1em}{\secformat}
+\titleformat{\subsection}{ \hC }{%
+            \makebox[0pt][r]{%
+            \thesubsection\enskip}%
+	}{0em}{\secformat}
+        
 % subsubsections
 \titleformat{\subsubsection}
-    { \hD }{}{1em}{\secformat}       
+    { \hD }{}{1em}{\secformat}
+    
 % paragraphs
 \titleformat{\paragraph}[runin]
     { \hE }{\theparagraph}{1em}{\secformat}    
@@ -62,8 +73,6 @@
 \renewcommand{\cftchappagefont}{    \normalsize \usefont{T1}{futura_lt_heavy}{m}{n} }
 \renewcommand{\cftsecpagefont}{     \normalsize \usefont{T1}{futura_lt_medium}{m}{n} }
 \renewcommand{\cftsubsecpagefont}{  \normalsize \usefont{T1}{futura_lt_medium}{m}{n} }
-
-
 
   
 %********************************************************************

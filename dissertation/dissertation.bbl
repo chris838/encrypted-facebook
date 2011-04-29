@@ -58,6 +58,34 @@
     \endverb
   \endentry
 
+  \entry{firefox-req}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Inc.}{I\bibinitperiod}{Mozilla}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Inc.}{I\bibinitperiod}{Mozilla}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{IM1}
+    \strng{fullhash}{IM1}
+    \field{sortinit}{I}
+    \field{title}{Firefox 4.0 System Requirements}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://www.mozilla.com/en-US/firefox/4.0/system-requirements/
+    \endverb
+  \endentry
+
+  \entry{bband-stats}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{N}
+    \field{title}{Net Index by Ookla - household download index, UK.}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://www.netindex.com/download/2,4/United-Kingdom/
+    \endverb
+  \endentry
+
   \entry{rsfec-decode}{book}{}
     \name{labelname}{1}{}{%
       {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
@@ -76,23 +104,45 @@
   \endentry
 
   \entry{fb-network}{book}{}
-    \name{labelname}{1}{}{%
+    \name{labelname}{2}{}{%
+      {{}{Shapiro}{S\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
       {{}{Varian}{V\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%
     }
-    \name{author}{1}{}{%
+    \name{author}{2}{}{%
+      {{}{Shapiro}{S\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
       {{}{Varian}{V\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%
     }
     \list{publisher}{1}{%
       {Harvard Business School Press}%
     }
-    \strng{namehash}{VH1}
-    \strng{fullhash}{VH1}
-    \field{sortinit}{V}
+    \strng{namehash}{SCVH1}
+    \strng{fullhash}{SCVH1}
+    \field{sortinit}{S}
     \field{title}{Information rules}
     \field{year}{1998}
     \verb{url}
     \verb http://www.utdallas.edu/~liebowit/palgrave/network.html
     \endverb
+  \endentry
+
+  \entry{cogwalk}{article}{}
+    \name{labelname}{4}{}{%
+      {{}{Wharton}{W\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Rieman}{R\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Lewis}{L\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Polson}{P\bibinitperiod}{P.}{P\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{4}{}{%
+      {{}{Wharton}{W\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Rieman}{R\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Lewis}{L\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Polson}{P\bibinitperiod}{P.}{P\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{WC+1}
+    \strng{fullhash}{WCRJLCPP1}
+    \field{sortinit}{W}
+    \field{title}{The Cognitive Walkthrough Method: A Practitioner's Guide}
+    \field{year}{1994}
   \endentry
 
   \lossort

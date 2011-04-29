@@ -372,7 +372,7 @@ eFB = {
         }
 
         // We need a passphrase to lock the file
-        pass = window.prompt("Please enter a password to keep your key information safe. Note that forgotten passwords cannot be recovered.");
+        pass = window.prompt("Please select a password to keep your key information safe. This password is not related to your Facebook account password. IMPORTANT: forgetting your password will result in irrecoverable loss of data.");
 
         // Go ahead and create the new (local) identity
         if (eFB.generateIdentity( eFB.keys_dir+eFB.privkey_file, eFB.keys_dir+eFB.pubkey_file, pass) == 0)

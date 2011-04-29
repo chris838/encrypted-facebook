@@ -2,7 +2,7 @@
 %   University of Cambridge Computer Science BSc
 %   Chris Harding, Part II (third year) Project
 %********************************************************************
-\documentclass[12pt,twoside,notitlepage]{report}
+\documentclass[12pt,twoside,notitlepage]{scrreprt}
 \usepackage{a4}
 \usepackage{verbatim}
 
@@ -26,7 +26,7 @@
 \usepackage{booktabs}
 
 % Bibliography and links
-%\usepackage{csquotes}
+\usepackage{csquotes}
 \usepackage[utf8]{inputenc}
 \usepackage[backend=biber,bibstyle=numeric]{biblatex}
 \addbibresource{bibliography.bib}
@@ -35,12 +35,14 @@
 \usepackage{titlesec} % headings
 \usepackage[titles,subfigure]{tocloft} % listings
 \usepackage[top=100pt, inner=146pt, width=360pt, height=583pt]{geometry} % margins
+\setlength{\skip\footins}{1cm} % footnotes
 
 % PDF hyperlinks
 \usepackage{hyperref}
 
 % Use the TEX Gyre Pagella font based on Palladio
 \usepackage[british,english,greek]{babel}
+\renewcommand*\ttdefault{txtt}
 \usepackage[T1]{fontenc}
 \usepackage{fourier}
 
@@ -73,6 +75,7 @@
 \widowpenalty1000%
 % Spacing
 \frenchspacing
+
 
 %********************************************************************
 %   Start of document

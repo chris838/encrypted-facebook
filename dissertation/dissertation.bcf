@@ -269,11 +269,16 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey>fb-factsheet</bcf:citekey>
+    <bcf:citekey>fb-priv</bcf:citekey>
     <bcf:citekey>fb-cipc</bcf:citekey>
     <bcf:citekey>pidder</bcf:citekey>
     <bcf:citekey>diaspora</bcf:citekey>
     <bcf:citekey>fb-network</bcf:citekey>
+    <bcf:citekey>metcalf</bcf:citekey>
+    <bcf:citekey>firefox-req</bcf:citekey>
+    <bcf:citekey>bband-stats</bcf:citekey>
     <bcf:citekey>rsfec-decode</bcf:citekey>
+    <bcf:citekey>hdd-errors</bcf:citekey>
     <bcf:citekey>cogwalk</bcf:citekey>
   </bcf:section>
 </bcf:controlfile>

@@ -2,30 +2,37 @@
 \chapter{Introduction}\label{ch:introduction}
 %************************************************
 
-Facebook, at the time of writing, is the world's most popular social network service, with over 500 million users active in the last 30 days \cite{fb-factsheet}. Currently all communication on Facebook is in plaintext. This project implements a Firefox extension which adds a broadcast encryption layer over the Facebook interface without significantly impacting the typical Facebook user experience.
+Facebook, at the time of writing, is the world's most popular social network service with over 500 million users active in the last 30 days \cite{fb-factsheet}. This project implements a Firefox extension which permits the use of broadcast encryption when sharing certain content via Facebook.
 
 \section{Background}
 
-Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}.
+As social netorks mimic real life interactions members are often willing to reveal more private infromation than they otherwise would \cite{}. Networks accumulate a large repository of sensitive user information which can then be exposed in any number of ways. Privacy controls may be misconfgured due to user error or poor design; Facebook was recently forced to update its privacy controls due to growing pressure from the public and media \cite{fb-priv}. Error or neglect on the part of the social network may result in breach of privacy, as was the case in 2010 when personally identifiable Facebook user details were sold to data brokers by third party developers \cite{}. Unlike communications over telephone, email or post, Facebook content can ofen be openly intercepted and read by the authorities without requiring a warrant \cite{}. Deliberate attempts to unlawfully access information can also occur; when social application site RockYou was the victim of a malicious attack 35 million user passwords and account details were made public \cite{}.
 
-General context - recent media coverage of Facebook, privacy and security concerns. Data (user passwords) stolen from web sites by hackers. Privacy a big issue for the 21st century?
-  
+Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}. 
 
-Despite growing concern around issues of online privacy (and the related issue of security) even where counter measures are available adoption rates have often been slow. An example is HTTPS (HTTP Secure) support being either disabled by default or unavailale completely on several prominent search, email and social network providers. This is partly due to an unwillingness to add SSL latency overheads \footnote{The other reason is due to the server side computation required (less a problem now than it used to be) and also problems with delivering advertisements over a secure connection.}. Clearly there is a requirement for privacy solutions which operate transparently without detrimenting the typical user experience.
+
+
+
+
+Despite growing concern around issues of online privacy (and the related issue of security) even where counter measures are available adoption rates have often been slow. An example is HTTPS support being either disabled by default or unavailable completely from several prominent search, email and social network providers \cite{}. This is partly due to an unwillingness to add SSL latency overheads \cite{}. Clearly there is a demand for security solutions which operate transparently without detrimenting the typical user experience.
   
-Recently there have been attempts to create alternatives to Facebook \cite{pidder} which provide better privacy protection by encrypting shared content. Some propose to go further and decentralize hosting of the social network platform \cite{diaspora}. Unfortunately, network externalities make it very difficult to compete \cite{fb-network} since the utility of such a social network service is coupled to the size of the userbase.
+Recently there have been attempts to create alternatives to Facebook \cite{pidder} which provide better privacy protection by encrypting shared content. Some propose to go further and decentralize hosting of the social network platform \cite{diaspora}. Unfortunately, network externalities make it very difficult to compete \cite{fb-network} since the utility of a social network is linked to the size of its userbase \footnote{Some suggest the value of a social network grows linearithmically, quadratically or even exponentially with the number of users \cite{metcalf}.}.
 
 The aim of this project is to provide enhanced privacy for existing Facebook users. By incorporating a broadcast encryption scheme via a Firefox extension we ensure confidentiality of shared content to a select set of recipients, without otherwise impacting browsing and with minal user supervision required.
 
 \section{Limitations}
 
-What the application does not do:
+Some objectives we consider beyond the scope of the project:
+
 \begin{itemize}
-    \item Does not hide the social graph. Arguably this is Facebook's real asset. But that's another story...
-    \item Does not ensure integrity of data. Facebook employees could swap your messages.
-    \item Does not ensure availability. Facebook could easily wipe your notes or images.
-    \item Does not ensure authenticity or non-repudiation. Not from the employees of Facebook anyway.
-    \item Threat model not comprehensive due to project limitations. You can turn off images, which haven't been audited.
+    \item We do not attempt to hide or conceal any aspect of the social graph structure. This would be tantamount to creating our own social network.
+    
+    \item We do not ensure the integrity, authenticity or non-repudiation of communications, though in theory the public key scheme could be extended to do so. This would go beyond mere privacy control.
+    
+    \item We do not ensure availability of any communications since all content is stored on Facebook's servers. Storing content elsewhere is discussed in section XXX.
+    
+    \item Designing and implementing a security policy which comprehensively covers all aspects of the project's functionality, though essential for actual deployment, would be prohibitively time consuming. Section XXX discusses which functionality the threat model does cover. Operations which haven't been fully audited are disabled by default where possible and come with security disclaimers attached. Section XXX discusses possible deployment and extension of the security policy.
+    
 \end{itemize}
 
 

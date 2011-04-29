@@ -10,10 +10,32 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces UML class diagrams for the library and its sub-components.\relax }}{16}{figure.caption.9}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces UML class diagrams for the forward error correction libary component.\relax }}{16}{figure.caption.10}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces UML class diagrams for the conduit image implementation.\relax }}{17}{figure.caption.11}
+\defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Bit error rate for varying quality factors.\relax }}{23}{figure.caption.13}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Per-image channel capacity (measured in KiB/image) for varying quality factors.\relax }}{24}{figure.caption.14}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Average timing results for a 10,000 chracter note and an (approximately) 50 KiB image.\relax }}{27}{figure.caption.16}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Histogram of 400 page loading times for newsfeeds containing 15 encrypted messages (top) and 15 encrypted images (bottom).\relax }}{29}{figure.caption.17}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Average time before first encrypted item loads.\relax }}{30}{figure.caption.18}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Average time interval between successive message loads, with caching turned off and on (top and bottom respectively).\relax }}{31}{figure.caption.19}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Average time interval between successive image loads, with caching turned off and on (top and bottom respectively).\relax }}{32}{figure.caption.20}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Per image encode and decode times for each of the three conduit image implementations, for varying JPEG quality factors.\relax }}{45}{figure.caption.23}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
