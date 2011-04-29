@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  29 APR 2011 09:13
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  29 APR 2011 13:59
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1512,7 +1512,7 @@ LaTeX Font Info:    Redeclaring math accent \mathring on input line 256.
 )
 (./customstyles.sty)
 
-Package csquotes Warning: Load 'inputenc' before 'csquotes' on input line 83.
+Package csquotes Warning: Load 'inputenc' before 'csquotes' on input line 84.
 
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
@@ -1523,68 +1523,65 @@ Package biblatex Info: ... file 'greek.lbx' found.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/biblatex/lbx/greek.lbx
 File: greek.lbx 2011/04/12 v1.4b biblatex localization
 )
-(./dissertation.aux (./frontbackmatter/dirtytitlepage.aux)
+(./dissertation.aux (./chapters/introduction.aux)
 LaTeX Font Info:    Try loading font information for LGR+cmr on input line 22.
 
 (/usr/local/texlive/2010/texmf-dist/tex/generic/babel/lgrcmr.fd
 File: lgrcmr.fd 2008/06/17 v2.3 Greek Computer Modern
 )
-(./frontbackmatter/titleback.aux) (./frontbackmatter/proforma.aux)
-(./frontbackmatter/declaration.aux) (./frontbackmatter/contents.aux)
-(./frontbackmatter/acknowledgments.aux) (./chapters/introduction.aux)
 (./chapters/preparation.aux) (./chapters/implementation.aux)
 (./chapters/evaluation.aux) (./chapters/conclusion.aux)
 (./chapters/app_times.aux) (./frontbackmatter/proposal.aux))
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 83.
-LaTeX Font Info:    Try loading font information for FML+futm on input line 83.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 84.
+LaTeX Font Info:    Try loading font information for FML+futm on input line 84.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 83.
-LaTeX Font Info:    Try loading font information for FMS+futm on input line 83.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 84.
+LaTeX Font Info:    Try loading font information for FMS+futm on input line 84.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmsfutm.fd
 File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
 )
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 83.
-LaTeX Font Info:    Try loading font information for FMX+futm on input line 83.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 84.
+LaTeX Font Info:    Try loading font information for FMX+futm on input line 84.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmxfutm.fd
 File: fmxfutm.fd futm-extension
 )
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 83.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 83.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 84.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 84.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Try loading font information for T1+futs on input line 83.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 84.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/t1futs.fd
 File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
@@ -1620,7 +1617,7 @@ ABD: EveryShipout initializing macros
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 83.
+LaTeX Info: Redefining \microtypecontext on input line 84.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1637,9 +1634,16 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'dissertation.bbl' found.
- (./dissertation.bbl)
-Package biblatex Info: Reference section=0 on input line 83.
-Package biblatex Info: Reference segment=0 on input line 83.
+ (./dissertation.bbl
+
+Package biblatex Warning: Biber reported the following issues
+(biblatex)                with 'gross':
+(biblatex)                - Field 'address' is aliased to field 'location' but 
+both are defined in entry with key 'gross' - skipping field 'address'.
+
+)
+Package biblatex Info: Reference section=0 on input line 84.
+Package biblatex Info: Reference segment=0 on input line 84.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1665,7 +1669,7 @@ Package biblatex Info: Reference segment=0 on input line 83.
 * \marginparwidth=57.81621pt
 * \marginparsep=12.8401pt
 * \columnsep=10.0pt
-* \skip\footins=28.45274pt
+* \skip\footins=22.76228pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -1676,7 +1680,7 @@ Package biblatex Info: Reference segment=0 on input line 83.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box39
-Package hyperref Info: Link coloring OFF on input line 83.
+Package hyperref Info: Link coloring OFF on input line 84.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -1685,21 +1689,21 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count297
 )
-LaTeX Info: Redefining \ref on input line 83.
-LaTeX Info: Redefining \pageref on input line 83.
-LaTeX Info: Redefining \nameref on input line 83.
+LaTeX Info: Redefining \ref on input line 84.
+LaTeX Info: Redefining \pageref on input line 84.
+LaTeX Info: Redefining \nameref on input line 84.
 
 (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write6
 \openout6 = `dissertation.out'.
 
-LaTeX Font Info:    Try loading font information for LGR+futs on input line 83.
+LaTeX Font Info:    Try loading font information for LGR+futs on input line 84.
 
-LaTeX Font Info:    No file LGRfuts.fd. on input line 83.
+LaTeX Font Info:    No file LGRfuts.fd. on input line 84.
 
 
 LaTeX Font Warning: Font shape `LGR/futs/m/n' undefined
-(Font)              using `LGR/cmr/m/n' instead on input line 83.
+(Font)              using `LGR/cmr/m/n' instead on input line 84.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2009/11/09 v2.0 microtype config. file: Computer Modern Roman 
@@ -1727,10 +1731,55 @@ t line 7.
 File: t1futura_lt_heavy.fd Lucida-Handwriting font
 )
 
-LaTeX Warning: Citation 'fb-priv' on page 1 undefined on input line 9.
+LaTeX Warning: Citation 'fb-cipc' on page 1 undefined on input line 9.
 
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
 (Font)              Font shape `T1/futs/b/n' tried instead on input line 9.
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 9.
+
+(/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmlfutmi.fd
+File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
+)
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 11.03998pt on input line 9.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 9.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.43999pt on input line 9.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 11.03998pt on input line 9.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 9.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.43999pt on input line 9.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 9.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 9.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 9.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 9.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 9.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 9.
+
+
+LaTeX Warning: Citation 'fb-gov' on page 1 undefined on input line 9.
+
+
+LaTeX Warning: Citation 'https' on page 1 undefined on input line 11.
+
+
+LaTeX Warning: Citation 'https2' on page 1 undefined on input line 11.
+
+
+LaTeX Warning: Citation 'pidder' on page 1 undefined on input line 13.
+
+
+LaTeX Warning: Citation 'diaspora' on page 1 undefined on input line 13.
+
 [1
 
 
@@ -1740,80 +1789,29 @@ LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
 
 
 ]
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 22.
 
-LaTeX Warning: Citation 'pidder' on page 2 undefined on input line 19.
-
-
-LaTeX Warning: Citation 'diaspora' on page 2 undefined on input line 19.
-
-LaTeX Font Info:    Try loading font information for FML+futmi on input line 19
-.
-(/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmlfutmi.fd
-File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
-)
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 19.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 19.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 19.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 19.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 19.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 19.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 19.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 19.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 19.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 19.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 19.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 19.
-
-
-LaTeX Warning: Citation 'metcalf' on page 2 undefined on input line 19.
-
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 19.
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 28.
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/ts1futs.fd
+ (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/ts1futs.fd
 File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
-) [2]
-LaTeX Font Info:    Try loading font information for T1+txtt on input line 44.
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/txfonts/t1txtt.fd
-File: t1txtt.fd 2000/12/15 v3.1
 )
-Underfull \hbox (badness 10000) in paragraph at lines 44--45
-[]\T1/futs/m/n/12 (+20) FireGPG - []$\T1/txtt/m/n/12 http : / / blog . fortinet
- . com /
- []
+
+LaTeX Warning: Citation 'firegpg' on page 2 undefined on input line 36.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
-[]\T1/futs/m/n/12 (+20) TextCrypt - []$\T1/txtt/m/n/12 http : / / subrosasoft .
- com / OSXSoftware /
- []
+LaTeX Warning: Citation 'cryptfire' on page 2 undefined on input line 36.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
-\T1/txtt/m/n/12 index . php ? main _ page = product _ info&cPath =
- []
+LaTeX Warning: Citation 'textcrypt' on page 2 undefined on input line 36.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--56
-[]\T1/futs/m/n/12 (+20) flyByNight - []$\T1/txtt/m/n/12 http : / / hatswitch . 
-org / ~nikita / papers /
- []
+LaTeX Warning: Citation 'pgp-hard' on page 2 undefined on input line 36.
 
-) [3] [4
+[2]
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 42.
+ (/usr/local/texlive/2010/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+)) [3]
+[4
 
 
 
@@ -1969,6 +1967,8 @@ Overfull \hbox (8.73334pt too wide) in paragraph at lines 123--138
 
 LaTeX Warning: Citation 'hdd-errors' on page 25 undefined on input line 150.
 
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 150.
 [25] [26] [27]
 PGFPlots: reading {gfx/async_text_hist.data}
 PGFPlots: reading {gfx/async_text_hist.data}
@@ -1990,15 +1990,32 @@ Chapter 5.
 
 
 
-]) [40] [41
+]) [40]
+Underfull \hbox (badness 2057) in paragraph at lines 114--114
+\T1/txtt/m/n/12 / / www . mozilla . com / en -[] US / firefox / 4 . 0 / system 
+-[]
+ []
+
+
+Underfull \hbox (badness 1997) in paragraph at lines 114--114
+[]$\T1/txtt/m/n/12 http : / / www . netindex . com / download / 2 ,[] 4 / Unite
+d -[]
+ []
+
+[41
 
 
 
 
-] [42
+]
+Underfull \hbox (badness 2828) in paragraph at lines 114--114
+[]  \T1/futs/m/n/12 (+20) C. Shapiro   and H. Var-ian.     \T1/futs/m/it/12 (+2
+0) In-for-ma-tion rules\T1/futs/m/n/12 (+20) .   Har-vard Busi-
+ []
+
+[42] [43
 
 
-] [43
 
 ] [44
 
@@ -2100,32 +2117,23 @@ Appendix B.
 
 
 ] [48] [49] [50] [51] [52] [53]) [54]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 128.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 128.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 129.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 129.
  (./dissertation.aux
 (./chapters/introduction.aux) (./chapters/preparation.aux)
 (./chapters/implementation.aux) (./chapters/evaluation.aux)
 (./chapters/conclusion.aux) (./chapters/app_times.aux)
 (./frontbackmatter/proposal.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 128.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 128.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 129.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 129.
+Package rerunfilecheck Info: File `dissertation.out' has not changed.
+(rerunfilecheck)             Checksum: B59E1A725E95BDCD4F14A212579C48F4;3243.
 
-
-Package rerunfilecheck Warning: File `dissertation.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `dissertation.out':
-(rerunfilecheck)             Before: F9D77AAB224C0933389FBA7339C685F3;3243
-(rerunfilecheck)             After:  B59E1A725E95BDCD4F14A212579C48F4;3243.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
 Package biblatex Warning: Please (re)run Biber on the file:
@@ -2137,53 +2145,26 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31788 strings out of 493763
- 618129 string characters out of 3144975
- 923181 words of memory out of 3000000
- 33937 multiletter control sequences out of 15000+200000
- 109305 words of font info for 306 fonts, out of 3000000 for 9000
+ 31798 strings out of 493763
+ 617977 string characters out of 3144975
+ 913138 words of memory out of 3000000
+ 33939 multiletter control sequences out of 15000+200000
+ 111831 words of font info for 329 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 74i,21n,99p,1185b,1854s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{figure.caption.23} has been referenced but does n
-ot exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.20} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.19} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.18} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.17} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{table.caption.15} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.14} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{table.caption.12} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{part*.22} has been referenced but does not exist, r
-eplaced by a fixed one
-
-{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
-live/2010/texmf/fonts/enc/ttf2pk/base/T1-WGL4.enc}<futura_lt_heavy.ttf><futura_
-lt_bold.ttf></usr/local/texlive/2010/texmf-dist/fonts/type1/public/fourier/four
-ier-mex.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/fourier/four
-ier-ms.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putb8a.
-pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></u
-sr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb></usr/loc
-al/texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/tex
-live/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on dissertation.pdf (54 pages, 229449 bytes).
+ 74i,21n,99p,1087b,1854s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
+exlive/2010/texmf/fonts/enc/ttf2pk/base/T1-WGL4.enc}<futura_lt_heavy.ttf><futur
+a_lt_bold.ttf></usr/local/texlive/2010/texmf-dist/fonts/type1/public/fourier/fo
+urier-mex.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/fourier/fo
+urier-ms.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putb8
+a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb><
+/usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb></usr/l
+ocal/texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/t
+exlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on dissertation.pdf (54 pages, 234531 bytes).
 PDF statistics:
- 640 PDF objects out of 1000 (max. 8388607)
- 569 compressed objects within 6 object streams
- 183 named destinations out of 1000 (max. 500000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 582 compressed objects within 6 object streams
+ 179 named destinations out of 1000 (max. 500000)
  44445 words of extra memory for PDF output out of 51595 (max. 10000000)
 

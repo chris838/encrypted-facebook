@@ -269,12 +269,23 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey>fb-factsheet</bcf:citekey>
-    <bcf:citekey>fb-priv</bcf:citekey>
     <bcf:citekey>fb-cipc</bcf:citekey>
+    <bcf:citekey>gross</bcf:citekey>
+    <bcf:citekey>fb-priv</bcf:citekey>
+    <bcf:citekey>fb-ids</bcf:citekey>
+    <bcf:citekey>fb-gov</bcf:citekey>
+    <bcf:citekey>fb-phish</bcf:citekey>
+    <bcf:citekey>rockyou</bcf:citekey>
+    <bcf:citekey>https</bcf:citekey>
+    <bcf:citekey>https2</bcf:citekey>
     <bcf:citekey>pidder</bcf:citekey>
     <bcf:citekey>diaspora</bcf:citekey>
     <bcf:citekey>fb-network</bcf:citekey>
     <bcf:citekey>metcalf</bcf:citekey>
+    <bcf:citekey>firegpg</bcf:citekey>
+    <bcf:citekey>cryptfire</bcf:citekey>
+    <bcf:citekey>textcrypt</bcf:citekey>
+    <bcf:citekey>pgp-hard</bcf:citekey>
     <bcf:citekey>firefox-req</bcf:citekey>
     <bcf:citekey>bband-stats</bcf:citekey>
     <bcf:citekey>rsfec-decode</bcf:citekey>

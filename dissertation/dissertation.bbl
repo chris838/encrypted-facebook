@@ -23,21 +23,78 @@
 
 
 \refsection{0}
-  \entry{fb-cipc}{online}{}
-    \name{labelname}{1}{}{%
-      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{EDApcoC1}
-    \strng{fullhash}{EDApcoC1}
-    \field{sortinit}{E}
-    \field{title}{Report of findings into the complaint filed by the Canadian internet policy and public interest clinic against Facebook Inc.}
-    \field{year}{2009}
+  \entry{fb-ids}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{F}
+    \field{title}{Facebook uncovers user data sale}
+    \field{year}{2010}
     \verb{url}
-    \verb http://www.priv.gc.ca/cf-dc/2009/2009_008_0716_e.pdf
+    \verb http://www.bbc.co.uk/news/technology-11665120
     \endverb
+  \endentry
+
+  \entry{gross}{inproceedings}{}
+    \name{labelname}{2}{}{%
+      {{}{Gross}{G\bibinitperiod}{Ralph}{R\bibinitperiod}{}{}{}{}}%
+      {{}{Acquisti}{A\bibinitperiod}{Alessandro}{A\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Gross}{G\bibinitperiod}{Ralph}{R\bibinitperiod}{}{}{}{}}%
+      {{}{Acquisti}{A\bibinitperiod}{Alessandro}{A\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Alexandria, VA, USA}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{GRAA1}
+    \strng{fullhash}{GRAA1}
+    \field{sortinit}{G}
+    \field{booktitle}{Proceedings of the 2005 ACM workshop on Privacy in the electronic society}
+    \field{isbn}{1-59593-228-3}
+    \field{series}{WPES '05}
+    \field{title}{Information revelation and privacy in online social networks}
+    \field{year}{2005}
+    \field{pages}{71\bibrangedash 80}
+    \verb{doi}
+    \verb http://doi.acm.org/10.1145/1102199.1102214
+    \endverb
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/1102199.1102214
+    \endverb
+    \keyw{information revelation, online privacy, social networking sites}
+    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'gross' - skipping field 'address'}
+  \endentry
+
+  \entry{metcalf}{article}{}
+    \name{labelname}{2}{}{%
+      {{}{Hendler}{H\bibinitperiod}{James}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Golbeck}{G\bibinitperiod}{Jennifer}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Hendler}{H\bibinitperiod}{James}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Golbeck}{G\bibinitperiod}{Jennifer}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{HJGJ1}
+    \strng{fullhash}{HJGJ1}
+    \field{sortinit}{H}
+    \field{issn}{1570-8268}
+    \field{journaltitle}{Web Semantics: Science, Services and Agents on the World Wide Web}
+    \field{note}{Semantic Web and Web 2.0}
+    \field{number}{1}
+    \field{title}{Metcalfe's law, Web 2.0, and the Semantic Web}
+    \field{volume}{6}
+    \field{year}{2008}
+    \field{pages}{14 \bibrangedash  20}
+    \verb{doi}
+    \verb DOI: 10.1016/j.websem.2007.11.008
+    \endverb
+    \verb{url}
+    \verb http://www.sciencedirect.com/science/article/B758F-4R6JP09-2/2/bc3ba99ebfcaf2fd3cf0077a55bd891d
+    \endverb
+    \keyw{Metcalfe's law}
   \endentry
 
   \entry{fb-factsheet}{online}{}
@@ -75,6 +132,44 @@
     \endverb
   \endentry
 
+  \entry{fb-phish}{article}{}
+    \name{labelname}{4}{}{%
+      {{}{Jagatic}{J\bibinitperiod}{Tom\bibnamedelima N.}{T\bibinitperiod\bibinitdelim N\bibinitperiod}{}{}{}{}}%
+      {{}{Johnson}{J\bibinitperiod}{Nathaniel\bibnamedelima A.}{N\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Jakobsson}{J\bibinitperiod}{Markus}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Menczer}{M\bibinitperiod}{Filippo}{F\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{4}{}{%
+      {{}{Jagatic}{J\bibinitperiod}{Tom\bibnamedelima N.}{T\bibinitperiod\bibinitdelim N\bibinitperiod}{}{}{}{}}%
+      {{}{Johnson}{J\bibinitperiod}{Nathaniel\bibnamedelima A.}{N\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Jakobsson}{J\bibinitperiod}{Markus}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Menczer}{M\bibinitperiod}{Filippo}{F\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {New York, NY, USA}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{JTN+1}
+    \strng{fullhash}{JTNJNAJMMF1}
+    \field{sortinit}{J}
+    \field{issn}{0001-0782}
+    \field{issue}{10}
+    \field{journaltitle}{Commun. ACM}
+    \field{month}{10}
+    \field{title}{Social phishing}
+    \field{volume}{50}
+    \field{year}{2007}
+    \field{pages}{94\bibrangedash 100}
+    \verb{doi}
+    \verb http://doi.acm.org/10.1145/1290958.1290968
+    \endverb
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/1290958.1290968
+    \endverb
+  \endentry
+
   \entry{bband-stats}{online}{}
     \strng{namehash}{1}
     \strng{fullhash}{1}
@@ -103,6 +198,24 @@
     \field{year}{1976}
   \endentry
 
+  \entry{fb-priv}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Post}{P\bibinitperiod}{The\bibnamedelima Washington}{T\bibinitperiod\bibinitdelim W\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Post}{P\bibinitperiod}{The\bibnamedelima Washington}{T\bibinitperiod\bibinitdelim W\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{PTW1}
+    \strng{fullhash}{PTW1}
+    \field{sortinit}{P}
+    \field{month}{05}
+    \field{title}{From Facebook, answering privacy concerns with new settings.}
+    \field{year}{2010}
+    \verb{url}
+    \verb http://www.washingtonpost.com/wp-dyn/content/article/2010/05/23/AR2010052303828.html
+    \endverb
+  \endentry
+
   \entry{fb-network}{book}{}
     \name{labelname}{2}{}{%
       {{}{Shapiro}{S\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
@@ -122,6 +235,23 @@
     \field{year}{1998}
     \verb{url}
     \verb http://www.utdallas.edu/~liebowit/palgrave/network.html
+    \endverb
+  \endentry
+
+  \entry{rockyou}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Siegler}{S\bibinitperiod}{MG}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Siegler}{S\bibinitperiod}{MG}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{SM1}
+    \strng{fullhash}{SM1}
+    \field{sortinit}{S}
+    \field{title}{TechCrunch - RockYou hacked}
+    \field{year}{2009}
+    \verb{url}
+    \verb http://techcrunch.com/2009/12/14/rockyou-hacked/
     \endverb
   \endentry
 
