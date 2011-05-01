@@ -23,6 +23,34 @@
 
 
 \refsection{0}
+  \entry{fb-cipc}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{EDApcoC1}
+    \strng{fullhash}{EDApcoC1}
+    \field{sortinit}{E}
+    \field{title}{Report of findings into the complaint filed by the Canadian internet policy and public interest clinic against Facebook Inc.}
+    \field{year}{2009}
+    \verb{url}
+    \verb http://www.priv.gc.ca/cf-dc/2009/2009_008_0716_e.pdf
+    \endverb
+  \endentry
+
+  \entry{snoop}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{F}
+    \field{title}{Facebook employees know what profiles you look at}
+    \field{year}{2007}
+    \verb{url}
+    \verb http://gawker.com/#!315901/scoop/facebook-employees-knowwhat-profiles-you-look-at
+    \endverb
+  \endentry
+
   \entry{fb-ids}{online}{}
     \strng{namehash}{1}
     \strng{fullhash}{1}
@@ -115,23 +143,6 @@
     \endverb
   \endentry
 
-  \entry{firefox-req}{online}{}
-    \name{labelname}{1}{}{%
-      {{}{Inc.}{I\bibinitperiod}{Mozilla}{M\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Inc.}{I\bibinitperiod}{Mozilla}{M\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{IM1}
-    \strng{fullhash}{IM1}
-    \field{sortinit}{I}
-    \field{title}{Firefox 4.0 System Requirements}
-    \field{year}{2011}
-    \verb{url}
-    \verb http://www.mozilla.com/en-US/firefox/4.0/system-requirements/
-    \endverb
-  \endentry
-
   \entry{fb-phish}{article}{}
     \name{labelname}{4}{}{%
       {{}{Jagatic}{J\bibinitperiod}{Tom\bibnamedelima N.}{T\bibinitperiod\bibinitdelim N\bibinitperiod}{}{}{}{}}%
@@ -170,34 +181,6 @@
     \endverb
   \endentry
 
-  \entry{bband-stats}{online}{}
-    \strng{namehash}{1}
-    \strng{fullhash}{1}
-    \field{sortinit}{N}
-    \field{title}{Net Index by Ookla - household download index, UK.}
-    \field{year}{2011}
-    \verb{url}
-    \verb http://www.netindex.com/download/2,4/United-Kingdom/
-    \endverb
-  \endentry
-
-  \entry{rsfec-decode}{book}{}
-    \name{labelname}{1}{}{%
-      {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
-    }
-    \list{publisher}{1}{%
-      {Linkabit Corporation}%
-    }
-    \strng{namehash}{OJP1}
-    \strng{fullhash}{OJP1}
-    \field{sortinit}{O}
-    \field{title}{Error Control Coding Handbook}
-    \field{year}{1976}
-  \endentry
-
   \entry{fb-priv}{online}{}
     \name{labelname}{1}{}{%
       {{}{Post}{P\bibinitperiod}{The\bibnamedelima Washington}{T\bibinitperiod\bibinitdelim W\bibinitperiod}{}{}{}{}}%
@@ -213,6 +196,23 @@
     \field{year}{2010}
     \verb{url}
     \verb http://www.washingtonpost.com/wp-dyn/content/article/2010/05/23/AR2010052303828.html
+    \endverb
+  \endentry
+
+  \entry{fb-stats}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Schools}{S\bibinitperiod}{Online}{O\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Schools}{S\bibinitperiod}{Online}{O\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{SO1}
+    \strng{fullhash}{SO1}
+    \field{sortinit}{S}
+    \field{title}{Obsessed with Facebook}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://www.onlineschools.org/blog/facebook-obsession/
     \endverb
   \endentry
 
@@ -253,26 +253,6 @@
     \verb{url}
     \verb http://techcrunch.com/2009/12/14/rockyou-hacked/
     \endverb
-  \endentry
-
-  \entry{cogwalk}{article}{}
-    \name{labelname}{4}{}{%
-      {{}{Wharton}{W\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Rieman}{R\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
-      {{}{Lewis}{L\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Polson}{P\bibinitperiod}{P.}{P\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{4}{}{%
-      {{}{Wharton}{W\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Rieman}{R\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
-      {{}{Lewis}{L\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Polson}{P\bibinitperiod}{P.}{P\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{WC+1}
-    \strng{fullhash}{WCRJLCPP1}
-    \field{sortinit}{W}
-    \field{title}{The Cognitive Walkthrough Method: A Practitioner's Guide}
-    \field{year}{1994}
   \endentry
 
   \lossort

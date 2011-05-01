@@ -2,82 +2,141 @@
 \chapter{Preparation}\label{ch:preparation}
 %*****************************************
 
-\section{Approaches}
-    \begin{itemize}
-        
-        \item Can't we just store message on a server, authenticate and server will let you download? No. This just defers the problem (uProtect.it does this). We actually want cryptographicly secure communication - if the server contents were made public we would still be OK. So we MUST execute crypto functions locally (since homomorphic encryption is shit).
-        
-        \item Choices we have, based mainly on existing work:
-        \begin{itemize}
-                
-        \item Where are the private keys stored?
-            \begin{itemize}
-                \item Rely on memorised passwords. Means we can store keys remotely, authenticate, download and unlock. Or, we could just hash the password or something. More portable BUT can't have big enough keyspace.
-                \item Locally.
-            \end{itemize}
-                
-        \item Where are public keys stored and how are they distrubuted?
-            \begin{itemize}
-                \item Locally, and distributed manually. Not really useable. Must be unobtrusive remember?
-                \item Through/from a trusted keychain. Nice but we would need to set something up, have a third party service which was registered. 
-                \item With Facebook.
-            \end{itemize}
-                
-        \item Where do we store messages?
-            \begin{itemize}
-                \item Locally isn't feasible (unobtrusive, transparent).
-                \item On Facebook.
-                \item On a third party server. Can we scale this?
-            \end{itemize}
-                
-        \item Where do we intercept Facebook interaction? This is the crucial question, can probably slim the content on the previous ones. Show a nice diagram.
-            \begin{itemize}
-                \item Behind the browser (remotely) (e.g. a remotely hosted Facebook client running server side code)
-                \item Behind the browser (locally) (e.g. proxy server on localhost)
-                \item In the browser (inside the sandbox) (e.g. JavaScript, Java Applet (ughh))
-                \item In the browser (outside the sandbox) (e.g. Greasemonkey or extension. Maybe Flash aswell since can access local filesystem but Chrome sandboxes \url{http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html})
-                \item No browser - custom built client
-            \end{itemize}
-        \end{itemize}
-        
-	\item The conclusion:
-            \begin{itemize}
-                \item Minimal third party reliance - can't scale, reliability, complexity. Everything stored/performed on Facebook or locally. One exception is app itself.
-                \item If we want to store local state i.e. private keys, we can't use remote client, Greasemonkey or sandbox browser stuff. Custom client and proxy server just too complex. So extension all thats left.
-            \end{itemize}
-         
-    \end{itemize}
+Here we discusses possible approaches to protecting privacy in social networks and how Encrypted Facebook relates to existing work. We briefly review Firefox extension development, the Facebook platform, broadcast encryption schemes and other security related concerns. We also look at the specific problems assosciated with encrypting images and possible solutions. Finally, we consider an appropriate testing strategy and software development methodology and derive a concrete set of requirements.
 
-\section{Firefox and extensions}
+\section{Possible approaches}
+\label{sec:approaches}
 
-\begin{itemize}
+Protecting privacy involves tradeoffs between security, useability and scaleability. We outline possible approaches using examples from the literature and existing solutions.
+
+
+\subsection{General}
+
+It is possible to preserve pricacy by encrypting or otherwise hiding the link between a user and their online identity, as with NOYB. However, this approach suffers from problems of inference control and inherently degrades the quality of service provided by the social network. \footnote{See appendix XXX for a full discussion.} As such, we do not consider NOYB or this method further.
+
+The alternative is to encyrpt the content shared a social networkd user, restricting access to only those who possess the appropriate key. This is the method emplyed by Encrypted Facebook and the other proposals introduced in section XXX.
+
+
+\subsection{Outsourcing content}
+
+As well as encryption, FaceCloak, flyByNight and uProtect.it also opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all (text steganography is otherwise difficult due to the low amount of redundancy) \cite{facecloak}. Better guarantees of availability can also be made in the case of account deletion.
+
+Encrypted Facebook avoids outsourcing content due to scaleability concerns. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext. Facebook is able to offer a free service by serving highly targetting advertising to its members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavaible to any solution hosting a database of encrypted content, and paying for privacy is unlikely to be an option for the majority of users.
+
+
+\subsection{Supporting multiple recipients}
+
+Communication over social networks is typically one to many. There are several ways this can be achieved using encryption:
+
+\begin {itemize}
+
+    \item \textbf{Share a single symmetric key with you and your friends.} Requires secure out-of-band distribution of the key. Key revocation and providing fine grained control over recipient groups are problematic.
     
-    \item Basics on how to build an extension.
-
-    \item Due to JavaScript being shit we need some native code. Only choices are Python or C/C++. Speed is in our criteria. Do a side by side speed comparison (and of JavaScript as well). C is faster => we use C.
-
-    \item Why we had to use Gecko 2.0 (I think it was to do with better file handling and better native code support).
-
-    \item How to call C++ from JavaScript (binding, linking, compilation, marshalling). You should probably find out how this works. Note that we need Gecko 2.0 so we can avoid all that XPCOM nonsense.
+    \item \textbf{Keep your encryption key secret. Share your decryption key with your friends.} Subject to the same problems, however gives some protection against friends masquerading as you \cite{facecloak}. A variant of this is used for FaceCloak.
     
-    \item Conclusion: Firefox 4/Gecko 2.0 extension with C/C++ backend, avoiding XPCOM.
+    \item \textbf{Keep your decryption key secret. Submit your encryption key to a third party who performs proxy re-encryption.} Used by flyByNight. Re-encryption allows content encrypted under one key-pair to be decrypted by another, without the third party ever being able to read the clear text \cite{flybynight}.
+    
+    \item \textbf{Authenticate with a trusted third party who posess all keys.} Confidentiality is only weakly assured: trust has simply been defered from Facebook to the third party and many of the scenarious raised in section \ref{sec:background} still apply. This does however greatly improve useability by removing the need for users to manage any keys whatsoever and is the basis of uProtect.it \cite{uprotect}.
+    
+    \item \textbf{Use a more complicated broadcast encryption scheme.} Many schemes exist with various tradeoffs, discussed in section XXX.
     
 \end{itemize}
 
-\section{Facebook}
+Relying on a third party for encryption or re-encryption is subject to the same scaleability issue as outsourcing content. In addition, any method which requires out-of-band transmission will likely suffer from useability isssues relating to manual key management \cite{johhny}.   
+
+Encrypted Facebook uses a simple form of broadcast encryption, which is discussed in section XXX. No third party is required. Public key distribution is performed in-band; permitting semi-automated key management at the cost of vulnerability to middleperson attacks (discussed in section XXX). In addition, high resolution control over recipient groups and key revocation is possible.
+
+
+\subsection{Supporting images}
+
+Encrypted Facebook is currently the only solution that supports encrypted image content. Photo sharing is a primary concern for privacy concious users \cite{photos-priv} and one of the most common activities (section XXX). Possible approaches are covered in detail in section XXX.
+
+
+
+\subsection{Intercepting Facebook interactions}
+
+In order to encrypt content it must be intercepted before being submitted to Facebook. There are several possible stages at which this may occur (Figure \ref{fig:approaches}):
+
+\begin{figure}[tbph]
+\begin{center}
+    \input{gfx/approaches_diag.tikz}
+\caption{Possible deployment strategys for intercepting interaction with Facebook.}
+\label{fig:approaches}
+\end{center}
+\end{figure}
+
+\begin{enumerate}[(a)]
+    
+    \item A remotely hosted proxy server. Multiple users may access Facebook through the server.
+    
+    \item A proxy server running on localhost.
+    
+    \item Within the browser, outside the browser sandbox. Extensions and plugins operate here and have elevated priveledges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications. \footnote{Flash applications are restricted but can give basic filesystem access \url{http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html}.} FaceCloak takes this approach.
+    
+    \item Within the browser, entirely inside the browser sandbox - using only JavaScript and HTML. uProtect.it and flyByNight both take this approach.
+    
+    \item Outside the browser as a dedicated Facebook client application.
+    
+\end{enumerate}
+   
+(a) isn't possible without relying on a third party for hosting. The browser sandbox prevents local filesystem access, ruling out (d) if private keys are to be kept locally. Encrypted Facebook takes approach (c) since (b) and (e) are considerably more complex, at some cost to cross-platform compatability.
+
+Manipulating the \ac{DOM} is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. This allows Encrypted Facebook to integrate functionality into Facebook's own user interface, which, along with distributing public keys in-band, mitigates usebility issues concerning key management.
+
+\section{Mozilla Firefox extension development}
+
+Encrypted Facebook is developed for Mozilla Firefox. Firefox is the worlds most popular browser (as of January 2011) and has a large support base for extension development \cite{ffox}. Porting to other browser is discussed in section XXX.
+
+Firefox extensions are written in JavaScript with partial support for Python and C/C++ \cite{ffox-lang}. Performing cryptography in JavaScript is possible but comes with severe performance difficulties \cite{flybynight}. Table \ref{tab:lang-speeds} compares approximate performance for each language (full details given in appendix xxx).
+
+\begin{figure}[tbph]
+\begin{center}
+\begin{tabular}{+l ^l ^l}
+    \rowstyle{\bfseries}%
+    Language & Library & Time (ms) \\
+    \midrule
+    Python 2.6.6 & pycryptopp 0.5.17 & 1,220 ms \\ [1ex]
+    C++ 98 & Botan 1.8.11 & 92 ms \\ [1ex]
+    \parbox[t][][t]{20ex}{\raggedright JavaScript 1.6 (in Chrome 12.0.712)} & \parbox[t][][t]{20ex}{\raggedright JavaScrypt (last updated December 2005)} & 1,685,000 ms \\
+\end{tabular}
+\caption{Approximate time for 256-bit AES encryption of 1000 1.5 MiB random messages.}
+\label{tab:lang-speeds}
+\end{center}
+\end{figure}
+
+Since long delays would hamper usebility Encrypted Facebook uses C/C++ for computation intensive operations. Native code can executed from within Firefox in at least three ways:
 
 \begin{itemize}
-   
-    \item Activity we need to support. What the average Facebook user does \url{http://www.onlineschools.org/blog/facebook-obsession/}. Comments by far the most common activity. Messages and photos next most common. Then friends  but this is social graph. Then status updates, wall posts. Invites and tags - again social graph. Finally links, not social graph but hard to integrate - doesn't matter too much since less popular than other usage forms. Can still share links manually anyway. Likes are probably on there somewhere - again we don't care.
 
-\begin{table}[h]
+    \item Creating an XPCOM component. These are linked against a single Gecko \footnote{Gecko is the layout engine used by Firefox.} SDK version; supporting multiple versions is possible but non-trivial \cite{xpcom}.
+    
+    \item Loading native libraries with {\tt js-ctypes}. Introduced in Gecko 2.0 \cite{js-ctypes}. 
+
+    \item Using {\tt nsiProcess} to invoke an external application. Capturing output can be difficult.
+    
+\end{itemize}
+
+To maximise longevity Encrypted Facebook is designed to work on the latest version of the Firefox web browser, Firefox 4.0, which runs on Gecko 2.0. Since building an entire XCPOM component would be excessive and give little advantage by way of backwards compatibility, the newly introduced {\tt js-ctypes} module is used to load native code. 
+
+Gecko 2.0 also provides better support for working with the local filesystem and manipulating images in the \ac{DOM}.
+
+
+\section{The Facebook platform}
+
+
+Encrypted Facebook supports encyrption for only the most popular types of object, listed in order of frequency of submission in Table \ref{tab:fb-activities}.
+
+Encryption adds size overheads. Without relying on a third party server all overheads must be stored on Facebook itelf, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, notes can contain over 120 KiB of information since each character represents one 16-bit unicode code point. Images are subject to lossy compression which is discussed in section XXX.
+
+\begin{table}[tbph]
   \begin{center}
         \definecolor{lgray}{hsb}{0.1, 0, 0.9}
         \rowcolors{3}{white}{lgray}
-        \begin{tabular}{l l l l}
-            
-            \textbf{Activity} & \textbf{ Frequency } & \textbf{Limitations} & \textbf{Notes} \\
-            & \textbf{(per second)} & & \\
+        \begin{tabular}{+l ^l ^l ^l}
+            \rowstyle{\bfseries}%
+            Activity & Frequency  & Limitations & Notes \\
+            \rowstyle{\bfseries}%
+            & (per second) & & \\
             
             \midrule
             
@@ -94,28 +153,31 @@
             Note            & unknown  & 65,536 chars.  & \parbox[t][][t]{20ex}{\raggedright Used for blog-style posts.} \\[3ex]
             
         \end{tabular}
-        \caption{Facebook objects, their limitations and approximate frequency of creation. Frequency is measured in number of submissions per second.}
+        \caption{Facebook objects, their limitations and approximate frequency of creation \cite{fb-stats}}
         \label{tab:fb-activities}
     \end{center}
 \end{table}
 
 
-    Clearly images and notes are the most information dense so we use these. To summerise we must support the most popular activities and will likely need to make use of the most dense objects.
+\subsection{Incremental deployment}
+
+Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this. This might require deleting objects
+
     
-    \item Deleting objects. Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this. This might require deleting objects
+\subsection{Graph API}
+ 
+Now we know what we need to interact with, how do we do it? Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
     
-    \item Communicating with Facebook. Now we know what we need to interact with, how do we do it? Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
-    
-    \item Connectedness.
+\subsection{Connectedness}
+
     \begin{itemize}
         \item Facebook says average is 130. This paper \url{http://arxiv.org/PS_cache/cs/pdf/0611/0611137v1.pdf} says average is 170 and distrubtion drops sharply at 250. Cameron Marlow says we only speak to a core group of friends anyway.
         \item Theoretical limits - Dunbar number of 150, others suggest higher at ~300. So it perhaps won't increase with Facebook's expansion.
         \item Conclusion - 400 if we can make it work, but anything as low as 100 we could probably get away with.
     \end{itemize}
 
-    \item Conclusion: we must be able to send objects X,Y and Z, and will probably need to make use of A,B and C. Three different ways needed to connect to Facebook to achieve this. No JavaScript SDK; must not significantly increase signal to noise ratio; must suport at least 400 friends/recipients.
+Conclusion: we must be able to send objects X,Y and Z, and will probably need to make use of A,B and C. Three different ways needed to connect to Facebook to achieve this. No JavaScript SDK; must not significantly increase signal to noise ratio; must suport at least 400 friends/recipients.
 
-\end{itemize}
     
 \section{Storing data in images}
     Images are the big thing. uProtect.it don't do images, FlyByNight talk about it as an extension.

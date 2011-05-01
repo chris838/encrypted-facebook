@@ -1,0 +1,91 @@
+\pgfdeclarelayer{device}
+\pgfdeclarelayer{browser}
+\pgfdeclarelayer{sandbox}
+\pgfdeclarelayer{fg}
+\pgfsetlayers{device,browser,sandbox,fg,main}
+\begin{tikzpicture}[
+    every node/.style={font={\footnotesize \bfseries}, minimum width=0.5cm, text centered, thick, black!80},
+    box/.style={rounded corners, draw=black!50, dashed}
+]
+
+%draw web page
+\node (a1) at (0,5) {};
+\node (b1) [on grid,below=1cm of a1] {};
+\node (c1) [on grid,below=1cm of b1] {};
+\node (d1) [on grid,below=1cm of c1] {};
+
+\node[fit=(a1) (d1)] (page1) {};
+\node[text width=2em] at (page1) (page2) {Web page};
+\begin{pgfonlayer}{fg}
+    \node[draw,  fill=green!20, fit=(page1) (page2)] (page3) {};
+\end{pgfonlayer}
+
+
+%draw entires
+\node[draw,fill=white,minimum width=0.7cm] (a2) [on grid,right=6cm of a1] {a};
+\node[draw,fill=white,minimum width=0.7cm] (b2) [on grid,right=4.4cm of b1] {b};
+\node[draw,fill=white,minimum width=0.7cm] (c2) [on grid,right=3.2cm of c1] {c};
+\node[draw,fill=white,minimum width=0.7cm] (d2) [on grid,right=2cm of d1] {d};
+
+% boxes
+\node[fit= (page3) (a1) (d1) (d2) ] (sandbox1) {};
+\node[below] at (sandbox1.south) (sandbox2) {Sandbox};
+\begin{pgfonlayer}{sandbox}
+    \node[box, fill=blue!10, fit= (sandbox1) (sandbox2) ] (sandbox3) {};
+\end{pgfonlayer}
+
+\node[fit=(sandbox3) (c2)] (browser1) {};
+\node[below] at (browser1.south) (browser2) {Browser};
+\begin{pgfonlayer}{browser}
+    \node[box, fill=blue!5, fit=(browser1) (browser2) ] (browser3) {};
+\end{pgfonlayer}
+
+%and client
+\node[draw,fill=white,minimum width=0.7cm] (e1) [on grid,below=4cm of browser3] {e};
+
+\node[fit=(e1)] (client1) {};
+\node[below] at (client1.south) (client2) {Facebook client};
+\begin{pgfonlayer}{browser}
+    \node[box, fill=blue!5, fit=(client1) (client2)] (client3) {};
+\end{pgfonlayer}
+
+% draw facebook
+\node (a3) [on grid,right=8cm of a1] {};
+\node (b3) [on grid,below=1cm of a3] {};
+\node (c3) [on grid,below=1cm of b3] {};
+\node (d3) [on grid,below=1cm of c3] {};
+\node (e3) [on grid,right=7cm of e1] {};
+
+\node[fit=(a3) (e3)] (fb1) {};
+\node at (fb1) (fb2) {Facebook};
+\begin{pgfonlayer}{fg}
+    \node[draw=black!50, fill=green!20, fit=(fb1) (fb2)] (fb3) {};
+\end{pgfonlayer}
+
+\node[fit=(browser3) (b2) (client3)] (device1) {};
+\node[below] at ($(device1.south)+(0,-0.5cm)$) (device2) {User device};
+\begin{pgfonlayer}{device}
+    \node[box, fill=yellow!20, fit=(device1) (device2)] (device) {};
+\end{pgfonlayer}
+
+\path[name path=ppath] (page3.north east) -- (page3.south east);
+\path[name path=fpath] (fb3.north west) -- (fb3.south west);
+
+% arrows
+\foreach \x in {a,b,c,d} {
+    \path[name path=a12] (\x 1) -- (\x 2);
+    \draw [->,name intersections={of=a12 and ppath, by=x}]
+    [thick, black!80] (\x 2) -- (x);
+    
+    \path[name path=a23] (\x 2) -- (\x 3);
+    \draw [<-,name intersections={of=a23 and fpath, by=x}]
+    [thick, black!80] (x) -- (\x 2);
+}
+
+\path[name path=eee] (e1) -- (e3);
+\draw [<->,name intersections={of=eee and fpath, by=x}]
+[thick, black!80] (x) -- (e1);
+
+
+
+\end{tikzpicture}

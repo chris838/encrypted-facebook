@@ -85,3 +85,13 @@
     \ifpdf\texorpdfstring{ \so{#1} }{#1}%
     \else{#1}\fi%
 }
+
+%********************************************************************
+%   Bold table rows
+%********************************************************************
+
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+#1\ignorespaces
+}

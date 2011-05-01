@@ -20,6 +20,21 @@
 \usepackage{subfigure}
 \usepackage[center]{caption}
 \renewcommand{\captionfont}{\it\small}
+% tikz packages
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{fit}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
+
+
+\usepackage{enumerate}
+
+\usepackage{amsmath}
+
+
+
 
 \usepackage{xcolor}
 \usepackage{microtype}
@@ -37,6 +52,9 @@
 \usepackage[top=100pt, inner=146pt, width=360pt, height=583pt]{geometry} % margins
 \setlength{\skip\footins}{0.8cm} % footnotes
 \setlength{\footnotesep}{0.4cm}
+
+
+
 
 % PDF hyperlinks
 \usepackage{hyperref}
@@ -99,22 +117,22 @@
 %********************************************************************
 % Mainmatter
 %********************************************************************
-\cleardoublepage
+%\cleardoublepage
 \cleardoublepage\pagenumbering{arabic}\include{chapters/introduction}
 \cleardoublepage\include{chapters/preparation}
-\cleardoublepage\include{chapters/implementation}
-\cleardoublepage\include{chapters/evaluation}
-\cleardoublepage\include{chapters/conclusion}
+%\cleardoublepage\include{chapters/implementation}
+%\cleardoublepage\include{chapters/evaluation}
+%\cleardoublepage\include{chapters/conclusion}
 
 % *******************************************************************
 %   Appendix and bibliography
 %********************************************************************
-\addcontentsline{toc}{chapter}{Bibliography}
-\cleardoublepage\printbibliography
-\cleardoublepage\part*{Appendix}
-\appendix
-\cleardoublepage\include{chapters/app_times}
-\cleardoublepage\include{frontbackmatter/proposal}
+%\addcontentsline{toc}{chapter}{Bibliography}
+%\cleardoublepage\printbibliography
+%\cleardoublepage\part*{Appendix}
+%\appendix
+%\cleardoublepage\include{chapters/app_times}
+%\cleardoublepage\include{frontbackmatter/proposal}
 
 
 
