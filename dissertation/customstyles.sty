@@ -7,7 +7,7 @@
 
 \DeclareRobustCommand{\hZero}{\usefont{T1}{futura_lt_bold}{m}{n} \fontsize{32}{38}\selectfont}%
 \DeclareRobustCommand{\hA}{\usefont{T1}{futura_lt_bold}{m}{n} \Huge}%
-\DeclareRobustCommand{\hB}{\usefont{T1}{futura_lt_heavy}{m}{n} \Large}%
+\DeclareRobustCommand{\hB}{\usefont{T1}{futura_lt_heavy}{m}{n} \fontsize{20}{24}\selectfont}%
 \DeclareRobustCommand{\hC}{\usefont{T1}{futura_lt_heavy}{m}{n} \large}%
 \DeclareRobustCommand{\hD}{\usefont{T1}{futura_lt_medium}{m}{n} \large}%
 \DeclareRobustCommand{\hE}{\usefont{T1}{futura_lt_heavy}{m}{n} \normalsize}%
@@ -19,7 +19,7 @@
 \titleformat{\chapter}
         {\hA }{%
             \makebox[0pt][r]{%
-            \thechapter\enskip}%
+            {\hZero \thechapter} \enskip}%
 	}{0em}{}
 % sections
 \titleformat{\section}{ \hB }
@@ -31,7 +31,7 @@
 % subsections
 \titleformat{\subsection}{ \hC }{%
             \makebox[0pt][r]{%
-            \thesubsection\enskip}%
+            { \thesubsection} \enskip}%
 	}{0em}{\secformat}
         
 % subsubsections
@@ -40,13 +40,26 @@
     
 % paragraphs
 \titleformat{\paragraph}[runin]
-    { \hE }{\theparagraph}{1em}{\secformat}    
-% descriptionlabels
+    { \hE }{\theparagraph}{1em}{\secformat}
+    
+% descriptionlabels  
+\newenvironment{desc}{%
     \renewcommand{\descriptionlabel}[1]{
         \fontfamily{futura_lt_heavy}
         \selectfont
-        \hso{#1}
+        \hso{##1}
     }
+   \begin{description}%
+}{%
+   \end{description}%
+}
+
+\newenvironment{sdesc}{%
+   \renewcommand\descriptionlabel[1]{\hspace{\labelsep}\textbf{##1}}
+   \begin{description}%
+}{%
+   \end{description}%
+}
     
 %********************************************************************
 %   Fonts and styles for table of contents and other listings
@@ -95,3 +108,19 @@
 \newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
 #1\ignorespaces
 }
+
+%********************************************************************
+%   Theorems
+%********************************************************************
+
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\newtheorem{scheme}{Scheme}

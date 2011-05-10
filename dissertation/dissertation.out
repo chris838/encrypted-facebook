@@ -1,23 +1,41 @@
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.1.1}{Background}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Limitations}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{Existing work}{chapter.1}% 4
-\BOOKMARK [0][-]{chapter.2}{Preparation}{}% 5
-\BOOKMARK [1][-]{section.2.1}{Possible approaches}{chapter.2}% 6
-\BOOKMARK [2][-]{subsection.2.1.1}{General}{section.2.1}% 7
-\BOOKMARK [2][-]{subsection.2.1.2}{Outsourcing content}{section.2.1}% 8
-\BOOKMARK [2][-]{subsection.2.1.3}{Supporting multiple recipients}{section.2.1}% 9
-\BOOKMARK [2][-]{subsection.2.1.4}{Supporting images}{section.2.1}% 10
-\BOOKMARK [2][-]{subsection.2.1.5}{Intercepting Facebook interactions}{section.2.1}% 11
-\BOOKMARK [1][-]{section.2.2}{Mozilla Firefox extension development}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.3}{The Facebook platform}{chapter.2}% 13
-\BOOKMARK [2][-]{subsection.2.3.1}{Incremental deployment}{section.2.3}% 14
-\BOOKMARK [2][-]{subsection.2.3.2}{Graph API}{section.2.3}% 15
-\BOOKMARK [2][-]{subsection.2.3.3}{Connectedness}{section.2.3}% 16
-\BOOKMARK [1][-]{section.2.4}{Storing data in images}{chapter.2}% 17
-\BOOKMARK [1][-]{section.2.5}{Encryption schemes}{chapter.2}% 18
-\BOOKMARK [1][-]{section.2.6}{Further security considerations}{chapter.2}% 19
-\BOOKMARK [1][-]{section.2.7}{Testing plan}{chapter.2}% 20
-\BOOKMARK [1][-]{section.2.8}{Security testing}{chapter.2}% 21
-\BOOKMARK [1][-]{section.2.9}{Proffesional practice stuff}{chapter.2}% 22
-\BOOKMARK [1][-]{section.2.10}{Requirements analysis}{chapter.2}% 23
+\BOOKMARK [1][-]{section.1.2}{Objectives}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Limitations}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Existing work}{chapter.1}% 5
+\BOOKMARK [0][-]{chapter.2}{Preparation}{}% 6
+\BOOKMARK [1][-]{section.2.1}{Design principles}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.1.1}{Encryption of shared content}{section.2.1}% 8
+\BOOKMARK [2][-]{subsection.2.1.2}{Independency from third-party servers}{section.2.1}% 9
+\BOOKMARK [2][-]{subsection.2.1.3}{Secret key security}{section.2.1}% 10
+\BOOKMARK [2][-]{subsection.2.1.4}{Minimal use of OOB channels}{section.2.1}% 11
+\BOOKMARK [1][-]{section.2.2}{Broadcast encryption}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.2.1}{Existing solutions}{section.2.2}% 13
+\BOOKMARK [2][-]{subsection.2.2.2}{}{section.2.2}% 14
+\BOOKMARK [1][-]{section.2.3}{Intercepting Facebook interactions}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.4}{Mozilla Firefox extension development}{chapter.2}% 16
+\BOOKMARK [1][-]{section.2.5}{The Facebook platform}{chapter.2}% 17
+\BOOKMARK [2][-]{subsection.2.5.1}{Activities and content types}{section.2.5}% 18
+\BOOKMARK [2][-]{subsection.2.5.2}{Connectedness}{section.2.5}% 19
+\BOOKMARK [2][-]{subsection.2.5.3}{Signal-to-noise ratio}{section.2.5}% 20
+\BOOKMARK [2][-]{subsection.2.5.4}{Graph API}{section.2.5}% 21
+\BOOKMARK [1][-]{section.2.6}{Storing data in images}{chapter.2}% 22
+\BOOKMARK [2][-]{subsection.2.6.1}{JPEG compression process}{section.2.6}% 23
+\BOOKMARK [2][-]{subsection.2.6.2}{Naive data insertion}{section.2.6}% 24
+\BOOKMARK [2][-]{subsection.2.6.3}{Advanced data insertion}{section.2.6}% 25
+\BOOKMARK [1][-]{section.2.7}{Further security considerations}{chapter.2}% 26
+\BOOKMARK [2][-]{subsection.2.7.1}{Threat model}{section.2.7}% 27
+\BOOKMARK [2][-]{subsection.2.7.2}{Underlying encryption schemes}{section.2.7}% 28
+\BOOKMARK [2][-]{subsection.2.7.3}{Key management}{section.2.7}% 29
+\BOOKMARK [1][-]{section.2.8}{Testing plan}{chapter.2}% 30
+\BOOKMARK [1][-]{section.2.9}{Security testing}{chapter.2}% 31
+\BOOKMARK [1][-]{section.2.10}{Proffesional practice stuff}{chapter.2}% 32
+\BOOKMARK [1][-]{section.2.11}{Requirements analysis}{chapter.2}% 33
+\BOOKMARK [0][-]{chapter.3}{Implementation}{}% 34
+\BOOKMARK [1][-]{section.3.1}{Extension structure}{chapter.3}% 35
+\BOOKMARK [2][-]{subsection.3.1.1}{Overview}{section.3.1}% 36
+\BOOKMARK [2][-]{subsection.3.1.2}{C++ module structure}{section.3.1}% 37
+\BOOKMARK [1][-]{section.3.2}{Encoding decoding data}{chapter.3}% 38
+\BOOKMARK [1][-]{section.3.3}{Storing data in images}{chapter.3}% 39
+\BOOKMARK [1][-]{section.3.4}{Modifying the Facebook UI}{chapter.3}% 40
+\BOOKMARK [1][-]{section.3.5}{Testing}{chapter.3}% 41

@@ -2,60 +2,120 @@
 \chapter{Preparation}\label{ch:preparation}
 %*****************************************
 
-Here we discusses possible approaches to protecting privacy in social networks and how Encrypted Facebook relates to existing work. We briefly review Firefox extension development, the Facebook platform, broadcast encryption schemes and other security related concerns. We also look at the specific problems assosciated with encrypting images and possible solutions. Finally, we consider an appropriate testing strategy and software development methodology and derive a concrete set of requirements.
-
-\section{Possible approaches}
-\label{sec:approaches}
-
-Protecting privacy involves tradeoffs between security, useability and scaleability. We outline possible approaches using examples from the literature and existing solutions.
+In this chapter we formulate the objectives presented in section \ref{sec:goals} into a set of design principles, drawing on existing work. We describe possible deployment strategies. We briefly review Firefox extension development, broadcast encryption schemes, the Facebook platform and other security related concerns. We also look at the specific problems assosciated with encrypting images and possible solutions. Finally, we consider an appropriate testing strategy and software development methodology and derive a concrete set of requirements.
 
 
-\subsection{General}
 
-It is possible to preserve pricacy by encrypting or otherwise hiding the link between a user and their online identity, as with NOYB. However, this approach suffers from problems of inference control and inherently degrades the quality of service provided by the social network. \footnote{See appendix XXX for a full discussion.} As such, we do not consider NOYB or this method further.
-
-The alternative is to encyrpt the content shared a social networkd user, restricting access to only those who possess the appropriate key. This is the method emplyed by Encrypted Facebook and the other proposals introduced in section XXX.
+\section{Design principles}
 
 
-\subsection{Outsourcing content}
-
-As well as encryption, FaceCloak, flyByNight and uProtect.it also opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all (text steganography is otherwise difficult due to the low amount of redundancy) \cite{facecloak}. Better guarantees of availability can also be made in the case of account deletion.
-
-Encrypted Facebook avoids outsourcing content due to scaleability concerns. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext. Facebook is able to offer a free service by serving highly targetting advertising to its members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavaible to any solution hosting a database of encrypted content, and paying for privacy is unlikely to be an option for the majority of users.
+We describe the design principles of Encrypted Facebook; how they enforce the stated aims of privacy preservation, scaleability, usebility and incremental deployment and how they compare with existing approaches. Note that use of the term third party excludes Facebook itself.
 
 
-\subsection{Supporting multiple recipients}
+\subsection{Encryption of shared content}
 
-Communication over social networks is typically one to many. There are several ways this can be achieved using encryption:
+It is possible to preserve privacy by encrypting or otherwise concealing the link between a real life user and their online identity, as with NOYB \cite{noyb}. Arguably, however, privacy is only poorly preserved due to problems of inference control \cite{ross}. An example: many users will be easily identifiable simply from the photos they upload. Incremental deployment is also not possible since non-users will only ever see fictitious profiles \cite{facecloak}.
 
-\begin {itemize}
+The alternative is to encrypt shared content itself in some way or another, restricting access to only those who possess the appropriate key even in the event of release.
 
-    \item \textbf{Share a single symmetric key with you and your friends.} Requires secure out-of-band distribution of the key. Key revocation and providing fine grained control over recipient groups are problematic.
+
+\subsection{Independency from third-party servers}
+
+%In addition to encrypting content, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all, as with FaceCloak. \footnote{Steganography requires large amounts of redundancy to securely hide even a small amount of information \cite{facecloak}.} Better guarantees of availability can also be made in the case of account deletion.
+
+In addition to encrypting content, flyByNight, FaceCloack and uProtect.it all opt to migrate content from the Facebook platform to an external third party database.
+
+Encrypted Facebook is designed to avoid outsourcing content due to scaleability concerns. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext.  Facebook's monthly bandwidth overheads alone are in excess of two million dollars \cite{fb-costs}. They are able to offer a free service by serving highly targetting advertising to members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavaible to any solution hosting a database of encrypted content. A subscription based service would also be unlikely to scale, since the majority of Facebook users would be reluctant to pay \cite{fb-pay}.
+
+%Third-party servers can also be employed for computation. uProtect.it performs all encryption and decryption server side negating the need for the user to perform any kind of kind of key management. Proxy re-encryption, used by flyByNight to permit multiple recipients \cite{flybynight}, also relies on access to server side computation, as do some of the more advanced broadcast encryption schemes (see section XXX).
+
+Third-party servers can also be employed for performing encryption and/or decryption, as with uProtect.it and flyByNight. Encrypted Facebook is designed to work without requiring a third-party for such computation, again since the resources required by the server would scale linearly in proportion to the amount of content exchanged.
+
+Another use of third-party servers is to store and distribute cryptographic keys, perhaps as part of a public key infrastructure. Arguably issues of scale here are not so severe. In any case Encrypted Facebook does not rely on such a service due to either conflicts with other design principles, or in some cases due to a limited percieved benefit given the additional complexity of impementation.
+
+
+\subsection{Secret key security}
+
+Any encryption scheme will require some form of key whose secrecy is required.
+
+It is possible to use a trusted third-party to store and distribute secret keys, in a so-called key escrow arrangement. This is the basis of uProtect.it \cite{uprotect}. Key management is taken out of the users hands entirely, improving usebility. However, confidentiality is only weakly assured: trust has simply been defered from Facebook to the third-party and many of the scenarious raised in section \ref{sec:background} still apply.
+
+Another possibility is using secret keys derived from a password. flyByNight, for example, allows users to download a password-protected private key from their server. We could also store password protected keys in-band (i.e. on Facebook itself) or to generate a key by hashing the password. Again, relying on the user to memorise a password rather than manage secret keys improves usebility. Unfortunately the entrophy of user chosen passwords is far less than that of randomly generated keys \cite{password}.
+
+Encrypted Facebook is designed to only ever generate and store secret keys on a user's device(s), trading usebility for better privacy protection.
+
+
+\subsection{Minimal use of OOB channels}
+
+Secure \ac{OOB} channels (such as encrypted email or face-to-face exchange) can be used to transmit update messages, keys or other information as part of an encryption scheme (see section XXX). Since these channels are, by definition, external to the Facebook platform it can be hard to automate such exchanges and much is still required from the user. FaceCloak, for example, requires users to transmit messages over secure email when adding friends. The process is partly automated, however the user must set up an email client themselves and ensure that the email is sent securely (by using PGP, for example).
+
+Encrypted Facebook is designed to limit the use of \ac{OOB} transmission due to usebility concerns regarding manual key managament. The exception is when installing a secret key across more than one device - since transporting a secret key by any other method would comprimise the principle of secret key security.
+
+
+%\subsection{Remainder of communications in-band}
+
+%Any system which uses public key cryptography will require some way of distributing public keys. Although they are 'public', a so-called middleperson attack can occur if keys are intercepted \cite{ross}.
+
+%Since public keys are likely to be transmitted often (depending on the protocol, every time a friend is added or even every time content is shared) doing so \ac{OOB}, although secure, will impact usebility - again since \ac{OOB} transmition is hard to automate.
+
+%We can instead store and distribute public keys via a trusted third-party. flyByNight takes this approach.  If the content server and the key server are distinct (for example, if Facebook itself is used to store content) both would have to be comprimised to perform so called middleperson attacks. Also web of trust.
+
+%For the sake of simplicity Encrypted Facebook transmits public keys in-band on Facebook itself, since immunity from middleperson attacks is not considered a design goal. Such attacks are discussed fully in section XXX. \footnote{The option of verifying public keys \ac{OOB} to prevent middleperson attack is left open to the expert user but is not a design feature.}
+
+
+\section{Broadcast encryption}
+
+Communication over social networks is typically one-to-many whereas cryptography traditionally considers a sender and a single recipient. We look at existing solutions to this problem and outline the broadcast encryption scheme adopted by Encrypted Facebook and a justification for its use.
+
+\subsection{Existing solutions}
+
+Existing proposals tackle this problem in the following ways:
+
+\begin{itemize}
+
+    \item If content is both hosted and encrypted/decrypted remotely, as with uProtect.it, one-to-many support is trivial: the user authenticates with the server and is sent the cleartext.
     
-    \item \textbf{Keep your encryption key secret. Share your decryption key with your friends.} Subject to the same problems, however gives some protection against friends masquerading as you \cite{facecloak}. A variant of this is used for FaceCloak.
+    \item If a third-party can be used for computation we can use a technique called proxy re-encryption as with \cite{flybynight}. Here the server changes the key under which the content may be decrypted on demand, without ever being able to read the cleartext itself \cite{proxy}.
     
-    \item \textbf{Keep your decryption key secret. Submit your encryption key to a third party who performs proxy re-encryption.} Used by flyByNight. Re-encryption allows content encrypted under one key-pair to be decrypted by another, without the third party ever being able to read the clear text \cite{flybynight}.
-    
-    \item \textbf{Authenticate with a trusted third party who posess all keys.} Confidentiality is only weakly assured: trust has simply been defered from Facebook to the third party and many of the scenarious raised in section \ref{sec:background} still apply. This does however greatly improve useability by removing the need for users to manage any keys whatsoever and is the basis of uProtect.it \cite{uprotect}.
-    
-    \item \textbf{Use a more complicated broadcast encryption scheme.} Many schemes exist with various tradeoffs, discussed in section XXX.
-    
+    \item Distributing keys over \ac{OOB} channels can permit one-to-many communication. A FaceCloak user, for example, shares a single decryption key \ac{OOB} among friends.
+
 \end{itemize}
 
-Relying on a third party for encryption or re-encryption is subject to the same scaleability issue as outsourcing content. In addition, any method which requires out-of-band transmission will likely suffer from useability isssues relating to manual key management \cite{johhny}.   
-
-Encrypted Facebook uses a simple form of broadcast encryption, which is discussed in section XXX. No third party is required. Public key distribution is performed in-band; permitting semi-automated key management at the cost of vulnerability to middleperson attacks (discussed in section XXX). In addition, high resolution control over recipient groups and key revocation is possible.
+None of these approaches are compatible with Encrypted Facebook's design principles. Instead we use a form of broadcast encryption.
 
 
-\subsection{Supporting images}
+\subsection{}
+    
+    Given a suitable assymetric encryption scheme $P$ and a suitable symmetric scheme $Q$, we use the broadcast-encryption scheme defined by the triple of algorithms {\sc (Setup, Broadcast, Decrypt)} such that:
+    
+    \begin{itemize}
+    
+    \item The setup algorithm {\sc (Setup)} takes a user $u \in U$ and constructs that receiver's private kev $priv_u$ and public key $pub_u$ using scheme $P$.
+    
+    \item The broadcast algorithm {\sc (Broadcast)} takes the list of priveledged users $R$ and a message $m$, generates a session key $k$ using scheme $Q$ and broadcasts a message $b = (b_1,b_2)$ where:
+    
+    \begin{itemize}
+        \item $b_1$ is the list of pairs $(u,k_u)$ such that $u \in R$, where $k_u$ is the session key encrypted under $pub_u$.
+        \item $b_2$ is $m$ encrypted under a session key $k$.
+    \end{itemize}
+    
+    
+    \item A user $u \in U$ runs the decryption algorithm {\sc Decrypt($b, u, priv_u$)} that will:
+    
+        \begin{itemize}
+            \item If $(u,k_u) \in b_2$, extract the session key $k$ from $k_u$ using $priv_u$. $m$ is obtained by decrypting $b_2$ using $k$
+        
+            \item {\sc Decrypt} fails, if $(u,k_u) \notin b_2$ or if, equivalently, $u \notin R$.
+        
+        \end{itemize}
 
-Encrypted Facebook is currently the only solution that supports encrypted image content. Photo sharing is a primary concern for privacy concious users \cite{photos-priv} and one of the most common activities (section XXX). Possible approaches are covered in detail in section XXX.
+    \end{itemize}
+    
+    
 
+\section{Intercepting Facebook interactions}
 
-
-\subsection{Intercepting Facebook interactions}
-
-In order to encrypt content it must be intercepted before being submitted to Facebook. There are several possible stages at which this may occur (Figure \ref{fig:approaches}):
+In order to encrypt content it must be intercepted before being submitted to Facebook. We describe the possible stages at which this may occur (Figure \ref{fig:approaches}):
 
 \begin{figure}[tbph]
 \begin{center}
@@ -67,27 +127,28 @@ In order to encrypt content it must be intercepted before being submitted to Fac
 
 \begin{enumerate}[(a)]
     
-    \item A remotely hosted proxy server. Multiple users may access Facebook through the server.
+    \item A remotely hosted proxy server. Supports multiple platforms.
     
-    \item A proxy server running on localhost.
+    \item A proxy server running on localhost. Supports multiple browsers.
     
-    \item Within the browser, outside the browser sandbox. Extensions and plugins operate here and have elevated priveledges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications. \footnote{Flash applications are restricted but can give basic filesystem access \url{http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html}.} FaceCloak takes this approach.
+    \item Within the browser, outside the browser sandbox. Extensions and plugins operate here and have elevated priveledges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications. \footnote{Flash applications, for example, are restricted but can provide basic filesystem access \url{http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html}.} FaceCloak takes this approach.
     
     \item Within the browser, entirely inside the browser sandbox - using only JavaScript and HTML. uProtect.it and flyByNight both take this approach.
     
-    \item Outside the browser as a dedicated Facebook client application.
+    \item Outside the browser as part of a bespoke Facebook client application.
     
 \end{enumerate}
    
-(a) isn't possible without relying on a third party for hosting. The browser sandbox prevents local filesystem access, ruling out (d) if private keys are to be kept locally. Encrypted Facebook takes approach (c) since (b) and (e) are considerably more complex, at some cost to cross-platform compatability.
+(a) conflicts with the design goal of no server-side computation. The browser sandbox prevents local filesystem access, ruling out (d) if private keys are to be kept securely. Encrypted Facebook takes approach (c) since (b) and (e) are considerably more complex, at some cost to cross-platform compatability.
 
-Manipulating the \ac{DOM} is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. This allows Encrypted Facebook to integrate functionality into Facebook's own user interface, which, along with distributing public keys in-band, mitigates usebility issues concerning key management.
+
 
 \section{Mozilla Firefox extension development}
 
-Encrypted Facebook is developed for Mozilla Firefox. Firefox is the worlds most popular browser (as of January 2011) and has a large support base for extension development \cite{ffox}. Porting to other browser is discussed in section XXX.
+Encrypted Facebook is developed for Mozilla Firefox, the worlds most popular browser (as of January 2011). Manipulating the \ac{DOM} is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. This allows Encrypted Facebook to integrate functionality into Facebook's own user interface which mitigates usebility issues concerning key management. Porting to other browsers is discussed in section XXX.
 
 Firefox extensions are written in JavaScript with partial support for Python and C/C++ \cite{ffox-lang}. Performing cryptography in JavaScript is possible but comes with severe performance difficulties \cite{flybynight}. Table \ref{tab:lang-speeds} compares approximate performance for each language (full details given in appendix xxx).
+
 
 \begin{figure}[tbph]
 \begin{center}
@@ -104,11 +165,11 @@ Firefox extensions are written in JavaScript with partial support for Python and
 \end{center}
 \end{figure}
 
-Since long delays would hamper usebility Encrypted Facebook uses C/C++ for computation intensive operations. Native code can executed from within Firefox in at least three ways:
+Since long delays would hamper usebility Encrypted Facebook uses C/C++ for computation intensive operations. Native code can be executed from within Firefox in at least three ways:
 
 \begin{itemize}
 
-    \item Creating an XPCOM component. These are linked against a single Gecko \footnote{Gecko is the layout engine used by Firefox.} SDK version; supporting multiple versions is possible but non-trivial \cite{xpcom}.
+    \item Creating an XPCOM component. These are linked against a single Gecko \footnote{Gecko is the layout engine used by Firefox.} version; supporting multiple versions is possible but non-trivial \cite{xpcom}.
     
     \item Loading native libraries with {\tt js-ctypes}. Introduced in Gecko 2.0 \cite{js-ctypes}. 
 
@@ -116,17 +177,20 @@ Since long delays would hamper usebility Encrypted Facebook uses C/C++ for compu
     
 \end{itemize}
 
-To maximise longevity Encrypted Facebook is designed to work on the latest version of the Firefox web browser, Firefox 4.0, which runs on Gecko 2.0. Since building an entire XCPOM component would be excessive and give little advantage by way of backwards compatibility, the newly introduced {\tt js-ctypes} module is used to load native code. 
+Encrypted Facebook is designed to work on the latest version of the Firefox web browser, Firefox 4.0, which runs on Gecko 2.0. Since building an entire XCPOM component would be excessive and give little advantage by way of backwards compatibility, the newly introduced {\tt js-ctypes} module is used to load native code. 
 
 Gecko 2.0 also provides better support for working with the local filesystem and manipulating images in the \ac{DOM}.
 
 
 \section{The Facebook platform}
 
+Each Facebook user has a 'news feed' which contains posts of recent updates from their friends in the network. A seperate 'wall feed' also exists for each user containing that user's recent activity. All users also have a profile where they may fill out personal details and submit status updates and upload images. Such actions create notifications in the relevant feeds. These notifications can then be commented on, and these comments themselves will also appear in the feed.
 
-Encrypted Facebook supports encyrption for only the most popular types of object, listed in order of frequency of submission in Table \ref{tab:fb-activities}.
+\subsection{Activities and content types}
 
-Encryption adds size overheads. Without relying on a third party server all overheads must be stored on Facebook itelf, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, notes can contain over 120 KiB of information since each character represents one 16-bit unicode code point. Images are subject to lossy compression which is discussed in section XXX.
+Table \ref{tab:fb-activities} lists the most popular Facebook activites in order of frequency of submission (where available).  Popular forms of textual submission (comments, messages, status updates and wall posts) are also supported. No attempt is made to encrypt or otherwise conceal structural elements of the social graph, such as 'likes' or 'tags' since this is a non-goal, as stated in section XXX. 
+
+The broadcast encryption scheme described in section XXX adds size overheads to any content that will be encrypted. Without relying on a third-party server all overheads must be stored on Facebook itelf, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, notes can contain over 120 KiB of information since each character represents one 16-bit unicode code point. Images are subject to lossy compression which is discussed in section XXX.
 
 \begin{table}[tbph]
   \begin{center}
@@ -158,59 +222,174 @@ Encryption adds size overheads. Without relying on a third party server all over
     \end{center}
 \end{table}
 
+Each user's profile has an "About Me" section with a character limit of XXX. With no other obvious attribute that can be easily queried from user ID and is large enough, Encrypted Facebook uses this store the users public key.
 
-\subsection{Incremental deployment}
 
-Need to allow for INCREMENTAL DEPLOYMENT. Needs to be an opt in scheme, don't want to divide SNS. Non-users must be able to co-exist with users. By this we basically mean low signal to noise ratio, link somewhere about this. This might require deleting objects
-
-    
-\subsection{Graph API}
- 
-Now we know what we need to interact with, how do we do it? Facebook Graph API (JavaScript API etc.). What we can do. What we can't that we need to (writing to profiles, problems with album ids etc.) Why I didn't use the JavaScript SDK - poorly documented, working with images is a pain. For the workarounds - iframes and forms - see the implementation.
     
 \subsection{Connectedness}
 
-    \begin{itemize}
-        \item Facebook says average is 130. This paper \url{http://arxiv.org/PS_cache/cs/pdf/0611/0611137v1.pdf} says average is 170 and distrubtion drops sharply at 250. Cameron Marlow says we only speak to a core group of friends anyway.
-        \item Theoretical limits - Dunbar number of 150, others suggest higher at ~300. So it perhaps won't increase with Facebook's expansion.
-        \item Conclusion - 400 if we can make it work, but anything as low as 100 we could probably get away with.
-    \end{itemize}
+Since Encrypted Facebook's broadcast encryption scheme has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user has has (since content can normally only be shared with friends anyway), which is equivalently the degree of the user's node in the social graph. 
 
-Conclusion: we must be able to send objects X,Y and Z, and will probably need to make use of A,B and C. Three different ways needed to connect to Facebook to achieve this. No JavaScript SDK; must not significantly increase signal to noise ratio; must suport at least 400 friends/recipients.
+Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops of sharply at around 250 \cite{fb-factsheet} \cite{fb-connectedness}. Marlow et al suggest that, regardless of the number of friends, communication only occurs with a small core group \cite{burke2010social}.
+
+The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to social networks as well as face-to-face interactions. Exact estimates range from around 150 to 300 \cite{xxx} \cite{xxx}, suggesting that the average degree of nodes within a social graph like Facebook's is unlikely to increase dramatically as Facebook expands further.
+
+
+\subsection{Signal-to-noise ratio}
+
+The signal-to-noise ratio refers to the amount of useful content in relation to junk content. By junk content, we typically mean spam but in our case this could be transmission overheads as part of the broadcast encryption scheme, or even the encrypted content itself since a user without Encrypted Facebook installed will be unable to see the cleartext.
+
+In order to permit incremental deployment any system must ensure that its users can coexist with non-users. Any solution should therefere take measures to limit the impact it has on the signal to noise ratio of non-users.
+
+
+
+\subsection{Graph API}
+
+Facebook does provide a JavaScript SDK for interfacing with the Facebook platform, however it is poorly documented and doesn't allow uploading images - since most JavaScript applications are designed to run inside the browser sandbox without local filesystem access. Instead we use the Facebook Graph API directly.
+
+Graph API has objects and connections between them. Every object has a unique ID. Make HTTP requests, return JSON objects.
+
+
+\begin{itemize}
+
+    \item Authentication. Authentication and authorisation is done using client-side OAuth 2.0 protocol.
+    
+    \begin{lstlisting}
+        https://www.facebook.com/dialog/oauth?
+         client_id=YOUR_APP_ID&
+         redirect_uri=YOUR_URL&
+         scope=email,read_stream&
+         response_type=token
+    \end{lstlisting}
+    
+    \item Reading. https://graph.facebook.com/ID.
+    
+    \item Publishing. \begin{lstlisting}
+    
+        https://graph.facebook.com/arjun/feed?
+        access_token=XXX&
+        message=XXX
+    
+    \end{lstlisting}
+    
+    Returns the ID of the new object.
+
+\end{itemize}
+
+There are several caveats:
+
+\begin{itemize}
+
+    \item When publishing images, although the operation is supported, getting a correct handle to the image is difficult due to JavaScript's poor support for working with local files. The workaround requires creating an invisible form on the current page with a file input element and extracting the file handle from there.
+
+    \item Images have to be published to an album. Facebook currenly uses two types of album ID, one which appears within web pages and one which can be used for publishing through the Graph API. An additional API query is required before uploading to tranlate from one format to the other.
+    
+    \item It certain cases, though publishing through the Graph API is possible, it is more conveniant to programatically manipulate form controls. An example is when submitting a comment and triggering the click handler for the submit button.
+    
+    \item Modifying the "About Me" section of a users profile is unsupported entirely. The workaround requires creating an invisible iframe on the current page and manipulating a form on the Facebook site within.
+
+\end{itemize}
 
     
 \section{Storing data in images}
-    Images are the big thing. uProtect.it don't do images, FlyByNight talk about it as an extension.
-    \begin{itemize}
-	\item Description of Facebook/JPEG compression process (problem statement)
-	\item Analysis of theoretical capacity
-	\item Evaluation of naive implementations (MATLAB demonstrations). Obiously use gray codes to begin with.
-            \begin{itemize}
-		\item Completely naive (encode in RGB values)
-		\item Slightly less so (encode in DST with bit masks)
-                \item Possible better schemes: Haar and Scale.
-                \item Optimal scheme? Dirty paper coding or similair? Its just too hard a problem but future work could be interesting.
-             \end{itemize}
-	\item Conclusion: possible approaches : Haar and Scale. Modularity and extensibility useful though since we don't know which is best and both are sub-optimal.
-    \end{itemize}
+
+Encrypted Facebook is capable of encrypting images: not only are images one of the most popular forms of shared content, images have also been highlighted as a prime privacy concern on social networks \cite{fb-images}. We describe the lossy stages of Facebook's JPEG compression and evaluate naive attempts at encoding data in images, before describing some more advanced approaches.
+
+
+\subsection{JPEG compression process}
+
+Regardless of the input format, Facebook encodes all uploaded images using lossy JPEG. \footnote{Even if a file is already in the output format, the compression process re-encodes and information is still lost.} Information is lost at several stages:
+
+\begin{enumerate}
+
+    \item Colour images are subject to a lossy colour space transform from RGB to YCrCb.
     
-\section{Encryption schemes}
-    \begin{itemize}
-        \item Threat model/analysis.
-        \item Proxy re-encryption, like FlyByNite. Requires server side encryption so we leave it.
-        \item Broadcast encryption.
-        \begin{itemize}
-            \item Naive implementation.
-            \item More advanced schemes (and why I don't use them). Mainly due to no server side code, can't ask users to perform operations and expect a reply any time soon (or at all). We could reuse headers which would reduce a lot of size. In many ways this is a great idea, have a big linked list of notes containing links to headers, move frequently accessed entries to the front etc. However this means reusing message keys which is bad practice/NIST recommends against. Also, since we can only add and delete (not edit) notes (not through the API anyway, how fucking annoying) we might run into performance issues. 
-            \item Underlying symmetric/asymmetric schemes. Maybe I could have improved the block size but ECC patents mean its not really found in open libraries.
-        \end{itemize}
-	
-        \item Conclusion : simple broadcast encryption using AES and RSA underneath. However, modularity and extensibility would be useful because there are improvements. In particular ECC would give dramatically smaller overheads. 
-    \end{itemize}
+    \item The chrominance components Cr and Cb are subsampled at a rate half that of the lumuninance channel.
+    
+    \item The discrete cosine transform is applied to each 8x8 block using floating point arithmetic.
+    
+    \item DCT coefficients are quantised according to values in a quantisation matrix.
+    
+\end{enumerate}
+
+Chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images.
+
+Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the libjpeg library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
+
+\begin{table}[tbph]
+\begin{center}
+    %\definecolor{lgray}{hsb}{0.1, 0, 0.9}
+    %\rowcolors{3}{white}{lgray}
+    \begin{tabular}{|+c |^c |^c |^c |^c |^c |^c |^c |}
+    \hline
+    \rowstyle{\bfseries} 5 & 3 & 3 & 5 & 7 & 12 & 15 & 18 \\ \hline
+    \rowstyle{\bfseries} 4 & 4 & 4 & 6 & 8 & 17 & 18 & 17 \\ \hline
+    \rowstyle{\bfseries} 4 & 4 & 5 & 7 & 12 & 17 & 21 & 17 \\ \hline
+    \rowstyle{\bfseries} 4 & 5 & 7 & 9 & 15 & 26 & 24 & 19 \\ \hline
+    \rowstyle{\bfseries} 5 & 7 & 11 & 17 & 20 & 33 & 31 & 23 \\ \hline
+    \rowstyle{\bfseries} 7 & 11 & 17 & 19 & 24 & 31 & 34 & 28 \\ \hline
+    \rowstyle{\bfseries} 15 & 19 & 23 & 26 & 31 & 36 & 36 & 30 \\ \hline
+    \rowstyle{\bfseries} 22 & 28 & 29 & 29 & 34 & 30 & 31 & 30 \\ \hline
+\end{tabular}
+\end{center}
+
+\caption{Quantisation matrix used by Facebook for luminance channel.}
+\label{tab:quants}
+
+\end{table}
+
+\subsection{Naive data insertion}
+
+We encode data in an image and compress/decompress at quality factor 85, using libjpeg. We then examine the Hamming distance between the output and the original data and compute the bit error rate.
+
+For each DCT coefficient with corresponding quantisation coefficient $c$ we know that:
+
+\begin{itemize}
+
+    \item $ \lceil \log_2 n \rceil $ low order bits will be lost during quantisation.
+    
+    \item Setting higher order bits is undesirable due to clipping. Large magnitudes are more likely to produce values which fall outside the 0-255 interval when performing the inverse DCT. 
+
+\end{itemize}
+
+Figure XXX graphs the error rates for naive insertion in to RGB values and insertion into DCT coefficients using a bitmask. Figure XXX also shows the per image capacity calculated by modelling the compression process as a binary symmetric channel (details for this are given in Evaluation section XXX).
+
+
+\subsection{Advanced data insertion}
+
+We map binary data on to appropraite length gray codes to ensure that only single bit errors occur from erroneously an adjacent codeword.
+
+\begin{itemize}
+
+    \item JPEG DCT compression selectively quantises high frequency components since these are less perceptually salient. Wavelet transforms allow us to embed data in the low frequency sub-band of the carrier signal and can be performed reversibly (i.e. losslessly) by using an integer lifting scheme. Xu et al demonstrate that \cite{haar} data encoded in the low-frequency approximation coefficients can survive JPEG decompression when combined with an error correction scheme.
+    
+    \item What will from now on be refered to as a n-bit scaling method. We map the n-bit input space on to the 8-bit pixel space by scaling and shifting the input such that 0 corresponds to 0, and $2^n$ corresponds to 256. The inverse process amounts to outputting which interval the data lies in.
+
+\end{itemize}
+
+Clearly both these schemes are sub-optimal and their exact properties (compression time and error rates) are unknown. We make it a requirement that the project should take a modular approach to conduit image implementations to ensure that a) both of the proposed schemes can be implemented simulatnaously and their performances compared and b) to aid future development of a more optimal solution.
+
+
     
 \section{Further security considerations}
 
+\subsection{Threat model}
+
+We describe an attack centric threat model based on the methodoloy of \cite{XXX}
+
+
+
+\subsection{Underlying encryption schemes}
+
+We use AES and RSA as both schemes are approved by NIST standards \cite{nist} and widely available via the Botan cryptography library. Ideally however, we would have liked to use a scheme based on eliptic curve cryptography since public key sizes are much smaller for the same amount of security than finite field or integer factorisation. This is important since the block size of the cipher depends on the public key, and this in turn determines the size of the session key once it has been encrypted. In our case, for example, a 256-bit AES session key requires 2048-bits of transmission overhead per recipient. Unfortunately ECC is less common due to patent concernse \cite{XXX}. Again, we make it a requirement that the project be modular enough to allow later insertion of more optimal scheme.
+
+
+\subsection{Key management}        
+	
+    
 \begin{itemize}
+
+
     \item Key management and size (NIST recommendations).
     \item Message key and IVs, don't reuse. Ensure good source of entrophy.
     \item Private key policy. Find a good reference, but basically we just mimic SSH and the like.

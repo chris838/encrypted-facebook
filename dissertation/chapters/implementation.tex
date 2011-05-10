@@ -2,31 +2,72 @@
 \chapter{Implementation}\label{ch:implementation}
 %*****************************************
 
-\section{Project overview}
+\section{Extension structure}
+
+
+\subsection{Overview}
+
+    Aside from some boilerplate Firefox extension code and the JavaScrypt Stego! library (see section XXX) the main body of the application is made up of five components, shown on Figure \ref{uml:component}:
+
+    \begin{figure}[tbph]
+        \begin{center}
+                \includegraphics{gfx/component.1}
+            \caption{UML component diagram for the extension.}
+            \label{uml:component}
+        \end{center}
+    \end{figure}
     
     \begin{itemize}
-        \item UML diagrams
-        \item Class diagrams
-        \item Orchestration diagrams
-        \item Directory structure
-        \item JavaScript extension structure
+     
+    \item The toolbar XUL defines the toolbar interface using the Mozilla XML User Interface Language (XUL). The component is loaded as part of the browser chrome when Firefox is started and is responsible for loading the JavaScript components.
+    
+    \item {\tt pagecept} contains the HTML parser for extracting prospective decryption targets and inserting UI controls. Actual target processors and control event handlers are defined in {\tt efb}. This layer of abstraction means updates due to changes in the Facebook web site are isolated to this component. Component re-use (e.g. in an extension for another browser) is also fascillitated. 
+
+    \item {\tt efb} defines the handlers for the toolbar and integrated UI controls. It contains handlers for decryption events and contains the plaintext cache data structures. It also contains callback handlers for asynchronous {\tt faceapi} function calls. During the login process {\tt efb} attaches the {\tt pagecept} HTML parser to page loading events and initialises the C++ module, binding the native methods to JavaScript wrapper functions.
+    
+    \item {\tt faceapi} is a layer of abstraction between {\tt efb} and the Facebook platform. {\tt faceapi} contains functions with Graph API read/write queries, as well as the workaround solutions detailed in section XXX.
+
+    \item The C++ module primarily implements codec algorithms and cryptographic functions.
+    
     \end{itemize}
+    
+
+
+\subsection{C++ module structure}
+
+    The C++ module contains a library instance which implements the {\tt IeFBLib} interface. The exposed behaviors of this libary are wrapped appropriately so they may be called from the JavaScript module.
+    
+    The library itself utilises four polymorphic sub-components:
+    
+    \begin{itemize}
+    
+        \item {\tt ICrypto}
+        \item {\tt IFec}
+        \item {\tt IStringCodec}
+        \item {\tt IConduitImage}
+    
+    \end{itemize}
+    
+    This design fascillitates future extension and possible run time composition of different sub-components - though currently the concrete implementations are chosen at design time. \footnote{Since only one set of components currently provides a feasible solution, see evaluation section XXX} The first three components are instantiated upon initialisation of the module. The last ({\tt IConduitImage}) is generated whenever a image is encoded or decoded. Since C++ does not natively define interfaces we use an abstract base classe with all pure virtual methods and a virtual destructor to disable polymorphic destruction \cite{interfaces}. 
+    
+    The library is built around the abstract factory pattern described in \cite{dpatterns}. This allows us to encapsulate groups of complimentary sub-components since some interdepenence exists between sub-components. \footnote{For example, the minimum size of the encryption header can't exceed the maximum capacity of the conduit image.} Figure \ref{uml:lib-classes} outlines the pattern structure with {\tt HaarWTConduitImage} as an example concrete subclass.
+    
+    \begin{figure}[tbph]
+        \begin{center}
+                \includegraphics{gfx/lib.1}
+            \caption{UML class diagrams for the library and its sub-components.}
+            \label{uml:lib-classes}
+        \end{center}
+    \end{figure}
+    
 
 % First all the C/C++ stuff
 
 \section{Encoding decoding data}
 
-    \begin{figure}[tbp]
+    \begin{figure}[tbph]
         \begin{center}
-                \includegraphics{lib.1}
-            \caption{UML class diagrams for the library and its sub-components.}
-            \label{uml:lib-classes}
-        \end{center}
-    \end{figure}
-
-    \begin{figure}[tbp]
-        \begin{center}
-                \includegraphics{fec.1}
+                \includegraphics{gfx/fec.1}
             \caption{UML class diagrams for the forward error correction libary component.}
             \label{uml:fec-classes}
         \end{center}
@@ -34,7 +75,7 @@
 
     \begin{itemize}
         \item Encryption and decryption
-        \item *Keeping key material safe*. Shredding RNG seeds and keys. Using SecureVector. Refer to NIST
+        \item *Keeping key material safe*. Shredding RNG seeds and keys. Using SecureVector. Refer to NIST.
         \item Forward error correction
         \item UTF8 encoding/decoding
         \item Text steganography. Keep this short. Stuff about it in testing anyway.
@@ -44,7 +85,7 @@
 
     \begin{figure}[tbp]
         \begin{center}
-                \includegraphics{img.1}
+                \includegraphics{gfx/img.1}
             \caption{UML class diagrams for the conduit image implementation.}
             \label{uml:img-classes}
         \end{center}
@@ -53,19 +94,11 @@
     \begin{itemize}
         \item Abstractions
         \item Using the Haar wavelet transform
-        \item Using upsampling
-        \item Using bitmasks on DCT coefficients
+        \item Using n-bit scaling
     \end{itemize}
 
 % Then all the JavaScript stuff
 
-\section{Interfacing with Facebook}
-    \begin{itemize}
-        \item Using the Graph API
-        \item Obtaining access tokens
-        \item Generating and submitting forms
-        \item Through iFrames
-    \end{itemize}
 
 \section{Modifying the Facebook UI}
     \begin{itemize}

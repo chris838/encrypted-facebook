@@ -8,27 +8,29 @@ Facebook, at the time of writing, is the world's most popular social network ser
 \section{Background}
 \label{sec:background}
 
-Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}. As social netorks mimic real life interactions members are often willing to reveal more private infromation than they otherwise would, resulting in social networks accumulating a large repository of sensitive information \cite{gross}. There are a number of ways this information can then be exposed: users misconfiguring privacy settings, \footnote{Facebook was recently forced to update its privacy controls due to growing pressure from the public and media \cite{fb-priv}.} malice, error or neglect on the part of the social network and its employees, \footnote{As was the case in 2010 when personally identifiable Facebook user details were sold to data brokers by third party developers \cite{fb-ids}.} acquiescent disclosure to government authorities, and unlawful access through phishing scams and security exploits \cite{snoop} \cite{fb-gov} \cite{fb-phish} \cite{rockyou}.
+Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}. As social netorks mimic real life interactions members are often willing to reveal more private details than they otherwise would, resulting in social networks accumulating a large repository of sensitive information \cite{gross}. There are a number of ways this information can then be exposed: users misconfiguring privacy settings, \footnote{Facebook was recently forced to update its privacy controls due to growing pressure from the public and media \cite{fb-priv}.} malice, error or neglect on the part of the social network and its employees, \footnote{As was the case in 2010 when personally identifiable Facebook user details were sold to data brokers by third party developers \cite{fb-ids}.} acquiescent disclosure to government authorities and unlawful access through phishing scams and security exploits \cite{snoop} \cite{fb-gov} \cite{fb-phish} \cite{rockyou}.
 
-Encrypting content ensures its secrecy in any eventuality, provided the encryption key itself is kept safe. Tools exist to perform encryption manually, some are even partly integrated into the Facebook user interface \cite{firegpg}. However, studies have shown that solutions such as these (which require management of cryptographic keys) are not usable enough to provide effective security for most users, putting them beyond the reach of the masses \cite{johhny}. In addition, interaction over social networks is typically one-to-many, unlike applications like e-mail which these tools are designed for. Other solutions have been proposed but they either fail to fully protect the user's privacy, lack support for common operations or suffer from performance, useability and scaleability issues (see sections \ref{sec:existing} and \ref{sec:approaches}).
+Encrypting content ensures its secrecy in any eventuality, provided the encryption key itself is kept safe. Tools exist to perform encryption manually, some are even partly integrated into the Facebook user interface \cite{firegpg}. However, studies have suggested that security software which requires manual management of cryptographic keys is not usable enough to provide effective security for most users, putting them beyond the reach of the masses \cite{johhny}. In addition, interaction over social networks is typically one-to-many, unlike applications like e-mail which these tools are designed for.
+
+Solutions targetting social networks specifically have been proposed. Some are still overly reliant on manual key management; others fail to fully protect the user's privacy or support the most popular forms of content (see sections \ref{sec:existing} and \ref{sec:approaches}). Thus far all proposals have required the use of a third party in ways which are unlikely to be scaleable (see section xxx). 
   
 Attempts have been made to create new social networks which protect privacy by encrypting content and in some cases even decentralizing hosting of the entire platform \cite{pidder} \cite{diaspora}. Unfortunately, network externalities make it difficult for newcomers to compete with Facebook since the utility of a social network is intrinsically tied to the size of its userbase. \footnote{Some suggest the value of a social network grows linearithmically, quadratically or even exponentially with the number of users \cite{fb-network} \cite{metcalf}.}
 
-The aim of this project is to provide accessible, enhanced privacy capabilities to existing Facebook users. By incorporating a broadcast encryption scheme we ensure that the most popular forms of content can only ever be deciphered by the intended set of trusted recipients. Impact on the usebility of Facebook's services is kept to a minimum, in particular by integrating most of the controls into the Facebook UI itself. By ensuring compatability with normal Facebook activity incremental deployment is possible, avoiding some of the problems of networks effects.
 
-
-\section{Obectives}
+\section{Objectives}
 \label{sec:objectives}
+
+The aim of this project is to provide an enhanced privacy solution for existing Facebook users which is:
 
 \begin{itemize}
 
-    \item Privacy preserving
+    \item \textbf{Privacy preserving} given the scenarios presented in section \ref{sec:background}.
 
-    \item Scaleable
+    \item \textbf{Useable} and therefore accessible to the typical Facebook user.
+
+    \item \textbf{Scaleable} given the vast size of Facebook's userbase. 
     
-    \item Useable
-    
-    \item Incrementally deployable
+    \item \textbf{Incrementally deployable} in order to avoid some of the problems of network effects.
 
 \end{itemize}
 
@@ -36,20 +38,21 @@ The aim of this project is to provide accessible, enhanced privacy capabilities 
 \section{Limitations}
 \label{sec:limit}
 
-Some objectives we consider outside the scope of the project:
+Some objectives we consider non-goals, or outside the scope of the project:
 
 \begin{itemize}
-    \item Protecting against middleperson interception of public keys, discussed in section XXX, or against malware.
 
-    \item Securing the actual structure of the social graph (see section XXX).
+    \item Securing the actual structure of the social graph.
     
     \item Ensuring the integrity, authenticity or non-repudiation of communications. In theory the public key scheme could be extended to do so but this would go beyond mere privacy control.
+
+    \item Protection against middleperson attacks (see section XXX).
     
     \item Guaranteeing availability of content. Completely severing reliance on Facebook would be tantamount to builing a new network.
     
-    \item Concealing the existence of content itself or concealing the fact that it is encrypted. This may be possible but comes at a cost - see appendix XXX for a full discussion. Steganography is employed but not for this reason (see section XXX).
+    \item Concealing the existence of content itself or concealing the fact that it is encrypted. Steganography is employed but not for this reason (see section XXX).
     
-    \item Cross-platform and/or cross-browser support (see section XXX).
+    \item Full cross-platform and/or cross-browser support (see section XXX).
     
     \item Designing and implementing a security policy which comprehensively covers all aspects of the project's functionality (see section XXX).
     
@@ -61,21 +64,21 @@ Some objectives we consider outside the scope of the project:
 
     Many applications for encrypting online data exist, most in the form of browser extensions \cite{firegpg} \cite{cryptfire} \cite{textcrypt}. There are also several applications which target Facebook specifically.
     
-    \begin{description}
+    \begin{desc}
     
-        \item[uProtect.it] Client side JavaScript which inserts UI controls and decodes content. Content stored and encrypted on a third party server. \hfill \\
+        \item[uProtect.it] Client side JavaScript which inserts UI controls and intercepts content. Content is encrypted, stored and decrypted all on a third party server. \hfill \\
         \url{http://uprotect.it/index}
         
-        \item[FaceCloak] Firefox extension which posts fake (but convincing content) to Facebook, using it as an index to the encrypted content on a third party server. Running your own server is possible, though only users on the same server can communicate. \hfill \\
+        \item[FaceCloak] Firefox extension which posts fake content to Facebook, using it as an index to the encrypted content on a third party server. Running your own server is possible, though only users on the same server can communicate. \hfill \\
         \url{http://crysp.uwaterloo.ca/software/facecloak/}
         
         \item[flyByNight] Content is submitted through a Facebook application, encrypted using client side JavaScript and passed via Facebook to a third party application server. Proxy re-encryption is used for sending to multiple reciepients. \hfill \\
         \url{http://hatswitch.org/~nikita/}
         
-        \item[NOYB] Content is stored in plaintext but profiles are anonymised. The mapping from real-to-fake profile is known only to a user's friends. See appendix XXX. \hfill \\
+        \item[NOYB] Content is stored in plaintext but profiles are anonymised. The mapping from real-to-fake profile is known only to a user's friends. \hfill \\
         \url{http://adresearch.mpi-sws.org/noyb.html}
         
-    \end{description}
+    \end{desc}
 
 
 

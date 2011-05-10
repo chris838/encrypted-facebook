@@ -22,10 +22,10 @@
 
 
 %draw entires
-\node[draw,fill=white,minimum width=0.7cm] (a2) [on grid,right=6cm of a1] {a};
-\node[draw,fill=white,minimum width=0.7cm] (b2) [on grid,right=4.4cm of b1] {b};
-\node[draw,fill=white,minimum width=0.7cm] (c2) [on grid,right=3.2cm of c1] {c};
-\node[draw,fill=white,minimum width=0.7cm] (d2) [on grid,right=2cm of d1] {d};
+\node[draw,fill=white,minimum width=0.7cm,minimum height=0.5cm] (a2) [on grid,right=6cm of a1] {a};
+\node[draw,fill=white,minimum width=0.7cm,minimum height=0.5cm] (b2) [on grid,right=4.4cm of b1] {b};
+\node[draw,fill=white,minimum width=0.7cm,minimum height=0.5cm] (c2) [on grid,right=3.2cm of c1] {c};
+\node[draw,fill=white,minimum width=0.7cm,minimum height=0.5cm] (d2) [on grid,right=2cm of d1] {d};
 
 % boxes
 \node[fit= (page3) (a1) (d1) (d2) ] (sandbox1) {};
@@ -41,7 +41,7 @@
 \end{pgfonlayer}
 
 %and client
-\node[draw,fill=white,minimum width=0.7cm] (e1) [on grid,below=4cm of browser3] {e};
+\node[draw,fill=white,minimum width=0.7cm,minimum height=0.5cm] (e1) [on grid,below=4cm of browser3] {e};
 
 \node[fit=(e1)] (client1) {};
 \node[below] at (client1.south) (client2) {Facebook client};
