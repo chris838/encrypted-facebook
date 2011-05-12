@@ -4,7 +4,7 @@ beginfig(1);
     Class.I("IFec")()
     (
         "codeLength(data_length: int): int",
-        "int dataLength(code_length: int): int",
+        "dataLength(code_length: int): int",
         "encode(data: vector<byte> ref)",
         "decode(data: vector<byte> ref)"
     );

@@ -2,14 +2,16 @@
 \chapter{Implementation}\label{ch:implementation}
 %*****************************************
 
+\FloatBarrier
 \section{Extension structure}
 
+We describe the overall structure of the extension and the C++ library. We also describe how the extension is loaded and initialised.
 
 \subsection{Overview}
 
     Aside from some boilerplate Firefox extension code and the JavaScrypt Stego! library (see section XXX) the main body of the application is made up of five components, shown on Figure \ref{uml:component}:
 
-    \begin{figure}[tbph]
+    \begin{figure}[tb]
         \begin{center}
                 \includegraphics{gfx/component.1}
             \caption{UML component diagram for the extension.}
@@ -17,21 +19,20 @@
         \end{center}
     \end{figure}
     
-    \begin{itemize}
+    \begin{sdesc}
      
-    \item The toolbar XUL defines the toolbar interface using the Mozilla XML User Interface Language (XUL). The component is loaded as part of the browser chrome when Firefox is started and is responsible for loading the JavaScript components.
+    \item[Toolbar XUL] \hfill \\ The toolbar XUL defines the toolbar interface using the Mozilla XML User Interface Language (XUL). The component is loaded as part of the browser chrome when Firefox is started and is responsible for loading the JavaScript components.
     
-    \item {\tt pagecept} contains the HTML parser for extracting prospective decryption targets and inserting UI controls. Actual target processors and control event handlers are defined in {\tt efb}. This layer of abstraction means updates due to changes in the Facebook web site are isolated to this component. Component re-use (e.g. in an extension for another browser) is also fascillitated. 
+    \item[Page interception] \hfill \\ {\tt pagecept} contains the HTML parser for extracting prospective decryption targets and inserting UI controls. Actual target processors and control event handlers are defined in {\tt efb}. This layer of abstraction means updates due to changes in the Facebook web site are isolated to this component. Component re-use (e.g. in an extension for another browser) is also fascillitated. 
 
-    \item {\tt efb} defines the handlers for the toolbar and integrated UI controls. It contains handlers for decryption events and contains the plaintext cache data structures. It also contains callback handlers for asynchronous {\tt faceapi} function calls. During the login process {\tt efb} attaches the {\tt pagecept} HTML parser to page loading events and initialises the C++ module, binding the native methods to JavaScript wrapper functions.
+    \item[Main extension component] \hfill \\ {\tt efb} defines the handlers for the toolbar and integrated UI controls. It contains handlers for decryption events and contains the plaintext cache data structures. It also contains callback handlers for asynchronous {\tt faceapi} function calls. During the login process {\tt efb} attaches the {\tt pagecept} HTML parser to page loading events and initialises the C++ module, binding the native methods to JavaScript wrapper functions.
     
-    \item {\tt faceapi} is a layer of abstraction between {\tt efb} and the Facebook platform. {\tt faceapi} contains functions with Graph API read/write queries, as well as the workaround solutions detailed in section XXX.
+    \item[Facebook API layer] \hfill \\ {\tt faceapi} is a layer of abstraction between {\tt efb} and the Facebook platform. {\tt faceapi} contains code for Graph API read/write queries as well as for the workaround solutions detailed in section XXX.
 
-    \item The C++ module primarily implements codec algorithms and cryptographic functions.
+    \item[C++ Module] \hfill \\ Primarily contains codec algorithms and cryptographic functions.
     
-    \end{itemize}
+    \end{sdesc}
     
-
 
 \subsection{C++ module structure}
 
@@ -41,18 +42,18 @@
     
     \begin{itemize}
     
-        \item {\tt ICrypto}
-        \item {\tt IFec}
-        \item {\tt IStringCodec}
-        \item {\tt IConduitImage}
+        \item {\tt ICrypto} contains cryptographic algorithms.
+        \item {\tt IFec} contains error correction algorithms.
+        \item {\tt IStringCodec} contains a UTF-8 encoder/decoder.
+        \item {\tt IConduitImage} contains JPEG-immune image coding algorithms.
     
     \end{itemize}
     
-    This design fascillitates future extension and possible run time composition of different sub-components - though currently the concrete implementations are chosen at design time. \footnote{Since only one set of components currently provides a feasible solution, see evaluation section XXX} The first three components are instantiated upon initialisation of the module. The last ({\tt IConduitImage}) is generated whenever a image is encoded or decoded. Since C++ does not natively define interfaces we use an abstract base classe with all pure virtual methods and a virtual destructor to disable polymorphic destruction \cite{interfaces}. 
+    This design fascillitates future extension and possible run time composition of different sub-components - though currently the concrete implementations are chosen at design time. \footnote{Since only one set of components currently provides a feasible solution, see evaluation section XXX} The first three components are instantiated upon initialisation of the module. The last ({\tt IConduitImage}) is generated whenever an image is encoded or decoded. Since C++ does not natively define interfaces we use an abstract base classe with all pure virtual methods and a virtual destructor to disable polymorphic destruction \cite{interfaces}. 
     
-    The library is built around the abstract factory pattern described in \cite{dpatterns}. This allows us to encapsulate groups of complimentary sub-components since some interdepenence exists between sub-components. \footnote{For example, the minimum size of the encryption header can't exceed the maximum capacity of the conduit image.} Figure \ref{uml:lib-classes} outlines the pattern structure with {\tt HaarWTConduitImage} as an example concrete subclass.
+    The library is built around the abstract factory pattern described in \cite{dpatterns}. This allows us to encapsulate groups of complimentary sub-components since some interdepenence exists between sub-components. \footnote{For example, the minimum size of the encryption header can't exceed the maximum capacity of the conduit image.} Figure \ref{uml:lib-classes} outlines the pattern structure with an example concrete subclass {\tt HaarWTConduitImage}.
     
-    \begin{figure}[tbph]
+    \begin{figure}[tb]
         \begin{center}
                 \includegraphics{gfx/lib.1}
             \caption{UML class diagrams for the library and its sub-components.}
@@ -60,28 +61,131 @@
         \end{center}
     \end{figure}
     
+    
+\subsection{Initialisation}
 
-% First all the C/C++ stuff
+Firefox loads the toolbar XUL as part of the chrome when the browser is started. The XUL then loads the javascript components which define handlers for the toolbar controls. The extension is initialised when either the start button or generate identity button is clicked. {\tt efb} harvests the Facebook ID from a browser cookie (assuming the user is logged in to Facebook) and uses it to define the working directory. The C++ library will then be instantiated and the {\tt pacecept} handler attached to page load events.
 
-\section{Encoding decoding data}
 
-    \begin{figure}[tbph]
+\FloatBarrier
+\section{Modifying the Facebook UI}
+    \begin{itemize}
+        \item Inserting submission controls
+        \item Retrieving content automatically
+    \end{itemize}
+    
+    
+\FloatBarrier
+\section{Text submission}
+
+We consider the process by which a plaintext message, given a list of recipients, is transformed to a steganography encoded tag which points to the ciphered message stored online as a note. This tag can then be used in place of the plaintext.
+
+The string is passed to the C++ library, encrypted then encoded in a UTF-8 based format suitable for Facebook. The result is returned to the JavaScript module, submitted and a tag generated from the resultant object ID using steganography. We describe each step of this process in detail.
+
+\FloatBarrier
+\subsection{Encryption}
+
+
+    \begin{figure}[tb]
+        \begin{center}
+                \includegraphics{gfx/crypto.1}
+            \caption{UML class diagrams for the cryptography component.}
+            \label{uml:crypto}
+        \end{center}
+    \end{figure}
+    
+Currently the only implementation for cryptographic functions is based on the Botan library using RSA and AES. The Botan library is encaspulated in a class with template parameters {\tt (N, M)} which determine the length (in bytes) of the AES session key and RSA public key, respectively.The class is designed so that a class with certain key sizes can be defined simply by specifying these paratameters.
+    
+    \begin{table}[tb]
+        \begin{center}
+                \begin{tabular}{|+l|^l|}
+                    \hline
+                    \rowstyle{\bfseries}%
+                    Description & Size (bytes) \\ \hline
+                    \hline
+                    Length tag & 2\\ \hline
+                    Initialisation vector & 16 \\ \hline
+                    Facebook ID & 8 \\ \hline
+                    Session key & {\it <pub-key size>} \\ \hline
+                    \multicolumn{2}{c}{$\vdots$} \\ \hline
+                    Facebook ID & 8 \\ \hline
+                    Session key & {\it <pub-key size>} \\ \hline                    
+                \end{tabular}
+            \caption{Structure of the encryption header.}
+            \label{tab:crypto}
+        \end{center}
+    \end{table}
+    
+The input string is converted to a byte vector containing enough free space at the begining for the encryption header (the size of the crypto header can be calculated in advance based on the recipient list so that encryption can be performed in place) along with a recipient list of Facebook IDs. The output is the ciphered message with the encryption header prepended.
+
+Table \ref{tab:crypto} describes the format of the crypto header generated as part of the broadcast encryption scheme. Note that the public key size determines the cipher block size and therefore the storage requirements for the encyrpted session key - regardless of the actual session key length itself.
+
+The Botan SecureVector data structure is used to intermediately store all cryptographic keys, preventing key material being swapped to disk. A random IV and session key is generated for every message using Botan, which is supposedly reasonably random \cite{XXX}. After encryption, all seeds, key material and IVs are disposed of securely.
+
+
+\FloatBarrier
+\subsection{String coding}
+
+The input is a byte vector of random bytes from the encryption stage. Each 16-bit (2 bytes) code is mapped on to a valid UTF-8 character - a variable length sequence of 1 to 5 bytes. Odd numbered input is padded and a otherwise unused character sequence prepended to indicate this. The mapping is based on the mapping from Unicode code points to UTF-8 chars, with two distinctions.
+
+\begin{itemize}
+
+    \item Each 16-bit input is shifted by an offset of 0xB0 before being mapped to a character. This avoids problem symbol characters which will be escaped by the Facebook sanitization process (< and > for example).
+    
+    \item Unicode code points XXX-XXX are surrogate pair characters and are illegal if used in isolation. Inputs which map to these characters (after being offset) are bit-shifted left by one place.
+    
+\end{itemize}
+
+
+Note that this means some of the resulting code points are outside the BMP (Basic Multilingual Plane) but are still well defined as UTF-8 characters and supported by Facebook.
+
+After adding a null terminal the final string can be returned to the JavaScript calling function.
+
+
+\FloatBarrier
+\subsection{Submission as a note}
+
+The final string is submitted as a note to Facebook via {\tt faceapi} passing the relevant handlers from {\tt efb}. On completion the Facebook Graph API object ID is parsed from the XmlHttpRequest response and encoded using the steganography functions provided by the JavaScrypt Stego! library. Start and end tags are added and the final text is ready to be used in place of the cleartext, as described in section XXX.
+
+
+
+\FloatBarrier
+\section{Image submission}
+
+We now describe the process by which an image, stored locally, is encryped and encoded in a temporary image file ready to be uploaded. The C++ library is passed the input and output file paths and returns 0 on success.
+
+Initially the image data is loaded from disk as a byte vector (leaving room for the encryption header) and encrypted exactly as described in section XXX. Error correcting codes are then added. Finally, a conduit image object is created, written to, and saved to disk. We describe the last two stages in detail.
+
+\FloatBarrier
+\subsection{Error correction}
+
+Currently the only implementations are based on the Shifra library using Reed Solomon codes. The bulk of the Shifra library is encapsulated in an abstract base class and two template specialisation subclasses implementing codes rates of (15,9) and (255,223) (see Figure \ref{uml:fec}).
+
+
+    \begin{figure}[tb]
         \begin{center}
                 \includegraphics{gfx/fec.1}
             \caption{UML class diagrams for the forward error correction libary component.}
-            \label{uml:fec-classes}
+            \label{uml:fec}
         \end{center}
     \end{figure}
 
-    \begin{itemize}
-        \item Encryption and decryption
-        \item *Keeping key material safe*. Shredding RNG seeds and keys. Using SecureVector. Refer to NIST.
-        \item Forward error correction
-        \item UTF8 encoding/decoding
-        \item Text steganography. Keep this short. Stuff about it in testing anyway.
-    \end{itemize}
+The FEC algorithms have a fixed block size. In order to avoid excess padding bytes or addition length tags, we use a scheme inspired by ciphertext stealing used in crytography \cite{XXX}. The FEC codes are appended to the data bytes so that, provided there are enough blocks, any last partial block will be padded out automatically.
 
-\section{Storing data in images}
+\begin{figure}
+\begin{center}
+
+    \input{gfx/fec.tikz}
+    
+    \caption{Error correction self-padding scheme.}
+    \label{tikz:fec}
+\end{center}
+\end{figure}
+
+\FloatBarrier
+\subsection{Conduit image classes}
+
+Images are encoded by generating an instance of IConduitImage through the abstract factory, writing data to it, then saving out to disk. The CImg class is used as a base class. It supports opening and saving various image formats and manipulating pixels.
 
     \begin{figure}[tbp]
         \begin{center}
@@ -91,21 +195,32 @@
         \end{center}
     \end{figure}
     
-    \begin{itemize}
-        \item Abstractions
-        \item Using the Haar wavelet transform
-        \item Using n-bit scaling
-    \end{itemize}
-
-% Then all the JavaScript stuff
 
 
-\section{Modifying the Facebook UI}
-    \begin{itemize}
-        \item Inserting submission controls
-        \item Retrieving content automatically
-    \end{itemize}
+\FloatBarrier
+\subsection{Read/write buffering}
 
+All current implementations are derived from the abstract class {\tt BufferedConduitImage } which implements read and write buffers. This allows us to group single byte read/write requests together, which is nessescary for certain implementations. The Haar wavelet method, for example, stores 3-bytes at a time in 8x8 pixel blocks.
+
+The variables {\tt rhead} and {\tt whead} determine the current position of the read and write heads, or equivalently the number of bytes written or read since creation. {\tt block\_size} is set upon instantiation through the constructor and is the smallest integer number of bytes that can be read/written at once.
+
+Any subclass of {\tt BufferedConduitImage } must provide a function {\tt getBlockCoords }. This maps the position of the read/write heads to block coordinates within the image.  Subclasses must also implement {\tt encodeInBlock } and {\tt decodeFromBlock } for writing {\tt block\_size} bytes to and from a block given the block coordinates.
+    
+\FloatBarrier
+\subsection{Haar wavelet transform}
+
+The {\tt HaarWTConduitImage} has a block size of 3 bytes (24-bits). 6 bits are written to each of the four 8-bit approximation coeffients after two passes of the 2D Haaw wavelet transform with lifting function. The transform is then reversed to output RGB values.
+
+
+\FloatBarrier
+\subsection{N-bit scaling}
+
+
+
+    
+    
+
+\FloatBarrier
 \section{Testing}
     \begin{itemize}
         \item Unit

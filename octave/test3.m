@@ -1,14 +1,12 @@
-a = 	[-3 0 0 0 0;
-	  2 -3 0 0 0;
-	  1 2 -3 0 0;
-	  0 1 2 -3 0;
-	  0 0 1 2 -3;
-	  0 0 0 1  2;
-	  0 0 0 0  1];
-b = [1 0 0 2 2];
+# Create some random data 
+d = uint8( round(256*rand(8,8)) );
 
-# Multiply the two 
-c = b * a'
+# Perform JPEG compression
+nothing =imread('test.jpg');
+imwrite(d, 'test.jpg', 'Quality', 85);
+d2 = imread('test.jpg');
 
-# Reverse using matrix operations
-c / a'
+# Calculate bit errors
+[e1 e2] = biterr( d, d2 );
+
+e2

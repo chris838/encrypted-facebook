@@ -1,0 +1,18 @@
+\begin{tikzpicture}[
+    every node/.style={draw,font={\footnotesize \bfseries}, minimum width=2cm, text centered, thick, black!80},
+]
+    
+\node (a) at (0,0) {};
+\node (b) [on grid,right=2cm of a] {};
+\node (c) [on grid,right=2cm of b] {};
+\node[minimum width=0.8cm] (d) [on grid,right=1.4cm of c] {};
+
+\node[minimum width=0.45cm,red!80] (ae) [on grid,right=0.65cm of d] {};
+\node[minimum width=0.45cm,red!80] (be) [on grid,right=0.45cm of ae] {};
+\node[minimum width=0.45cm,red!80] (ce) [on grid,right=0.45cm of be] {};
+\node[minimum width=0.45cm,red!80] (de) [on grid,right=0.45cm of ce] {};
+
+\draw [gray,decorate,decoration={brace,amplitude=5pt},xshift=0cm,yshift=2cm]
+   (a.east)  -- (a.west);
+
+\end{tikzpicture}

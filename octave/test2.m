@@ -5,14 +5,19 @@ sam = jpeg_read('sample.jpg');
 
 # Get the quant matrix for the luminance
 q = sam.quant_tables{sam.comp_info(1).quant_tbl_no};
-
+q;
 # Convert to bit mask
 m = uint16( ceil( log2(q) ) );
 m = 2.^(m+1);
 m = bitor( m, 2*m );
+m = bitor( m, 2*m );
+m = bitor( m, 2*m );
+m = bitor( m, 2*m );
+m = bitor( m, 2*m );
+m = bitor( m, 2*m );
 format hex;
-m = bitand(m , ones(8)*0x00ff );
-m(1,1) = 0;
+m = bitand(m , ones(8)*0x007f );
+%m(1,1) = 0;
 m
 
 # Load an 8x8 greyscale template jpeg and set its quant values
@@ -43,13 +48,29 @@ d2 = dequantize( j.coef_arrays{1} , q) + off;
 #d2 =  bitand( d2 , m);
 
 format;
-i.coef_arrays{1}
-max( max(temp) )
-j.coef_arrays{1}
-d-d2
+%i.coef_arrays{1}
+%max( max(temp) )
+%j.coef_arrays{1}
+d;
+d2 =  double(d2);
+d2 = bitand( d2 , m);
+d2;
 
 # Calculate bit errors
-#e = bitxor( uint16(d) , d2 );
-#e
 
-# Caclulate capacity
+w=0;
+for k=1:8
+	for l=1:8	
+		val = m(k,l);
+		for i=1:16
+		   if bitget( val, i ) == 1
+		       w = w + 1;
+		   end
+		end
+	end
+end
+
+[e1 e2] = biterr( d, d2 );
+
+e1 / w
+

@@ -5,13 +5,14 @@
 In this chapter we formulate the objectives presented in section \ref{sec:goals} into a set of design principles, drawing on existing work. We describe possible deployment strategies. We briefly review Firefox extension development, broadcast encryption schemes, the Facebook platform and other security related concerns. We also look at the specific problems assosciated with encrypting images and possible solutions. Finally, we consider an appropriate testing strategy and software development methodology and derive a concrete set of requirements.
 
 
-
+\FloatBarrier
 \section{Design principles}
 
 
 We describe the design principles of Encrypted Facebook; how they enforce the stated aims of privacy preservation, scaleability, usebility and incremental deployment and how they compare with existing approaches. Note that use of the term third party excludes Facebook itself.
 
 
+\FloatBarrier
 \subsection{Encryption of shared content}
 
 It is possible to preserve privacy by encrypting or otherwise concealing the link between a real life user and their online identity, as with NOYB \cite{noyb}. Arguably, however, privacy is only poorly preserved due to problems of inference control \cite{ross}. An example: many users will be easily identifiable simply from the photos they upload. Incremental deployment is also not possible since non-users will only ever see fictitious profiles \cite{facecloak}.
@@ -19,6 +20,7 @@ It is possible to preserve privacy by encrypting or otherwise concealing the lin
 The alternative is to encrypt shared content itself in some way or another, restricting access to only those who possess the appropriate key even in the event of release.
 
 
+\FloatBarrier
 \subsection{Independency from third-party servers}
 
 %In addition to encrypting content, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all, as with FaceCloak. \footnote{Steganography requires large amounts of redundancy to securely hide even a small amount of information \cite{facecloak}.} Better guarantees of availability can also be made in the case of account deletion.
@@ -34,17 +36,19 @@ Third-party servers can also be employed for performing encryption and/or decryp
 Another use of third-party servers is to store and distribute cryptographic keys, perhaps as part of a public key infrastructure. Arguably issues of scale here are not so severe. In any case Encrypted Facebook does not rely on such a service due to either conflicts with other design principles, or in some cases due to a limited percieved benefit given the additional complexity of impementation.
 
 
+\FloatBarrier
 \subsection{Secret key security}
 
 Any encryption scheme will require some form of key whose secrecy is required.
 
-It is possible to use a trusted third-party to store and distribute secret keys, in a so-called key escrow arrangement. This is the basis of uProtect.it \cite{uprotect}. Key management is taken out of the users hands entirely, improving usebility. However, confidentiality is only weakly assured: trust has simply been defered from Facebook to the third-party and many of the scenarious raised in section \ref{sec:background} still apply.
+It is possible to use a trusted third-party to store and distribute secret keys, in a so-called key escrow arrangement. This is the basis of uProtect.it \cite{uprotect}. Key management can even be taken out of the users hands entirely, greatly improving usebility. However, confidentiality is only weakly assured: trust has simply been defered from Facebook to the third-party and many of the scenarious raised in section \ref{sec:background} still apply.
 
 Another possibility is using secret keys derived from a password. flyByNight, for example, allows users to download a password-protected private key from their server. We could also store password protected keys in-band (i.e. on Facebook itself) or to generate a key by hashing the password. Again, relying on the user to memorise a password rather than manage secret keys improves usebility. Unfortunately the entrophy of user chosen passwords is far less than that of randomly generated keys \cite{password}.
 
 Encrypted Facebook is designed to only ever generate and store secret keys on a user's device(s), trading usebility for better privacy protection.
 
 
+\FloatBarrier
 \subsection{Minimal use of OOB channels}
 
 Secure \ac{OOB} channels (such as encrypted email or face-to-face exchange) can be used to transmit update messages, keys or other information as part of an encryption scheme (see section XXX). Since these channels are, by definition, external to the Facebook platform it can be hard to automate such exchanges and much is still required from the user. FaceCloak, for example, requires users to transmit messages over secure email when adding friends. The process is partly automated, however the user must set up an email client themselves and ensure that the email is sent securely (by using PGP, for example).
@@ -63,10 +67,13 @@ Encrypted Facebook is designed to limit the use of \ac{OOB} transmission due to 
 %For the sake of simplicity Encrypted Facebook transmits public keys in-band on Facebook itself, since immunity from middleperson attacks is not considered a design goal. Such attacks are discussed fully in section XXX. \footnote{The option of verifying public keys \ac{OOB} to prevent middleperson attack is left open to the expert user but is not a design feature.}
 
 
+\FloatBarrier
 \section{Broadcast encryption}
 
 Communication over social networks is typically one-to-many whereas cryptography traditionally considers a sender and a single recipient. We look at existing solutions to this problem and outline the broadcast encryption scheme adopted by Encrypted Facebook and a justification for its use.
 
+
+\FloatBarrier
 \subsection{Existing solutions}
 
 Existing proposals tackle this problem in the following ways:
@@ -84,7 +91,8 @@ Existing proposals tackle this problem in the following ways:
 None of these approaches are compatible with Encrypted Facebook's design principles. Instead we use a form of broadcast encryption.
 
 
-\subsection{}
+\FloatBarrier
+\subsection{Proposed scheme}
     
     Given a suitable assymetric encryption scheme $P$ and a suitable symmetric scheme $Q$, we use the broadcast-encryption scheme defined by the triple of algorithms {\sc (Setup, Broadcast, Decrypt)} such that:
     
@@ -113,11 +121,12 @@ None of these approaches are compatible with Encrypted Facebook's design princip
     
     
 
+\FloatBarrier
 \section{Intercepting Facebook interactions}
 
 In order to encrypt content it must be intercepted before being submitted to Facebook. We describe the possible stages at which this may occur (Figure \ref{fig:approaches}):
 
-\begin{figure}[tbph]
+\begin{figure}[tb]
 \begin{center}
     \input{gfx/approaches_diag.tikz}
 \caption{Possible deployment strategys for intercepting interaction with Facebook.}
@@ -143,6 +152,7 @@ In order to encrypt content it must be intercepted before being submitted to Fac
 
 
 
+\FloatBarrier
 \section{Mozilla Firefox extension development}
 
 Encrypted Facebook is developed for Mozilla Firefox, the worlds most popular browser (as of January 2011). Manipulating the \ac{DOM} is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. This allows Encrypted Facebook to integrate functionality into Facebook's own user interface which mitigates usebility issues concerning key management. Porting to other browsers is discussed in section XXX.
@@ -150,7 +160,7 @@ Encrypted Facebook is developed for Mozilla Firefox, the worlds most popular bro
 Firefox extensions are written in JavaScript with partial support for Python and C/C++ \cite{ffox-lang}. Performing cryptography in JavaScript is possible but comes with severe performance difficulties \cite{flybynight}. Table \ref{tab:lang-speeds} compares approximate performance for each language (full details given in appendix xxx).
 
 
-\begin{figure}[tbph]
+\begin{figure}[tb]
 \begin{center}
 \begin{tabular}{+l ^l ^l}
     \rowstyle{\bfseries}%
@@ -182,17 +192,20 @@ Encrypted Facebook is designed to work on the latest version of the Firefox web 
 Gecko 2.0 also provides better support for working with the local filesystem and manipulating images in the \ac{DOM}.
 
 
+\FloatBarrier
 \section{The Facebook platform}
 
 Each Facebook user has a 'news feed' which contains posts of recent updates from their friends in the network. A seperate 'wall feed' also exists for each user containing that user's recent activity. All users also have a profile where they may fill out personal details and submit status updates and upload images. Such actions create notifications in the relevant feeds. These notifications can then be commented on, and these comments themselves will also appear in the feed.
 
+
+\FloatBarrier
 \subsection{Activities and content types}
 
 Table \ref{tab:fb-activities} lists the most popular Facebook activites in order of frequency of submission (where available).  Popular forms of textual submission (comments, messages, status updates and wall posts) are also supported. No attempt is made to encrypt or otherwise conceal structural elements of the social graph, such as 'likes' or 'tags' since this is a non-goal, as stated in section XXX. 
 
 The broadcast encryption scheme described in section XXX adds size overheads to any content that will be encrypted. Without relying on a third-party server all overheads must be stored on Facebook itelf, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, notes can contain over 120 KiB of information since each character represents one 16-bit unicode code point. Images are subject to lossy compression which is discussed in section XXX.
 
-\begin{table}[tbph]
+\begin{table}[tb]
   \begin{center}
         \definecolor{lgray}{hsb}{0.1, 0, 0.9}
         \rowcolors{3}{white}{lgray}
@@ -215,7 +228,6 @@ The broadcast encryption scheme described in section XXX adds size overheads to 
             Link            & 833      &                & \parbox[t][][t]{20ex}{\raggedright }  \\
             Like            & unknown  &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
             Note            & unknown  & 65,536 chars.  & \parbox[t][][t]{20ex}{\raggedright Used for blog-style posts.} \\[3ex]
-            
         \end{tabular}
         \caption{Facebook objects, their limitations and approximate frequency of creation \cite{fb-stats}}
         \label{tab:fb-activities}
@@ -226,6 +238,7 @@ Each user's profile has an "About Me" section with a character limit of XXX. Wit
 
 
     
+\FloatBarrier
 \subsection{Connectedness}
 
 Since Encrypted Facebook's broadcast encryption scheme has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user has has (since content can normally only be shared with friends anyway), which is equivalently the degree of the user's node in the social graph. 
@@ -235,6 +248,7 @@ Empirical estimates for the average number of Facebook friends range from 130 to
 The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to social networks as well as face-to-face interactions. Exact estimates range from around 150 to 300 \cite{xxx} \cite{xxx}, suggesting that the average degree of nodes within a social graph like Facebook's is unlikely to increase dramatically as Facebook expands further.
 
 
+\FloatBarrier
 \subsection{Signal-to-noise ratio}
 
 The signal-to-noise ratio refers to the amount of useful content in relation to junk content. By junk content, we typically mean spam but in our case this could be transmission overheads as part of the broadcast encryption scheme, or even the encrypted content itself since a user without Encrypted Facebook installed will be unable to see the cleartext.
@@ -243,6 +257,7 @@ In order to permit incremental deployment any system must ensure that its users 
 
 
 
+\FloatBarrier
 \subsection{Graph API}
 
 Facebook does provide a JavaScript SDK for interfacing with the Facebook platform, however it is poorly documented and doesn't allow uploading images - since most JavaScript applications are designed to run inside the browser sandbox without local filesystem access. Instead we use the Facebook Graph API directly.
@@ -291,11 +306,13 @@ There are several caveats:
 \end{itemize}
 
     
+\FloatBarrier
 \section{Storing data in images}
 
 Encrypted Facebook is capable of encrypting images: not only are images one of the most popular forms of shared content, images have also been highlighted as a prime privacy concern on social networks \cite{fb-images}. We describe the lossy stages of Facebook's JPEG compression and evaluate naive attempts at encoding data in images, before describing some more advanced approaches.
 
 
+\FloatBarrier
 \subsection{JPEG compression process}
 
 Regardless of the input format, Facebook encodes all uploaded images using lossy JPEG. \footnote{Even if a file is already in the output format, the compression process re-encodes and information is still lost.} Information is lost at several stages:
@@ -316,20 +333,22 @@ Chrominance subsampling means that colour images only provide a 50\% increase in
 
 Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the libjpeg library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
 
-\begin{table}[tbph]
+\begin{table}[tb]
 \begin{center}
     %\definecolor{lgray}{hsb}{0.1, 0, 0.9}
     %\rowcolors{3}{white}{lgray}
     \begin{tabular}{|+c |^c |^c |^c |^c |^c |^c |^c |}
     \hline
-    \rowstyle{\bfseries} 5 & 3 & 3 & 5 & 7 & 12 & 15 & 18 \\ \hline
-    \rowstyle{\bfseries} 4 & 4 & 4 & 6 & 8 & 17 & 18 & 17 \\ \hline
-    \rowstyle{\bfseries} 4 & 4 & 5 & 7 & 12 & 17 & 21 & 17 \\ \hline
-    \rowstyle{\bfseries} 4 & 5 & 7 & 9 & 15 & 26 & 24 & 19 \\ \hline
-    \rowstyle{\bfseries} 5 & 7 & 11 & 17 & 20 & 33 & 31 & 23 \\ \hline
-    \rowstyle{\bfseries} 7 & 11 & 17 & 19 & 24 & 31 & 34 & 28 \\ \hline
-    \rowstyle{\bfseries} 15 & 19 & 23 & 26 & 31 & 36 & 36 & 30 \\ \hline
-    \rowstyle{\bfseries} 22 & 28 & 29 & 29 & 34 & 30 & 31 & 30 \\ \hline
+    \multicolumn{8}{|c|}{\bf Quantisation Matrix} \\ \hline
+    \hline
+    5 & 3 & 3 & 5 & 7 & 12 & 15 & 18 \\ \hline
+    4 & 4 & 4 & 6 & 8 & 17 & 18 & 17 \\ \hline
+    4 & 4 & 5 & 7 & 12 & 17 & 21 & 17 \\ \hline
+    4 & 5 & 7 & 9 & 15 & 26 & 24 & 19 \\ \hline
+    5 & 7 & 11 & 17 & 20 & 33 & 31 & 23 \\ \hline
+    7 & 11 & 17 & 19 & 24 & 31 & 34 & 28 \\ \hline
+    15 & 19 & 23 & 26 & 31 & 36 & 36 & 30 \\ \hline
+    22 & 28 & 29 & 29 & 34 & 30 & 31 & 30 \\ \hline
 \end{tabular}
 \end{center}
 
@@ -338,6 +357,8 @@ Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPE
 
 \end{table}
 
+
+\FloatBarrier
 \subsection{Naive data insertion}
 
 We encode data in an image and compress/decompress at quality factor 85, using libjpeg. We then examine the Hamming distance between the output and the original data and compute the bit error rate.
@@ -355,6 +376,7 @@ For each DCT coefficient with corresponding quantisation coefficient $c$ we know
 Figure XXX graphs the error rates for naive insertion in to RGB values and insertion into DCT coefficients using a bitmask. Figure XXX also shows the per image capacity calculated by modelling the compression process as a binary symmetric channel (details for this are given in Evaluation section XXX).
 
 
+\FloatBarrier
 \subsection{Advanced data insertion}
 
 We map binary data on to appropraite length gray codes to ensure that only single bit errors occur from erroneously an adjacent codeword.
@@ -370,20 +392,25 @@ We map binary data on to appropraite length gray codes to ensure that only singl
 Clearly both these schemes are sub-optimal and their exact properties (compression time and error rates) are unknown. We make it a requirement that the project should take a modular approach to conduit image implementations to ensure that a) both of the proposed schemes can be implemented simulatnaously and their performances compared and b) to aid future development of a more optimal solution.
 
 
-    
+
+\FloatBarrier 
 \section{Further security considerations}
 
+
+\FloatBarrier
 \subsection{Threat model}
 
 We describe an attack centric threat model based on the methodoloy of \cite{XXX}
 
 
 
+\FloatBarrier
 \subsection{Underlying encryption schemes}
 
 We use AES and RSA as both schemes are approved by NIST standards \cite{nist} and widely available via the Botan cryptography library. Ideally however, we would have liked to use a scheme based on eliptic curve cryptography since public key sizes are much smaller for the same amount of security than finite field or integer factorisation. This is important since the block size of the cipher depends on the public key, and this in turn determines the size of the session key once it has been encrypted. In our case, for example, a 256-bit AES session key requires 2048-bits of transmission overhead per recipient. Unfortunately ECC is less common due to patent concernse \cite{XXX}. Again, we make it a requirement that the project be modular enough to allow later insertion of more optimal scheme.
 
 
+\FloatBarrier
 \subsection{Key management}        
 	
     
@@ -397,6 +424,7 @@ We use AES and RSA as both schemes are approved by NIST standards \cite{nist} an
 \end{itemize}
 
 
+\FloatBarrier
 \section{Testing plan}
     \begin{itemize}
 	\item What kinds of testing will I use?
@@ -414,6 +442,8 @@ We use AES and RSA as both schemes are approved by NIST standards \cite{nist} an
         \end{itemize}
     \end{itemize}
 
+
+\FloatBarrier
 \section{Security testing}
 
 Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint\%4080/2006/12.20.12.15/doc/v1.pdf}. Must compromise since full security audit beyond scope of project. Look only at text retrieval process and public key management. We ignore images, and general attacks (e.g. setting up a spoof Facebook site). We also ignore threats that would be present ANYWAY e.g. if you haven't got SSL on. As an extension expand threat model.
@@ -443,7 +473,8 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
             \end{itemize}
         \end{itemize}
     
-    
+   
+\FloatBarrier 
 \section{Proffesional practice stuff}
     \begin{itemize}
 	\item Software development methodology. Iterative prototyping. Work plan spells out which prototypes with what functionality should be completed when.
@@ -452,6 +483,7 @@ Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.b
 	\item Performance bounds. Of what???
     \end{itemize}
     
+\FloatBarrier
 \section{Requirements analysis}
         
 \begin{itemize}
