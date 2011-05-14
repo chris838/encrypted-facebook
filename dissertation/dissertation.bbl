@@ -23,6 +23,46 @@
 
 
 \refsection{0}
+  \entry{interfaces}{article}{}
+    \list{location}{1}{%
+      {USA}%
+    }
+    \list{publisher}{1}{%
+      {CMP Media, Inc.}%
+    }
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{2}
+    \field{issn}{1075-2838}
+    \field{journaltitle}{C/C++ Users J.}
+    \field{number}{9}
+    \field{volume}{19}
+    \field{year}{2001}
+  \endentry
+
+  \entry{burke2010social}{inproceedings}{}
+    \name{labelname}{3}{}{%
+      {{}{Burke}{B\bibinitperiod}{Moira}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Marlow}{M\bibinitperiod}{Cameron}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Lento}{L\bibinitperiod}{Thomas}{T\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{3}{}{%
+      {{}{Burke}{B\bibinitperiod}{Moira}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Marlow}{M\bibinitperiod}{Cameron}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Lento}{L\bibinitperiod}{Thomas}{T\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Atlanta, GA}%
+    }
+    \strng{namehash}{BMMCLT1}
+    \strng{fullhash}{BMMCLT1}
+    \field{sortinit}{B}
+    \field{booktitle}{CHI ’10: Proceedings of the 28th international conference on Human factors in computing systems}
+    \field{title}{Social network activity and social well-being}
+    \field{year}{2010}
+    \keyw{social capital, social well-being}
+  \endentry
+
   \entry{fb-cipc}{online}{}
     \name{labelname}{1}{}{%
       {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
@@ -60,6 +100,52 @@
     \verb{url}
     \verb http://www.bbc.co.uk/news/technology-11665120
     \endverb
+  \endentry
+
+  \entry{dpatterns}{book}{}
+    \name{labelname}{4}{}{%
+      {{}{Gamma}{G\bibinitperiod}{Erich}{E\bibinitperiod}{}{}{}{}}%
+      {{}{Helm}{H\bibinitperiod}{Richard}{R\bibinitperiod}{}{}{}{}}%
+      {{}{Johnson}{J\bibinitperiod}{Ralph\bibnamedelima E.}{R\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
+      {{}{Vlissides}{V\bibinitperiod}{John}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{4}{}{%
+      {{}{Gamma}{G\bibinitperiod}{Erich}{E\bibinitperiod}{}{}{}{}}%
+      {{}{Helm}{H\bibinitperiod}{Richard}{R\bibinitperiod}{}{}{}{}}%
+      {{}{Johnson}{J\bibinitperiod}{Ralph\bibnamedelima E.}{R\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
+      {{}{Vlissides}{V\bibinitperiod}{John}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Reading, MA}%
+    }
+    \list{publisher}{1}{%
+      {Addison-Wesley}%
+    }
+    \strng{namehash}{GE+1}
+    \strng{fullhash}{GEHRJREVJ1}
+    \field{sortinit}{G}
+    \field{isbn}{978-0-201-63361-0}
+    \field{title}{Design Patterns: Elements of Reusable Object-Oriented Software}
+    \field{year}{1995}
+  \endentry
+
+  \entry{fb-connectedness}{inproceedings}{}
+    \name{labelname}{3}{}{%
+      {{}{Golder}{G\bibinitperiod}{Scott}{S\bibinitperiod}{}{}{}{}}%
+      {{}{Wilkinson}{W\bibinitperiod}{Dennis}{D\bibinitperiod}{}{}{}{}}%
+      {{}{Huberman}{H\bibinitperiod}{Bernardo}{B\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{3}{}{%
+      {{}{Golder}{G\bibinitperiod}{Scott}{S\bibinitperiod}{}{}{}{}}%
+      {{}{Wilkinson}{W\bibinitperiod}{Dennis}{D\bibinitperiod}{}{}{}{}}%
+      {{}{Huberman}{H\bibinitperiod}{Bernardo}{B\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{GSWDHB1}
+    \strng{fullhash}{GSWDHB1}
+    \field{sortinit}{G}
+    \field{booktitle}{Proc. 3rd Intl. Conf. on Communities and Technologies}
+    \field{title}{Rhythms of social interaction: Messaging within a massive online network}
+    \field{year}{2007}
   \endentry
 
   \entry{gross}{inproceedings}{}
@@ -252,6 +338,39 @@
     \field{year}{2009}
     \verb{url}
     \verb http://techcrunch.com/2009/12/14/rockyou-hacked/
+    \endverb
+  \endentry
+
+  \entry{haar}{article}{}
+    \name{labelname}{4}{}{%
+      {{}{Xu}{X\bibinitperiod}{Jianyun}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Sung}{S\bibinitperiod}{Andrew\bibnamedelima H.}{A\bibinitperiod\bibinitdelim H\bibinitperiod}{}{}{}{}}%
+      {{}{Shi}{S\bibinitperiod}{Peipei}{P\bibinitperiod}{}{}{}{}}%
+      {{}{Liu}{L\bibinitperiod}{Qingzhong}{Q\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{4}{}{%
+      {{}{Xu}{X\bibinitperiod}{Jianyun}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Sung}{S\bibinitperiod}{Andrew\bibnamedelima H.}{A\bibinitperiod\bibinitdelim H\bibinitperiod}{}{}{}{}}%
+      {{}{Shi}{S\bibinitperiod}{Peipei}{P\bibinitperiod}{}{}{}{}}%
+      {{}{Liu}{L\bibinitperiod}{Qingzhong}{Q\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Los Alamitos, CA, USA}%
+    }
+    \list{publisher}{1}{%
+      {IEEE Computer Society}%
+    }
+    \strng{namehash}{XJ+1}
+    \strng{fullhash}{XJSAHSPLQ1}
+    \field{sortinit}{X}
+    \field{isbn}{0-7695-2108-8}
+    \field{journaltitle}{Information Technology: Coding and Computing, International Conference on}
+    \field{title}{JPEG Compression Immune Steganography Using Wavelet Transform}
+    \field{volume}{2}
+    \field{year}{2004}
+    \field{pages}{704}
+    \verb{doi}
+    \verb http://doi.ieeecomputersociety.org/10.1109/ITCC.2004.1286737
     \endverb
   \endentry
 

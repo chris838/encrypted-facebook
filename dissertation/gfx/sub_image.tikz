@@ -1,0 +1,48 @@
+\begin{tikzpicture}[
+box/.style={
+    draw, font={\footnotesize \bfseries},
+    minimum width=3cm, text width=3cm, minimum height=1cm, text centered, thick, black!100},
+lab/.style={
+    right,
+    font={\scriptsize},
+    text width=5cm},
+lab2/.style={
+    align=right,
+    below left,
+    font={\scriptsize},
+    text width=3cm} 
+]
+
+% nodes
+\node (start) at (0,0) {};
+\node[box] (recieve) [below=0.5cm of start] {Load from disk};
+\node[box] (encrypt) [below=1cm of recieve] {Encrypt};
+\node[box] (encode) [below=1cm of encrypt] {FEC Encode};
+\node[box] (return) [below=1cm of encode] {Image Encode};
+\node[box] (submit) [below=1cm of return] {Save to disk};
+\node (end) [below=0.5cm of submit] {};
+
+% descr
+%\node[lab] at (recieve.east) () {Prepend empty space for header};
+%\node[lab] at (encrypt.east) () {No size increase, header writen to empty space};
+%\node[lab] at (encode.east) () {Unpredectible output size. Between 1-4 $\times$ $\lceil \frac{input}{2} %\rceil$ possibly plus 4-byte padding flag prepended};
+%\node[lab] at (return.east) () {Null terminal appended};
+
+% types
+%\node[lab2, above left] at (recieve.north) () {char* $\times$ \\ char*};
+%\node[lab2] at (recieve.south) () {vector<byte> $\times$ \\ vector<FacebookId>};
+%\node[lab2] at (encrypt.south) () {vector<byte>};
+%\node[lab2] at (encode.south) () {string};
+%\node[lab2] at (return.south) () {char*};
+
+%arrows
+\draw [->,>=stealth, thick] (start.south) -- (recieve.north);
+\draw [->,>=stealth, thick] (recieve.south) -- (encrypt.north);
+\draw [->,>=stealth, thick] (encrypt.south) -- (encode.north);
+\draw [->,>=stealth, thick] (encode.south) -- (return.north);
+\draw [->,>=stealth, thick] (return.south) -- (submit.north);
+\draw [->,>=stealth, thick] (submit.south) -- (end.north);
+
+
+
+\end{tikzpicture}

@@ -296,6 +296,7 @@
     <bcf:citekey>password</bcf:citekey>
     <bcf:citekey>flybynight</bcf:citekey>
     <bcf:citekey>proxy</bcf:citekey>
+    <bcf:citekey>flash-sbox</bcf:citekey>
     <bcf:citekey>ffox-lang</bcf:citekey>
     <bcf:citekey>flybynight</bcf:citekey>
     <bcf:citekey>xpcom</bcf:citekey>
@@ -316,3 +317,7 @@
     <bcf:citekey>dpatterns</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>XXX</bcf:citekey>
+  </bcf:section>
+</bcf:controlfile>

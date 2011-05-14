@@ -2,14 +2,13 @@
 \chapter{Preparation}\label{ch:preparation}
 %*****************************************
 
-In this chapter we formulate the objectives presented in section \ref{sec:goals} into a set of design principles, drawing on existing work. We describe possible deployment strategies. We briefly review Firefox extension development, broadcast encryption schemes, the Facebook platform and other security related concerns. We also look at the specific problems assosciated with encrypting images and possible solutions. Finally, we consider an appropriate testing strategy and software development methodology and derive a concrete set of requirements.
+In this chapter we formulate the objectives presented in section \ref{sec:goals} into a set of design principles, drawing on existing work. We justify the use of broadcast encryption and define a suitable scheme. We describe possible deployment strategies and briefly review Firefox extension development and the Facebook platform. We also look at the specific problems assosciated with encrypting images and possible solutions. Finally, we discuss some additional security related concerns and draft a threat model, outline an appropriate testing strategy and software development methodology and derive a concrete set of requirements.
 
 
 \FloatBarrier
 \section{Design principles}
 
-
-We describe the design principles of Encrypted Facebook; how they enforce the stated aims of privacy preservation, scaleability, usebility and incremental deployment and how they compare with existing approaches. Note that use of the term third party excludes Facebook itself.
+We describe the design principles of Encrypted Facebook; how they enforce the stated aims of privacy preservation, scaleability, usebility and incremental deployment and how they compare with existing approaches. Note that here use of the term third party excludes Facebook itself.
 
 
 \FloatBarrier
@@ -27,13 +26,13 @@ The alternative is to encrypt shared content itself in some way or another, rest
 
 In addition to encrypting content, flyByNight, FaceCloack and uProtect.it all opt to migrate content from the Facebook platform to an external third party database.
 
-Encrypted Facebook is designed to avoid outsourcing content due to scaleability concerns. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext.  Facebook's monthly bandwidth overheads alone are in excess of two million dollars \cite{fb-costs}. They are able to offer a free service by serving highly targetting advertising to members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavaible to any solution hosting a database of encrypted content. A subscription based service would also be unlikely to scale, since the majority of Facebook users would be reluctant to pay \cite{fb-pay}.
+With Encrypted Facebook we avoid outsourcing content due to scaleability concerns. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext.  Facebook's monthly bandwidth overheads alone are in excess of two million dollars \cite{fb-costs}. They are able to offer a free service by serving highly targetting advertising to members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavaible to any solution hosting a database of encrypted content. A subscription based service would also be unlikely to scale, since the majority of Facebook users would be reluctant to pay \cite{fb-pay}.
 
 %Third-party servers can also be employed for computation. uProtect.it performs all encryption and decryption server side negating the need for the user to perform any kind of kind of key management. Proxy re-encryption, used by flyByNight to permit multiple recipients \cite{flybynight}, also relies on access to server side computation, as do some of the more advanced broadcast encryption schemes (see section XXX).
 
-Third-party servers can also be employed for performing encryption and/or decryption, as with uProtect.it and flyByNight. Encrypted Facebook is designed to work without requiring a third-party for such computation, again since the resources required by the server would scale linearly in proportion to the amount of content exchanged.
+Third-party servers can also be employed for performing encryption and/or decryption, as with uProtect.it and flyByNight. We avoid taking this approach, again since the resources required by the server would scale linearly in proportion to the amount of content exchanged.
 
-Another use of third-party servers is to store and distribute cryptographic keys, perhaps as part of a public key infrastructure. Arguably issues of scale here are not so severe. In any case Encrypted Facebook does not rely on such a service due to either conflicts with other design principles, or in some cases due to a limited percieved benefit given the additional complexity of impementation.
+Another use of third-party servers is to store and distribute cryptographic keys, perhaps as part of a public key infrastructure. Arguably issues of scale here are not so severe. In any case we do not rely on such a service due to conflicts with other design principles, or in some cases due to a limited percieved benefit given the additional complexity of impementation.
 
 
 \FloatBarrier
@@ -41,11 +40,11 @@ Another use of third-party servers is to store and distribute cryptographic keys
 
 Any encryption scheme will require some form of key whose secrecy is required.
 
-It is possible to use a trusted third-party to store and distribute secret keys, in a so-called key escrow arrangement. This is the basis of uProtect.it \cite{uprotect}. Key management can even be taken out of the users hands entirely, greatly improving usebility. However, confidentiality is only weakly assured: trust has simply been defered from Facebook to the third-party and many of the scenarious raised in section \ref{sec:background} still apply.
+It is possible to use a trusted third-party to store and distribute secret keys, in a so-called key escrow arrangement. Key management can even be taken out of the users hands entirely, improving usebility. This is the basis of uProtect.it \cite{uprotect}. However, confidentiality is only weakly assured: trust has simply been defered from Facebook to the third-party and many of the scenarious raised in section \ref{sec:background} still apply.
 
-Another possibility is using secret keys derived from a password. flyByNight, for example, allows users to download a password-protected private key from their server. We could also store password protected keys in-band (i.e. on Facebook itself) or to generate a key by hashing the password. Again, relying on the user to memorise a password rather than manage secret keys improves usebility. Unfortunately the entrophy of user chosen passwords is far less than that of randomly generated keys \cite{password}.
+Another possibility is using secret keys derived from a password. flyByNight, for example, allows users to download a password-protected private key from their server. We could also store password protected keys in-band (i.e. on Facebook itself) or generate a key simply by hashing a password. Again, relying on the user to memorise a password rather than manage secret keys improves usebility. Unfortunately the entrophy of user chosen passwords is far less than that of randomly generated keys \cite{password}.
 
-Encrypted Facebook is designed to only ever generate and store secret keys on a user's device(s), trading usebility for better privacy protection.
+With Encrypted Facebook we ensure keys are only ever generated and stored on the user's device(s), trading usebility for better privacy protection.
 
 
 \FloatBarrier
@@ -80,7 +79,7 @@ Existing proposals tackle this problem in the following ways:
 
 \begin{itemize}
 
-    \item If content is both hosted and encrypted/decrypted remotely, as with uProtect.it, one-to-many support is trivial: the user authenticates with the server and is sent the cleartext.
+    \item If content is both hosted and encrypted/decrypted remotely, as with uProtect.it, one-to-many support is trivial. The user simply authenticates with the server and is sent the cleartext.
     
     \item If a third-party can be used for computation we can use a technique called proxy re-encryption as with \cite{flybynight}. Here the server changes the key under which the content may be decrypted on demand, without ever being able to read the cleartext itself \cite{proxy}.
     
@@ -93,8 +92,15 @@ None of these approaches are compatible with Encrypted Facebook's design princip
 
 \FloatBarrier
 \subsection{Proposed scheme}
+
+Appendix XXX gives a full introduction to broadcast encryption schemes. In general they can be characterised by the size of each users private and public key and the amount of transmission overhead that must be sent with each message, given the number of recipients. The scheme presented here has a large transmission overhead, however unlike many more complex schemes it doesn't require the use of key-update messages. Transmiting key-updates \ac{OOB} or though a third party would violate our design principles. Transmitting them in-band would be possible, but since Facebook is a "best effort" service synchronisation and lost updates would likely be a problem. Further discussion of more advanced schemes is included in appendix XXX.
+
+Let $U$ be the set of users with Encrypted Facebook installed and $R \subseteq U$ be a set of intended recipients. Our broadcast encryption scheme is defined as follows:
+
+
+\begin{defn}
     
-    Given a suitable assymetric encryption scheme $P$ and a suitable symmetric scheme $Q$, we use the broadcast-encryption scheme defined by the triple of algorithms {\sc (Setup, Broadcast, Decrypt)} such that:
+    Given a suitable asymmetric encryption scheme $P$ and a suitable symmetric scheme $Q$, we define our broadcast encryption scheme as the triple of algorithms {\sc (Setup, Broadcast, Decrypt)} such that:
     
     \begin{itemize}
     
@@ -119,7 +125,9 @@ None of these approaches are compatible with Encrypted Facebook's design princip
 
     \end{itemize}
     
-    
+
+\end{defn}    
+
 
 \FloatBarrier
 \section{Intercepting Facebook interactions}
@@ -129,18 +137,20 @@ In order to encrypt content it must be intercepted before being submitted to Fac
 \begin{figure}[tb]
 \begin{center}
     \input{gfx/approaches_diag.tikz}
-\caption{Possible deployment strategys for intercepting interaction with Facebook.}
+\caption{Possible deployment strategies for intercepting interaction with Facebook.}
 \label{fig:approaches}
 \end{center}
 \end{figure}
 
-\begin{enumerate}[(a)]
+
+\begin{enumerate}
+\renewcommand{\labelenumi}{\alph{enumi})}
     
-    \item A remotely hosted proxy server. Supports multiple platforms.
+    \item On a remotely hosted proxy server. Easier multi-OS and multi-browser support.
     
-    \item A proxy server running on localhost. Supports multiple browsers.
+    \item On a proxy server running on localhost. Easier multi-browser support.
     
-    \item Within the browser, outside the browser sandbox. Extensions and plugins operate here and have elevated priveledges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications. \footnote{Flash applications, for example, are restricted but can provide basic filesystem access \url{http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html}.} FaceCloak takes this approach.
+    \item Within the browser, outside the browser sandbox. Extensions and plugins exist here and have elevated priveledges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications. \footnote{Flash applications, for example, are restricted but can provide basic filesystem access \cite{flash-sbox}.} FaceCloak takes this approach.
     
     \item Within the browser, entirely inside the browser sandbox - using only JavaScript and HTML. uProtect.it and flyByNight both take this approach.
     
@@ -148,16 +158,16 @@ In order to encrypt content it must be intercepted before being submitted to Fac
     
 \end{enumerate}
    
-(a) conflicts with the design goal of no server-side computation. The browser sandbox prevents local filesystem access, ruling out (d) if private keys are to be kept securely. Encrypted Facebook takes approach (c) since (b) and (e) are considerably more complex, at some cost to cross-platform compatability.
+(a) conflicts with the design goal of no server-side computation. The browser sandbox prevents local filesystem access, ruling out (d) if private keys are to be kept securely. We take approach (c) since (b) and (e) are considerably more complex, at some cost to cross-platform compatability.
 
 
 
 \FloatBarrier
 \section{Mozilla Firefox extension development}
 
-Encrypted Facebook is developed for Mozilla Firefox, the worlds most popular browser (as of January 2011). Manipulating the \ac{DOM} is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. This allows Encrypted Facebook to integrate functionality into Facebook's own user interface which mitigates usebility issues concerning key management. Porting to other browsers is discussed in section XXX.
+Encrypted Facebook is developed as an extension for Mozilla Firefox, the worlds most popular browser (as of January 2011). Manipulating the \ac{DOM} is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. This allows Encrypted Facebook to integrate functionality into Facebook's own user interface which mitigates usebility issues concerning key management. Porting to other browsers is discussed in section XXX.
 
-Firefox extensions are written in JavaScript with partial support for Python and C/C++ \cite{ffox-lang}. Performing cryptography in JavaScript is possible but comes with severe performance difficulties \cite{flybynight}. Table \ref{tab:lang-speeds} compares approximate performance for each language (full details given in appendix xxx).
+Firefox extensions are written in JavaScript with partial support for binding library code written in Python or C/C++ \cite{ffox-lang}. Performing cryptography in JavaScript is possible but comes with severe performance difficulties \cite{flybynight}. Table \ref{tab:lang-speeds} compares approximate performance for each language (full details given in appendix xxx).
 
 
 \begin{figure}[tb]
@@ -183,27 +193,28 @@ Since long delays would hamper usebility Encrypted Facebook uses C/C++ for compu
     
     \item Loading native libraries with {\tt js-ctypes}. Introduced in Gecko 2.0 \cite{js-ctypes}. 
 
-    \item Using {\tt nsiProcess} to invoke an external application. Capturing output can be difficult.
+    \item Using {\tt nsiProcess} to invoke an external stand-alone application. Capturing output can be difficult.
     
 \end{itemize}
 
-Encrypted Facebook is designed to work on the latest version of the Firefox web browser, Firefox 4.0, which runs on Gecko 2.0. Since building an entire XCPOM component would be excessive and give little advantage by way of backwards compatibility, the newly introduced {\tt js-ctypes} module is used to load native code. 
-
-Gecko 2.0 also provides better support for working with the local filesystem and manipulating images in the \ac{DOM}.
+Since building an entire XCPOM component would be excessive and give little advantage by way of multi-version compatibility, the newly introduced {\tt js-ctypes} module is used to load native code. This restricts use of Encrypted Facebook to Firefox version 4.0 and above. Gecko 2.0 does also provides slightly better support for working with the local filesystem and manipulating images in the \ac{DOM}.
 
 
 \FloatBarrier
 \section{The Facebook platform}
 
-Each Facebook user has a 'news feed' which contains posts of recent updates from their friends in the network. A seperate 'wall feed' also exists for each user containing that user's recent activity. All users also have a profile where they may fill out personal details and submit status updates and upload images. Such actions create notifications in the relevant feeds. These notifications can then be commented on, and these comments themselves will also appear in the feed.
+Facebook represents the social graph as objects and connections between them. Objects include users, photos, messages and events. All objects are assigned a single unique Facebook ID, and all objects (except users themselves) are assosciated with the ID of their owner. The owners privacy settings (global and per object) will determine who may access an object. Objects will also have connections to other users and other objects. For example, users can create discussion threads by commenting on objects or tag other users as being present in a photograph.
 
+There are many ways users can interact with Facebook. We will make the generalisation that interaction amounts to creating and retrieving content - i.e. objects in the social graph. Our goal then is to encrypt and decrypt the properties of certain objects - e.g. the body of a message object. We do not attempt to encrypt or otherwise conceal connections between objects, this is an non-goal as stated in section XXX.
+
+We describe the most popular forms of content submitted and discuss issues relating to the connectedness of user nodes and signal-to-noise ratio in the network. We then briefly look at methods of interfacing with the Facebook platform.
 
 \FloatBarrier
-\subsection{Activities and content types}
+\subsection{Content types}
 
-Table \ref{tab:fb-activities} lists the most popular Facebook activites in order of frequency of submission (where available).  Popular forms of textual submission (comments, messages, status updates and wall posts) are also supported. No attempt is made to encrypt or otherwise conceal structural elements of the social graph, such as 'likes' or 'tags' since this is a non-goal, as stated in section XXX. 
+Encrypting all possible types of content would be prohibitively complex. We therefore aim to encrypt only those most frequenclty used. From Table \ref{tab:fb-activities} we can clearly see that these are Comments, Messages, Images and Posts. 
 
-The broadcast encryption scheme described in section XXX adds size overheads to any content that will be encrypted. Without relying on a third-party server all overheads must be stored on Facebook itelf, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, notes can contain over 120 KiB of information since each character represents one 16-bit unicode code point. Images are subject to lossy compression which is discussed in section XXX.
+Our broadcast encryption scheme described in section XXX adds size overheads to any content that will be encrypted. Without relying on a third-party server all overheads must be stored on Facebook itelf, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, notes can contain over 120 KiB of information since each character represents one 16-bit unicode code point. Images are subject to lossy compression which is discussed in section XXX.
 
 \begin{table}[tb]
   \begin{center}
@@ -234,27 +245,27 @@ The broadcast encryption scheme described in section XXX adds size overheads to 
     \end{center}
 \end{table}
 
-Each user's profile has an "About Me" section with a character limit of XXX. With no other obvious attribute that can be easily queried from user ID and is large enough, Encrypted Facebook uses this store the users public key.
-
+Each user's profile has an "About Me" field with a character limit of XXX. With no other obvious capacitous attribute that can be easily queried from user ID, this is an obvious place to store a user's public key.
 
     
 \FloatBarrier
 \subsection{Connectedness}
 
-Since Encrypted Facebook's broadcast encryption scheme has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user has has (since content can normally only be shared with friends anyway), which is equivalently the degree of the user's node in the social graph. 
+Since Encrypted Facebook's broadcast encryption scheme has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user or equivalently by the degree of the user's node in the social graph. 
 
-Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops of sharply at around 250 \cite{fb-factsheet} \cite{fb-connectedness}. Marlow et al suggest that, regardless of the number of friends, communication only occurs with a small core group \cite{burke2010social}.
+Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops of sharply at around 250 \cite{fb-factsheet} \cite{fb-connectedness}. Marlow et al suggest that, regardless of the number of friends, communication is only ever between a small subset \cite{burke2010social}.
 
 The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to social networks as well as face-to-face interactions. Exact estimates range from around 150 to 300 \cite{xxx} \cite{xxx}, suggesting that the average degree of nodes within a social graph like Facebook's is unlikely to increase dramatically as Facebook expands further.
+
+We this in mind we make it a requirement that the extension operates with recipient group sizes of up to 400.
 
 
 \FloatBarrier
 \subsection{Signal-to-noise ratio}
 
-The signal-to-noise ratio refers to the amount of useful content in relation to junk content. By junk content, we typically mean spam but in our case this could be transmission overheads as part of the broadcast encryption scheme, or even the encrypted content itself since a user without Encrypted Facebook installed will be unable to see the cleartext.
+Activity within the social graph causes notifications to be posted to feeds. Each user has a 'news feed' of nearby graph activity which is presented to them on logging in, and also a 'wall feed' of their own activity. Interaction with Facebook revolves around these feeds and it is vital that the signal-to-noise ratio is kept high. This is the proportion of useful content to non-useful content: typically spam, but in our case this could be transmission overheads as part of the broadcast encryption scheme, or even the encrypted content itself since a user without Encrypted Facebook installed will be unable to see the cleartext.
 
-In order to permit incremental deployment any system must ensure that its users can coexist with non-users. Any solution should therefere take measures to limit the impact it has on the signal to noise ratio of non-users.
-
+In order to permit incremental deployment any system must ensure that its users can coexist with non-users. We therefore make it a requirment to limit the extensions impact on the signal-to-noise ratio of feeds.
 
 
 \FloatBarrier
@@ -262,34 +273,29 @@ In order to permit incremental deployment any system must ensure that its users 
 
 Facebook does provide a JavaScript SDK for interfacing with the Facebook platform, however it is poorly documented and doesn't allow uploading images - since most JavaScript applications are designed to run inside the browser sandbox without local filesystem access. Instead we use the Facebook Graph API directly.
 
-Graph API has objects and connections between them. Every object has a unique ID. Make HTTP requests, return JSON objects.
+Objects can be read simply by making GET requests to \url{https://graph.facebook.com/ID} and parsing the return result as a JSON object. For none public objects we will also require an access token. Facebook uses the OAuth 2.0 protocol. An access token can be obtained by handling the page redirect \footnote{To ensure authentication can only occur in client side code the access token is passed in a URI fragment.} after the following GET request:
 
-
-\begin{itemize}
-
-    \item Authentication. Authentication and authorisation is done using client-side OAuth 2.0 protocol.
-    
-    \begin{lstlisting}
+\FloatBarrier
+    \begin{lstlisting}[label=code:auth,caption=Authentication GET request,float=h]
         https://www.facebook.com/dialog/oauth?
-         client_id=YOUR_APP_ID&
-         redirect_uri=YOUR_URL&
-         scope=email,read_stream&
-         response_type=token
+            client_id=APP_ID&
+            redirect_uri=REDIRECT_URL&
+            scope=SCOPE_VAR1,SCOPE_VAR2,SCOPE_VAR3&
+            response_type=token
     \end{lstlisting}
-    
-    \item Reading. https://graph.facebook.com/ID.
-    
-    \item Publishing. \begin{lstlisting}
-    
-        https://graph.facebook.com/arjun/feed?
-        access_token=XXX&
-        message=XXX
-    
-    \end{lstlisting}
-    
-    Returns the ID of the new object.
+\FloatBarrier
 
-\end{itemize}
+    
+Content can also be published in a similair way. An example request might look like:
+
+\FloatBarrier
+    \begin{lstlisting}[label=code:pub,caption=Publishing POST request,float=h]
+        https://graph.facebook.com/ID/feed?
+            access_token=ACCESS_TOKEN&
+            message=MESSAGE
+    \end{lstlisting}
+\FloatBarrier    
+    
 
 There are several caveats:
 
@@ -309,27 +315,27 @@ There are several caveats:
 \FloatBarrier
 \section{Storing data in images}
 
-Encrypted Facebook is capable of encrypting images: not only are images one of the most popular forms of shared content, images have also been highlighted as a prime privacy concern on social networks \cite{fb-images}. We describe the lossy stages of Facebook's JPEG compression and evaluate naive attempts at encoding data in images, before describing some more advanced approaches.
+As well as being one of the most frequently used types of content, images have been highlighted as a prime privacy concern on social networks \cite{fb-images}. None of the existing work supports image encryption, though flyByNight mentions is as a possible extension.
 
+The main problem is that, regardless of the input format, Facebook encodes all uploaded images using lossy JPEG. \footnote{Even if a file is already in the output format the compression process is repeated and information is lost.} This means we require some form of JPEG-immune coding to store the binary output of encryption in an image, such that even after undergoing compression we can exactly recover the original bytes.
+
+We being by describing Facebook's JPEG compression process and evaluating naive attempts at encoding data in images, before proposing two more advanced approaches.
 
 \FloatBarrier
 \subsection{JPEG compression process}
 
-Regardless of the input format, Facebook encodes all uploaded images using lossy JPEG. \footnote{Even if a file is already in the output format, the compression process re-encodes and information is still lost.} Information is lost at several stages:
+Information is lost at several stages:
 
 \begin{enumerate}
 
     \item Colour images are subject to a lossy colour space transform from RGB to YCrCb.
-    
     \item The chrominance components Cr and Cb are subsampled at a rate half that of the lumuninance channel.
-    
     \item The discrete cosine transform is applied to each 8x8 block using floating point arithmetic.
-    
     \item DCT coefficients are quantised according to values in a quantisation matrix.
     
 \end{enumerate}
 
-Chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images.
+Note that chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images. This leaves quantisation as the principle step at which information loss occurs.
 
 Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the libjpeg library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
 
@@ -374,6 +380,47 @@ For each DCT coefficient with corresponding quantisation coefficient $c$ we know
 \end{itemize}
 
 Figure XXX graphs the error rates for naive insertion in to RGB values and insertion into DCT coefficients using a bitmask. Figure XXX also shows the per image capacity calculated by modelling the compression process as a binary symmetric channel (details for this are given in Evaluation section XXX).
+
+
+\begin{figure}[tbph]
+  \begin{center}
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=BER (\%), xmin=80, xmax=90,
+    height=9cm,width=11cm,legend style={legend pos=outer north east}]
+    
+    \addplot
+        table[x=QF,y=rgb] {gfx/error_rate0.data};
+    
+        
+    \legend{RGB,DCT}
+    
+    \end{axis}
+\end{tikzpicture}
+    \caption{Bit error rate for varying quality factors.}
+    \label{graph:ber0}
+  \end{center}
+\end{figure}
+
+\begin{figure}[tbph]
+  \begin{center}
+\begin{tikzpicture}
+    \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Capacity (KiB/image), xmin=80, xmax=90,
+    height=9cm,width=11cm,legend style={legend pos=outer north east}]
+    
+    \addplot
+        table[x=QF,y=Sc3] {gfx/encoding_time.data};
+    
+    \addplot
+        table[x=QF,y=Sc4] {gfx/encoding_time.data};
+        
+    \legend{RGB,DCT}
+    
+    \end{axis}
+\end{tikzpicture}
+    \caption{Per-image channel capacity (measured in KiB/image) for varying quality factors.}
+    \label{graph:capacity0}
+  \end{center}
+\end{figure}
 
 
 \FloatBarrier

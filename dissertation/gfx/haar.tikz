@@ -1,0 +1,59 @@
+\begin{tikzpicture}[]
+
+
+% bg bg
+
+\fill[fill = yellow!10] (-2,-2) rectangle (10,6);
+
+% bg
+\fill[fill = green!20] (-1,0) rectangle (1,2);
+
+\fill[fill = orange!20] (3-0.0001,0) rectangle (5,2);
+\fill[fill = blue!20] (3-0.0001,1.5) rectangle (3.5,2);
+
+
+% grids
+\draw[step=0.25,color=black!50!white] (-1,0) grid (1,2);
+\draw[step=0.25,color=black!50!white] (3-0.0001,0) grid (5,2);
+
+% bits
+\fill[xshift=110, yshift=110, fill = white] (3,0) (0,0) rectangle (4,0.5);
+\draw[xshift=110, yshift=110, step=0.5,color=black!50!white, fill=white] (0,0) grid (4,0.5);
+
+
+
+\draw[xshift=110, yshift=110] node at (0.25,0.25) {x};
+\draw[xshift=110, yshift=110] node at (0.75,0.25) {x};
+\draw[xshift=110, yshift=110] node at (1.25,0.25) {x};
+\draw[xshift=110, yshift=110] node at (1.75,0.25) {x};
+\draw[xshift=110, yshift=110] node at (2.25,0.25) {x};
+\draw[xshift=110, yshift=110] node at (2.75,0.25) {x};
+
+\draw [decorate,decoration={brace,amplitude=5pt}]
+   (-1,2.1) -- (1,2.1);
+\draw [decorate,decoration={brace,amplitude=5pt},xshift=110, yshift=110]
+   (0,0.6) -- (3,0.6);
+\draw [decorate,decoration={brace,amplitude=5pt},xshift=110, yshift=110]
+   (4,-0.1) -- (0,-0.1);
+
+\fill[xshift=110, yshift=110, fill = black!10!white] (3,0) rectangle (4,0.5);
+
+\draw[xshift=110, yshift=110] node at (3.25,0.25) {1};
+\draw[xshift=110, yshift=110] node at (3.75,0.25) {0};
+
+
+% arrows
+
+\draw[font={\footnotesize \bfseries}] node at (1.2,2.5) {(1) 8x8 RGB pixel block};
+
+
+\draw[<->,>=stealth] (0,-0.3) -- (4,-0.3);
+\draw[font={\footnotesize \bfseries}] node at (3.5,-0.75) {(2) Two passes of 2D-HWT variant};
+
+\draw[<->,>=stealth] (3.375,2.1) .. controls (3.375,3.1) and (5.9,2.5) .. (5.9,3.5);
+\draw[xshift=110, yshift=110, font={\footnotesize \bfseries}] node at (3.25,-1.3) {(3) Approximation coefficients};
+
+\draw[xshift=110, yshift=110, font={\footnotesize \bfseries}] node at (1.5,1.1) {(4) Data bits};
+
+
+\end{tikzpicture}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  12 MAY 2011 10:05
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  14 MAY 2011 08:15
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -732,10 +732,6 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
-(/usr/local/texlive/2010/texmf-dist/tex/latex/tools/enumerate.sty
-Package: enumerate 1999/03/05 v3.00 enumerate extensions (DPC)
-\@enLab=\toks40
-)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2000/07/18 v2.13 AMS math features
 \@mathmargin=\skip57
@@ -746,7 +742,7 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks41
+\@emptytoks=\toks40
 \ex@=\dimen193
 ))
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -776,35 +772,35 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
 \dotsspace@=\muskip10
 \c@parentequation=\count142
 \dspbrk@lvl=\count143
-\tag@help=\toks42
+\tag@help=\toks41
 \row@=\count144
 \column@=\count145
 \maxfields@=\count146
-\andhelp@=\toks43
+\andhelp@=\toks42
 \eqnshift@=\dimen196
 \alignsep@=\dimen197
 \tagshift@=\dimen198
 \tagwidth@=\dimen199
 \totwidth@=\dimen200
 \lineht@=\dimen201
-\@envbody=\toks44
+\@envbody=\toks43
 \multlinegap=\skip58
 \multlinetaggap=\skip59
-\mathdisplay@stack=\toks45
+\mathdisplay@stack=\toks44
 LaTeX Info: Redefining \[ on input line 2666.
 LaTeX Info: Redefining \] on input line 2667.
 )
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2004/08/06 v2.20
-\thm@style=\toks46
-\thm@bodyfont=\toks47
-\thm@headfont=\toks48
-\thm@notefont=\toks49
-\thm@headpunct=\toks50
+\thm@style=\toks45
+\thm@bodyfont=\toks46
+\thm@headfont=\toks47
+\thm@notefont=\toks48
+\thm@headpunct=\toks49
 \thm@preskip=\skip60
 \thm@postskip=\skip61
 \thm@headsep=\skip62
-\dth@everypar=\toks51
+\dth@everypar=\toks50
 )
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2009/06/22 v3.00
@@ -818,7 +814,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))
 (/usr/local/texlive/2010/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2010/01/10 v2.4 Micro-typography with pdfTeX (RS)
-\MT@toks=\toks52
+\MT@toks=\toks51
 \MT@count=\count147
 LaTeX Info: Redefining \lsstyle on input line 1597.
 LaTeX Info: Redefining \lslig on input line 1597.
@@ -868,7 +864,7 @@ Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
 \csq@qlevel=\count157
 \csq@maxlvl=\count158
 \csq@tshold=\count159
-\csq@ltx@everypar=\toks53
+\csq@ltx@everypar=\toks52
  (/usr/local/texlive/2010/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2011/03/25 v5.1c csquotes generic definitions
 )
@@ -880,8 +876,8 @@ File: csquotes.cfg
 ))
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
-\inpenc@prehook=\toks54
-\inpenc@posthook=\toks55
+\inpenc@prehook=\toks53
+\inpenc@posthook=\toks54
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
@@ -1275,7 +1271,7 @@ Package: titlesec 2007/08/12 v2.8 Sectioning titles
 \aftertitleunit=\skip74
 \ttl@plus=\dimen216
 \ttl@minus=\dimen217
-\ttl@toksa=\toks56
+\ttl@toksa=\toks55
 \titlewidth=\dimen218
 \titlewidthlast=\dimen219
 \titlewidthfirst=\dimen220
@@ -1349,7 +1345,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutheight=\dimen226
 \Gm@layouthoffset=\dimen227
 \Gm@layoutvoffset=\dimen228
-\Gm@dimlist=\toks57
+\Gm@dimlist=\toks56
 )
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2011/04/17 v6.82g Hypertext links for LaTeX
@@ -1772,11 +1768,13 @@ LaTeX Font Info:    Redeclaring math accent \mathring on input line 256.
 )
 (./customstyles.sty
 \c@thm=\count317
-)
 \c@scheme=\count318
 
+(/usr/local/texlive/2010/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+))
 
-Package csquotes Warning: Load 'inputenc' before 'csquotes' on input line 115.
+Package csquotes Warning: Load 'inputenc' before 'csquotes' on input line 116.
 
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
@@ -1793,58 +1791,61 @@ LaTeX Font Info:    Try loading font information for LGR+cmr on input line 22.
 (/usr/local/texlive/2010/texmf-dist/tex/generic/babel/lgrcmr.fd
 File: lgrcmr.fd 2008/06/17 v2.3 Greek Computer Modern
 )
-(./chapters/preparation.aux) (./chapters/implementation.aux))
+(./chapters/preparation.aux) (./chapters/implementation.aux
+
+LaTeX Warning: Label `tikz:text' multiply defined.
+
+))
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 115.
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 115.
-LaTeX Font Info:    Try loading font information for FML+futm on input line 115
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 116.
+LaTeX Font Info:    Try loading font information for FML+futm on input line 116
 .
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmlfutm.fd
+ (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 115.
-LaTeX Font Info:    Try loading font information for FMS+futm on input line 115
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 116.
+LaTeX Font Info:    Try loading font information for FMS+futm on input line 116
 .
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmsfutm.fd
 File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
 )
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 115.
-LaTeX Font Info:    Try loading font information for FMX+futm on input line 115
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 116.
+LaTeX Font Info:    Try loading font information for FMX+futm on input line 116
 .
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmxfutm.fd
 File: fmxfutm.fd futm-extension
 )
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 115.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 115.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 116.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 116.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 115.
-LaTeX Font Info:    Try loading font information for T1+futs on input line 115.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 116.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/t1futs.fd
@@ -1857,12 +1858,12 @@ File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
 \scratchbox=\box62
 \nofMPsegments=\count320
 \nofMParguments=\count321
-\everyMPshowfont=\toks58
+\everyMPshowfont=\toks57
 \MPscratchCnt=\count322
 Normal \dimen register pool exhausted, switching to extended pool.
 \MPscratchDim=\dimen256
 \MPnumerator=\count323
-\everyMPtoPDFconversion=\toks59
+\everyMPtoPDFconversion=\toks58
 ) (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1884,7 +1885,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count324
-LaTeX Info: Redefining \microtypecontext on input line 115.
+LaTeX Info: Redefining \microtypecontext on input line 116.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1909,8 +1910,8 @@ Package biblatex Warning: Biber reported the following issues
 both are defined in entry with key 'gross' - skipping field 'address'.
 
 )
-Package biblatex Info: Reference section=0 on input line 115.
-Package biblatex Info: Reference segment=0 on input line 115.
+Package biblatex Info: Reference section=0 on input line 116.
+Package biblatex Info: Reference segment=0 on input line 116.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1947,7 +1948,7 @@ Package biblatex Info: Reference segment=0 on input line 115.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box63
-Package hyperref Info: Link coloring OFF on input line 115.
+Package hyperref Info: Link coloring OFF on input line 116.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -1956,21 +1957,21 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count325
 )
-LaTeX Info: Redefining \ref on input line 115.
-LaTeX Info: Redefining \pageref on input line 115.
-LaTeX Info: Redefining \nameref on input line 115.
+LaTeX Info: Redefining \ref on input line 116.
+LaTeX Info: Redefining \pageref on input line 116.
+LaTeX Info: Redefining \nameref on input line 116.
 
 (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write6
 \openout6 = `dissertation.out'.
 
-LaTeX Font Info:    Try loading font information for LGR+futs on input line 115
+LaTeX Font Info:    Try loading font information for LGR+futs on input line 116
 .
-LaTeX Font Info:    No file LGRfuts.fd. on input line 115.
+LaTeX Font Info:    No file LGRfuts.fd. on input line 116.
 
 
 LaTeX Font Warning: Font shape `LGR/futs/m/n' undefined
-(Font)              using `LGR/cmr/m/n' instead on input line 115.
+(Font)              using `LGR/cmr/m/n' instead on input line 116.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2009/11/09 v2.0 microtype config. file: Computer Modern Roman 
@@ -2110,60 +2111,63 @@ Chapter 2.
 LaTeX Warning: Reference `sec:goals' on page 5 undefined on input line 5.
 
 
-LaTeX Warning: Citation 'noyb' on page 5 undefined on input line 18.
+LaTeX Warning: Citation 'noyb' on page 5 undefined on input line 17.
 
 
-LaTeX Warning: Citation 'ross' on page 5 undefined on input line 18.
+LaTeX Warning: Citation 'ross' on page 5 undefined on input line 17.
 
 
-LaTeX Warning: Citation 'facecloak' on page 5 undefined on input line 18.
+LaTeX Warning: Citation 'facecloak' on page 5 undefined on input line 17.
 
 [5
 
 
 ]
 
-LaTeX Warning: Citation 'fb-costs' on page 6 undefined on input line 30.
+LaTeX Warning: Citation 'fb-costs' on page 6 undefined on input line 29.
 
 
-LaTeX Warning: Citation 'fb-ads' on page 6 undefined on input line 30.
+LaTeX Warning: Citation 'fb-ads' on page 6 undefined on input line 29.
 
 
-LaTeX Warning: Citation 'fb-pay' on page 6 undefined on input line 30.
+LaTeX Warning: Citation 'fb-pay' on page 6 undefined on input line 29.
 
 
-LaTeX Warning: Citation 'uprotect' on page 6 undefined on input line 44.
+LaTeX Warning: Citation 'uprotect' on page 6 undefined on input line 43.
 
 
-LaTeX Warning: Citation 'password' on page 6 undefined on input line 46.
+LaTeX Warning: Citation 'password' on page 6 undefined on input line 45.
 
 [6]
 Package acronym Info: Label `acro:OOB' newly defined as it shall be overridden
-although it is yet undefined on input line 54.
+although it is yet undefined on input line 53.
 
 
-Package acronym Warning: Acronym `OOB' is not defined on input line 54.
+Package acronym Warning: Acronym `OOB' is not defined on input line 53.
 
 
-Package acronym Warning: Acronym `OOB' is not defined on input line 54.
+Package acronym Warning: Acronym `OOB' is not defined on input line 53.
 
 
-Package acronym Warning: Acronym `OOB' is not defined on input line 56.
+Package acronym Warning: Acronym `OOB' is not defined on input line 55.
 
 
-LaTeX Warning: Citation 'flybynight' on page 7 undefined on input line 85.
+LaTeX Warning: Citation 'flybynight' on page 7 undefined on input line 84.
 
 
-LaTeX Warning: Citation 'proxy' on page 7 undefined on input line 85.
+LaTeX Warning: Citation 'proxy' on page 7 undefined on input line 84.
 
 [7]
 
-Package acronym Warning: Acronym `OOB' is not defined on input line 87.
+Package acronym Warning: Acronym `OOB' is not defined on input line 86.
 
 
-Package acronym Warning: Acronym `OOB' is not defined on input line 87.
+Package acronym Warning: Acronym `OOB' is not defined on input line 86.
 
-(./gfx/approaches_diag.tikz
+
+Package acronym Warning: Acronym `OOB' is not defined on input line 96.
+
+[8] (./gfx/approaches_diag.tikz
 \pgf@layerbox@device=\box64
 \pgf@layerboxsaved@device=\box65
 \pgf@layerbox@browser=\box66
@@ -2209,155 +2213,201 @@ Underfull \hbox (badness 10000) in paragraph at lines 68--68
  [][][][] 
  []
 
-) [8]
-Underfull \hbox (badness 10000) in paragraph at lines 143--143
-[][]\T1/futs/m/n/10 (+20) Flash ap-pli-ca-tions, for ex-am-ple, are re-stricted
- but can pro-vide
- []
+)
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 143--143
-\T1/futs/m/n/10 (+20) ba-sic filesys-tem ac-cess []$\T1/txtt/m/n/10 http : / / 
-blog . chromium . org / 2010 / 12 /
- []
+LaTeX Warning: Citation 'flash-sbox' on page 9 undefined on input line 153.
 
 [9]
 Package acronym Info: Label `acro:DOM' newly defined as it shall be overridden
-although it is yet undefined on input line 158.
+although it is yet undefined on input line 168.
 
 
-Package acronym Warning: Acronym `DOM' is not defined on input line 158.
+Package acronym Warning: Acronym `DOM' is not defined on input line 168.
 
 
-Package acronym Warning: Acronym `DOM' is not defined on input line 158.
+Package acronym Warning: Acronym `DOM' is not defined on input line 168.
 
 
-LaTeX Warning: Citation 'ffox-lang' on page 10 undefined on input line 160.
+LaTeX Warning: Citation 'ffox-lang' on page 10 undefined on input line 170.
 
 
-LaTeX Warning: Citation 'flybynight' on page 10 undefined on input line 160.
-
-
-LaTeX Warning: Citation 'xpcom' on page 10 undefined on input line 182.
+LaTeX Warning: Citation 'flybynight' on page 10 undefined on input line 170.
 
 [10]
 
-LaTeX Warning: Citation 'js-ctypes' on page 11 undefined on input line 184.
+LaTeX Warning: Citation 'xpcom' on page 11 undefined on input line 192.
 
 
-Package acronym Warning: Acronym `DOM' is not defined on input line 192.
+LaTeX Warning: Citation 'js-ctypes' on page 11 undefined on input line 194.
+
+
+Package acronym Warning: Acronym `DOM' is not defined on input line 200.
 
 [11]
-Overfull \hbox (7.62462pt too wide) in paragraph at lines 212--232
+Overfull \hbox (7.62462pt too wide) in paragraph at lines 223--243
  [] 
  []
 
 [12]
 
-LaTeX Warning: Citation 'fb-connectedness' on page 13 undefined on input line 2
-46.
+LaTeX Warning: Citation 'xxx' on page 13 undefined on input line 258.
 
 
-LaTeX Warning: Citation 'burke2010social' on page 13 undefined on input line 24
-6.
-
-
-LaTeX Warning: Citation 'xxx' on page 13 undefined on input line 248.
-
-
-LaTeX Warning: Citation 'xxx' on page 13 undefined on input line 248.
+LaTeX Warning: Citation 'xxx' on page 13 undefined on input line 258.
 
 [13]
-
-LaTeX Warning: Citation 'fb-images' on page 14 undefined on input line 312.
-
-[14] [15]
-
-LaTeX Warning: Citation 'haar' on page 16 undefined on input line 386.
-
-[16]
-
-LaTeX Warning: Citation 'XXX' on page 17 undefined on input line 403.
+Overfull \hbox (6.0pt too wide) in paragraph at lines 279--279
+ [][][][][][][] 
+ []
 
 
-LaTeX Warning: Citation 'nist' on page 17 undefined on input line 410.
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[14]
+Overfull \hbox (6.0pt too wide) in paragraph at lines 292--292
+ [][][][][][][] 
+ []
 
 
-LaTeX Warning: Citation 'XXX' on page 17 undefined on input line 410.
+LaTeX Warning: Citation 'fb-images' on page 15 undefined on input line 318.
 
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+[15] [16]
+PGFPlots: reading {gfx/error_rate0.data}
+
+Overfull \hbox (9.08286pt too wide) in paragraph at lines 398--399
+ [] 
+ []
+
+PGFPlots: reading {gfx/encoding_time.data}
+! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
+n name 'a'. Only the first occurence can be accessed via column names.
+PGFPlots: reading {gfx/encoding_time.data}
+! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
+n name 'a'. Only the first occurence can be accessed via column names.
+
+Overfull \hbox (10.67885pt too wide) in paragraph at lines 419--420
+ [] 
+ []
+
+[17] [18] [19]
+
+LaTeX Warning: Citation 'XXX' on page 20 undefined on input line 450.
+
+
+LaTeX Warning: Citation 'nist' on page 20 undefined on input line 457.
+
+
+LaTeX Warning: Citation 'XXX' on page 20 undefined on input line 457.
+
+[20
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 496--497
 \T1/txtt/m/n/12 col / sid . inpe . br / ePrint % 4080 / 2006 / 12 . 20 . 12 . 1
 5 / doc / v1 . pdf$[]\T1/futs/m/n/12 (+20) .
  []
 
-[18] [19] [20]) [21] [22
-
-
-
-]
+[21] [22] [23]) [24]
 \openout2 = `chapters/implementation.aux'.
 
  (./chapters/implementation.tex
 Chapter 3.
 File: gfx/component.1 Graphic file (type mps)
-[MP to PDF] (./gfx/component.1) [23
+[MP to PDF] (./gfx/component.1) [25
 
 
-] [24]
-
-LaTeX Warning: Citation 'interfaces' on page 25 undefined on input line 52.
 
 
-LaTeX Warning: Citation 'dpatterns' on page 25 undefined on input line 54.
 
+] [26]
 File: gfx/lib.1 Graphic file (type mps)
-[MP to PDF] (./gfx/lib.1)
+ [MP to PDF] (./gfx/lib.1)
 Overfull \hbox (16.40625pt too wide) in paragraph at lines 58--59
  [] 
  []
 
-[25] [26]
+[27] [28] [29] (./gfx/sub_text.tikz)
 File: gfx/crypto.1 Graphic file (type mps)
- [MP to PDF] (./gfx/crypto.1) [27]
+ [MP to PDF] (./gfx/crypto.1) [30] [31]
 
-LaTeX Warning: Citation 'XXX' on page 28 undefined on input line 123.
+LaTeX Warning: Citation 'XXX' on page 32 undefined on input line 148.
 
-[28]
+[32] (./gfx/sub_image.tikz) [33]
 File: gfx/fec.1 Graphic file (type mps)
  [MP to PDF] (./gfx/fec.1)
 
-LaTeX Warning: Citation 'XXX' on page 29 undefined on input line 173.
+LaTeX Warning: Citation 'XXX' on page 34 undefined on input line 207.
 
-(./gfx/fec.tikz) [29]
 File: gfx/img.1 Graphic file (type mps)
- [MP to PDF] (./gfx/img.1)
-Overfull \hbox (39.4925pt too wide) in paragraph at lines 192--193
+[MP to PDF] (./gfx/img.1)
+Overfull \hbox (39.4925pt too wide) in paragraph at lines 217--218
  [] 
  []
 
-[30] [31]
-Underfull \hbox (badness 3965) in paragraph at lines 203--204
+[34] [35]
+Underfull \hbox (badness 3965) in paragraph at lines 227--228
 \T1/futs/m/n/12 (+20) All cur-rent im-ple-men-ta-tions are de-rived from the ab
 -stract class
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.205 ...s of the read and write heads {\tt block_
-                                                  size} is set upon instanti...
 
-? x
- 
+LaTeX Warning: Citation 'XXX' on page 36 undefined on input line 255.
+
+(./gfx/haar.tikz)
+
+LaTeX Warning: Citation 'XXX' on page 36 undefined on input line 267.
+
+[36] [37] [38]) [39]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 161.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 161.
+ (./dissertation.aux (./chapters/introduction.aux)
+(./chapters/preparation.aux) (./chapters/implementation.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 161.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 161.
+Package rerunfilecheck Info: File `dissertation.out' has not changed.
+(rerunfilecheck)             Checksum: 81E7D9DBC4AB109BF4D027881C104294;3589.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                dissertation
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'dissertation.run.xml'.
+\openout1 = `dissertation.run.xml'.
+
+ ) 
 Here is how much of TeX's memory you used:
- 36271 strings out of 493763
- 703188 string characters out of 3144975
- 1007604 words of memory out of 3000000
- 38413 multiletter control sequences out of 15000+200000
- 109962 words of font info for 309 fonts, out of 3000000 for 9000
+ 36824 strings out of 493763
+ 717536 string characters out of 3144975
+ 1032057 words of memory out of 3000000
+ 38907 multiletter control sequences out of 15000+200000
+ 116376 words of font info for 318 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 74i,12n,79p,1153b,1354s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 74i,19n,95p,1153b,1816s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{cite.0@dpatterns} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@interfaces} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@haar} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@burke2010social} has been referenced but doe
+s not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{cite.0@fb-connectedness} has been referenced but do
+es not exist, replaced by a fixed one
+
 pdfTeX warning (dest): name{cite.0@fb-stats} has been referenced but does not e
 xist, replaced by a fixed one
 
@@ -2400,10 +2450,10 @@ b></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr
 /local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb></usr/local
 /texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texli
 ve/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on dissertation.pdf (31 pages, 195135 bytes).
+Output written on dissertation.pdf (39 pages, 225235 bytes).
 PDF statistics:
- 472 PDF objects out of 1000 (max. 8388607)
- 421 compressed objects within 5 object streams
- 122 named destinations out of 1000 (max. 500000)
- 44913 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 554 PDF objects out of 1000 (max. 8388607)
+ 498 compressed objects within 5 object streams
+ 149 named destinations out of 1000 (max. 500000)
+ 45485 words of extra memory for PDF output out of 51595 (max. 10000000)
 

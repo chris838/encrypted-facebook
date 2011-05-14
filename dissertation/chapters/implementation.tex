@@ -68,23 +68,48 @@ Firefox loads the toolbar XUL as part of the chrome when the browser is started.
 
 
 \FloatBarrier
-\section{Modifying the Facebook UI}
-    \begin{itemize}
-        \item Inserting submission controls
-        \item Retrieving content automatically
-    \end{itemize}
-    
+\section{Integrating with the Facebook UI}
+
+The {\tt pagecept} module checks if web pages are from the Facebook domain. If they are, it parses the HTML and attempts to insert additional UI controls and also retrieve and process any ciphered content automatically. 
+
+
+\subsection{Inserting submission controls}
+
+There are four types of submission control, each of which may appear in multiple places within a single page. These are for general posts (status updates and wall posts) comments, private messages and image uploads. Each control is assosciated with an input field. Finding control-field pairs involves several complex regex queries which we will not discuss in detail.
+
+Once a pair has been identified we generate an alternative encrypted submission control and place it beside the normal one. A handler is generated assosciated with the input field. For images this process is slightly different - a check box is added and the handler to the normal control modified.
+
+The submission handler causes a friend selector window to appear, loaded with any friends whose public keys are stored on disk. Elements within the control are populated with the user's names and profile pictures by performing queries through {\tt faceapi}. Optionally, Encrypted Facebook will check if local public keys are up to date with online keys. The user is given the option of updating an out of date key, and is informed of the tradeoff between vulnerability to middleperson attacks and potential non-availability.
+
+On submission, the selected list of friends and the input from the input fields are gathered and processed by {\tt efb}. The submission process is detailed in section XXX.
+
+
+\subsection{Retrieving content}
+
+Regexes are used to locate and filter possible decryption targets. For text these will be enclosed by special start and end sequences. Images can be identified by their filename as Graph API objects. In either case we can not be certain and so filtering is a "best effort" approach. Malicious user could easily create fake text tags, and most Graph API images won't be encrypted. The decryption process is designed to fail gracefully as early as possible if this turns out to be the case. Currently, since all images are 720x720 pixels this predicate is used as a filter. The case for uploading variable sized images and its effect on filtering are discussed in section XXX.
+
+Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a XmlHttpRequest triggered though {\tt efb}. A handler is attached to the requst so that on completion, the cache can be updated appropriately. If an entry exists then several actions may be appropriate. If a valid plaintext exists in the cache this is used. The entry may also be marked as in progress in which case a loading message is substituted. If a previous attempt failed then the target can be ignored.
+
+
     
 \FloatBarrier
 \section{Text submission}
 
 We consider the process by which a plaintext message, given a list of recipients, is transformed to a steganography encoded tag which points to the ciphered message stored online as a note. This tag can then be used in place of the plaintext.
 
+    \begin{figure}[tb]
+        \begin{center}
+                \input{gfx/sub_text.tikz}
+            \caption{Encoding process for submitting text.}
+            \label{tikz:text}
+        \end{center}
+    \end{figure}
+
+
+
 The string is passed to the C++ library, encrypted then encoded in a UTF-8 based format suitable for Facebook. The result is returned to the JavaScript module, submitted and a tag generated from the resultant object ID using steganography. We describe each step of this process in detail.
 
-\FloatBarrier
 \subsection{Encryption}
-
 
     \begin{figure}[tb]
         \begin{center}
@@ -156,6 +181,15 @@ We now describe the process by which an image, stored locally, is encryped and e
 
 Initially the image data is loaded from disk as a byte vector (leaving room for the encryption header) and encrypted exactly as described in section XXX. Error correcting codes are then added. Finally, a conduit image object is created, written to, and saved to disk. We describe the last two stages in detail.
 
+    \begin{figure}[tb]
+        \begin{center}
+                \input{gfx/sub_image.tikz}
+            \caption{Encoding process for submitting an image.}
+            \label{tikz:text}
+        \end{center}
+    \end{figure}
+
+
 \FloatBarrier
 \subsection{Error correction}
 
@@ -172,20 +206,11 @@ Currently the only implementations are based on the Shifra library using Reed So
 
 The FEC algorithms have a fixed block size. In order to avoid excess padding bytes or addition length tags, we use a scheme inspired by ciphertext stealing used in crytography \cite{XXX}. The FEC codes are appended to the data bytes so that, provided there are enough blocks, any last partial block will be padded out automatically.
 
-\begin{figure}
-\begin{center}
-
-    \input{gfx/fec.tikz}
-    
-    \caption{Error correction self-padding scheme.}
-    \label{tikz:fec}
-\end{center}
-\end{figure}
 
 \FloatBarrier
-\subsection{Conduit image classes}
+\subsection{Conduit image class hierarchy}
 
-Images are encoded by generating an instance of IConduitImage through the abstract factory, writing data to it, then saving out to disk. The CImg class is used as a base class. It supports opening and saving various image formats and manipulating pixels.
+Images are encoded by generating an instance of IConduitImage through the abstract factory, writing data to it, then saving out to disk. The CImg class (from the CImg library) is used as a base class since it supports opening and saving various image formats, manipulating pixels and colour space transforms.
 
     \begin{figure}[tbp]
         \begin{center}
@@ -196,7 +221,6 @@ Images are encoded by generating an instance of IConduitImage through the abstra
     \end{figure}
     
 
-
 \FloatBarrier
 \subsection{Read/write buffering}
 
@@ -205,20 +229,62 @@ All current implementations are derived from the abstract class {\tt BufferedCon
 The variables {\tt rhead} and {\tt whead} determine the current position of the read and write heads, or equivalently the number of bytes written or read since creation. {\tt block\_size} is set upon instantiation through the constructor and is the smallest integer number of bytes that can be read/written at once.
 
 Any subclass of {\tt BufferedConduitImage } must provide a function {\tt getBlockCoords }. This maps the position of the read/write heads to block coordinates within the image.  Subclasses must also implement {\tt encodeInBlock } and {\tt decodeFromBlock } for writing {\tt block\_size} bytes to and from a block given the block coordinates.
+
+This class also contains gray code translation functions, since they are used by all descendant classes and their definitions are too small to justify a class of their own.
+
+\begin{table}[tbph]
+    \begin{center}
+            
+            \begin{tabular}{+l ^l ^l ^l}
+                \rowstyle{\bfseries}%
+                Class & \parbox[t][][t]{12ex}{\raggedright Dimensions (pixels)} & \parbox[t][][t]{12ex}{\raggedright Block size (bytes)} & \parbox[t][][t]{12ex}{\raggedright Grey codes (bits)} \\
+                \midrule
+                Haar WT & 8 $\times$ 8 & 3 & 6 \\
+                3-bit Scaling & 3 $\times$ 2 & 3 & 3\\
+                4-bit Scaling & 2 $\times$ 1 & 1 & 4
+            \end{tabular}
+            
+        \caption{Comparison of blocks for each concrete subclass}
+        \label{tab:blocks}
+    \end{center}
+\end{table}
     
 \FloatBarrier
 \subsection{Haar wavelet transform}
 
-The {\tt HaarWTConduitImage} has a block size of 3 bytes (24-bits). 6 bits are written to each of the four 8-bit approximation coeffients after two passes of the 2D Haaw wavelet transform with lifting function. The transform is then reversed to output RGB values.
+The {\tt HaarWTConduitImage} uses blocks of 8x8 pixels, with a block size of 3-bytes. Two passes of the 2D Haar wavelet transform are performed on a single block. 6 bits are written to the high order bits of each of the four 8-bit approximation coeffients. The low order bits are masked of based on experimental results, and as suggested in \cite{XXX}. The inverse transform is then performed to output greyscale pixel values.
+
+\begin{figure}
+\begin{center}
+
+    \input{gfx/haar.tikz}
+    
+    \caption{Outline of the encoding process}
+    \label{tikz:haar}
+\end{center}
+\end{figure}
+
+The CImg class does contain Haar transforms but these are not suitable. We require an integer lifting scheme (described in \cite{XXX}) to ensure that the transform is reversible (without information loss). In the 1-dimensional case, for a pair of approximation and difference coefficients $(c_a,c_d)$, we calculate the output value pair $(x,y)$: 
+
+\begin{eqnarray}
+    x = & c_a + \lfloor \frac{c_d+1}{2} \rfloor \nonumber \\ 
+    y = & x - c_d
+\end{eqnarray}
+
+Iteration of the above over pairs in both vertical and horizontal axis can be used to perform the full 2D HWT and its inversion losslessly.
+
+Changing the approximation coefficients can also lead to capping of values as they are mapped back to greyscale space, outside the 0-255 range. We therefore selectively discard high frequency information (during the inverse transform) from the difference coefficient $c_d$ whenever capping occurs - leaving the approximation coefficients intact and the output within range. See appendix XXX for full details of the exact HWT variant used.
 
 
 \FloatBarrier
 \subsection{N-bit scaling}
 
+The base class {\tt ScaledConduitImage} contains functions to code n-bits of data to and from a single pixel. The value of n is set on instancaition.
 
+Two subclasses are specified for $n=3$ and $n=4$. For $n=3$ we use 3x2 blocks of pixels with a block size of 3-bytes. For $n=4$ we use blocks of 2 pixels with a block size of 1-byte.
 
-    
-    
+The scaling process works so that the intervals for each data point are of equal width, except for the intervals at either end which are $\frac{1}{2}$ length. This is because extreme values (0 or 255) can only be either decreased or increased due to compression artifacts, not both. An input pixel value of 255 might result in 254 or 253 after compression, but never 0 or 1.
+
 
 \FloatBarrier
 \section{Testing}
