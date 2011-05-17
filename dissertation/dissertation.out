@@ -6,47 +6,81 @@
 \BOOKMARK [0][-]{chapter.2}{Preparation}{}% 6
 \BOOKMARK [1][-]{section.2.1}{Design principles}{chapter.2}% 7
 \BOOKMARK [2][-]{subsection.2.1.1}{Encryption of shared content}{section.2.1}% 8
-\BOOKMARK [2][-]{subsection.2.1.2}{Independency from third-party servers}{section.2.1}% 9
+\BOOKMARK [2][-]{subsection.2.1.2}{Independence from third-party servers}{section.2.1}% 9
 \BOOKMARK [2][-]{subsection.2.1.3}{Secret key security}{section.2.1}% 10
 \BOOKMARK [2][-]{subsection.2.1.4}{Minimal use of OOB channels}{section.2.1}% 11
 \BOOKMARK [1][-]{section.2.2}{Broadcast encryption}{chapter.2}% 12
 \BOOKMARK [2][-]{subsection.2.2.1}{Existing solutions}{section.2.2}% 13
 \BOOKMARK [2][-]{subsection.2.2.2}{Proposed scheme}{section.2.2}% 14
 \BOOKMARK [1][-]{section.2.3}{Intercepting Facebook interactions}{chapter.2}% 15
-\BOOKMARK [1][-]{section.2.4}{Mozilla Firefox extension development}{chapter.2}% 16
-\BOOKMARK [1][-]{section.2.5}{The Facebook platform}{chapter.2}% 17
-\BOOKMARK [2][-]{subsection.2.5.1}{Content types}{section.2.5}% 18
-\BOOKMARK [2][-]{subsection.2.5.2}{Connectedness}{section.2.5}% 19
-\BOOKMARK [2][-]{subsection.2.5.3}{Signal-to-noise ratio}{section.2.5}% 20
-\BOOKMARK [2][-]{subsection.2.5.4}{Graph API}{section.2.5}% 21
-\BOOKMARK [1][-]{section.2.6}{Storing data in images}{chapter.2}% 22
-\BOOKMARK [2][-]{subsection.2.6.1}{JPEG compression process}{section.2.6}% 23
-\BOOKMARK [2][-]{subsection.2.6.2}{Naive data insertion}{section.2.6}% 24
-\BOOKMARK [2][-]{subsection.2.6.3}{Advanced data insertion}{section.2.6}% 25
-\BOOKMARK [1][-]{section.2.7}{Further security considerations}{chapter.2}% 26
-\BOOKMARK [2][-]{subsection.2.7.1}{Threat model}{section.2.7}% 27
-\BOOKMARK [2][-]{subsection.2.7.2}{Underlying encryption schemes}{section.2.7}% 28
-\BOOKMARK [2][-]{subsection.2.7.3}{Key management}{section.2.7}% 29
-\BOOKMARK [1][-]{section.2.8}{Testing plan}{chapter.2}% 30
-\BOOKMARK [1][-]{section.2.9}{Security testing}{chapter.2}% 31
-\BOOKMARK [1][-]{section.2.10}{Proffesional practice stuff}{chapter.2}% 32
-\BOOKMARK [1][-]{section.2.11}{Requirements analysis}{chapter.2}% 33
-\BOOKMARK [0][-]{chapter.3}{Implementation}{}% 34
-\BOOKMARK [1][-]{section.3.1}{Extension structure}{chapter.3}% 35
-\BOOKMARK [2][-]{subsection.3.1.1}{Overview}{section.3.1}% 36
-\BOOKMARK [2][-]{subsection.3.1.2}{C++ module structure}{section.3.1}% 37
-\BOOKMARK [2][-]{subsection.3.1.3}{Initialisation}{section.3.1}% 38
-\BOOKMARK [1][-]{section.3.2}{Integrating with the Facebook UI}{chapter.3}% 39
-\BOOKMARK [2][-]{subsection.3.2.1}{Inserting submission controls}{section.3.2}% 40
-\BOOKMARK [2][-]{subsection.3.2.2}{Retrieving content}{section.3.2}% 41
-\BOOKMARK [1][-]{section.3.3}{Text submission}{chapter.3}% 42
-\BOOKMARK [2][-]{subsection.3.3.1}{Encryption}{section.3.3}% 43
-\BOOKMARK [2][-]{subsection.3.3.2}{String coding}{section.3.3}% 44
-\BOOKMARK [2][-]{subsection.3.3.3}{Submission as a note}{section.3.3}% 45
-\BOOKMARK [1][-]{section.3.4}{Image submission}{chapter.3}% 46
-\BOOKMARK [2][-]{subsection.3.4.1}{Error correction}{section.3.4}% 47
-\BOOKMARK [2][-]{subsection.3.4.2}{Conduit image class hierarchy}{section.3.4}% 48
-\BOOKMARK [2][-]{subsection.3.4.3}{Read/write buffering}{section.3.4}% 49
-\BOOKMARK [2][-]{subsection.3.4.4}{Haar wavelet transform}{section.3.4}% 50
-\BOOKMARK [2][-]{subsection.3.4.5}{N-bit scaling}{section.3.4}% 51
-\BOOKMARK [1][-]{section.3.5}{Testing}{chapter.3}% 52
+\BOOKMARK [2][-]{subsection.2.3.1}{Possible deployment strategies}{section.2.3}% 16
+\BOOKMARK [1][-]{section.2.4}{Mozilla Firefox extension development}{chapter.2}% 17
+\BOOKMARK [1][-]{section.2.5}{The Facebook platform}{chapter.2}% 18
+\BOOKMARK [2][-]{subsection.2.5.1}{Content types}{section.2.5}% 19
+\BOOKMARK [2][-]{subsection.2.5.2}{Connectedness}{section.2.5}% 20
+\BOOKMARK [2][-]{subsection.2.5.3}{Signal-to-noise ratio}{section.2.5}% 21
+\BOOKMARK [2][-]{subsection.2.5.4}{Graph API}{section.2.5}% 22
+\BOOKMARK [1][-]{section.2.6}{Storing data in images}{chapter.2}% 23
+\BOOKMARK [2][-]{subsection.2.6.1}{JPEG compression process}{section.2.6}% 24
+\BOOKMARK [2][-]{subsection.2.6.2}{Naive data insertion}{section.2.6}% 25
+\BOOKMARK [2][-]{subsection.2.6.3}{Advanced data insertion}{section.2.6}% 26
+\BOOKMARK [1][-]{section.2.7}{Further security considerations}{chapter.2}% 27
+\BOOKMARK [2][-]{subsection.2.7.1}{Threat analysis}{section.2.7}% 28
+\BOOKMARK [2][-]{subsection.2.7.2}{Underlying encryption schemes}{section.2.7}% 29
+\BOOKMARK [2][-]{subsection.2.7.3}{Cryptographic keys}{section.2.7}% 30
+\BOOKMARK [1][-]{section.2.8}{Requirements specification}{chapter.2}% 31
+\BOOKMARK [1][-]{section.2.9}{Development}{chapter.2}% 32
+\BOOKMARK [2][-]{subsection.2.9.1}{Development environment}{section.2.9}% 33
+\BOOKMARK [1][-]{section.2.10}{Testing plan}{chapter.2}% 34
+\BOOKMARK [2][-]{subsection.2.10.1}{Security testing}{section.2.10}% 35
+\BOOKMARK [2][-]{subsection.2.10.2}{Usability testing}{section.2.10}% 36
+\BOOKMARK [2][-]{subsection.2.10.3}{Testing framework}{section.2.10}% 37
+\BOOKMARK [0][-]{chapter.3}{Implementation}{}% 38
+\BOOKMARK [1][-]{section.3.1}{Extension structure}{chapter.3}% 39
+\BOOKMARK [2][-]{subsection.3.1.1}{Overview}{section.3.1}% 40
+\BOOKMARK [2][-]{subsection.3.1.2}{C++ module structure}{section.3.1}% 41
+\BOOKMARK [2][-]{subsection.3.1.3}{Initialisation}{section.3.1}% 42
+\BOOKMARK [1][-]{section.3.2}{Integrating with the Facebook UI}{chapter.3}% 43
+\BOOKMARK [2][-]{subsection.3.2.1}{Inserting submission controls}{section.3.2}% 44
+\BOOKMARK [2][-]{subsection.3.2.2}{Identifying decryption targets}{section.3.2}% 45
+\BOOKMARK [2][-]{subsection.3.2.3}{Processing decryption targets}{section.3.2}% 46
+\BOOKMARK [1][-]{section.3.3}{Key management}{chapter.3}% 47
+\BOOKMARK [1][-]{section.3.4}{Text submission}{chapter.3}% 48
+\BOOKMARK [2][-]{subsection.3.4.1}{Encryption}{section.3.4}% 49
+\BOOKMARK [2][-]{subsection.3.4.2}{String coding}{section.3.4}% 50
+\BOOKMARK [2][-]{subsection.3.4.3}{Submission as a note}{section.3.4}% 51
+\BOOKMARK [1][-]{section.3.5}{Image encoding}{chapter.3}% 52
+\BOOKMARK [2][-]{subsection.3.5.1}{Forward error correction}{section.3.5}% 53
+\BOOKMARK [2][-]{subsection.3.5.2}{Conduit image class hierarchy}{section.3.5}% 54
+\BOOKMARK [2][-]{subsection.3.5.3}{Read/write buffering}{section.3.5}% 55
+\BOOKMARK [2][-]{subsection.3.5.4}{Haar wavelet transform}{section.3.5}% 56
+\BOOKMARK [2][-]{subsection.3.5.5}{N-bit scaling}{section.3.5}% 57
+\BOOKMARK [1][-]{section.3.6}{Testing}{chapter.3}% 58
+\BOOKMARK [0][-]{chapter.4}{Evaluation}{}% 59
+\BOOKMARK [1][-]{section.4.1}{Conduit image performance}{chapter.4}% 60
+\BOOKMARK [2][-]{subsection.4.1.1}{Method}{section.4.1}% 61
+\BOOKMARK [2][-]{subsection.4.1.2}{Theoretical capacity}{section.4.1}% 62
+\BOOKMARK [2][-]{subsection.4.1.3}{Reed Solomon error correction}{section.4.1}% 63
+\BOOKMARK [2][-]{subsection.4.1.4}{Conclusion}{section.4.1}% 64
+\BOOKMARK [1][-]{section.4.2}{Submission and retrieval times}{chapter.4}% 65
+\BOOKMARK [2][-]{subsection.4.2.1}{Method}{section.4.2}% 66
+\BOOKMARK [2][-]{subsection.4.2.2}{Results}{section.4.2}% 67
+\BOOKMARK [1][-]{section.4.3}{Effect of cache on loading times}{chapter.4}% 68
+\BOOKMARK [2][-]{subsection.4.3.1}{Method}{section.4.3}% 69
+\BOOKMARK [2][-]{subsection.4.3.2}{Results}{section.4.3}% 70
+\BOOKMARK [1][-]{section.4.4}{Usability inspection}{chapter.4}% 71
+\BOOKMARK [2][-]{subsection.4.4.1}{Creating a cryptographic identity}{section.4.4}% 72
+\BOOKMARK [2][-]{subsection.4.4.2}{Logging in to a cryptographic identity}{section.4.4}% 73
+\BOOKMARK [2][-]{subsection.4.4.3}{Adding public keys}{section.4.4}% 74
+\BOOKMARK [2][-]{subsection.4.4.4}{Using the recipient selector control}{section.4.4}% 75
+\BOOKMARK [2][-]{subsection.4.4.5}{Uploading an encrypted image}{section.4.4}% 76
+\BOOKMARK [2][-]{subsection.4.4.6}{Posting a comment}{section.4.4}% 77
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 78
+\BOOKMARK [1][-]{section.5.1}{Evaluation of Requirements}{chapter.5}% 79
+\BOOKMARK [1][-]{section.5.2}{Retrospective}{chapter.5}% 80
+\BOOKMARK [1][-]{section.5.3}{Potential deployment}{chapter.5}% 81
+\BOOKMARK [1][-]{section.5.4}{Future work}{chapter.5}% 82
+\BOOKMARK [0][-]{section.5.4}{Bibliography}{}% 83
+\BOOKMARK [-1][-]{part*.52}{Appendix}{}% 84
+\BOOKMARK [0][-]{appendix.A}{Codec Timing}{part*.52}% 85
+\BOOKMARK [0][-]{appendix.B}{Project Proposal}{part*.52}% 86

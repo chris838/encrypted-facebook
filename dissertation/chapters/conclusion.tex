@@ -3,6 +3,8 @@
 %*****************************************
 
 \section{Evaluation of Requirements}
+\label{sec:eval-require}
+
 
 It works, and works for groups of 400 - covered by cognitive walkthrough. Also group size of 400 made possible by image method.
 
@@ -13,6 +15,7 @@ Incremental deployment - refer to implementation, we nailed this trivially. On a
 Extensible library components - refer to implementation, abstract factory groups families of components. Also refer to image method evaluation - clearly had to swtich between them to run those tests.
 
 \section{Retrospective}
+\label{sec:retro}
 
 What I would have done differently?
 
@@ -24,21 +27,31 @@ Tighter integration between FEC and conduit image - combine the two. Was never a
 
 Added multithreading just because there is probably plenty of opportunity for parallelism.
 
-Add backwards compatibility of difference versions as a requirement; store the encoding method in each image when encoding; allow choosing the decoding method on the spot at decode time rather than at initialisation. Since user base is very important (network effects etc.) and so splitting the user base in any way is very bad.
+
+
+\section{Potential deployment}
+\label{sec:deploy}
+
+Cross browser and cross platform.
+
+Make cross version compatible since that major hurdle at the moment.
+
+Image problem - start working for larger image sizes and variable sizes. Add backwards compatibility of difference versions as a requirement; store the encoding method in each image when encoding; allow choosing the decoding method on the spot at decode time rather than at initialisation. Since user base is very important (network effects etc.) and so splitting the user base in any way is very bad.
+
+
 
 \section{Future work}
+\label{sec:future}
+
+The idea about seperating headers from content is cool. Would be nice to experiment regarding the performance hit, but essentially we could have sliding parameter which indicated security vs storage overhead tradeoff.
 
 Would be great if we could use ECC encryption because overhead would be cut by a big factor, though patent issues etc. mean bad.
 
 Would be great to find an optimal solution to the image problem. Practically it doesnt make much difference but from a theoretical perspective its interesting - could easily turn into a thesis.
 
 
-\section{Potential deployment}
 
-Obviously would need to expand threat model and deal with security holes. Also need to relax certain constraints i.e. more character support for languages other than English.
 
-Main problem is Linux-only at the moment. Wouldn't take too much trouble to compile on Windows though. (as if).
 
-The idea about seperating headers from content is cool. Would be nice to experiment regarding the performance hit, but essentially we could have sliding parameter which indicated security vs storage overhead tradeoff.
 
 

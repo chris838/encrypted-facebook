@@ -208,6 +208,16 @@ The entire process was then repeated for a newsfeed containing 15 image objects,
 
 The start time of each test was logged, along with the 15 subsequent load times of the encyrpted objects. 
 
+    \begin{figure}[tbph]
+        \begin{center}
+                \includegraphics[width=10cm]{screens/parrots1.png}
+                \includegraphics[width=10cm]{screens/parrots2.png}
+            \caption{Newsfeed excerpt containing encrypted image thumbnails, before (top) and after (bottom) parsing.}
+            \label{scn:parrots}
+        \end{center}
+    \end{figure}
+
+
 
 \subsection{Results}
 
@@ -270,8 +280,8 @@ From figure \ref{graph:time-first} we again see a modest improvement in loading 
     xtick=data,ylabel=Time (seconds), width=7cm, height=10cm,
     legend style={legend pos=north west, area legend},
     bar width=1cm,enlarge x limits=0.5,ymin=0]
-        \addplot coordinates { (Messages,5.4457) (Images,6.7105) };
-        \addplot coordinates { (Messages,3.4306) (Images,3.9765) };
+        \addplot[fill=blue, fill opacity=0.5] coordinates { (Messages,5.4457) (Images,6.7105) };
+        \addplot[fill=red, fill opacity=0.5] coordinates { (Messages,3.4306) (Images,3.9765) };
         \legend{Cache off, Cache on}
 \end{axis}
 \end{tikzpicture}
@@ -328,9 +338,9 @@ bar width=0.3cm, ymin=0, xmin=2, xmax=15, enlarge x limits=0.04]
 \end{center}
 \end{figure}
 
-\section{Useability inspection}
+\section{Usability inspection}
 
-A full user study was considered too time consuming to perform; instead we use a cognitive walkthrough (as described by Wharton et al \cite{cogwalk}) to evaluate the success of the user interface. During development many passes of the walkthrough were perfomed and alterations made, until a credible success story could be constructed for each task. This section consists of a selection of some of the final success stories and a defense of their validity.
+A full user study was considered too time consuming to perform; instead we use a cognitive walkthrough (as described by Wharton et al \cite{cogwalk}) to evaluate the success of the user interface. This section consists of a selection of some of the final success stories and a defense of their validity.
 
 We only consider one class of user - a typical Facebook user who is therefore familiar with the Facebook user interface. It is therefore assumed that actions such as "navigate to a given friend's profile" can be performed without additional aid. It is also assumed that the user will follow their usual actions when trying to perform an encrypted operation - when trying to upload an encrypted image they will, for example, simply follow the normal procedure for uploading an image rather than searching for some hidden option. Finally, we make the assumption that the extension has been installed and enabled and that the toolbar has not been hidden.
 
@@ -338,7 +348,7 @@ We only consider one class of user - a typical Facebook user who is therefore fa
 \subsection{Creating a cryptographic identity}
 A user who is not logged in but who knows the extension is installed, wishes to make use of some of the extensions functionality and his actions result in the creation of a (prerequisite) cryptographic identity.
 
-\begin{description}
+\begin{desc}
 
     \item[Action Sequence] \hfill
     
@@ -358,21 +368,21 @@ A user who is not logged in but who knows the extension is installed, wishes to 
             
             \item User will know how to cancel process as it is clearly marked.
             
-            \item Quiting/crashing the browser or cancelling will result in a return to the initial state.
+            \item Quiting/crashing the browser or canceling will result in a return to the initial state.
             
             \item User will either enter a valid password or be prompted by the restrictions on entering an invalid one, in which case he will then know how to enter a valid password and do so.
             
             \item User will know if he incorrectly re-enters password via an alert.
             
-            \item User knows things are OK because an alert informs him the process was succesful.
+            \item User knows things are OK because an alert informs him the process was successful.
             
         \end{itemize}
-\end{description}
+\end{desc}
 
 \subsection{Logging in to a cryptographic identity}
 A user who is not logged in but has created an identity, wishes to make use of some of the extensions functionality and logs in.
 
-\begin{description}
+\begin{desc}
 
     \item[Action Sequence] \hfill
     
@@ -385,19 +395,29 @@ A user who is not logged in but has created an identity, wishes to make use of s
     \item[Defense of Credibility] \hfill
         \begin{itemize}
             
-            \item User knows to click {\tt [Start Encrypted Facebook]} . We know the user wants to use the extension in some way and is aware that the plugin is installed - it is reasonable to assume that he will look at the toolbar. All other buttons are greyed out apart from {\tt [Create Identity]} which he has used before. If he does mistakenly click {\tt [Create Identity]} he will be informed that he already has an identity and that attempting to overwrite it will result in irrevocable data loss.
+            \item User knows to click {\tt [Start Encrypted Facebook]} . We know the user wants to use the extension in some way and is aware that the plugin is installed - it is reasonable to assume that he will look at the toolbar. All other buttons are greyed out apart from {\tt [Create Identity]} which he has used before. If he does mistakenly click {\tt [Create Identity]} he will be informed that he already has an identity and that attempting to overwrite it will result in irrevocable data loss. See figure \ref{scn:create}.
             
             \item If the user isn't logged in to Facebook he knows he must first do so since he will be informed of this on clicking {\tt [Start Encrypted Facebook]}. User will know how to log in to Facebook.
             
             \item User will know his password and be able to enter it. In the case that the user doesn't know his password he will know he must create a new one and do so as described in section XXX.
             
         \end{itemize}
-\end{description}
+\end{desc}
+
+    \begin{figure}[tbph]
+        \begin{center}
+        
+                \includegraphics[width=12cm]{screens/create-warning.png}
+
+            \caption{Warning displayed if {\tt [Create Identity]} is mistakely clicked.}
+            \label{scn:create}
+        \end{center}
+    \end{figure}
 
 \subsection{Adding public keys}
 A user with no public keys wishes to submit encrypted content. His actions lead to him obtaining one of his intended recipient's public key.
 
-\begin{description}
+\begin{desc}
 
     \item[Action Sequence] \hfill
     \begin{enumerate}
@@ -415,12 +435,12 @@ A user with no public keys wishes to submit encrypted content. His actions lead 
         
     \end{itemize}
     
-\end{description}
+\end{desc}
 
 \subsection{Using the recipient selector control}
 A user presented with the recipient selector control wishes to use it to select a large subset of his friends for broadcast encryption, and does so. The user has 406 friends available to select and wants to choose 405 of them.
 
-\begin{description}
+\begin{desc}
 
     \item[Action Sequence] \hfill
     \begin{enumerate}
@@ -448,18 +468,18 @@ A user presented with the recipient selector control wishes to use it to select 
         
         \end{itemize}
     
-\end{description}
+\end{desc}
 
 
 \subsection{Uploading an encrypted image}
 A user wishing to send an encrypted image to 405 friends who also have the extension, does so.
 
-\begin{description}
+\begin{desc}
 
     \item[Action Sequence] \hfill
     \begin{enumerate}
         \item Add any public keys required.
-        \item Navigate to the image upload page for the required album.
+        \item Navigate to the image upload page for the required album (see Figure \ref{scn:pic-up}).
         \item Select the image to encrypted.
         \item Check the {\tt [Encrypt]} check box.
         \item Click the {\tt [Submit]} button.
@@ -487,13 +507,23 @@ A user wishing to send an encrypted image to 405 friends who also have the exten
             
         \end{itemize}
     
-\end{description}
+\end{desc}
 
+
+    \begin{figure}[tbph]
+        \begin{center}
+        
+                \includegraphics[width=12cm]{screens/pic-upload.png}
+
+            \caption{Input fields and controls for submitting encrypted images.}
+            \label{scn:pic-up}
+        \end{center}
+    \end{figure}
 
 \subsection{Posting a comment}
 A user has navigated to his newsfeed. He wishes to write an encrypted reply to a plaintext comment on a newsfeed post of an encrypted photo. It is assumed he already possesses the public keys required and can decrypt the photo in question.
 
-\begin{description}
+\begin{desc}
 
     \item[Action Sequence] \hfill
     \begin{enumerate}
@@ -524,6 +554,15 @@ A user has navigated to his newsfeed. He wishes to write an encrypted reply to a
             \item User knows they must refresh the page to view their own comment. Even if this is their first encrypted submission, Facebook users will be familiar with the process of refreshing a page when something is not working or to view an update. If the user does not make the connection right away, when returning to the page and seeing the item decrypted automatically they should realise that encrypted text submissions are decrypted as a page first loads.
         
         \end{itemize}
-\end{description}
+\end{desc}
 
 
+    \begin{figure}[tbph]
+        \begin{center}
+        
+                \includegraphics[width=12cm]{screens/comment.png}
+
+            \caption{Input fields and controls for posting a comment to a newsfeed entry.}
+            \label{scn:comment}
+        \end{center}
+    \end{figure}

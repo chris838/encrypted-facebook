@@ -40,6 +40,51 @@
     \field{year}{2001}
   \endentry
 
+  \entry{ross}{book}{}
+    \name{labelname}{1}{}{%
+      {{}{Anderson}{A\bibinitperiod}{Ross\bibnamedelima J.}{R\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Anderson}{A\bibinitperiod}{Ross\bibnamedelima J.}{R\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {New York, NY, USA}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons, Inc.}%
+    }
+    \strng{namehash}{ARJ1}
+    \strng{fullhash}{ARJ1}
+    \field{sortinit}{A}
+    \field{edition}{1st}
+    \field{isbn}{0471389226}
+    \field{title}{Security Engineering: A Guide to Building Dependable Distributed Systems}
+    \field{year}{2001}
+  \endentry
+
+  \entry{proxy}{inproceedings}{}
+    \name{labelname}{3}{}{%
+      {{}{Blaze}{B\bibinitperiod}{Matt}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Bleumer}{B\bibinitperiod}{Gerrit}{G\bibinitperiod}{}{}{}{}}%
+      {{}{Strauss}{S\bibinitperiod}{Martin}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{3}{}{%
+      {{}{Blaze}{B\bibinitperiod}{Matt}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Bleumer}{B\bibinitperiod}{Gerrit}{G\bibinitperiod}{}{}{}{}}%
+      {{}{Strauss}{S\bibinitperiod}{Martin}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Springer-Verlag}%
+    }
+    \strng{namehash}{BMBGSM1}
+    \strng{fullhash}{BMBGSM1}
+    \field{sortinit}{B}
+    \field{booktitle}{In EUROCRYPT}
+    \field{title}{Divertible protocols and atomic proxy cryptography}
+    \field{year}{1998}
+    \field{pages}{127\bibrangedash 144}
+  \endentry
+
   \entry{burke2010social}{inproceedings}{}
     \name{labelname}{3}{}{%
       {{}{Burke}{B\bibinitperiod}{Moira}{M\bibinitperiod}{}{}{}{}}%
@@ -61,6 +106,47 @@
     \field{title}{Social network activity and social well-being}
     \field{year}{2010}
     \keyw{social capital, social well-being}
+  \endentry
+
+  \entry{passwords}{misc}{}
+    \name{labelname}{9}{}{%
+      {{}{Burr}{B\bibinitperiod}{William\bibnamedelima E.}{W\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
+      {{}{Dodson}{D\bibinitperiod}{Donna\bibnamedelima F.}{D\bibinitperiod\bibinitdelim F\bibinitperiod}{}{}{}{}}%
+      {{}{Perlner}{P\bibinitperiod}{Ray\bibnamedelima A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Polk}{P\bibinitperiod}{W.\bibnamedelimi Timothy}{W\bibinitperiod\bibinitdelim T\bibinitperiod}{}{}{}{}}%
+      {{}{Gupta}{G\bibinitperiod}{Sarbari}{S\bibinitperiod}{}{}{}{}}%
+      {{}{Nabbus}{N\bibinitperiod}{Emad\bibnamedelima A.}{E\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Gutierrez}{G\bibinitperiod}{Carlos\bibnamedelima M.}{C\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      {{}{Turner}{T\bibinitperiod}{James\bibnamedelima M.}{J\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      {{}{Director}{D\bibinitperiod}{Acting}{A\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{9}{}{%
+      {{}{Burr}{B\bibinitperiod}{William\bibnamedelima E.}{W\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
+      {{}{Dodson}{D\bibinitperiod}{Donna\bibnamedelima F.}{D\bibinitperiod\bibinitdelim F\bibinitperiod}{}{}{}{}}%
+      {{}{Perlner}{P\bibinitperiod}{Ray\bibnamedelima A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Polk}{P\bibinitperiod}{W.\bibnamedelimi Timothy}{W\bibinitperiod\bibinitdelim T\bibinitperiod}{}{}{}{}}%
+      {{}{Gupta}{G\bibinitperiod}{Sarbari}{S\bibinitperiod}{}{}{}{}}%
+      {{}{Nabbus}{N\bibinitperiod}{Emad\bibnamedelima A.}{E\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Gutierrez}{G\bibinitperiod}{Carlos\bibnamedelima M.}{C\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      {{}{Turner}{T\bibinitperiod}{James\bibnamedelima M.}{J\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      {{}{Director}{D\bibinitperiod}{Acting}{A\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{BWE+1}
+    \strng{fullhash}{BWEDDFPRAPWTGSNEAGCMTJMDA1}
+    \field{sortinit}{B}
+    \field{title}{DRAFT i Draft Special Publication 800-63-1 Electronic Authentication Guideline}
+    \field{year}{2008}
+  \endentry
+
+  \entry{diaspora}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{D}
+    \field{title}{Diaspora Alpha}
+    \field{year}{2011}
+    \verb{url}
+    \verb https://joindiaspora.com/
+    \endverb
   \endentry
 
   \entry{fb-cipc}{online}{}
@@ -102,6 +188,17 @@
     \endverb
   \endentry
 
+  \entry{firegpg}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{F}
+    \field{title}{FireGPG}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://getfiregpg.org/s/home
+    \endverb
+  \endentry
+
   \entry{dpatterns}{book}{}
     \name{labelname}{4}{}{%
       {{}{Gamma}{G\bibinitperiod}{Erich}{E\bibinitperiod}{}{}{}{}}%
@@ -127,6 +224,17 @@
     \field{isbn}{978-0-201-63361-0}
     \field{title}{Design Patterns: Elements of Reusable Object-Oriented Software}
     \field{year}{1995}
+  \endentry
+
+  \entry{code-style}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{G}
+    \field{title}{GeoSoft Coding Style Guide}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://geosoft.no/development/cppstyle.html
+    \endverb
   \endentry
 
   \entry{fb-connectedness}{inproceedings}{}
@@ -182,6 +290,42 @@
     \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'gross' - skipping field 'address'}
   \endentry
 
+  \entry{noyb}{inproceedings}{}
+    \name{labelname}{3}{}{%
+      {{}{Guha}{G\bibinitperiod}{Saikat}{S\bibinitperiod}{}{}{}{}}%
+      {{}{Tang}{T\bibinitperiod}{Kevin}{K\bibinitperiod}{}{}{}{}}%
+      {{}{Francis}{F\bibinitperiod}{Paul}{P\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{3}{}{%
+      {{}{Guha}{G\bibinitperiod}{Saikat}{S\bibinitperiod}{}{}{}{}}%
+      {{}{Tang}{T\bibinitperiod}{Kevin}{K\bibinitperiod}{}{}{}{}}%
+      {{}{Francis}{F\bibinitperiod}{Paul}{P\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Seattle, WA, USA}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{GSTKFP1}
+    \strng{fullhash}{GSTKFP1}
+    \field{sortinit}{G}
+    \field{booktitle}{Proceedings of the first workshop on Online social networks}
+    \field{isbn}{978-1-60558-182-8}
+    \field{series}{WOSN '08}
+    \field{title}{NOYB: privacy in online social networks}
+    \field{year}{2008}
+    \field{pages}{49\bibrangedash 54}
+    \verb{doi}
+    \verb http://doi.acm.org/10.1145/1397735.1397747
+    \endverb
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/1397735.1397747
+    \endverb
+    \keyw{cloud computing, noyb, privacy}
+    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'noyb' - skipping field 'address'}
+  \endentry
+
   \entry{metcalf}{article}{}
     \name{labelname}{2}{}{%
       {{}{Hendler}{H\bibinitperiod}{James}{J\bibinitperiod}{}{}{}{}}%
@@ -211,6 +355,17 @@
     \keyw{Metcalfe's law}
   \endentry
 
+  \entry{fb-ads}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{H}
+    \field{title}{How Facebook Makes Money}
+    \field{year}{2010}
+    \verb{url}
+    \verb http://www.allfacebook.com/facebook-makes-money-2010-01
+    \endverb
+  \endentry
+
   \entry{fb-factsheet}{online}{}
     \name{labelname}{1}{}{%
       {{}{Inc.}{I\bibinitperiod}{Facebook}{F\bibinitperiod}{}{}{}{}}%
@@ -226,6 +381,23 @@
     \field{year}{2011}
     \verb{url}
     \verb http://www.facebook.com/press/info.php?factsheet
+    \endverb
+  \endentry
+
+  \entry{firefox-req}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Inc.}{I\bibinitperiod}{Mozilla}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Inc.}{I\bibinitperiod}{Mozilla}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{IM1}
+    \strng{fullhash}{IM1}
+    \field{sortinit}{I}
+    \field{title}{Firefox 4.0 System Requirements}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://www.mozilla.com/en-US/firefox/4.0/system-requirements/
     \endverb
   \endentry
 
@@ -264,6 +436,105 @@
     \endverb
     \verb{url}
     \verb http://doi.acm.org/10.1145/1290958.1290968
+    \endverb
+  \endentry
+
+  \entry{flybynight}{inproceedings}{}
+    \name{labelname}{2}{}{%
+      {{}{Lucas}{L\bibinitperiod}{Matthew\bibnamedelima M.}{M\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      {{}{Borisov}{B\bibinitperiod}{Nikita}{N\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Lucas}{L\bibinitperiod}{Matthew\bibnamedelima M.}{M\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      {{}{Borisov}{B\bibinitperiod}{Nikita}{N\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Alexandria, Virginia, USA}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{LMMBN1}
+    \strng{fullhash}{LMMBN1}
+    \field{sortinit}{L}
+    \field{booktitle}{Proceedings of the 7th ACM workshop on Privacy in the electronic society}
+    \field{isbn}{978-1-60558-289-4}
+    \field{series}{WPES '08}
+    \field{title}{FlyByNight: mitigating the privacy risks of social networking}
+    \field{year}{2008}
+    \field{pages}{1\bibrangedash 8}
+    \verb{doi}
+    \verb http://doi.acm.org/10.1145/1456403.1456405
+    \endverb
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/1456403.1456405
+    \endverb
+    \keyw{privacy, social networks}
+    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'flybynight' - skipping field 'address'}
+  \endentry
+
+  \entry{facecloak}{inproceedings}{}
+    \name{labelname}{3}{}{%
+      {{}{Luo}{L\bibinitperiod}{Wanying}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Xie}{X\bibinitperiod}{Qi}{Q\bibinitperiod}{}{}{}{}}%
+      {{}{Hengartner}{H\bibinitperiod}{U.}{U\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{3}{}{%
+      {{}{Luo}{L\bibinitperiod}{Wanying}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Xie}{X\bibinitperiod}{Qi}{Q\bibinitperiod}{}{}{}{}}%
+      {{}{Hengartner}{H\bibinitperiod}{U.}{U\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{LWXQHU1}
+    \strng{fullhash}{LWXQHU1}
+    \field{sortinit}{L}
+    \field{booktitle}{Computational Science and Engineering, 2009. CSE '09. International Conference on}
+    \field{month}{08}
+    \field{title}{FaceCloak: An Architecture for User Privacy on Social Networking Sites}
+    \field{volume}{3}
+    \field{year}{2009}
+    \field{pages}{26 \bibrangedash 33}
+    \verb{doi}
+    \verb 10.1109/CSE.2009.387
+    \endverb
+    \keyw{FaceCloak;Facebook;Firefox browser extension;Flickr;Internet users;MySpace;social networking sites;user privacy;data privacy;social networking (online);}
+  \endentry
+
+  \entry{bband-stats}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{N}
+    \field{title}{Net Index by Ookla - household download index, UK.}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://www.netindex.com/download/2,4/United-Kingdom/
+    \endverb
+  \endentry
+
+  \entry{rsfec-decode}{book}{}
+    \name{labelname}{1}{}{%
+      {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Odenwalder}{O\bibinitperiod}{J.\bibnamedelimi P.}{J\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Linkabit Corporation}%
+    }
+    \strng{namehash}{OJP1}
+    \strng{fullhash}{OJP1}
+    \field{sortinit}{O}
+    \field{title}{Error Control Coding Handbook}
+    \field{year}{1976}
+  \endentry
+
+  \entry{pidder}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{P}
+    \field{title}{Pidder}
+    \field{year}{2011}
+    \verb{url}
+    \verb https://www.pidder.com/en/index.html
     \endverb
   \endentry
 
@@ -339,6 +610,65 @@
     \verb{url}
     \verb http://techcrunch.com/2009/12/14/rockyou-hacked/
     \endverb
+  \endentry
+
+  \entry{uprotect}{online}{}
+    \strng{namehash}{1}
+    \strng{fullhash}{1}
+    \field{sortinit}{u}
+    \field{title}{uProtect.it - Take Back Control From Facebook}
+    \field{year}{2011}
+    \verb{url}
+    \verb http://uprotect.it/
+    \endverb
+  \endentry
+
+  \entry{cogwalk}{article}{}
+    \name{labelname}{4}{}{%
+      {{}{Wharton}{W\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Rieman}{R\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Lewis}{L\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Polson}{P\bibinitperiod}{P.}{P\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{4}{}{%
+      {{}{Wharton}{W\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Rieman}{R\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Lewis}{L\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Polson}{P\bibinitperiod}{P.}{P\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{WC+1}
+    \strng{fullhash}{WCRJLCPP1}
+    \field{sortinit}{W}
+    \field{title}{The Cognitive Walkthrough Method: A Practitioner's Guide}
+    \field{year}{1994}
+  \endentry
+
+  \entry{johnny}{inproceedings}{}
+    \name{labelname}{2}{}{%
+      {{}{Whitten}{W\bibinitperiod}{Alma}{A\bibinitperiod}{}{}{}{}}%
+      {{}{Tygar}{T\bibinitperiod}{J.\bibnamedelimi D.}{J\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Whitten}{W\bibinitperiod}{Alma}{A\bibinitperiod}{}{}{}{}}%
+      {{}{Tygar}{T\bibinitperiod}{J.\bibnamedelimi D.}{J\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {Washington, D.C.}%
+    }
+    \list{publisher}{1}{%
+      {USENIX Association}%
+    }
+    \strng{namehash}{WATJD1}
+    \strng{fullhash}{WATJD1}
+    \field{sortinit}{W}
+    \field{booktitle}{Proceedings of the 8th conference on USENIX Security Symposium - Volume 8}
+    \field{title}{Why Johnny can't encrypt: a usability evaluation of PGP 5.0}
+    \field{year}{1999}
+    \field{pages}{14\bibrangedash 14}
+    \verb{url}
+    \verb http://portal.acm.org/citation.cfm?id=1251421.1251435
+    \endverb
+    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'johnny' - skipping field 'address'}
   \endentry
 
   \entry{haar}{article}{}

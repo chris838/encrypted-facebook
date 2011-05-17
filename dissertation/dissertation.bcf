@@ -274,30 +274,26 @@
     <bcf:citekey>fb-priv</bcf:citekey>
     <bcf:citekey>fb-ids</bcf:citekey>
     <bcf:citekey>snoop</bcf:citekey>
-    <bcf:citekey>fb-gov</bcf:citekey>
     <bcf:citekey>fb-phish</bcf:citekey>
     <bcf:citekey>rockyou</bcf:citekey>
     <bcf:citekey>firegpg</bcf:citekey>
-    <bcf:citekey>johhny</bcf:citekey>
+    <bcf:citekey>johnny</bcf:citekey>
     <bcf:citekey>pidder</bcf:citekey>
     <bcf:citekey>diaspora</bcf:citekey>
     <bcf:citekey>fb-network</bcf:citekey>
     <bcf:citekey>metcalf</bcf:citekey>
     <bcf:citekey>firegpg</bcf:citekey>
-    <bcf:citekey>cryptfire</bcf:citekey>
-    <bcf:citekey>textcrypt</bcf:citekey>
     <bcf:citekey>noyb</bcf:citekey>
     <bcf:citekey>ross</bcf:citekey>
     <bcf:citekey>facecloak</bcf:citekey>
-    <bcf:citekey>fb-costs</bcf:citekey>
     <bcf:citekey>fb-ads</bcf:citekey>
-    <bcf:citekey>fb-pay</bcf:citekey>
     <bcf:citekey>uprotect</bcf:citekey>
-    <bcf:citekey>password</bcf:citekey>
+    <bcf:citekey>passwords</bcf:citekey>
+    <bcf:citekey>facecloak</bcf:citekey>
     <bcf:citekey>flybynight</bcf:citekey>
     <bcf:citekey>proxy</bcf:citekey>
+    <bcf:citekey>facecloak</bcf:citekey>
     <bcf:citekey>flash-sbox</bcf:citekey>
-    <bcf:citekey>ffox-lang</bcf:citekey>
     <bcf:citekey>flybynight</bcf:citekey>
     <bcf:citekey>xpcom</bcf:citekey>
     <bcf:citekey>js-ctypes</bcf:citekey>
@@ -311,13 +307,22 @@
     <bcf:citekey>fb-images</bcf:citekey>
     <bcf:citekey>haar</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>XXX</bcf:citekey>
     <bcf:citekey>nist</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>nist</bcf:citekey>
+    <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>code-style</bcf:citekey>
     <bcf:citekey>interfaces</bcf:citekey>
     <bcf:citekey>dpatterns</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>firefox-req</bcf:citekey>
+    <bcf:citekey>bband-stats</bcf:citekey>
+    <bcf:citekey>rsfec-decode</bcf:citekey>
+    <bcf:citekey>hdd-errors</bcf:citekey>
+    <bcf:citekey>cogwalk</bcf:citekey>
   </bcf:section>
 </bcf:controlfile>

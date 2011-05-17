@@ -8,13 +8,13 @@ Facebook, at the time of writing, is the world's most popular social network ser
 \section{Background}
 \label{sec:background}
 
-Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}. As social netorks mimic real life interactions members are often willing to reveal more private details than they otherwise would, resulting in social networks accumulating a large repository of sensitive information \cite{gross}. There are a number of ways this information can then be exposed: users misconfiguring privacy settings, \footnote{Facebook was recently forced to update its privacy controls due to growing pressure from the public and media \cite{fb-priv}.} malice, error or neglect on the part of the social network and its employees, \footnote{As was the case in 2010 when personally identifiable Facebook user details were sold to data brokers by third party developers \cite{fb-ids}.} acquiescent disclosure to government authorities and unlawful access through phishing scams and security exploits \cite{snoop} \cite{fb-gov} \cite{fb-phish} \cite{rockyou}.
+Since its inception, Facebook has come under criticism in relation to online privacy \cite{fb-cipc}. As social netorks mimic real life interactions members are often willing to reveal more private details than they otherwise would, resulting in social networks accumulating a large repository of sensitive information \cite{gross}. There are a number of ways this information can then be exposed: users misconfiguring privacy settings, \footnote{Facebook was recently forced to update its privacy controls due to growing pressure from the public and media \cite{fb-priv}.} malice, error or neglect on the part of the social network and its employees, \footnote{As was the case in 2010 when personally identifiable Facebook user details were sold to data brokers by third party developers \cite{fb-ids}.} acquiescent disclosure to government authorities and unlawful access through phishing scams and security exploits \cite{snoop} \cite{fb-phish} \cite{rockyou}.
 
-Encrypting content ensures its secrecy in any eventuality, provided the encryption key itself is kept safe. Tools exist for performing encryption manually - some are even partly integrated into the Facebook user interface \cite{firegpg}. However, studies have suggested that software which requires manual management of cryptographic keys is not usable enough to provide effective security for most users \cite{johhny}. In addition, interaction over social networks is typically one-to-many, unlike applications like e-mail which these tools are designed for.
+Encrypting content ensures its secrecy in any eventuality, provided the encryption key itself is kept safe. Tools exist for performing encryption manually - some are even partly integrated into the Facebook user interface \cite{firegpg}. However, studies have suggested that software which requires manual management of cryptographic keys is not usable enough to provide effective security for most users \cite{johnny}. In addition, interaction over social networks is typically one-to-many, unlike applications like e-mail which these tools are designed for.
 
-Solutions targetting social networks specifically have been proposed. Some are still overly reliant on manual key management; others fail to fully protect the user's privacy or support the most popular forms of content (see sections \ref{sec:existing} and \ref{sec:approaches}). Thus far all proposals have required the use of a third party in ways which are unlikely to be scaleable (see section xxx). 
+Solutions targetting social networks specifically have been proposed. Some are still overly reliant on manual key management; others fail to fully protect the user's privacy or support the most popular forms of content (see sections \ref{sec:existing}, \ref{sec:principles} and \ref{sec:facebook}). Thus far all proposals have required the use of a third party in ways which are unlikely to be scaleable.
   
-Attempts have been made to create new social networks which protect privacy by encrypting content and in some cases even decentralizing hosting of the entire platform \cite{pidder} \cite{diaspora}. Unfortunately, network externalities make it difficult for newcomers to compete with Facebook since the utility of a social network is intrinsically tied to the size of its userbase. \footnote{Some suggest the value of a social network grows linearithmically, quadratically or even exponentially with the number of users \cite{fb-network} \cite{metcalf}.}
+Attempts have been made at creating new social networks which use encryption and decentralised hosting to provide better privacy protection \cite{pidder} \cite{diaspora}. Unfortunately, network externalities make it difficult for newcomers to compete with Facebook since the utility of a social network is intrinsically tied to the size of its userbase. \footnote{Some suggest the value of a social network grows linearithmically, quadratically or even exponentially with the number of users \cite{fb-network} \cite{metcalf}.}
 
 
 \section{Objectives}
@@ -46,15 +46,13 @@ Some objectives we consider non-goals, or outside the scope of the project:
     
     \item Ensuring the integrity, authenticity or non-repudiation of communications. In theory the public key scheme could be extended to do so but this would go beyond mere privacy control.
 
-    \item Protection against middleperson attacks (see section XXX).
+    \item Protection against middleperson attacks (see section \ref{ssec:threat}).
     
     \item Guaranteeing availability of content. Completely severing reliance on Facebook would be tantamount to builing a new network.
     
-    \item Concealing the existence of content itself or concealing the fact that it is encrypted. Steganography is employed but not for this reason (see section XXX).
+    \item Concealing the existence of content itself or concealing the fact that it is encrypted. Steganography is employed but not for this reason (see section \ref{ssec:submitnote}).
     
-    \item Full cross-platform and/or cross-browser support (see section XXX).
-    
-    \item Designing and implementing a security policy which comprehensively covers all aspects of the project's functionality (see section XXX).
+    \item Full cross-platform and/or cross-browser support (see section \ref{sec:future}).
     
 \end{itemize}
 
@@ -62,7 +60,7 @@ Some objectives we consider non-goals, or outside the scope of the project:
 \section{Existing work}
 \label{sec:existing}
 
-    Many applications for encrypting online data exist, most in the form of browser extensions \cite{firegpg} \cite{cryptfire} \cite{textcrypt}. There are also several applications which target Facebook specifically.
+    Many applications for encrypting online data exist, most in the form of browser extensions \cite{firegpg}. There are also several applications which target Facebook specifically.
     
     \begin{desc}
     
