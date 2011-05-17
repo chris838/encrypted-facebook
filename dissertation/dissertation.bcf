@@ -295,34 +295,22 @@
     <bcf:citekey>facecloak</bcf:citekey>
     <bcf:citekey>flash-sbox</bcf:citekey>
     <bcf:citekey>flybynight</bcf:citekey>
-    <bcf:citekey>xpcom</bcf:citekey>
+    <bcf:citekey>xpcomm</bcf:citekey>
     <bcf:citekey>js-ctypes</bcf:citekey>
     <bcf:citekey>fb-stats</bcf:citekey>
     <bcf:citekey>fb-stats</bcf:citekey>
     <bcf:citekey>fb-factsheet</bcf:citekey>
     <bcf:citekey>fb-connectedness</bcf:citekey>
-    <bcf:citekey>burke2010social</bcf:citekey>
-    <bcf:citekey>xxx</bcf:citekey>
-    <bcf:citekey>xxx</bcf:citekey>
-    <bcf:citekey>fb-images</bcf:citekey>
+    <bcf:citekey>dunbar</bcf:citekey>
+    <bcf:citekey>socnetsize</bcf:citekey>
     <bcf:citekey>haar</bcf:citekey>
+    <bcf:citekey>security</bcf:citekey>
     <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>nist</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>nist</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>response</bcf:citekey>
+    <bcf:citekey>agile</bcf:citekey>
     <bcf:citekey>code-style</bcf:citekey>
-    <bcf:citekey>interfaces</bcf:citekey>
-    <bcf:citekey>dpatterns</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>XXX</bcf:citekey>
-    <bcf:citekey>firefox-req</bcf:citekey>
-    <bcf:citekey>bband-stats</bcf:citekey>
-    <bcf:citekey>rsfec-decode</bcf:citekey>
-    <bcf:citekey>hdd-errors</bcf:citekey>
-    <bcf:citekey>cogwalk</bcf:citekey>
   </bcf:section>
 </bcf:controlfile>

@@ -1,0 +1,40 @@
+\chapter{Facebook's JPEG compression process}
+
+Information is lost at several stages in the compression process:
+
+\begin{enumerate}
+
+    \item Colour images are subject to a lossy colour space transform from RGB to YCrCb.
+    \item The chrominance components Cr and Cb are subsampled at a rate half that of the luminance channel.
+    \item The discrete cosine transform is applied to each 8x8 block using finite arithmetic.
+    \item DCT coefficients are quantised according to values in a quantisation matrix.
+    
+\end{enumerate}
+
+Note that chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images. This leaves quantisation as the principle step at which information loss occurs.
+
+Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the {\tt libjpeg} library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
+
+\begin{table}[tb]
+\begin{center}
+    %\definecolor{lgray}{hsb}{0.1, 0, 0.9}
+    %\rowcolors{3}{white}{lgray}
+    \begin{tabular}{|+c |^c |^c |^c |^c |^c |^c |^c |}
+    \hline
+    \multicolumn{8}{|c|}{\bf Quantisation Matrix} \\ \hline
+    \hline
+    5 & 3 & 3 & 5 & 7 & 12 & 15 & 18 \\ \hline
+    4 & 4 & 4 & 6 & 8 & 17 & 18 & 17 \\ \hline
+    4 & 4 & 5 & 7 & 12 & 17 & 21 & 17 \\ \hline
+    4 & 5 & 7 & 9 & 15 & 26 & 24 & 19 \\ \hline
+    5 & 7 & 11 & 17 & 20 & 33 & 31 & 23 \\ \hline
+    7 & 11 & 17 & 19 & 24 & 31 & 34 & 28 \\ \hline
+    15 & 19 & 23 & 26 & 31 & 36 & 36 & 30 \\ \hline
+    22 & 28 & 29 & 29 & 34 & 30 & 31 & 30 \\ \hline
+\end{tabular}
+\end{center}
+
+\caption{Quantisation matrix used by Facebook for luminance channel.}
+\label{tab:quants}
+
+\end{table}

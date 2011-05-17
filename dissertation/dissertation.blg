@@ -1,37 +1,20 @@
 [1] biber:197> INFO - This is biber 0.9
-[2] biber:198> INFO - Logfile is 'dissertation.blg'
+[1] biber:198> INFO - Logfile is 'dissertation.blg'
 [2] biber:205> INFO - === Biber version 0.9
-[2] biber:206> INFO - === Tue May 17, 2011, 11:25:14
-[3] Biber.pm:304> INFO - Reading dissertation.bcf
-[134] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[134] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[135] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[135] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[135] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[136] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[136] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[136] Biber.pm:574> WARN - Case mismatch error between cite keys 'XXX' and 'xxx'
-[136] Biber.pm:580> INFO - Found 40 citekeys in bib section 0
-[165] Biber.pm:2103> INFO - Processing bib section 0
-[198] Biber.pm:2191> INFO - Processing bibtex format file 'bibliography.bib' for section 0
-[202] bibtex.pm:497> INFO - Decoding LaTeX character macros into UTF-8
-[222] bibtex.pm:446> WARN - Entry js-ctypes does not parse correctly: skipping
-[222] bibtex.pm:446> WARN - Entry xpcomm does not parse correctly: skipping
-[223] bibtex.pm:446> WARN - Entry flash-sbox does not parse correctly: skipping
-[241] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'gross' - skipping field 'address'
-[253] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'johnny' - skipping field 'address'
-[262] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'noyb' - skipping field 'address'
-[278] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'flybynight' - skipping field 'address'
-[303] Biber.pm:2198> WARN - I didn't find a database entry for 'flash-sbox' (section 0)
-[304] Biber.pm:2198> WARN - I didn't find a database entry for 'xpcom' (section 0)
-[305] Biber.pm:2198> WARN - I didn't find a database entry for 'js-ctypes' (section 0)
-[305] Biber.pm:2198> WARN - I didn't find a database entry for 'xxx' (section 0)
-[306] Biber.pm:2198> WARN - I didn't find a database entry for 'fb-images' (section 0)
-[306] Biber.pm:2198> WARN - I didn't find a database entry for 'nist' (section 0)
-[307] Biber.pm:2198> WARN - I didn't find a database entry for 'hdd-errors' (section 0)
-[516] Biber.pm:1999> INFO - Sorting list 'MAIN' keys
-[517] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
-[715] Biber.pm:1999> INFO - Sorting list 'SHORTHANDS' keys
-[715] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
-[800] BBL.pm:388> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
-[804] BBL.pm:447> INFO - Output to dissertation.bbl
+[2] biber:206> INFO - === Tue May 17, 2011, 16:00:17
+[2] Biber.pm:304> INFO - Reading dissertation.bcf
+[129] Biber.pm:580> INFO - Found 43 citekeys in bib section 0
+[158] Biber.pm:2103> INFO - Processing bib section 0
+[191] Biber.pm:2191> INFO - Processing bibtex format file 'bibliography.bib' for section 0
+[195] bibtex.pm:497> INFO - Decoding LaTeX character macros into UTF-8
+[235] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'gross' - skipping field 'address'
+[246] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'johnny' - skipping field 'address'
+[270] Biber.pm:99> WARN - Field 'address' is aliased to field 'location' but both are defined in entry with key 'flybynight' - skipping field 'address'
+[316] Biber.pm:2198> WARN - I didn't find a database entry for 'XXX' (section 0)
+[317] Biber.pm:2198> WARN - I didn't find a database entry for 'hdd-errors' (section 0)
+[570] Biber.pm:1999> INFO - Sorting list 'MAIN' keys
+[570] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
+[822] Biber.pm:1999> INFO - Sorting list 'SHORTHANDS' keys
+[823] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
+[929] BBL.pm:388> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
+[934] BBL.pm:447> INFO - Output to dissertation.bbl

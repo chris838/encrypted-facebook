@@ -8,24 +8,6 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {2.1}{\ignorespaces Facebook objects, their limitations and approximate frequency of creation \cite {fb-stats}\relax }}{13}{table.caption.10}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Facebook objects and connections, their limitations and approximate frequency of creation \cite {fb-stats}\relax }}{13}{table.caption.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {2.2}{\ignorespaces Quantisation matrix used by Facebook for luminance channel.\relax }}{18}{table.caption.14}
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {3.1}{\ignorespaces Structure of the encryption header.\relax }}{38}{table.caption.29}
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {3.2}{\ignorespaces Comparison of blocks for each concrete subclass\relax }}{45}{table.caption.34}
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.1}{\ignorespaces Tabulated details of the testing process. \textasciitilde 1 GiB of data was used for every test run.\relax }}{52}{table.caption.38}
-\defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.2}{\ignorespaces Bit error probability, symbol error probability and output symbol error probability for each possible combination. Quality factor is 85.\relax }}{55}{table.caption.41}
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.2}{\ignorespaces Table of public key length equivalences \cite {nist-key}\relax }}{19}{table.caption.14}

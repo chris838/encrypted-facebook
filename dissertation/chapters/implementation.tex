@@ -117,6 +117,7 @@ The submission handler causes a friend selector window to appear (see Figure \re
 On submission, the selected list of friends and the input from the input field is gathered and processed by {\tt efb} (detailed in section XXX). The result is a replacement input that can be either be uploaded via {\tt faceapi} directly or inserted back into the input field.
 
 \subsection{Identifying decryption targets}
+\label{ssec:ident-targets}
 
 Regular expression are also used to locate and filter possible decryption targets. For text these will be enclosed by special start and end sequences. Images can be identified by their filename as Graph API objects. In either case we take a best effort approach to filtering since a malicious user could easily create fake text tags and most Graph API images won't be encrypted. The decryption process is designed to fail gracefully as early as possible if this turns out to be the case. \footnote{Currently, since all images are $720 \times 720$ pixels images are filtered on dimension. The case for uploading variable sized images and its effect on filtering are discussed in section XXX.}
 

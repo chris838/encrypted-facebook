@@ -15,7 +15,7 @@ We begin by outlining several key principles which were used to constrain the re
 \FloatBarrier
 \subsection{Encryption of shared content}
 
-It is possible to preserve privacy by encrypting or otherwise concealing the link between a real life user and their online identity. This is the basis of NOYB \cite{noyb}. Arguably, however, privacy is only poorly preserved due to problems of inference control \cite{ross}. \footnote{An obvious example is that many users will be easily identifiable simply from the photos they upload.} Incremental deployment is also not possible since non-users will only ever see fictitious profiles \cite{facecloak}.
+It is possible to preserve privacy by encrypting or otherwise concealing the link between a real life user and their online identity. This is the basis of NOYB \cite{noyb}. Arguably, however, privacy is only poorly preserved due to problems of inference control \cite{ross}.\footnote{An obvious example is that many users will be easily identifiable simply from the photos they upload.} Incremental deployment is also not possible since non-users will only ever see fictitious profiles \cite{facecloak}.
 
 The alternative is to encrypt shared content itself in some way or another, restricting access to only those who possess the appropriate key even in the event of exposure.
 
@@ -23,7 +23,7 @@ The alternative is to encrypt shared content itself in some way or another, rest
 \FloatBarrier
 \subsection{Independence from third-party servers}
 
-%In addition to encrypting content, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all, as with FaceCloak. \footnote{Steganography requires large amounts of redundancy to securely hide even a small amount of information \cite{facecloak}.} Better guarantees of availability can also be made in the case of account deletion.
+%In addition to encrypting content, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all, as with FaceCloak.\footnote{Steganography requires large amounts of redundancy to securely hide even a small amount of information \cite{facecloak}.} Better guarantees of availability can also be made in the case of account deletion.
 
 In addition to using encryption, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external third-party database.
 
@@ -50,7 +50,7 @@ By ensuring we use securely generated keys that are only ever stored on the user
 \FloatBarrier
 \subsection{Minimal use of OOB channels}
 
-Secure OOB (out-of-band) channels \footnote{Such as encrypted email or face-to-face exchange.} can be used to transmit content, update messages, keys or other information as part of an encryption scheme. Since these channels are, by definition, external to the Facebook platform it can be hard to automate such exchanges and much is still required from the user. FaceCloak, for example, requires users to transmit messages over secure email when adding friends. The process is partly automated, however the user must set up an email client and install and configure PGP themselves \cite{facecloak}.
+Secure OOB (out-of-band) channels\footnote{Such as encrypted email or face-to-face exchange.} can be used to transmit content, update messages, keys or other information as part of an encryption scheme. Since these channels are, by definition, external to the Facebook platform it can be hard to automate such exchanges and much is still required from the user. FaceCloak, for example, requires users to transmit messages over secure email when adding friends. The process is partly automated, however the user must set up an email client and install and configure PGP themselves \cite{facecloak}.
 
 By limiting the use of OOB transmission we mitigate usability concerns regarding manual key management. The exception is when installing a secret key across more than one device - since transporting a secret key by any other method would compromise the principle of secret key security.
 
@@ -63,7 +63,7 @@ By limiting the use of OOB transmission we mitigate usability concerns regarding
 
 %We can instead store and distribute public keys via a trusted third-party. flyByNight takes this approach.  If the content server and the key server are distinct (for example, if Facebook itself is used to store content) both would have to be compromised to perform so called middle-person attacks. Also web of trust.
 
-%For the sake of simplicity Encrypted Facebook transmits public keys in-band on Facebook itself, since immunity from middle-person attacks is not considered a design goal. Such attacks are discussed fully in section XXX. \footnote{The option of verifying public keys OOB to prevent middle-person attack is left open to the expert user but is not a design feature.}
+%For the sake of simplicity Encrypted Facebook transmits public keys in-band on Facebook itself, since immunity from middle-person attacks is not considered a design goal. Such attacks are discussed fully in section XXX.\footnote{The option of verifying public keys OOB to prevent middle-person attack is left open to the expert user but is not a design feature.}
 
 
 \FloatBarrier
@@ -152,7 +152,7 @@ In order to encrypt content it must be intercepted before being submitted to Fac
     
     \item On a proxy server running on localhost. Providers easier multi-browser support.
     
-    \item Within the browser, outside the browser sandbox. Extensions and plugins exist here and have elevated privileges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications. \footnote{Flash applications, for example, are restricted but can provide basic filesystem access \cite{flash-sbox}.} FaceCloak takes this approach.
+    \item Within the browser, outside the browser sandbox. Extensions and plugins exist here and have elevated privileges over normal site code. Other examples include signed Java applets, ActiveX controls and to a lesser extent inline Flash and Silverlight applications.\footnote{Flash applications, for example, are restricted but can provide basic filesystem access \cite{flash-sbox}.} FaceCloak takes this approach.
     
     \item Within the browser, entirely inside the browser sandbox - using only JavaScript and HTML. uProtect.it and flyByNight both take this approach.
     
@@ -191,7 +191,7 @@ Since long delays would hamper usability we opted to use C/C++ for computation i
 
 \begin{itemize}
 
-    \item Creating an XPCOM component. These are linked against a single Gecko \footnote{Gecko is the layout engine used by Firefox.} version; supporting multiple versions is possible but non-trivial \cite{xpcom}.
+    \item Creating an XPCOM component. These are linked against a single Gecko\footnote{Gecko is the layout engine used by Firefox.} version; supporting multiple versions is possible but non-trivial \cite{xpcomm}.
     
     \item Loading native libraries with {\tt js-ctypes}. Introduced in Gecko 2.0 \cite{js-ctypes}. 
 
@@ -199,7 +199,7 @@ Since long delays would hamper usability we opted to use C/C++ for computation i
     
 \end{itemize}
 
-Since building an entire XCPOM component would be excessive and give little advantage by way of multi-version compatibility, the newly introduced {\tt js-ctypes} module is used to load native code. This restricts us to Firefox version 4.0 and above, however Gecko 2.0 also has the advantage of providing better support for working with the local filesystem and manipulating images in the DOM.
+Since building an entire XCPOM component would be excessive and give little advantage by way of multi-version compatibility, the newly introduced {\tt js-ctypes} module was used to load native code. This restricted us to Firefox version 4.0 and above, however Gecko 2.0 also has the advantage of providing better support for working with the local filesystem and manipulating images in the DOM.
 
 
 \FloatBarrier
@@ -208,69 +208,63 @@ Since building an entire XCPOM component would be excessive and give little adva
 
 %Facebook represents the social graph as objects and connections between them. Objects include users, photos, messages and events. All objects are assigned a single unique Facebook ID and all objects (except users themselves) are assosciated with the ID of the user who created them (their owner). The owner's privacy settings (global and per object) will partly determine who may access an object. Objects will also have connections to other users and other objects. For example, users can create discussion threads by commenting on objects or tag other users as being present in a photograph.
 
-Facebook represents all objects (e.g. users, messages, photos) as nodes in the social graph. Each node has a unique Facebook ID, several attributes including an object type, and one or more connections to other nodes.
+Facebook represents all entities (e.g. users, messages, photos, events) uniformly as nodes in the social graph. Each node has a unique Facebook ID, several attributes including an object type, and one or more connections to other nodes.\footnote{This is actually a slight simplification. For full details refer to the Facebook Graph API reference documentation.}
 
-Users may interact with Facebook in many different ways. We make the generalisation that interaction amounts to creating and retrieving objects in the social graph. Our goal then is to encrypt and decrypt the attributes of certain object types - the body of a message object, for example. We do not attempt to encrypt or otherwise conceal connections between objects; this is an non-goal as stated in section XXX.
+We make the generalisation that interaction with Facebook amounts to creating and retrieving objects in the social graph. Our goal then is to encrypt and decrypt the attributes of certain object types - the body of a message object, for example. We do not attempt to encrypt or otherwise conceal connections between objects; this is an non-goal as stated in section \ref{sec:limit}.
 
 We describe the most popular forms of object submitted and discuss issues relating to the connectedness of user nodes and the signal-to-noise ratio in network feeds. We then briefly look at interfacing with the Facebook platform.
 
 \FloatBarrier
 \subsection{Content types}
+\label{sec:content}
 
-Encrypting all possible types of object would be prohibitively complex. We therefore aim to encrypt only those most frequently used. From the data available these are Comments, Messages, Images and Posts (Table \ref{tab:fb-activities}). 
+Encrypting all possible types of object would be prohibitively complex. Ideally we should encrypt those most frequently used. From the data available these are Comments, Messages, Images and Posts (Table \ref{tab:fb-activities}). 
 
-Broadcast encryption adds size overheads to any content that will be encrypted. Without relying on a third-party server all overheads must be stored on Facebook itself, in some form or another. Images and blog-style notes are obvious targets for storage utilisation due to their high capacity limits (see Table \ref{tab:fb-activities}). In particular, the body of a note can contain over 120 KiB of information since each character represents one 16-bit Unicode code point. Images are subject to lossy compression which is discussed in section XXX.
+Without relying on a third-party server all transmission overheads must be stored on Facebook itself, in one form or another. Images and blog-style notes are obvious targets for storage utilisation due to their large capacity (see Table \ref{tab:fb-activities}). In particular, the body of a note can contain over 120 KiB of information since each character represents one 16-bit Unicode code point. Images are subject to lossy compression which is discussed in section \ref{ssec:images}.
 
 \begin{table}[tb]
   \begin{center}
-        \definecolor{lgray}{hsb}{0.1, 0, 0.9}
-        \rowcolors{3}{white}{lgray}
-        \begin{tabular}{+l ^l ^l ^l}
+        \definecolor{lgrey}{hsb}{0.1, 0, 0.9}
+        %\rowcolors{3}{white}{lgrey}
+        \begin{tabular}{+l ^l ^l}
             \rowstyle{\bfseries}%
-            Activity & Frequency  & Limitations & Notes \\
+            Activity & Frequency  & Limitations \\
             \rowstyle{\bfseries}%
-            & (per second) & & \\
-            
+            & (per second) & \\
             \midrule
-            
-            Comment         & 8,507    & 8,000 chars.   & \\ 
-            Message         & 2,263    & 10,000 chars.  & \\
-            Image           & 2,263    & $720 \times 720$ pixels   & \parbox[t][][t]{20ex}{\raggedright 3-channel 8-bit colour. JPEG compressed (see section XXX). } \\ [9ex]
-            Friend request  & 1,643    &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\ [3ex]
-            Status update   & 1,320    & 420 chars.     & \\
-            Wall post       & 1,323    & 1,000 chars.   & \\
-            Event invite    & 1,237    &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
-            Photo tag       & 1,103    &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
-            Link            & 833      &                & \parbox[t][][t]{20ex}{\raggedright }  \\
-            Like            & unknown  &                & \parbox[t][][t]{20ex}{\raggedright Social graph structure.}  \\[3ex]
-            Note            & unknown  & 65,536 chars.  & \parbox[t][][t]{20ex}{\raggedright Used for blog-style posts.} \\[3ex]
+            Comment         & 8,507    & 8,000 chars.   \\ 
+            Message         & 2,263    & 10,000 chars.  \\
+            Image           & 2,263    & $720 \times 720$ pixels \\  
+            Friend request  & 1,643    &                \\
+            Status update   & 1,320    & 420 chars.     \\
+            Wall post       & 1,323    & 1,000 chars.   \\
+            Event invite    & 1,237    &                \\
+            Photo tag       & 1,103    &                \\
+            Link            & 833      &                \\
+            Note            & unknown  & 65,536 chars.  \\
         \end{tabular}
-        \caption{Facebook objects, their limitations and approximate frequency of creation \cite{fb-stats}}
+        \caption{Facebook objects and connections, their limitations and approximate frequency of creation \cite{fb-stats}}
         \label{tab:fb-activities}
     \end{center}
 \end{table}
 
-Each user's profile has a "Bio"\footnote{Sometimes referred to as the "About me" field.} field with a character limit of XXX. With no other capacitous attribute that can be easily queried from a user ID, this is an obvious place to store a user's public key.
+Each user's profile has a "Bio"\footnote{Sometimes referred to as the "About me" field.} field with a character limit of 64,536. With no other capacitous attribute that can be easily queried from a user ID this is the obvious place to store a user's public key.
 
     
-\FloatBarrier
 \subsection{Connectedness}
+\label{sec:cness}
 
-Since broadcast encryption has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user or equivalently by the degree of the user's node in the social graph. 
+Since broadcast encryption has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user or equivalently by the degree of the user's node in the social graph. Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops of sharply at around 250 \cite{fb-factsheet} \cite{fb-connectedness}.
 
-Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops of sharply at around 250 \cite{fb-factsheet} \cite{fb-connectedness}. Marlow et al suggest that, regardless of the number of friends, communication is only ever between a small subset \cite{burke2010social}.
-
-The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to social networks as well as face-to-face interactions. Exact estimates range from around 150 to 300 \cite{xxx} \cite{xxx}, suggesting that the average degree of nodes within a social graph like Facebook's is unlikely to increase dramatically as Facebook expands further.
-
-We this in mind we make it a requirement that the extension operates with recipient group sizes of up to 400.
+The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to social networks as well as face-to-face interactions. Estimates range from around 150 to 300 \cite{dunbar} \cite{socnetsize}, suggesting that average node degree is unlikely to increase dramatically as Facebook expands further.
 
 
-\FloatBarrier
 \subsection{Signal-to-noise ratio}
+\label{sec:signoise}
 
-Activity within the social graph causes notifications to be posted to feeds. The news feed, for example, is shown to users on logging in (Figure \ref{scn:fbook}  We define the signal-to-noise ratio of a feed as the proportion of useful content to non-useful content: typically spam, but in our case this could be transmission overheads as part of the broadcast encryption scheme or even the encrypted content itself since a user without Encrypted Facebook installed will be unable to see the cleartext.
+Activity within the social graph causes notifications to be posted to feeds. The news feed, for example, is shown to users on logging in (Figure \ref{scn:fbook}  We define the signal-to-noise ratio of a feed as the proportion of useful items to non-useful items.\footnote{By non-useful items we typically mean spam, but in our case this could be transmission overheads as part of the broadcast encryption scheme or even the encrypted content itself.}
 
-In order to permit incremental deployment any system must ensure that its users can coexist with non-users. We therefore make it a requirement to limit the extensions impact on the signal-to-noise ratio of feeds.
+In order to permit incremental deployment any system must ensure that its users can coexist with non-users. Ideally the impact on signal-to-noise ratio should be limited.
 
     \begin{figure}[tb]
         \begin{center}
@@ -285,107 +279,25 @@ In order to permit incremental deployment any system must ensure that its users 
 
 Facebook does provide a JavaScript SDK for interfacing with the Facebook platform, however it is poorly documented and doesn't allow uploading images - since most JavaScript applications are designed to run inside the browser sandbox without local filesystem access. Instead, we may use the Facebook Graph API directly.
 
-Objects can be read simply by making GET requests to \url{https://graph.facebook.com/ID} and parsing the return result as a JSON object. For none public objects we will also require an access token. Facebook uses the OAuth 2.0 protocol. An access token can be obtained by handling the page redirect \footnote{To ensure authentication can only occur in client side code the access token is passed in a URI fragment.} after the following GET request:
+Authentication is performed using the OAuth 2.0 protocol. Applications register with Facebook and present their application ID upon request. The user then confirms that the application may use the requested permisions and an access token is generated. This token is then used in future exchanges.
 
-\FloatBarrier
-    \begin{lstlisting}[label=code:auth,caption=Authentication GET request,float=h]
-        https://www.facebook.com/dialog/oauth?
-            client_id=APP_ID&
-            redirect_uri=REDIRECT_URL&
-            scope=SCOPE_VAR1,SCOPE_VAR2,SCOPE_VAR3&
-            response_type=token
-    \end{lstlisting}
-\FloatBarrier
-
-    
-Content can also be published in a similar way. An example request might look like:
-
-\FloatBarrier
-    \begin{lstlisting}[label=code:pub,caption=Publishing POST request,float=h]
-        https://graph.facebook.com/ID/feed?
-            access_token=ACCESS_TOKEN&
-            message=MESSAGE
-    \end{lstlisting}
-\FloatBarrier    
-
-<--------------------------------------------------------------------->
-<--------------------- Probably move this to Appendix ---------------->    
-
-There are several caveats:
-
-\begin{itemize}
-
-    \item When publishing images, although the operation is supported, getting a correct handle to the image is difficult due to JavaScript's poor support for working with local files. The workaround requires creating an invisible form on the current page with a file input element and extracting the file handle from there.
-
-    \item Images have to be published to an album. Facebook currently uses two types of album ID, one which appears within web pages and one which can be used for publishing through the Graph API. An additional API query is required before uploading to translate from one format to the other.
-    
-    \item It certain cases, though publishing through the Graph API is possible, it is more convenient to programatically manipulate form controls. An example is when submitting a comment and triggering the click handler for the submit button.
-    
-    \item Modifying the "About Me" section of a users profile is unsupported entirely. The workaround requires creating an invisible iframe on the current page and manipulating a form on the Facebook site within.
-
-\end{itemize}
-
-<--------------------------------------------------------------------->
-
+Unfortunately some actions\footnote{Namely working with the local filesystem and modifying the "Bio" attribute.} are poorly supported by the Graph API, if at all. Appendix XXX describes the API in more detail, as well as the required workarounds.
 
     
 \FloatBarrier
-\section{Storing data in images}
+\section{Encrypting images}
+\label{ssec:images}
 
-As well as being one of the most frequently used types of content, images have been highlighted as a prime privacy concern on social networks \cite{fb-images}. None of the existing work supports image encryption, though flyByNight discusses it as a possible extension.
+%As well as being one of the most frequently used types of content, images have been highlighted as a prime privacy concern on social networks \cite{fb-images}. None of the existing work supports image encryption, though flyByNight discusses it as a possible extension.
 
-The main problem is that, regardless of the input format, Facebook encodes all uploaded images using lossy JPEG. \footnote{Even if a file is already in the output format the compression process is repeated and information is lost.} This means we require some form of JPEG-immune coding to store the binary output of encryption in an image, such that even after undergoing compression we can exactly recover the original bytes.
+Regardless of the input format, Facebook encodes all uploaded images using lossy JPEG.\footnote{Even if a file is already in the output format the compression process is repeated and information is lost.} We therefore require some form of JPEG-immune coding for the binary output of encryption, so that after undergoing compression we can exactly recover the original bytes.
 
-We being by describing Facebook's JPEG compression process and evaluating naive attempts at encoding data in images, before proposing two more advanced approaches.
-
-\FloatBarrier
-\subsection{JPEG compression process}
-
-Information is lost at several stages:
-
-\begin{enumerate}
-
-    \item Colour images are subject to a lossy colour space transform from RGB to YCrCb.
-    \item The chrominance components Cr and Cb are subsampled at a rate half that of the luminance channel.
-    \item The discrete cosine transform is applied to each 8x8 block using finite arithmetic.
-    \item DCT coefficients are quantised according to values in a quantisation matrix.
-    
-\end{enumerate}
-
-Note that chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images. This leaves quantisation as the principle step at which information loss occurs.
-
-Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the {\tt libjpeg} library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
-
-\begin{table}[tb]
-\begin{center}
-    %\definecolor{lgray}{hsb}{0.1, 0, 0.9}
-    %\rowcolors{3}{white}{lgray}
-    \begin{tabular}{|+c |^c |^c |^c |^c |^c |^c |^c |}
-    \hline
-    \multicolumn{8}{|c|}{\bf Quantisation Matrix} \\ \hline
-    \hline
-    5 & 3 & 3 & 5 & 7 & 12 & 15 & 18 \\ \hline
-    4 & 4 & 4 & 6 & 8 & 17 & 18 & 17 \\ \hline
-    4 & 4 & 5 & 7 & 12 & 17 & 21 & 17 \\ \hline
-    4 & 5 & 7 & 9 & 15 & 26 & 24 & 19 \\ \hline
-    5 & 7 & 11 & 17 & 20 & 33 & 31 & 23 \\ \hline
-    7 & 11 & 17 & 19 & 24 & 31 & 34 & 28 \\ \hline
-    15 & 19 & 23 & 26 & 31 & 36 & 36 & 30 \\ \hline
-    22 & 28 & 29 & 29 & 34 & 30 & 31 & 30 \\ \hline
-\end{tabular}
-\end{center}
-
-\caption{Quantisation matrix used by Facebook for luminance channel.}
-\label{tab:quants}
-
-\end{table}
+Appendix XXX describes Facebook's JPEG compression process. To motivate the need for a more complex scheme we evaluate two naive attempts at encoding data in images, before proposing a more advanced approach. Note that we only consider greyscale images.\footnote{Chrominance subsampling means RGB images provide a less than 50\% increase in capacity over greyscale. See appendix XXX.}
 
 
 \subsection{Naive data insertion}
 
-To motivate the need for a more complex scheme, we describe two naive methods of coding data in images.
-
-One approach would be to encode directly into greyscale pixel values with enough redundancy to overcome the information lost during compression. Another approach might be to similarly encode data into DCT coefficients of an existing JPEG image, since through the process of decompression and re-compression only a small amount of information is lost. The main source of information loss for the second approach is from capping DCT coefficients that don't map back to greyscale values in the range 0-255.
+One approach would be to encode directly into greyscale pixel values with enough redundancy to overcome the information lost during compression. A second might be to similarly encode data into DCT coefficients of an existing JPEG image, since through the process of decompression and re-compression only a small amount of information is lost. The main source of information loss for the second approach is from capping DCT coefficients which don't map back to greyscale values in the range 0-255.
 
 \begin{figure}[tbph]
   \begin{center}
@@ -406,7 +318,7 @@ One approach would be to encode directly into greyscale pixel values with enough
   \end{center}
 \end{figure}
 
-Figure XX graphs the bit error rate for both methods over a range of quality factors, using {\tt libjpeg} for compression. For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see appendix XXX for details). Modeling the compression process as a binary symmetric channel, Figure XX graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation section XXX).
+Figure XX graphs the bit error rate for both methods over a range of quality factors, using the IGJ (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix XXX). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see appendix XXX for details). Modeling the compression process as a binary symmetric channel, Figure XX graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation section \ref{ssec:capacity}).
 
 
 \begin{figure}[tbph]
@@ -428,22 +340,22 @@ Figure XX graphs the bit error rate for both methods over a range of quality fac
   \end{center}
 \end{figure}
 
-Given a recipient group size of 400 and ciphered session key size of 1024-bit (see section XXX), the transmission overhead required would be at least 50 KiB. This means neither of the naive approaches would be suitable, even given an error correction scheme which performs at or near the Shannon limit. 
+Given a recipient group size of 400 and a ciphered session key size of 1024-bit (see section \label{ssec:keys}) the transmission overhead alone would be at at least 50 KiB.\footnote{50 KiB not including the list of recipient IDs, initialisation vector and any padding or size tags.} This means neither of the naive approaches would be suitable even given an error correction scheme which performs at or near the Shannon limit. 
 
 
 \subsection{Advanced data insertion}
 
-One initial optimisation for any coding scheme would be to map binary data to appropriate length gray codes to ensure that only single bit errors occur from erroneously outputting an adjacent codeword. In addition, we present two possible schemes, henceforth referred to as the HWT (Haar Wavelet Transform) method and the n-bit scaling method.
+One initial optimisation for any coding scheme would be to map binary data to appropriate length grey codes to ensure that only single bit errors occur from erroneously outputting an adjacent codeword. In addition, we present two possible schemes, henceforth referred to as the HWT (Haar Wavelet Transform) method and the n-bit scaling method.
 
 \begin{sdesc}
 
-    \item[HWT method] \hfill \\ JPEG DCT compression selectively quantises perceptually redundant high frequency components. Wavelet transforms allow us to embed data in the low frequency sub-band of the carrier signal and can be performed reversibly (i.e. losslessly) by using an integer lifting scheme. Xu et al demonstrate that data encoded in low-frequency HWT approximation coefficients can survive JPEG decompression when combined with an error correction scheme \cite{haar}.
+    \item[HWT method] \hfill \\ JPEG DCT compression selectively quantises perceptually redundant high frequency components. Wavelet transforms allow us to embed data in the low frequency sub-band of the carrier signal and can be performed reversibly by using an integer lifting scheme. Xu et al demonstrate that data encoded in low-frequency HWT approximation coefficients can survive JPEG decompression when combined with an error correction scheme \cite{haar}.
     
-    \item[N-bit scaling method] \hfill \\ This method maps the n-bit input space on to the 8-bit pixel space by scaling the input such that 0 corresponds to 0, and $2^n - 1$ corresponds to 255. The inverse process amounts to outputting the interval the pixel value lies in. This method works on the assumption that large changes in pixel intensity are unlikely.
+    \item[N-bit scaling method] \hfill \\ This method maps the n-bit input space on to the 8-bit pixel space by scaling the input by a factor of $ \frac{2^8 - 1}{2^n - 1}$. The inverse process amounts to outputting the interval pixel value lies in. This method works on the assumption that large changes in single pixel intensity are unlikely to occur due to compression.
 
 \end{sdesc}
 
-Clearly both these schemes are sub-optimal and their exact properties (compression time and error rates) are unknown. We make it a requirement that the project should take a modular approach to conduit image implementations: firstly to ensure that both of the proposed schemes can be implemented simultaneously and their performances compared; secondly, to aid future development of a more optimal solution.
+Clearly both these schemes are sub-optimal and their exact properties (compression time and error rates) are unknown. We made it a requirement that the project should take a modular approach to conduit image implementations: firstly to ensure that both of the proposed schemes can be implemented simultaneously and their performances compared; secondly, to aid future development of a more optimal solution.
 
 
 
@@ -451,18 +363,19 @@ Clearly both these schemes are sub-optimal and their exact properties (compressi
 \section{Further security considerations}
 \label{sec:security}
 
-In order to meet the goal of privacy protection we must consider proper security engineering practices. A particular concern is that of introducing new vulnerabilities into the browser platform. We perform a threat analysis and describe issue relating to the underlying cryptographic scheme and management of private keys.
+To properly
+protect privacy we must consider proper security engineering practices. Of particular concern is introducing new vulnerabilities into the browser platform. We perform a threat analysis and describe issues relating to the underlying cryptographic scheme and management of private keys.
 
 \FloatBarrier
 \subsection{Threat analysis}
 \label{ssec:threat}
 
-Full details of the threat and risk analysis are included in appendix XXX. We take an attack-centric approach, defining risk as (Vulnerability x Threat x Impact) according the methodology described by \cite{XXX}. We identify several potential threats and possible security measures proportionate to the risk they pose:
+Full details of the threat and risk analysis are included in appendix XXX. We take an attack-centric approach, defining risk as $Vulnerability \times Threat \times Impact$ according the methodology described by \cite{security}. We identify several potential threats and possible security measures proportionate to the risk they pose:
 
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 1] Attacker breaks encryption scheme by brute force methods.
-    \item[Measures] Ensure key sizes are appropriate given the type of attacker. See section XXX.
+    \item[Attack 1] Attacker breaks the encryption scheme by brute force methods.
+    \item[Measures] Ensure key sizes are appropriate given the type of attacker. See section \ref{ssec:keys}.
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
@@ -471,8 +384,8 @@ Full details of the threat and risk analysis are included in appendix XXX. We ta
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 3] Attacker gains access to users computer by injecting code into eval() which runs outside the browser sandbox.
-    \item[Measures] Wrap all calls to eval() with a SecureEval() function which sanitizes input and prevents malicious use. 
+    \item[Attack 3] Attacker gains access to user's computer by injecting code into eval() which runs outside the browser sandbox.
+    \item[Measures] Wrap all calls to eval() with a SecureEval() function which attempts to prevent malicious use. 
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
@@ -487,27 +400,37 @@ Full details of the threat and risk analysis are included in appendix XXX. We ta
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
     \item[Attack 6] Attacker causes DoS by creating a malicious object.
-    \item[Measures] Since the decryption process is built to fail gracefully (see section XXX) this need not be a large problem even in the worse case, provided some simple run time checks are included.
+    \item[Measures] This need not be a large problem since decryption is built to fail gracefully (see section \ref{ssec:ident-targets}). Include some simple run time checks to limit iteration.
 \end{sdesc}
 
 
 \FloatBarrier
 \subsection{Underlying encryption schemes}
-
-We use AES and RSA as both schemes are approved by NIST standards \cite{nist} and widely available via the Botan cryptography library. Ideally however, we would have liked to use a scheme based on elliptic curve cryptography since public key sizes are much smaller for the same amount of security than finite field or integer factorisation. This is important since the block size of the cipher depends on the public key, and this in turn determines the size of the session key once it has been encrypted. In our case, for example, a 256-bit AES session key requires 2048-bits of transmission overhead per recipient. Unfortunately ECC is less common in open libraries due to patent concerns \cite{XXX}.
-
-Again, we make it a requirement that the project be modular enough to allow later use of a more suitable scheme.
-
-
-\FloatBarrier
-\subsection{Cryptographic keys}
 \label{ssec:keys}
 
-NIST(National Institute of Standard and Technology) provide recommendations on key size. Since 2010 NIST have recommended using at least 128-bits of security. This is equivalent to 3-TDEA (symmetric) or 2048-bit RSA (asymmetric). \cite{nist}
+NIST(National Institute of Standard and Technology) provide recommendations on key size. Since 2010 NIST have recommended using at least 128-bits of security \cite{nist-key}.
 
-NIST also give recommendations for acceptable psuedo-random number generators and hash functions when generating keys, which we adhere to. {\tt /dev/random} is used as a source of entropy, an analysis of which is provided by http://www.pinkas.net/PAPERS/gpr06.pdf.
-	
-    
+AES and RSA are both approved by NIST standards and widely available via the Botan cryptography library. Ideally however, we would like to use a scheme based on elliptic curve cryptography since comparable strength public keys are much smaller than for finite field or integer factorisation methods (see Table \ref{tab:keys}). This is important since the block size of the cipher depends on the public key; this in turn determines the size of the session key once it has been encrypted. Unfortunately ECC is less common in open libraries due to patent concerns.
+
+\begin{table}[tbph]
+  \begin{center}
+        \definecolor{lgrey}{hsb}{0.1, 0, 0.9}
+        %\rowcolors{3}{white}{lgrey}
+        \begin{tabular}{+l ^l ^l ^l}
+            \rowstyle{\bfseries}%
+            Bits of Security & FFC & IFC & ECC \\
+            \midrule
+            80 &  1024  & 1024 & 160-223 \\
+            112 & 2048  & 2048 & 224-255 \\
+            128 & 3072  & 3072 & 256-383 \\
+            192 & 7680  & 7680 & 384-511 \\
+            256 & 15360 & 15360 & 512+ \\
+        \end{tabular}
+        \caption{Table of public key length equivalences \cite{nist-key}}
+        \label{tab:keys}
+    \end{center}
+\end{table}
+
 
 \FloatBarrier
 \section{Requirements specification}
@@ -526,19 +449,19 @@ Based on the contents of this chapter we derive a set of concrete requirements.
         \item Images
     \end{itemize}
     
-    Specifically, key sizes will provide at least 128 bits of security according to the NIST standards described in section XXX.
+    Specifically, key sizes will provide at least 128 bits of security according to NIST recommendations ( section \ref{ssec:keys}).
     
-    \item[Requirement 2] The size limits for encrypted text objects will be no smaller than the current limits Facebook imposes, given in section XXX).
+    \item[Requirement 2] The size limits for encrypted text objects will be no smaller than the current limits Facebook imposes, given in section \ref{sec:content}).
 
     \item[Requirement 3] The size limit for encrypted images will be no less than 50 KiB. XXX JUSTIFY THIS XXX.
 
-    \item[Requirement 4] To ensure the goal of scalability is met, all requirements will be met given recipient groups sizes up to 400, based on the discussion in section XXX.
+    \item[Requirement 4] To ensure the goal of scalability is met, all requirements will be met given recipient groups sizes up to 400, based on the discussion in section \ref{sec:cness}.
     
     
-    \item[Requirement 5] To ensure the goal of usability is met, response times will meet the criteria described by \url{http://www.useit.com/papers/responsetime.html}.
+    \item[Requirement 5] To ensure the goal of usability is met, all response times will lie within acceptable limits, in accordance with \cite{response}.
 
 
-    \item[Requirement 6] Should try not to introduce any security holes. Up to a point, given scope of project. We have already declared a threat model and testing strategy etc.
+    \item[Requirement 6] To ensure privacy is protected, the project will implement the security measures described in \label{ssec:threat}.
 
 
     \item[Requirement 7] The number of newsfeed entries generated by encrypted submission will be no more than the number generated by normal content submission. This ensures that the effect on signal-to-noise ratio is kept to an absolute minimum - the only perceivable 'noise' is the encrypted content itself.
@@ -553,13 +476,13 @@ Based on the contents of this chapter we derive a set of concrete requirements.
 \FloatBarrier 
 \section{Development}
         
-An agile development style was adopted based on \cite{XXX}. Uncertainties in the optimal approach or combination of approaches for encryption, image coding and error correction meant that being flexible and able to respond to changes was crucial. Delivering functional prototypes at various stage in the development life-cycle also fits with the project's modularity requirement. Since the bulk of the project concerns encapsulating data in some layer of encoding the natural approach was to build successive prototypes, each implementing a new layer.
+An agile development style was adopted loosely based on \cite{agile}. Uncertainties in the optimal approach or combination of approaches for encryption, image coding and error correction meant that being flexible and able to respond to changes was crucial. Delivering functional prototypes at various stage in the development life-cycle also fits with the project's modularity requirement. Since the bulk of the project concerns encapsulating data in some layer of encoding the natural approach was to build successive prototypes, each implementing a new layer.
 
 \subsection{Development environment}
 
 Git was used for revision control and backup. The working repository is stored on a laptop and pushed twice-daily to a remote repository hosted by ProjectLocker.
 
-Komodo edit was used as a development IDE, as recommended by Mozilla. C++ coding style followed the guidelines detailed here \cite{code-style} and documentation was generated automatically using Doxygen.
+Komodo edit was used as a development IDE, as recommended by Mozilla. C++ coding style followed the GeoSoft guidelines \cite{code-style}. Documentation was generated automatically using Doxygen.
 
 Firefox 4.0 pre-beta was obtained through APT by adding the Mozilla Daily Build Team PPA. The build process consists of compiling and linking the C++ shared library, then packaging this (together with the rest of the extension code) and automatically installing to a number of Firefox development profiles.        
 
@@ -570,7 +493,7 @@ GNU Octave (a free MATLAB-like application) was also used for provisional evalua
 \FloatBarrier
 \section{Testing plan}
 
-General testing followed the agile testing principles of "test driven" development over "test last". The feedback loop between testing and implementation was kept as short as possible, to maintain flexibility over the exact approach.
+General testing followed the agile testing principles of test driven development over test last. The feedback loop between testing and implementation was kept as short as possible, to maintain flexibility over the exact approach.
 
 
 \subsection{Security testing}
@@ -580,12 +503,12 @@ Special attention was made to security relevant testing such as input sanitisati
 
 \subsection{Usability testing}
 
-To help ensure the goal of usability was met, usability testing in the form of cognitive walkthroughs were performed. During development many passes of the walkthroughs were performed and alterations made, until a credible success story could be constructed for each task. Excerpts from final success stories are presented in evaluation chapter XXX.
+To help ensure the goal of usability was met, usability testing in the form of cognitive walkthroughs were performed. During development many passes of the walkthroughs were performed and alterations made, until a credible success story could be constructed for each task. Excerpts from final success stories are presented in evaluation chapter \ref{sec:use}.
 
 
 \subsection{Testing framework}
 
-In order to expedite testing often the Facebook image compression process was simulated locally. We used libjpeg at quality factor 85 since this most closely matches the compression signature of Facebook images.
+In order to expedite testing often the Facebook image compression process was simulated locally. We used IJG {\tt libjpeg} at quality factor 85, again since this most closely matches the compression signature of Facebook images.
 
 The C++ module was developed and unit tested offline independently. Testing codes was built into extraneous library functions and {\tt gprof } was used for profiling and debugging.
 

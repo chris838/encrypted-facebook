@@ -40,6 +40,33 @@
     \field{year}{2001}
   \endentry
 
+  \entry{agile}{report}{}
+    \name{labelname}{4}{}{%
+      {{}{Abrahamsson}{A\bibinitperiod}{Pekka}{P\bibinitperiod}{}{}{}{}}%
+      {{}{Salo}{S\bibinitperiod}{Outi}{O\bibinitperiod}{}{}{}{}}%
+      {{}{Ronkainen}{R\bibinitperiod}{Jussi}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Warsta}{W\bibinitperiod}{Juhani}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{4}{}{%
+      {{}{Abrahamsson}{A\bibinitperiod}{Pekka}{P\bibinitperiod}{}{}{}{}}%
+      {{}{Salo}{S\bibinitperiod}{Outi}{O\bibinitperiod}{}{}{}{}}%
+      {{}{Ronkainen}{R\bibinitperiod}{Jussi}{J\bibinitperiod}{}{}{}{}}%
+      {{}{Warsta}{W\bibinitperiod}{Juhani}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \list{institution}{1}{%
+      {VTT Publications}%
+    }
+    \strng{namehash}{AP+1}
+    \strng{fullhash}{APSORJWJ1}
+    \field{sortinit}{A}
+    \field{title}{Agile software development methods}
+    \field{type}{techreport}
+    \field{year}{2002}
+    \verb{url}
+    \verb http://vtt.fi/vtt_show_record.jsp?target=julk&form=sdefe&search=44278
+    \endverb
+  \endentry
+
   \entry{ross}{book}{}
     \name{labelname}{1}{}{%
       {{}{Anderson}{A\bibinitperiod}{Ross\bibnamedelima J.}{R\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
@@ -60,6 +87,32 @@
     \field{isbn}{0471389226}
     \field{title}{Security Engineering: A Guide to Building Dependable Distributed Systems}
     \field{year}{2001}
+  \endentry
+
+  \entry{nist-key}{article}{}
+    \name{labelname}{5}{}{%
+      {{}{Barker}{B\bibinitperiod}{E.}{E\bibinitperiod}{}{}{}{}}%
+      {{}{Barker}{B\bibinitperiod}{W.}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Burr}{B\bibinitperiod}{W.}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Polk}{P\bibinitperiod}{W.}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Smid}{S\bibinitperiod}{M.}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{5}{}{%
+      {{}{Barker}{B\bibinitperiod}{E.}{E\bibinitperiod}{}{}{}{}}%
+      {{}{Barker}{B\bibinitperiod}{W.}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Burr}{B\bibinitperiod}{W.}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Polk}{P\bibinitperiod}{W.}{W\bibinitperiod}{}{}{}{}}%
+      {{}{Smid}{S\bibinitperiod}{M.}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{2}{%
+      {NIST (National Institute of Standards}%
+      {Technology)}%
+    }
+    \strng{namehash}{BE+1}
+    \strng{fullhash}{BEBWBWPWSM1}
+    \field{sortinit}{B}
+    \field{title}{NIST Special Publication 800-57: Recommendation for Key Management Part1 - General}
+    \field{year}{2007}
   \endentry
 
   \entry{proxy}{inproceedings}{}
@@ -83,29 +136,6 @@
     \field{title}{Divertible protocols and atomic proxy cryptography}
     \field{year}{1998}
     \field{pages}{127\bibrangedash 144}
-  \endentry
-
-  \entry{burke2010social}{inproceedings}{}
-    \name{labelname}{3}{}{%
-      {{}{Burke}{B\bibinitperiod}{Moira}{M\bibinitperiod}{}{}{}{}}%
-      {{}{Marlow}{M\bibinitperiod}{Cameron}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Lento}{L\bibinitperiod}{Thomas}{T\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{3}{}{%
-      {{}{Burke}{B\bibinitperiod}{Moira}{M\bibinitperiod}{}{}{}{}}%
-      {{}{Marlow}{M\bibinitperiod}{Cameron}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Lento}{L\bibinitperiod}{Thomas}{T\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {Atlanta, GA}%
-    }
-    \strng{namehash}{BMMCLT1}
-    \strng{fullhash}{BMMCLT1}
-    \field{sortinit}{B}
-    \field{booktitle}{CHI ’10: Proceedings of the 28th international conference on Human factors in computing systems}
-    \field{title}{Social network activity and social well-being}
-    \field{year}{2010}
-    \keyw{social capital, social well-being}
   \endentry
 
   \entry{passwords}{misc}{}
@@ -256,6 +286,23 @@
     \field{year}{2007}
   \endentry
 
+  \entry{flash-sbox}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Google}{G\bibinitperiod}{}{}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Google}{G\bibinitperiod}{}{}{}{}{}{}}%
+    }
+    \strng{namehash}{G1}
+    \strng{fullhash}{G1}
+    \field{sortinit}{G}
+    \field{title}{Rolling out sandbox for Adobe Flash}
+    \field{year}{2010}
+    \verb{url}
+    \verb http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html
+    \endverb
+  \endentry
+
   \entry{gross}{inproceedings}{}
     \name{labelname}{2}{}{%
       {{}{Gross}{G\bibinitperiod}{Ralph}{R\bibinitperiod}{}{}{}{}}%
@@ -302,7 +349,7 @@
       {{}{Francis}{F\bibinitperiod}{Paul}{P\bibinitperiod}{}{}{}{}}%
     }
     \list{location}{1}{%
-      {Seattle, WA, USA}%
+      {New York, NY, USA}%
     }
     \list{publisher}{1}{%
       {ACM}%
@@ -323,7 +370,6 @@
     \verb http://doi.acm.org/10.1145/1397735.1397747
     \endverb
     \keyw{cloud computing, noyb, privacy}
-    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'noyb' - skipping field 'address'}
   \endentry
 
   \entry{metcalf}{article}{}
@@ -353,6 +399,28 @@
     \verb http://www.sciencedirect.com/science/article/B758F-4R6JP09-2/2/bc3ba99ebfcaf2fd3cf0077a55bd891d
     \endverb
     \keyw{Metcalfe's law}
+  \endentry
+
+  \entry{dunbar}{article}{}
+    \name{labelname}{2}{}{%
+      {{}{Hill}{H\bibinitperiod}{R.\bibnamedelimi A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Dunbar}{D\bibinitperiod}{R.\bibnamedelimi I.\bibnamedelimi M.}{R\bibinitperiod\bibinitdelim I\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Hill}{H\bibinitperiod}{R.\bibnamedelimi A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+      {{}{Dunbar}{D\bibinitperiod}{R.\bibnamedelimi I.\bibnamedelimi M.}{R\bibinitperiod\bibinitdelim I\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{HRADRIM1}
+    \strng{fullhash}{HRADRIM1}
+    \field{sortinit}{H}
+    \field{journaltitle}{Human Nature}
+    \field{title}{{Social network size in humans}}
+    \field{volume}{14}
+    \field{pages}{53\bibrangedash 72}
+    \verb{url}
+    \verb http://www.liv.ac.uk/evolpsyc/Hill\_Dunbar\_networks.pdf
+    \endverb
+    \keyw{cooperation, online\_communities, social\_networks}
   \endentry
 
   \entry{fb-ads}{online}{}
@@ -499,6 +567,85 @@
     \keyw{FaceCloak;Facebook;Firefox browser extension;Flickr;Internet users;MySpace;social networking sites;user privacy;data privacy;social networking (online);}
   \endentry
 
+  \entry{socnetsize}{article}{}
+    \name{labelname}{5}{}{%
+      {{}{Mccarty}{M\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Killworth}{K\bibinitperiod}{P.\bibnamedelimi D.}{P\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
+      {{}{Bernard}{B\bibinitperiod}{H.\bibnamedelimi R.}{H\bibinitperiod\bibinitdelim R\bibinitperiod}{}{}{}{}}%
+      {{}{Johnsen}{J\bibinitperiod}{E.\bibnamedelimi C.}{E\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+      {{}{Shelley}{S\bibinitperiod}{G.\bibnamedelimi A.}{G\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{5}{}{%
+      {{}{Mccarty}{M\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Killworth}{K\bibinitperiod}{P.\bibnamedelimi D.}{P\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
+      {{}{Bernard}{B\bibinitperiod}{H.\bibnamedelimi R.}{H\bibinitperiod\bibinitdelim R\bibinitperiod}{}{}{}{}}%
+      {{}{Johnsen}{J\bibinitperiod}{E.\bibnamedelimi C.}{E\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+      {{}{Shelley}{S\bibinitperiod}{G.\bibnamedelimi A.}{G\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{MC+1}
+    \strng{fullhash}{MCKPDBHRJECSGA1}
+    \field{sortinit}{M}
+    \field{journaltitle}{Human Organization}
+    \field{number}{1}
+    \field{title}{{Comparing Two Methods for Estimating Network Size}}
+    \field{volume}{60}
+    \field{year}{2001}
+    \field{pages}{28\bibrangedash 39}
+    \keyw{non}
+  \endentry
+
+  \entry{security}{book}{}
+    \name{labelname}{1}{}{%
+      {{}{McGraw}{M\bibinitperiod}{Gary}{G\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{McGraw}{M\bibinitperiod}{Gary}{G\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Addison-Wesley Professional}%
+    }
+    \strng{namehash}{MG1}
+    \strng{fullhash}{MG1}
+    \field{sortinit}{M}
+    \field{isbn}{0321356705}
+    \field{title}{Software Security: Building Security In}
+    \field{year}{2006}
+  \endentry
+
+  \entry{xpcomm}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
+    }
+    \strng{namehash}{M1}
+    \strng{fullhash}{M1}
+    \field{sortinit}{M}
+    \field{title}{Bundling multiple binary components}
+    \field{year}{2010}
+    \verb{url}
+    \verb https://developer.mozilla.org/en/Bundling_multiple_binary_components
+    \endverb
+  \endentry
+
+  \entry{js-ctypes}{online}{}
+    \name{labelname}{1}{}{%
+      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
+    }
+    \strng{namehash}{M1}
+    \strng{fullhash}{M1}
+    \field{sortinit}{M}
+    \field{title}{JavaScript Code Modules: ctypes.jsm}
+    \field{year}{2010}
+    \verb{url}
+    \verb https://developer.mozilla.org/en/JavaScript_code_modules/ctypes.jsm
+    \endverb
+  \endentry
+
   \entry{bband-stats}{online}{}
     \strng{namehash}{1}
     \strng{fullhash}{1}
@@ -508,6 +655,29 @@
     \verb{url}
     \verb http://www.netindex.com/download/2,4/United-Kingdom/
     \endverb
+  \endentry
+
+  \entry{response}{book}{}
+    \name{labelname}{1}{}{%
+      {{}{Nielsen}{N\bibinitperiod}{Jakob}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Nielsen}{N\bibinitperiod}{Jakob}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \list{location}{1}{%
+      {San Francisco, California}%
+    }
+    \list{publisher}{1}{%
+      {Morgan Kaufmann Publishers}%
+    }
+    \strng{namehash}{NJ1}
+    \strng{fullhash}{NJ1}
+    \field{sortinit}{N}
+    \field{isbn}{0125184069}
+    \field{month}{10}
+    \field{title}{Usability Engineering}
+    \field{year}{1994}
+    \keyw{imported}
   \endentry
 
   \entry{rsfec-decode}{book}{}
