@@ -80,6 +80,17 @@ eFB = {
                             "scope=offline_access,user_notes,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,user_about_me,friends_about_me,create_note,friends_notes,read_stream,publish_stream&" +
                             "display=popup";
             window.open( login_url, "fb-login-window", "centerscreen,width=550,resizable=0");
+            
+            document.getElementById('efb-login').setAttribute('disabled','true');
+
+            document.getElementById('efb-importpk').setAttribute('disabled','false');
+            document.getElementById('efb-exportpk').setAttribute('disabled','false');
+            document.getElementById('efb-dloadpk').setAttribute('disabled','false');
+            document.getElementById('efb-uploadpk').setAttribute('disabled','false');
+            document.getElementById('efb-clean').setAttribute('disabled','false');
+            document.getElementById('efb-logout').setAttribute('disabled','false');
+
+            
         } else {
             // And if we are, nothing to do
             window.alert( "You are already logged in." );

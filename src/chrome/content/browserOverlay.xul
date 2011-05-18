@@ -27,14 +27,18 @@
         insertbefore="PersonalToolbar">
       <toolbarbutton id="efb-login"
         class="button" 
-        label="Start eFB Session"
+        label="Start Encrypted Facebook"
         tooltiptext="Log the application into your Facebook account."
-        oncommand="eFB.login(event);" />
+        oncommand="eFB.login(event);"
+        disabled="false" />
       <toolbarbutton id="efb-logout"
         class="button" 
-        label="End eFB Session"
+        label="Logout"
         tooltiptext="Log the application out of your Facebook account."
-        oncommand="eFB.logout(event);" />
+        oncommand="eFB.logout(event);"
+        disabled="true" />
+       
+      <toolbarseparator /> 
         
       <spacer flex="1"/>
       
@@ -42,35 +46,41 @@
         class="button" 
         label="Clean Profile"
         tooltiptext="Remove all notes and wall/newsfeed objects from your profile."
-        oncommand="eFB.cleanProfile(event);" />
+        oncommand="eFB.cleanProfile(event);"
+        disabled="true" />
         
       <toolbarbutton id="efb-createid"
         class="button" 
         label="Create Identity"
         tooltiptext="Create a new identity locally. This will overwrite any current local identity."
-        oncommand="eFB.createId(event);" />
+        oncommand="eFB.createId(event);"
+        disabled="false" />
         
       <toolbarbutton id="efb-uploadpk"
         class="button" 
         label="Upload Public Key"
         tooltiptext="Upload local public key to your Facebook prfile."
-        oncommand="eFB.uploadPk(event);" />
+        oncommand="eFB.uploadPk(event);"
+        disabled="true" />
       <toolbarbutton id="efb-dloadpk"
         class="button" 
         label="Download Public Key"
         tooltiptext="Download public key from your Facebook profile. This will overwrite any current local public keys."
-        oncommand="eFB.downloadPk(event);" />
+        oncommand="eFB.downloadPk(event);"
+        disabled="true" />
         
       <toolbarbutton id="efb-exportpk"
         class="button" 
         label="Export Private Key"
         tooltiptext="Export you private key file. Please ensure your private key information is kept safe."
-        oncommand="eFB.exportPk(event);" />
+        oncommand="eFB.exportPk(event);"
+        disabled="true" />
       <toolbarbutton id="efb-importpk"
         class="button" 
         label="Import Private Key"
         tooltiptext="Import your private key from a file. This will overwrite any current local private key."
-        oncommand="eFB.importPk(event);" />
+        oncommand="eFB.importPk(event);"
+        disabled="true" />
     </toolbar>
   </toolbox>
 

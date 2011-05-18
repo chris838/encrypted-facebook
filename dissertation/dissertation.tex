@@ -24,9 +24,9 @@
 \usepackage[pdftex]{graphicx}
 \DeclareGraphicsRule{*}{mps}{*}{}
 \usepackage{pgfplots}
-\usepackage{subfigure}
-\usepackage[center]{caption}
+\usepackage[center,labelfont=it,textfont=it]{caption}
 \renewcommand{\captionfont}{\it\small}
+\usepackage{subfigure}
 
 % tikz packages
 \usetikzlibrary{shapes,arrows}
@@ -71,7 +71,7 @@
 
 
 % PDF hyperlinks
-\usepackage{hyperref}
+\usepackage[colorlinks=false,pdfborder={0 0 0}]{hyperref}
 
 % Use the TEX Gyre Pagella font based on Palladio
 \usepackage[british,english,greek]{babel}
@@ -134,19 +134,30 @@
 %\cleardoublepage
 \cleardoublepage\pagenumbering{arabic}\include{chapters/introduction}
 \cleardoublepage\include{chapters/preparation}
-%\cleardoublepage\include{chapters/implementation}
-%\cleardoublepage\include{chapters/evaluation}
-%\cleardoublepage\include{chapters/conclusion}
+\cleardoublepage\include{chapters/implementation}
+\cleardoublepage\include{chapters/evaluation}
+\cleardoublepage\include{chapters/conclusion}
 
 % *******************************************************************
 %   Appendix and bibliography
 %********************************************************************
 \addcontentsline{toc}{chapter}{Bibliography}
 \cleardoublepage\printbibliography
-%\cleardoublepage\part*{Appendix}
-%\appendix
-%\cleardoublepage\include{chapters/app_times}
-%\cleardoublepage\include{frontbackmatter/proposal}
+\cleardoublepage\part*{Appendix}
+\appendix
+
+\cleardoublepage\include{chapters/app_bcast}
+\cleardoublepage\include{chapters/app_graph}
+\cleardoublepage\include{chapters/app_images}
+\cleardoublepage\include{chapters/app_dct}
+\cleardoublepage\include{chapters/app_threat}
+\cleardoublepage\include{chapters/app_haar}
+\cleardoublepage\include{chapters/app_test}
+\cleardoublepage\include{chapters/app_cogwalk}
+\cleardoublepage\include{chapters/app_bvanal}
+
+
+\cleardoublepage\include{frontbackmatter/proposal}
 
 
 

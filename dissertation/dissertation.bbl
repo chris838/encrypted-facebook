@@ -23,23 +23,6 @@
 
 
 \refsection{0}
-  \entry{interfaces}{article}{}
-    \list{location}{1}{%
-      {USA}%
-    }
-    \list{publisher}{1}{%
-      {CMP Media, Inc.}%
-    }
-    \strng{namehash}{1}
-    \strng{fullhash}{1}
-    \field{sortinit}{2}
-    \field{issn}{1075-2838}
-    \field{journaltitle}{C/C++ Users J.}
-    \field{number}{9}
-    \field{volume}{19}
-    \field{year}{2001}
-  \endentry
-
   \entry{agile}{report}{}
     \name{labelname}{4}{}{%
       {{}{Abrahamsson}{A\bibinitperiod}{Pekka}{P\bibinitperiod}{}{}{}{}}%
@@ -181,10 +164,10 @@
 
   \entry{fb-cipc}{online}{}
     \name{labelname}{1}{}{%
-      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commissioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
     }
     \name{author}{1}{}{%
-      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commisioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
+      {{}{Elizabeth\bibnamedelima Denham}{E\bibinitperiod\bibinitdelim D\bibinitperiod}{Assistant\bibnamedelimb privacy\bibnamedelimb commissioner\bibnamedelimb of\bibnamedelima Canada}{A\bibinitperiod\bibinitdelim p\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
     }
     \strng{namehash}{EDApcoC1}
     \strng{fullhash}{EDApcoC1}
@@ -215,6 +198,36 @@
     \field{year}{2010}
     \verb{url}
     \verb http://www.bbc.co.uk/news/technology-11665120
+    \endverb
+  \endentry
+
+  \entry{fiat-naor}{incollection}{}
+    \name{labelname}{2}{}{%
+      {{}{Fiat}{F\bibinitperiod}{Amos}{A\bibinitperiod}{}{}{}{}}%
+      {{}{Naor}{N\bibinitperiod}{Moni}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Fiat}{F\bibinitperiod}{Amos}{A\bibinitperiod}{}{}{}{}}%
+      {{}{Naor}{N\bibinitperiod}{Moni}{M\bibinitperiod}{}{}{}{}}%
+    }
+    \name{editor}{1}{}{%
+      {{}{Stinson}{S\bibinitperiod}{Douglas}{D\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Springer Berlin / Heidelberg}%
+    }
+    \strng{namehash}{FANM1}
+    \strng{fullhash}{FANM1}
+    \field{sortinit}{F}
+    \field{booktitle}{Advances in Cryptology — CRYPTO’ 93}
+    \field{note}{10.1007/3-540-48329-2_40}
+    \field{series}{Lecture Notes in Computer Science}
+    \field{title}{Broadcast Encryption}
+    \field{volume}{773}
+    \field{year}{1994}
+    \field{pages}{480\bibrangedash 491}
+    \verb{url}
+    \verb http://dx.doi.org/10.1007/3-540-48329-2_40
     \endverb
   \endentry
 
@@ -313,7 +326,7 @@
       {{}{Acquisti}{A\bibinitperiod}{Alessandro}{A\bibinitperiod}{}{}{}{}}%
     }
     \list{location}{1}{%
-      {Alexandria, VA, USA}%
+      {New York, NY, USA}%
     }
     \list{publisher}{1}{%
       {ACM}%
@@ -327,14 +340,10 @@
     \field{title}{Information revelation and privacy in online social networks}
     \field{year}{2005}
     \field{pages}{71\bibrangedash 80}
-    \verb{doi}
-    \verb http://doi.acm.org/10.1145/1102199.1102214
-    \endverb
     \verb{url}
     \verb http://doi.acm.org/10.1145/1102199.1102214
     \endverb
     \keyw{information revelation, online privacy, social networking sites}
-    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'gross' - skipping field 'address'}
   \endentry
 
   \entry{noyb}{inproceedings}{}
@@ -421,6 +430,41 @@
     \verb http://www.liv.ac.uk/evolpsyc/Hill\_Dunbar\_networks.pdf
     \endverb
     \keyw{cooperation, online\_communities, social\_networks}
+  \endentry
+
+  \entry{fb-gov}{article}{}
+    \name{labelname}{1}{}{%
+      {{}{Hodge}{H\bibinitperiod}{Matthew\bibnamedelima J.}{M\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Hodge}{H\bibinitperiod}{Matthew\bibnamedelima J.}{M\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{HMJ1}
+    \strng{fullhash}{HMJ1}
+    \field{sortinit}{H}
+    \field{journaltitle}{Southern Illinois University Law Journal}
+    \field{title}{{The Fourth Amendment and privacy issues on the "new" internet: Facebook.com and MySpace.com.}}
+    \field{volume}{31}
+    \field{year}{2006}
+    \field{pages}{95\bibrangedash 122}
+    \verb{url}
+    \verb http://www.law.siu.edu/research/31fallpdf/fourthamendment.pdf
+    \endverb
+  \endentry
+
+  \entry{survey}{report}{}
+    \name{labelname}{1}{}{%
+      {{}{Horwitz}{H\bibinitperiod}{Jeremy}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Horwitz}{H\bibinitperiod}{Jeremy}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{HJ1}
+    \strng{fullhash}{HJ1}
+    \field{sortinit}{H}
+    \field{title}{A Survey of Broadcast Encryption}
+    \field{type}{techreport}
+    \field{year}{2003}
   \endentry
 
   \entry{fb-ads}{online}{}
@@ -517,7 +561,7 @@
       {{}{Borisov}{B\bibinitperiod}{Nikita}{N\bibinitperiod}{}{}{}{}}%
     }
     \list{location}{1}{%
-      {Alexandria, Virginia, USA}%
+      {New York, NY, USA}%
     }
     \list{publisher}{1}{%
       {ACM}%
@@ -538,7 +582,6 @@
     \verb http://doi.acm.org/10.1145/1456403.1456405
     \endverb
     \keyw{privacy, social networks}
-    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'flybynight' - skipping field 'address'}
   \endentry
 
   \entry{facecloak}{inproceedings}{}
@@ -726,6 +769,21 @@
     \endverb
   \endentry
 
+  \entry{utf8}{misc}{}
+    \name{labelname}{1}{}{%
+      {{}{Schneier}{S\bibinitperiod}{Bruce}{B\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{1}{}{%
+      {{}{Schneier}{S\bibinitperiod}{Bruce}{B\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{SB1}
+    \strng{fullhash}{SB1}
+    \field{sortinit}{S}
+    \field{month}{07}
+    \field{title}{Crypto-Gram Newsletter: July 15, 2000}
+    \field{year}{2000}
+  \endentry
+
   \entry{fb-stats}{online}{}
     \name{labelname}{1}{}{%
       {{}{Schools}{S\bibinitperiod}{Online}{O\bibinitperiod}{}{}{}{}}%
@@ -823,7 +881,7 @@
       {{}{Tygar}{T\bibinitperiod}{J.\bibnamedelimi D.}{J\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
     }
     \list{location}{1}{%
-      {Washington, D.C.}%
+      {Berkeley, CA, USA}%
     }
     \list{publisher}{1}{%
       {USENIX Association}%
@@ -838,7 +896,30 @@
     \verb{url}
     \verb http://portal.acm.org/citation.cfm?id=1251421.1251435
     \endverb
-    \warn{\item Field 'address' is aliased to field 'location' but both are defined in entry with key 'johnny' - skipping field 'address'}
+  \endentry
+
+  \entry{stealing}{inproceedings}{}
+    \name{labelname}{2}{}{%
+      {{}{Wu}{W\bibinitperiod}{Hongjun}{H\bibinitperiod}{}{}{}{}}%
+      {{}{Ma}{M\bibinitperiod}{Di}{D\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Wu}{W\bibinitperiod}{Hongjun}{H\bibinitperiod}{}{}{}{}}%
+      {{}{Ma}{M\bibinitperiod}{Di}{D\bibinitperiod}{}{}{}{}}%
+    }
+    \strng{namehash}{WHMD1}
+    \strng{fullhash}{WHMD1}
+    \field{sortinit}{W}
+    \field{booktitle}{Acoustics, Speech, and Signal Processing, 2004. Proceedings. (ICASSP '04). IEEE International Conference on}
+    \field{issn}{1520-6149}
+    \field{month}{05}
+    \field{title}{Efficient and secure encryption schemes for JPEG2000}
+    \field{volume}{5}
+    \field{year}{2004}
+    \field{pages}{}
+    \verb{doi}
+    \verb 10.1109/ICASSP.2004.1327249
+    \endverb
   \endentry
 
   \entry{haar}{article}{}

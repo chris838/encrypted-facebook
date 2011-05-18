@@ -9,9 +9,9 @@
 \BOOKMARK [2][-]{subsection.2.1.2}{Independence from third-party servers}{section.2.1}% 9
 \BOOKMARK [2][-]{subsection.2.1.3}{Secret key security}{section.2.1}% 10
 \BOOKMARK [2][-]{subsection.2.1.4}{Minimal use of OOB channels}{section.2.1}% 11
-\BOOKMARK [1][-]{section.2.2}{Broadcast encryption}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.2}{One-to-many communication}{chapter.2}% 12
 \BOOKMARK [2][-]{subsection.2.2.1}{Existing solutions}{section.2.2}% 13
-\BOOKMARK [2][-]{subsection.2.2.2}{Proposed scheme}{section.2.2}% 14
+\BOOKMARK [2][-]{subsection.2.2.2}{Broadcast encryption}{section.2.2}% 14
 \BOOKMARK [1][-]{section.2.3}{Intercepting Facebook interactions}{chapter.2}% 15
 \BOOKMARK [2][-]{subsection.2.3.1}{Possible deployment strategies}{section.2.3}% 16
 \BOOKMARK [1][-]{section.2.4}{Mozilla Firefox extension development}{chapter.2}% 17
@@ -23,14 +23,57 @@
 \BOOKMARK [1][-]{section.2.6}{Encrypting images}{chapter.2}% 23
 \BOOKMARK [2][-]{subsection.2.6.1}{Naive data insertion}{section.2.6}% 24
 \BOOKMARK [2][-]{subsection.2.6.2}{Advanced data insertion}{section.2.6}% 25
-\BOOKMARK [1][-]{section.2.7}{Further security considerations}{chapter.2}% 26
+\BOOKMARK [1][-]{section.2.7}{Security Policy}{chapter.2}% 26
 \BOOKMARK [2][-]{subsection.2.7.1}{Threat analysis}{section.2.7}% 27
 \BOOKMARK [2][-]{subsection.2.7.2}{Underlying encryption schemes}{section.2.7}% 28
 \BOOKMARK [1][-]{section.2.8}{Requirements specification}{chapter.2}% 29
 \BOOKMARK [1][-]{section.2.9}{Development}{chapter.2}% 30
 \BOOKMARK [2][-]{subsection.2.9.1}{Development environment}{section.2.9}% 31
-\BOOKMARK [1][-]{section.2.10}{Testing plan}{chapter.2}% 32
-\BOOKMARK [2][-]{subsection.2.10.1}{Security testing}{section.2.10}% 33
-\BOOKMARK [2][-]{subsection.2.10.2}{Usability testing}{section.2.10}% 34
-\BOOKMARK [2][-]{subsection.2.10.3}{Testing framework}{section.2.10}% 35
-\BOOKMARK [0][-]{subsection.2.10.3}{Bibliography}{}% 36
+\BOOKMARK [2][-]{subsection.2.9.2}{Testing plan}{section.2.9}% 32
+\BOOKMARK [0][-]{chapter.3}{Implementation}{}% 33
+\BOOKMARK [1][-]{section.3.1}{Extension structure}{chapter.3}% 34
+\BOOKMARK [2][-]{subsection.3.1.1}{Overview}{section.3.1}% 35
+\BOOKMARK [2][-]{subsection.3.1.2}{C++ module structure}{section.3.1}% 36
+\BOOKMARK [2][-]{subsection.3.1.3}{Initialisation}{section.3.1}% 37
+\BOOKMARK [1][-]{section.3.2}{Parsing Facebook web pages}{chapter.3}% 38
+\BOOKMARK [2][-]{subsection.3.2.1}{Inserting submission controls}{section.3.2}% 39
+\BOOKMARK [2][-]{subsection.3.2.2}{Identifying decryption targets}{section.3.2}% 40
+\BOOKMARK [2][-]{subsection.3.2.3}{Processing decryption targets}{section.3.2}% 41
+\BOOKMARK [1][-]{section.3.3}{Key management}{chapter.3}% 42
+\BOOKMARK [2][-]{subsection.3.3.1}{Creating and migrating identities}{section.3.3}% 43
+\BOOKMARK [2][-]{subsection.3.3.2}{Managing public keys}{section.3.3}% 44
+\BOOKMARK [1][-]{section.3.4}{Text submission}{chapter.3}% 45
+\BOOKMARK [2][-]{subsection.3.4.1}{Encryption}{section.3.4}% 46
+\BOOKMARK [2][-]{subsection.3.4.2}{String coding}{section.3.4}% 47
+\BOOKMARK [2][-]{subsection.3.4.3}{Submission as a note}{section.3.4}% 48
+\BOOKMARK [1][-]{section.3.5}{Image encoding}{chapter.3}% 49
+\BOOKMARK [2][-]{subsection.3.5.1}{Forward error correction}{section.3.5}% 50
+\BOOKMARK [2][-]{subsection.3.5.2}{Conduit image class hierarchy}{section.3.5}% 51
+\BOOKMARK [2][-]{subsection.3.5.3}{Read/write buffering}{section.3.5}% 52
+\BOOKMARK [2][-]{subsection.3.5.4}{Haar wavelet transform}{section.3.5}% 53
+\BOOKMARK [2][-]{subsection.3.5.5}{N-bit scaling}{section.3.5}% 54
+\BOOKMARK [1][-]{section.3.6}{Testing}{chapter.3}% 55
+\BOOKMARK [2][-]{subsection.3.6.1}{Page interception module}{section.3.6}% 56
+\BOOKMARK [2][-]{subsection.3.6.2}{Image coding}{section.3.6}% 57
+\BOOKMARK [2][-]{subsection.3.6.3}{Other modules}{section.3.6}% 58
+\BOOKMARK [2][-]{subsection.3.6.4}{Integration testing}{section.3.6}% 59
+\BOOKMARK [0][-]{chapter.4}{Evaluation}{}% 60
+\BOOKMARK [1][-]{section.4.1}{Conduit image performance}{chapter.4}% 61
+\BOOKMARK [2][-]{subsection.4.1.1}{Method}{section.4.1}% 62
+\BOOKMARK [2][-]{subsection.4.1.2}{Theoretical capacity}{section.4.1}% 63
+\BOOKMARK [2][-]{subsection.4.1.3}{Reed Solomon error correction}{section.4.1}% 64
+\BOOKMARK [2][-]{subsection.4.1.4}{Conclusion}{section.4.1}% 65
+\BOOKMARK [1][-]{section.4.2}{Submission and retrieval times}{chapter.4}% 66
+\BOOKMARK [2][-]{subsection.4.2.1}{Method}{section.4.2}% 67
+\BOOKMARK [2][-]{subsection.4.2.2}{Results}{section.4.2}% 68
+\BOOKMARK [1][-]{section.4.3}{Effect of cache on loading times}{chapter.4}% 69
+\BOOKMARK [2][-]{subsection.4.3.1}{Method}{section.4.3}% 70
+\BOOKMARK [2][-]{subsection.4.3.2}{Results}{section.4.3}% 71
+\BOOKMARK [1][-]{section.4.4}{Usability inspection}{chapter.4}% 72
+\BOOKMARK [2][-]{subsection.4.4.1}{Uploading an encrypted image}{section.4.4}% 73
+\BOOKMARK [2][-]{subsection.4.4.2}{Posting a comment}{section.4.4}% 74
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 75
+\BOOKMARK [1][-]{section.5.1}{Evaluation of Requirements}{chapter.5}% 76
+\BOOKMARK [1][-]{section.5.2}{Retrospective}{chapter.5}% 77
+\BOOKMARK [1][-]{section.5.3}{Potential deployment}{chapter.5}% 78
+\BOOKMARK [1][-]{section.5.4}{Future work}{chapter.5}% 79
