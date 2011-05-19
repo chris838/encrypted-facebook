@@ -250,7 +250,7 @@ Without relying on a third-party server all transmission overheads must be store
     \end{center}
 \end{table}
 
-Each user's profile has a "Bio"\footnote{Sometimes referred to as the "About me" field.} field with a character limit of 64,536. With no other capacitous attribute that can be easily queried from a user ID this is the obvious place to store a user's public key.
+Each user's profile has a "Bio"\footnote{Sometimes referred to as the "About me" field.} field with a character limit of 64,536. With no other capacious attribute that can be easily queried from a user ID this is the obvious place to store a user's public key.
 
     
 \subsection{Connectedness}
@@ -281,7 +281,7 @@ In order to permit incremental deployment any system must ensure that its users 
 
 Facebook does provide a JavaScript SDK for interfacing with the Facebook platform, however it is poorly documented and doesn't allow uploading images - since most JavaScript applications are designed to run inside the browser sandbox without local filesystem access. Instead, we may use the Facebook Graph API directly.
 
-Authentication is performed using the OAuth 2.0 protocol. Applications register with Facebook and present their application ID upon request. The user then confirms that the application may use the requested permisions and an access token is generated. This token is then used in future exchanges.
+Authentication is performed using the OAuth 2.0 protocol. Applications register with Facebook and present their application ID upon request. The user then confirms that the application may use the requested permissions and an access token is generated. This token is then used in future exchanges.
 
 Unfortunately some actions\footnote{Namely working with the local filesystem and modifying the "Bio" attribute.} are poorly supported by the Graph API, if at all. Appendix XXX describes the API in more detail, as well as the required workarounds.
 
@@ -321,7 +321,7 @@ One approach would be to encode directly into greyscale pixel values with enough
   \end{center}
 \end{figure}
 
-Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IGJ (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix XXX). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see appendix XXX for details). Modeling the compression process as a binary symmetric channel, Figure XX graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation Section \ref{ssec:capacity}).
+Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IGJ (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix XXX). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see appendix XXX for details). Modeling the compression process as a binary symmetric channel, Figure \ref{graph:capacity0} graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation Section \ref{ssec:capacity}).
 
 
 \begin{figure}[tbph]

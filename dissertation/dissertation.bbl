@@ -23,55 +23,6 @@
 
 
 \refsection{0}
-  \entry{agile}{report}{}
-    \name{labelname}{4}{}{%
-      {{}{Abrahamsson}{A\bibinitperiod}{Pekka}{P\bibinitperiod}{}{}{}{}}%
-      {{}{Salo}{S\bibinitperiod}{Outi}{O\bibinitperiod}{}{}{}{}}%
-      {{}{Ronkainen}{R\bibinitperiod}{Jussi}{J\bibinitperiod}{}{}{}{}}%
-      {{}{Warsta}{W\bibinitperiod}{Juhani}{J\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{4}{}{%
-      {{}{Abrahamsson}{A\bibinitperiod}{Pekka}{P\bibinitperiod}{}{}{}{}}%
-      {{}{Salo}{S\bibinitperiod}{Outi}{O\bibinitperiod}{}{}{}{}}%
-      {{}{Ronkainen}{R\bibinitperiod}{Jussi}{J\bibinitperiod}{}{}{}{}}%
-      {{}{Warsta}{W\bibinitperiod}{Juhani}{J\bibinitperiod}{}{}{}{}}%
-    }
-    \list{institution}{1}{%
-      {VTT Publications}%
-    }
-    \strng{namehash}{AP+1}
-    \strng{fullhash}{APSORJWJ1}
-    \field{sortinit}{A}
-    \field{title}{Agile software development methods}
-    \field{type}{techreport}
-    \field{year}{2002}
-    \verb{url}
-    \verb http://vtt.fi/vtt_show_record.jsp?target=julk&form=sdefe&search=44278
-    \endverb
-  \endentry
-
-  \entry{ross}{book}{}
-    \name{labelname}{1}{}{%
-      {{}{Anderson}{A\bibinitperiod}{Ross\bibnamedelima J.}{R\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Anderson}{A\bibinitperiod}{Ross\bibnamedelima J.}{R\bibinitperiod\bibinitdelim J\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {New York, NY, USA}%
-    }
-    \list{publisher}{1}{%
-      {John Wiley \& Sons, Inc.}%
-    }
-    \strng{namehash}{ARJ1}
-    \strng{fullhash}{ARJ1}
-    \field{sortinit}{A}
-    \field{edition}{1st}
-    \field{isbn}{0471389226}
-    \field{title}{Security Engineering: A Guide to Building Dependable Distributed Systems}
-    \field{year}{2001}
-  \endentry
-
   \entry{nist-key}{article}{}
     \name{labelname}{5}{}{%
       {{}{Barker}{B\bibinitperiod}{E.}{E\bibinitperiod}{}{}{}{}}%
@@ -98,57 +49,26 @@
     \field{year}{2007}
   \endentry
 
-  \entry{proxy}{inproceedings}{}
+  \entry{boneh}{inproceedings}{}
     \name{labelname}{3}{}{%
-      {{}{Blaze}{B\bibinitperiod}{Matt}{M\bibinitperiod}{}{}{}{}}%
-      {{}{Bleumer}{B\bibinitperiod}{Gerrit}{G\bibinitperiod}{}{}{}{}}%
-      {{}{Strauss}{S\bibinitperiod}{Martin}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Boneh}{B\bibinitperiod}{Dan}{D\bibinitperiod}{}{}{}{}}%
+      {{}{Gentry}{G\bibinitperiod}{Craig}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Waters}{W\bibinitperiod}{Brent}{B\bibinitperiod}{}{}{}{}}%
     }
     \name{author}{3}{}{%
-      {{}{Blaze}{B\bibinitperiod}{Matt}{M\bibinitperiod}{}{}{}{}}%
-      {{}{Bleumer}{B\bibinitperiod}{Gerrit}{G\bibinitperiod}{}{}{}{}}%
-      {{}{Strauss}{S\bibinitperiod}{Martin}{M\bibinitperiod}{}{}{}{}}%
+      {{}{Boneh}{B\bibinitperiod}{Dan}{D\bibinitperiod}{}{}{}{}}%
+      {{}{Gentry}{G\bibinitperiod}{Craig}{C\bibinitperiod}{}{}{}{}}%
+      {{}{Waters}{W\bibinitperiod}{Brent}{B\bibinitperiod}{}{}{}{}}%
     }
     \list{publisher}{1}{%
       {Springer-Verlag}%
     }
-    \strng{namehash}{BMBGSM1}
-    \strng{fullhash}{BMBGSM1}
+    \strng{namehash}{BDGCWB1}
+    \strng{fullhash}{BDGCWB1}
     \field{sortinit}{B}
-    \field{booktitle}{In EUROCRYPT}
-    \field{title}{Divertible protocols and atomic proxy cryptography}
-    \field{year}{1998}
-    \field{pages}{127\bibrangedash 144}
-  \endentry
-
-  \entry{passwords}{misc}{}
-    \name{labelname}{9}{}{%
-      {{}{Burr}{B\bibinitperiod}{William\bibnamedelima E.}{W\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
-      {{}{Dodson}{D\bibinitperiod}{Donna\bibnamedelima F.}{D\bibinitperiod\bibinitdelim F\bibinitperiod}{}{}{}{}}%
-      {{}{Perlner}{P\bibinitperiod}{Ray\bibnamedelima A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-      {{}{Polk}{P\bibinitperiod}{W.\bibnamedelimi Timothy}{W\bibinitperiod\bibinitdelim T\bibinitperiod}{}{}{}{}}%
-      {{}{Gupta}{G\bibinitperiod}{Sarbari}{S\bibinitperiod}{}{}{}{}}%
-      {{}{Nabbus}{N\bibinitperiod}{Emad\bibnamedelima A.}{E\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-      {{}{Gutierrez}{G\bibinitperiod}{Carlos\bibnamedelima M.}{C\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-      {{}{Turner}{T\bibinitperiod}{James\bibnamedelima M.}{J\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-      {{}{Director}{D\bibinitperiod}{Acting}{A\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{9}{}{%
-      {{}{Burr}{B\bibinitperiod}{William\bibnamedelima E.}{W\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
-      {{}{Dodson}{D\bibinitperiod}{Donna\bibnamedelima F.}{D\bibinitperiod\bibinitdelim F\bibinitperiod}{}{}{}{}}%
-      {{}{Perlner}{P\bibinitperiod}{Ray\bibnamedelima A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-      {{}{Polk}{P\bibinitperiod}{W.\bibnamedelimi Timothy}{W\bibinitperiod\bibinitdelim T\bibinitperiod}{}{}{}{}}%
-      {{}{Gupta}{G\bibinitperiod}{Sarbari}{S\bibinitperiod}{}{}{}{}}%
-      {{}{Nabbus}{N\bibinitperiod}{Emad\bibnamedelima A.}{E\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-      {{}{Gutierrez}{G\bibinitperiod}{Carlos\bibnamedelima M.}{C\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-      {{}{Turner}{T\bibinitperiod}{James\bibnamedelima M.}{J\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-      {{}{Director}{D\bibinitperiod}{Acting}{A\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{BWE+1}
-    \strng{fullhash}{BWEDDFPRAPWTGSNEAGCMTJMDA1}
-    \field{sortinit}{B}
-    \field{title}{DRAFT i Draft Special Publication 800-63-1 Electronic Authentication Guideline}
-    \field{year}{2008}
+    \field{title}{Collusion Resistant Broadcast Encryption with Short Ciphertexts and Private Keys}
+    \field{year}{2005}
+    \field{pages}{258\bibrangedash 275}
   \endentry
 
   \entry{diaspora}{online}{}
@@ -172,6 +92,7 @@
     \strng{namehash}{EDApcoC1}
     \strng{fullhash}{EDApcoC1}
     \field{sortinit}{E}
+    \field{month}{07}
     \field{title}{Report of findings into the complaint filed by the Canadian internet policy and public interest clinic against Facebook Inc.}
     \field{year}{2009}
     \verb{url}
@@ -220,7 +141,6 @@
     \strng{fullhash}{FANM1}
     \field{sortinit}{F}
     \field{booktitle}{Advances in Cryptology — CRYPTO’ 93}
-    \field{note}{10.1007/3-540-48329-2_40}
     \field{series}{Lecture Notes in Computer Science}
     \field{title}{Broadcast Encryption}
     \field{volume}{773}
@@ -239,80 +159,6 @@
     \field{year}{2011}
     \verb{url}
     \verb http://getfiregpg.org/s/home
-    \endverb
-  \endentry
-
-  \entry{dpatterns}{book}{}
-    \name{labelname}{4}{}{%
-      {{}{Gamma}{G\bibinitperiod}{Erich}{E\bibinitperiod}{}{}{}{}}%
-      {{}{Helm}{H\bibinitperiod}{Richard}{R\bibinitperiod}{}{}{}{}}%
-      {{}{Johnson}{J\bibinitperiod}{Ralph\bibnamedelima E.}{R\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
-      {{}{Vlissides}{V\bibinitperiod}{John}{J\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{4}{}{%
-      {{}{Gamma}{G\bibinitperiod}{Erich}{E\bibinitperiod}{}{}{}{}}%
-      {{}{Helm}{H\bibinitperiod}{Richard}{R\bibinitperiod}{}{}{}{}}%
-      {{}{Johnson}{J\bibinitperiod}{Ralph\bibnamedelima E.}{R\bibinitperiod\bibinitdelim E\bibinitperiod}{}{}{}{}}%
-      {{}{Vlissides}{V\bibinitperiod}{John}{J\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {Reading, MA}%
-    }
-    \list{publisher}{1}{%
-      {Addison-Wesley}%
-    }
-    \strng{namehash}{GE+1}
-    \strng{fullhash}{GEHRJREVJ1}
-    \field{sortinit}{G}
-    \field{isbn}{978-0-201-63361-0}
-    \field{title}{Design Patterns: Elements of Reusable Object-Oriented Software}
-    \field{year}{1995}
-  \endentry
-
-  \entry{code-style}{online}{}
-    \strng{namehash}{1}
-    \strng{fullhash}{1}
-    \field{sortinit}{G}
-    \field{title}{GeoSoft Coding Style Guide}
-    \field{year}{2011}
-    \verb{url}
-    \verb http://geosoft.no/development/cppstyle.html
-    \endverb
-  \endentry
-
-  \entry{fb-connectedness}{inproceedings}{}
-    \name{labelname}{3}{}{%
-      {{}{Golder}{G\bibinitperiod}{Scott}{S\bibinitperiod}{}{}{}{}}%
-      {{}{Wilkinson}{W\bibinitperiod}{Dennis}{D\bibinitperiod}{}{}{}{}}%
-      {{}{Huberman}{H\bibinitperiod}{Bernardo}{B\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{3}{}{%
-      {{}{Golder}{G\bibinitperiod}{Scott}{S\bibinitperiod}{}{}{}{}}%
-      {{}{Wilkinson}{W\bibinitperiod}{Dennis}{D\bibinitperiod}{}{}{}{}}%
-      {{}{Huberman}{H\bibinitperiod}{Bernardo}{B\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{GSWDHB1}
-    \strng{fullhash}{GSWDHB1}
-    \field{sortinit}{G}
-    \field{booktitle}{Proc. 3rd Intl. Conf. on Communities and Technologies}
-    \field{title}{Rhythms of social interaction: Messaging within a massive online network}
-    \field{year}{2007}
-  \endentry
-
-  \entry{flash-sbox}{online}{}
-    \name{labelname}{1}{}{%
-      {{}{Google}{G\bibinitperiod}{}{}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Google}{G\bibinitperiod}{}{}{}{}{}{}}%
-    }
-    \strng{namehash}{G1}
-    \strng{fullhash}{G1}
-    \field{sortinit}{G}
-    \field{title}{Rolling out sandbox for Adobe Flash}
-    \field{year}{2010}
-    \verb{url}
-    \verb http://blog.chromium.org/2010/12/rolling-out-sandbox-for-adobe-flash.html
     \endverb
   \endentry
 
@@ -346,41 +192,6 @@
     \keyw{information revelation, online privacy, social networking sites}
   \endentry
 
-  \entry{noyb}{inproceedings}{}
-    \name{labelname}{3}{}{%
-      {{}{Guha}{G\bibinitperiod}{Saikat}{S\bibinitperiod}{}{}{}{}}%
-      {{}{Tang}{T\bibinitperiod}{Kevin}{K\bibinitperiod}{}{}{}{}}%
-      {{}{Francis}{F\bibinitperiod}{Paul}{P\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{3}{}{%
-      {{}{Guha}{G\bibinitperiod}{Saikat}{S\bibinitperiod}{}{}{}{}}%
-      {{}{Tang}{T\bibinitperiod}{Kevin}{K\bibinitperiod}{}{}{}{}}%
-      {{}{Francis}{F\bibinitperiod}{Paul}{P\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {New York, NY, USA}%
-    }
-    \list{publisher}{1}{%
-      {ACM}%
-    }
-    \strng{namehash}{GSTKFP1}
-    \strng{fullhash}{GSTKFP1}
-    \field{sortinit}{G}
-    \field{booktitle}{Proceedings of the first workshop on Online social networks}
-    \field{isbn}{978-1-60558-182-8}
-    \field{series}{WOSN '08}
-    \field{title}{NOYB: privacy in online social networks}
-    \field{year}{2008}
-    \field{pages}{49\bibrangedash 54}
-    \verb{doi}
-    \verb http://doi.acm.org/10.1145/1397735.1397747
-    \endverb
-    \verb{url}
-    \verb http://doi.acm.org/10.1145/1397735.1397747
-    \endverb
-    \keyw{cloud computing, noyb, privacy}
-  \endentry
-
   \entry{metcalf}{article}{}
     \name{labelname}{2}{}{%
       {{}{Hendler}{H\bibinitperiod}{James}{J\bibinitperiod}{}{}{}{}}%
@@ -408,28 +219,6 @@
     \verb http://www.sciencedirect.com/science/article/B758F-4R6JP09-2/2/bc3ba99ebfcaf2fd3cf0077a55bd891d
     \endverb
     \keyw{Metcalfe's law}
-  \endentry
-
-  \entry{dunbar}{article}{}
-    \name{labelname}{2}{}{%
-      {{}{Hill}{H\bibinitperiod}{R.\bibnamedelimi A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-      {{}{Dunbar}{D\bibinitperiod}{R.\bibnamedelimi I.\bibnamedelimi M.}{R\bibinitperiod\bibinitdelim I\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{2}{}{%
-      {{}{Hill}{H\bibinitperiod}{R.\bibnamedelimi A.}{R\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-      {{}{Dunbar}{D\bibinitperiod}{R.\bibnamedelimi I.\bibnamedelimi M.}{R\bibinitperiod\bibinitdelim I\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{HRADRIM1}
-    \strng{fullhash}{HRADRIM1}
-    \field{sortinit}{H}
-    \field{journaltitle}{Human Nature}
-    \field{title}{{Social network size in humans}}
-    \field{volume}{14}
-    \field{pages}{53\bibrangedash 72}
-    \verb{url}
-    \verb http://www.liv.ac.uk/evolpsyc/Hill\_Dunbar\_networks.pdf
-    \endverb
-    \keyw{cooperation, online\_communities, social\_networks}
   \endentry
 
   \entry{fb-gov}{article}{}
@@ -465,17 +254,6 @@
     \field{title}{A Survey of Broadcast Encryption}
     \field{type}{techreport}
     \field{year}{2003}
-  \endentry
-
-  \entry{fb-ads}{online}{}
-    \strng{namehash}{1}
-    \strng{fullhash}{1}
-    \field{sortinit}{H}
-    \field{title}{How Facebook Makes Money}
-    \field{year}{2010}
-    \verb{url}
-    \verb http://www.allfacebook.com/facebook-makes-money-2010-01
-    \endverb
   \endentry
 
   \entry{fb-factsheet}{online}{}
@@ -551,144 +329,6 @@
     \endverb
   \endentry
 
-  \entry{flybynight}{inproceedings}{}
-    \name{labelname}{2}{}{%
-      {{}{Lucas}{L\bibinitperiod}{Matthew\bibnamedelima M.}{M\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-      {{}{Borisov}{B\bibinitperiod}{Nikita}{N\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{2}{}{%
-      {{}{Lucas}{L\bibinitperiod}{Matthew\bibnamedelima M.}{M\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
-      {{}{Borisov}{B\bibinitperiod}{Nikita}{N\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {New York, NY, USA}%
-    }
-    \list{publisher}{1}{%
-      {ACM}%
-    }
-    \strng{namehash}{LMMBN1}
-    \strng{fullhash}{LMMBN1}
-    \field{sortinit}{L}
-    \field{booktitle}{Proceedings of the 7th ACM workshop on Privacy in the electronic society}
-    \field{isbn}{978-1-60558-289-4}
-    \field{series}{WPES '08}
-    \field{title}{FlyByNight: mitigating the privacy risks of social networking}
-    \field{year}{2008}
-    \field{pages}{1\bibrangedash 8}
-    \verb{doi}
-    \verb http://doi.acm.org/10.1145/1456403.1456405
-    \endverb
-    \verb{url}
-    \verb http://doi.acm.org/10.1145/1456403.1456405
-    \endverb
-    \keyw{privacy, social networks}
-  \endentry
-
-  \entry{facecloak}{inproceedings}{}
-    \name{labelname}{3}{}{%
-      {{}{Luo}{L\bibinitperiod}{Wanying}{W\bibinitperiod}{}{}{}{}}%
-      {{}{Xie}{X\bibinitperiod}{Qi}{Q\bibinitperiod}{}{}{}{}}%
-      {{}{Hengartner}{H\bibinitperiod}{U.}{U\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{3}{}{%
-      {{}{Luo}{L\bibinitperiod}{Wanying}{W\bibinitperiod}{}{}{}{}}%
-      {{}{Xie}{X\bibinitperiod}{Qi}{Q\bibinitperiod}{}{}{}{}}%
-      {{}{Hengartner}{H\bibinitperiod}{U.}{U\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{LWXQHU1}
-    \strng{fullhash}{LWXQHU1}
-    \field{sortinit}{L}
-    \field{booktitle}{Computational Science and Engineering, 2009. CSE '09. International Conference on}
-    \field{month}{08}
-    \field{title}{FaceCloak: An Architecture for User Privacy on Social Networking Sites}
-    \field{volume}{3}
-    \field{year}{2009}
-    \field{pages}{26 \bibrangedash 33}
-    \verb{doi}
-    \verb 10.1109/CSE.2009.387
-    \endverb
-    \keyw{FaceCloak;Facebook;Firefox browser extension;Flickr;Internet users;MySpace;social networking sites;user privacy;data privacy;social networking (online);}
-  \endentry
-
-  \entry{socnetsize}{article}{}
-    \name{labelname}{5}{}{%
-      {{}{Mccarty}{M\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Killworth}{K\bibinitperiod}{P.\bibnamedelimi D.}{P\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
-      {{}{Bernard}{B\bibinitperiod}{H.\bibnamedelimi R.}{H\bibinitperiod\bibinitdelim R\bibinitperiod}{}{}{}{}}%
-      {{}{Johnsen}{J\bibinitperiod}{E.\bibnamedelimi C.}{E\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
-      {{}{Shelley}{S\bibinitperiod}{G.\bibnamedelimi A.}{G\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{5}{}{%
-      {{}{Mccarty}{M\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
-      {{}{Killworth}{K\bibinitperiod}{P.\bibnamedelimi D.}{P\bibinitperiod\bibinitdelim D\bibinitperiod}{}{}{}{}}%
-      {{}{Bernard}{B\bibinitperiod}{H.\bibnamedelimi R.}{H\bibinitperiod\bibinitdelim R\bibinitperiod}{}{}{}{}}%
-      {{}{Johnsen}{J\bibinitperiod}{E.\bibnamedelimi C.}{E\bibinitperiod\bibinitdelim C\bibinitperiod}{}{}{}{}}%
-      {{}{Shelley}{S\bibinitperiod}{G.\bibnamedelimi A.}{G\bibinitperiod\bibinitdelim A\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{MC+1}
-    \strng{fullhash}{MCKPDBHRJECSGA1}
-    \field{sortinit}{M}
-    \field{journaltitle}{Human Organization}
-    \field{number}{1}
-    \field{title}{{Comparing Two Methods for Estimating Network Size}}
-    \field{volume}{60}
-    \field{year}{2001}
-    \field{pages}{28\bibrangedash 39}
-    \keyw{non}
-  \endentry
-
-  \entry{security}{book}{}
-    \name{labelname}{1}{}{%
-      {{}{McGraw}{M\bibinitperiod}{Gary}{G\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{McGraw}{M\bibinitperiod}{Gary}{G\bibinitperiod}{}{}{}{}}%
-    }
-    \list{publisher}{1}{%
-      {Addison-Wesley Professional}%
-    }
-    \strng{namehash}{MG1}
-    \strng{fullhash}{MG1}
-    \field{sortinit}{M}
-    \field{isbn}{0321356705}
-    \field{title}{Software Security: Building Security In}
-    \field{year}{2006}
-  \endentry
-
-  \entry{xpcomm}{online}{}
-    \name{labelname}{1}{}{%
-      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
-    }
-    \strng{namehash}{M1}
-    \strng{fullhash}{M1}
-    \field{sortinit}{M}
-    \field{title}{Bundling multiple binary components}
-    \field{year}{2010}
-    \verb{url}
-    \verb https://developer.mozilla.org/en/Bundling_multiple_binary_components
-    \endverb
-  \endentry
-
-  \entry{js-ctypes}{online}{}
-    \name{labelname}{1}{}{%
-      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Mozilla}{M\bibinitperiod}{}{}{}{}{}{}}%
-    }
-    \strng{namehash}{M1}
-    \strng{fullhash}{M1}
-    \field{sortinit}{M}
-    \field{title}{JavaScript Code Modules: ctypes.jsm}
-    \field{year}{2010}
-    \verb{url}
-    \verb https://developer.mozilla.org/en/JavaScript_code_modules/ctypes.jsm
-    \endverb
-  \endentry
-
   \entry{bband-stats}{online}{}
     \strng{namehash}{1}
     \strng{fullhash}{1}
@@ -698,29 +338,6 @@
     \verb{url}
     \verb http://www.netindex.com/download/2,4/United-Kingdom/
     \endverb
-  \endentry
-
-  \entry{response}{book}{}
-    \name{labelname}{1}{}{%
-      {{}{Nielsen}{N\bibinitperiod}{Jakob}{J\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Nielsen}{N\bibinitperiod}{Jakob}{J\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {San Francisco, California}%
-    }
-    \list{publisher}{1}{%
-      {Morgan Kaufmann Publishers}%
-    }
-    \strng{namehash}{NJ1}
-    \strng{fullhash}{NJ1}
-    \field{sortinit}{N}
-    \field{isbn}{0125184069}
-    \field{month}{10}
-    \field{title}{Usability Engineering}
-    \field{year}{1994}
-    \keyw{imported}
   \endentry
 
   \entry{rsfec-decode}{book}{}
@@ -769,38 +386,6 @@
     \endverb
   \endentry
 
-  \entry{utf8}{misc}{}
-    \name{labelname}{1}{}{%
-      {{}{Schneier}{S\bibinitperiod}{Bruce}{B\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Schneier}{S\bibinitperiod}{Bruce}{B\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{SB1}
-    \strng{fullhash}{SB1}
-    \field{sortinit}{S}
-    \field{month}{07}
-    \field{title}{Crypto-Gram Newsletter: July 15, 2000}
-    \field{year}{2000}
-  \endentry
-
-  \entry{fb-stats}{online}{}
-    \name{labelname}{1}{}{%
-      {{}{Schools}{S\bibinitperiod}{Online}{O\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{1}{}{%
-      {{}{Schools}{S\bibinitperiod}{Online}{O\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{SO1}
-    \strng{fullhash}{SO1}
-    \field{sortinit}{S}
-    \field{title}{Obsessed with Facebook}
-    \field{year}{2011}
-    \verb{url}
-    \verb http://www.onlineschools.org/blog/facebook-obsession/
-    \endverb
-  \endentry
-
   \entry{fb-network}{book}{}
     \name{labelname}{2}{}{%
       {{}{Shapiro}{S\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
@@ -837,17 +422,6 @@
     \field{year}{2009}
     \verb{url}
     \verb http://techcrunch.com/2009/12/14/rockyou-hacked/
-    \endverb
-  \endentry
-
-  \entry{uprotect}{online}{}
-    \strng{namehash}{1}
-    \strng{fullhash}{1}
-    \field{sortinit}{u}
-    \field{title}{uProtect.it - Take Back Control From Facebook}
-    \field{year}{2011}
-    \verb{url}
-    \verb http://uprotect.it/
     \endverb
   \endentry
 
@@ -895,63 +469,6 @@
     \field{pages}{14\bibrangedash 14}
     \verb{url}
     \verb http://portal.acm.org/citation.cfm?id=1251421.1251435
-    \endverb
-  \endentry
-
-  \entry{stealing}{inproceedings}{}
-    \name{labelname}{2}{}{%
-      {{}{Wu}{W\bibinitperiod}{Hongjun}{H\bibinitperiod}{}{}{}{}}%
-      {{}{Ma}{M\bibinitperiod}{Di}{D\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{2}{}{%
-      {{}{Wu}{W\bibinitperiod}{Hongjun}{H\bibinitperiod}{}{}{}{}}%
-      {{}{Ma}{M\bibinitperiod}{Di}{D\bibinitperiod}{}{}{}{}}%
-    }
-    \strng{namehash}{WHMD1}
-    \strng{fullhash}{WHMD1}
-    \field{sortinit}{W}
-    \field{booktitle}{Acoustics, Speech, and Signal Processing, 2004. Proceedings. (ICASSP '04). IEEE International Conference on}
-    \field{issn}{1520-6149}
-    \field{month}{05}
-    \field{title}{Efficient and secure encryption schemes for JPEG2000}
-    \field{volume}{5}
-    \field{year}{2004}
-    \field{pages}{}
-    \verb{doi}
-    \verb 10.1109/ICASSP.2004.1327249
-    \endverb
-  \endentry
-
-  \entry{haar}{article}{}
-    \name{labelname}{4}{}{%
-      {{}{Xu}{X\bibinitperiod}{Jianyun}{J\bibinitperiod}{}{}{}{}}%
-      {{}{Sung}{S\bibinitperiod}{Andrew\bibnamedelima H.}{A\bibinitperiod\bibinitdelim H\bibinitperiod}{}{}{}{}}%
-      {{}{Shi}{S\bibinitperiod}{Peipei}{P\bibinitperiod}{}{}{}{}}%
-      {{}{Liu}{L\bibinitperiod}{Qingzhong}{Q\bibinitperiod}{}{}{}{}}%
-    }
-    \name{author}{4}{}{%
-      {{}{Xu}{X\bibinitperiod}{Jianyun}{J\bibinitperiod}{}{}{}{}}%
-      {{}{Sung}{S\bibinitperiod}{Andrew\bibnamedelima H.}{A\bibinitperiod\bibinitdelim H\bibinitperiod}{}{}{}{}}%
-      {{}{Shi}{S\bibinitperiod}{Peipei}{P\bibinitperiod}{}{}{}{}}%
-      {{}{Liu}{L\bibinitperiod}{Qingzhong}{Q\bibinitperiod}{}{}{}{}}%
-    }
-    \list{location}{1}{%
-      {Los Alamitos, CA, USA}%
-    }
-    \list{publisher}{1}{%
-      {IEEE Computer Society}%
-    }
-    \strng{namehash}{XJ+1}
-    \strng{fullhash}{XJSAHSPLQ1}
-    \field{sortinit}{X}
-    \field{isbn}{0-7695-2108-8}
-    \field{journaltitle}{Information Technology: Coding and Computing, International Conference on}
-    \field{title}{JPEG Compression Immune Steganography Using Wavelet Transform}
-    \field{volume}{2}
-    \field{year}{2004}
-    \field{pages}{704}
-    \verb{doi}
-    \verb http://doi.ieeecomputersociety.org/10.1109/ITCC.2004.1286737
     \endverb
   \endentry
 

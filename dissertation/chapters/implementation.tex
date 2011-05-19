@@ -60,9 +60,9 @@ We describe the overall structure of the extension and the C++ library. We also 
     
     \end{itemize}
     
-    This design fascillitates future extension and possible run time composition of different sub-components - though currently the concrete implementations are chosen at design time. \footnote{Since only one set of components currently provides a feasible solution, see Section \ref{ssec:image-conc}} The first three components are instantiated upon initialisation of the module. The last ({\tt IConduitImage}) is generated whenever an image is encoded or decoded. Since C++ does not natively define interfaces we use an abstract base class with all pure virtual methods and a virtual destructor to disable polymorphic destruction.
+    This design facillitates future extension and possible run time composition of different sub-components - though currently the concrete implementations are chosen at design time. \footnote{Since only one set of components currently provides a feasible solution, see Section \ref{ssec:image-conc}} The first three components are instantiated upon initialisation of the module. The last ({\tt IConduitImage}) is generated whenever an image is encoded or decoded. Since C++ does not natively define interfaces we use an abstract base class with all pure virtual methods and a virtual destructor to disable polymorphic destruction.
     
-    The library is built around the abstract factory pattern described in \cite{dpatterns}. This allows us to encapsulate families of complimentary sub-components since some interdependence exists between them. \footnote{For example, the minimum size of the encryption header can't exceed the maximum capacity of the conduit image.} Figure \ref{uml:lib-classes} outlines the pattern structure with an example concrete subclass {\tt HaarWTConduitImage}.
+    The library is built around the abstract factory pattern described in \cite{dpatterns}. This allows us to encapsulate families of complimentary sub-components since some interdependence exists between them. \footnote{For example, the minimum size of the encryption header can't exceed the maximum capacity of the conduit image.} Figure \ref{uml:lib-classes} outlines the pattern structure with an example of a concrete subclass {\tt HaarWTConduitImage}.
     
     \begin{figure}[tb]
         \begin{center}
@@ -84,13 +84,12 @@ Firefox loads the toolbar XUL as part of the chrome when the browser is started.
 
 The {\tt pagecept} parser is triggered whenever the DOM is updated. This means several passes will be performed when a page first loads and many subsequent passes may be performed as the user interacts with the page. This also means the actions of the parser itself can trigger another parse event. The parser must therefore break after any DOM edits, allowing the next event to finish the remainder of the work. Before any modification occurs care is taken to ensure it hasn't been performed already by a previous pass. Caches are used to ensure that computationally expensive work isn't unduly repeated
 
-The parser checks if a page is within the Facebook domain, then inserts additional UI controls and identifies and processes potential decryption targets. We describe each of these processes and also discuss how the parsing module was unit tested.
-
+The parser checks if a page is within the Facebook domain, then inserts additional UI controls and identifies and processes potential decryption targets. We describe each of these processes.
 
 \subsection{Inserting submission controls}
 \label{ssec:insert}
 
-Existing submission controls are each associated with an input field. Initially the parser identifies any control-field pairs using regular expressions. There are a number of possible types of control-field pair, and these can exist within the DOM in various places and configurations. We ommit the specifics of how to deal each possible case and instead describe the general process.
+Existing submission controls are each associated with an input field. Initially the parser identifies any control-field pairs using regular expressions. There are a number of possible types of control-field pairs, and these can exist within the DOM in various places and configurations. We ommit the specifics of how to deal with each possible case and instead describe the general process.
 
     \begin{figure}[tbph]
         \begin{center}
@@ -118,12 +117,12 @@ On submission, the list of recipient's Facebook IDs and the input from the input
 \subsection{Identifying decryption targets}
 \label{ssec:ident-targets}
 
-Regular expression are used to locate and filter possible decryption targets. For text these will be enclosed by special start and end sequences. Images can be identified by their filename as Graph API objects. In either case we take a best effort approach to filtering since a malicious user could easily create fake text tags and images are hard to filter out without first initiating decryption. The decryption process is designed to fail gracefully as early as possible if this turns out to be the case. \footnote{Currently, all ciphered images are $720 \times 720$ pixels allowing images to be filtered on their dimensions. The case for uploading variable sized images and its effect on filtering are discussed in Section \ref{sec:deploy}.}
+Regular expressions are used to locate and filter possible decryption targets. For text these will be enclosed by special start and end sequences. Images can be identified by their filename as Graph API objects. In either case we take a best effort approach to filtering since a malicious user could easily create fake text tags and images are hard to filter out without first initiating decryption. The decryption process is designed to fail gracefully as early as possible if this turns out to be the case. \footnote{Currently, all ciphered images are $720 \times 720$ pixels allowing images to be filtered on their dimensions. The case for uploading variable sized images and its effect on filtering is discussed in Section \ref{sec:deploy}.}
 
     
 \subsection{Processing decryption targets}
 
-Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a sequence of {\tt XmlHttpRequest}'s triggered though {\tt efb}. For text this involves retrieving the note containing the ciphertext. For images this requires retrieving a full resolution copy of the image.\footnote{Most often images are displayed only as thumbnails. A full resolution copy of the ciphered image is obviously required to generate a plaintext thumbnail.} A handler is attached to the request so that on completion, the cache can be updated appropriately. If an entry exists then several actions may be appropriate. If a valid plaintext exists in the cache this is used. The entry may also be marked as in progress in which case a loading message is substituted. If a previous attempt failed then the target can be ignored.
+Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a sequence of {\tt XmlHttpRequest}s triggered though {\tt efb}. For text this involves retrieving the note containing the ciphertext. For images this requires retrieving a full resolution copy of the image.\footnote{Most often images are displayed only as thumbnails. A full resolution copy of the ciphered image is obviously required to generate a plaintext thumbnail.} A handler is attached to the request so that on completion, the cache can be updated appropriately. If an entry exists then several actions may be appropriate. If a valid plaintext exists in the cache this is used. The entry may also be marked as in progress in which case a loading message is substituted. If a previous attempt failed then the target can be ignored.
 
 Parsing of a comment thread contained in a newsfeed is illustrated in figures \ref{scn:ctrl} and \ref{scn:ctrl2}. Encrypted messages are decorated using CSS.
 
@@ -151,12 +150,12 @@ Parsing of a comment thread contained in a newsfeed is illustrated in figures \r
 \FloatBarrier
 \section{Key management}
 
-A cryptographic identity\footnote{By which we mean a public-private key pair.} needs to be generated and uploaded before a user begins using the extension. Migrating identities also needs to be supported so that an identity can be used on multiple devices. Public keys of other users also need to be downloaded and stored locally.
+A cryptographic identity\footnote{By which we mean a public-private key pair.} needs to be generated and uploaded before a user begins using the extension. Migrating identities is used to support use of the same identity from multiple devices. Public keys of other users also need to be downloaded and stored locally.
 
 
 \subsection{Creating and migrating identities}
 
-Creation and migration is performed through the browser toolbar (see Figure \ref{scn:pubkey}). On first install only the {\tt [Create Identity]} button will be enabled. This action generates a local public-private key pair through the C++ module and uploads and appends the public key to the user's Bio attribute using {\tt faceapi} methods. Figure \ref{scn:bio} shows the key as it exists on a user's profile. The public key is encoded using Stego! (see Section \ref{ssec:submitnote}) and checks are made to prevent duplicate public keys existing online.
+Creation and migration is performed through the browser toolbar (see Figure \ref{scn:pubkey}). On first install, only the {\tt [Create Identity]} button will be enabled. This action generates a local public-private key pair through the C++ module and uploads and appends the public key to the user's Bio attribute using {\tt faceapi} methods. Figure \ref{scn:bio} shows the key as it exists on a user's profile. The public key is encoded using Stego! (see Section \ref{ssec:submitnote}) and checks are made to prevent duplicate public keys existing online.
 
     \begin{figure}[tbph]
         \begin{center}
@@ -197,8 +196,8 @@ We consider the process by which a message, given a list of recipients, is trans
 
     \begin{figure}[tb]
         \begin{center}
-                \input{gfx/sub_text.tikz}
-            \caption{Encoding process for submitting text.}
+                \includegraphics[width=12cm]{gfx/text-seq.eps}
+            \caption{UML sequence diagram of the encoding process for submitting text.}
             \label{tikz:text}
         \end{center}
     \end{figure}
@@ -255,9 +254,9 @@ The input to this stage is a byte vector of encrypted bytes. Each 16-bit (2 byte
 
 \begin{itemize}
 
-    \item Each 16-bit input is shifted by an offset of 0xB0 before being mapped to a character. This avoids problem symbol characters which will be escaped by the Facebook sanitization process (< and > for example).
+    \item Each 16-bit input is shifted by an offset of 0xB0 before being mapped to a character. This avoids problem symbol characters which will be escaped by the Facebook sanitization process ('<' and '>' for example).
     
-    \item Unicode code points U+D800 --- U+DBFF are surrogate pair characters and are illegal if used in isolation. Inputs which map to these characters (after being offset) are bit-shifted left by one place.
+    \item Unicode code points U+D800 - U+DBFF are surrogate pair characters and are illegal if used in isolation. Inputs which map to these characters (after being offset) are bit-shifted left by one place.
     
 \end{itemize}
 
@@ -295,9 +294,9 @@ Initially the image data is loaded from disk as a byte vector (leaving room for 
 
     \begin{figure}[tb]
         \begin{center}
-                \input{gfx/sub_image.tikz}
-            \caption{Encoding process for submitting an image.}
-            \label{tikz:text}
+                \includegraphics[width=12cm]{gfx/img-seq.eps}
+            \caption{UML sequence diagram of the encoding process for submitting an image.}
+            \label{eps:img}
         \end{center}
     \end{figure}
 
@@ -383,7 +382,7 @@ The CImg class does contain Haar transforms but these are not suitable. We requi
     y = & x - c_d
 \end{eqnarray}
 
-Iteration of the above over pairs in both vertical and horizontal axis can be used to perform the full 2D HWT and its inversion losslessly.
+Iteration of the above over pairs in both vertical and horizontal axes can be used to perform the full 2D HWT and its inversion losslessly.
 
 Changing the approximation coefficients can also lead to capping of values as they are mapped back to greyscale space, outside the 0-255 range. We therefore selectively discard high frequency information (during the inverse transform) from the difference coefficient $c_d$ whenever capping occurs - leaving the approximation coefficients intact and the output within range. See appendix XXX for full details of the exact HWT variant used.
 
@@ -416,24 +415,24 @@ The scaling process works so that the intervals for each data point are of equal
 \FloatBarrier
 \section{Testing}
 
-Many modules or processes could be unit tested individally before being aggregated and integration testing performed. Note that this section does not describe the chronology of development. In accordance with an agile developmental approach the focus was on delivering a minimally functioning prototype as earlier in the development lifecycle as possible, combining aspects of all the components listed below. Iterative improvement and development was then performed until a fully functioning system emerged.
+Many modules or processes could be unit tested individally before being aggregated and integration testing performed. Note that this section does not describe the chronology of development. In accordance with an agile developmental approach the focus was on delivering a minimally functioning prototype as early in the development lifecycle as possible, combining aspects of all the components listed below. Iterative improvement and development was then performed until a fully functioning system emerged.
 
 
 \subsection{Page interception module}
 
-The {\tt pagecept} parsing module was present in early prototypes, with placeholder messages and images used to demarcate decrypted items and skeleton handlers attached to UI controls. Testing principally involved manual inspection of the DOM using FireBug to ensure parsing had occured correctly. Test scripts derived from boundary-value analysis (available in appendix XXX) were also ran using FireBug and FireUnit to test that DOM insertions were being sanitised correctly. The cognitive walkthough method was also performed periodically to identify useability issues with UI controls, which could then be fixed.
+The {\tt pagecept} parsing module was present in early prototypes, with placeholder messages and images used to demarcate decrypted items and skeleton handlers attached to UI controls. Testing principally involved manual inspection of the DOM using FireBug to ensure parsing had occured correctly. Test scripts derived from boundary-value analysis (available in appendix XXX) were also run using FireBug and FireUnit to test that DOM insertions were being sanitised correctly. The cognitive walkthough method was also performed periodically to identify useability issues with UI controls, which could then be fixed.
 
-Initially a small subset of decryption target types and control-input pairs were supported. As development progressed each sucessive prototype added wider support for more specific cases. Testing was tightly integrated with and performed thoughout development, in line with agile testing methedology.
+Initially a small subset of decryption target types and control-input pairs were supported. As development progressed each sucessive prototype added wider support for more specific cases. Testing was tightly integrated with and performed thoughout development, in line with agile testing methodology.
 
 
 \subsection{Image coding}
 
-Development of image coding algorithms, particularly the HWT method, was highly suseptible to conceptual bugs, whereby the only error indicator was higher than expected output error rates. Error rates had to be carefully monitored during development. Testing involved simulating compression using the IGJ {\tt libjpeg} library --- initially for single $8 \times 8$ blocks then later for entire images. Debug methods were created for calculating the Hamming distance, edit distance and other metrics between byte sequences and/or files.
+Development of image coding algorithms, particularly the HWT method, was highly suseptible to conceptual bugs. Error rates where in some cases the only indicator that a bug was present, and had to be carefully monitored during development. Testing involved simulating compression using the IGJ {\tt libjpeg} library --- initially for single $8 \times 8$ blocks then later for entire images. Extraneous library methods were coded for calculating the Hamming distance, edit distance and other metrics between byte sequences and/or files. A standalone test instance of the C++ library was used since starting and stopping the browser was considerably time consuming.
 
 
 \subsection{Other modules}
 
-The UTF-8 codec was also tested using boundary-value analysis (available in appendix XXX). A standalone test instance of the C++ library was used since starting and stopping the browser was considerably time consuming.
+The UTF-8 codec was also tested using boundary-value analysis (available in appendix XXX). 
 
 Layers of encoding for both text and images were added to successive prototypes. Encoding layers could then be turned on and off during testing with command line switches to isolate bugs to specific library components.
 
@@ -442,4 +441,4 @@ Layers of encoding for both text and images were added to successive prototypes.
 
 Eventually simulation of the JPEG compression process was replaced by automated uploading and dowloading of images to and from Facebook.
 
-Particular care was taken to ensure text sanitisation was tested end-to-end, including submission and retriveal to/from Facebook, since the complexity of the UTF-8 coding scheme and the custom built decoder introduced the possibility of bypassing sanitisation \cite{utf8}.\footnote{Since we sanitise before injecting anything in to the page, in retrospect it seem unlikely that this could ever be a problem.}
+Particular care was taken to ensure text sanitisation was tested end-to-end, including submission and retrieval to/from Facebook, since the complexity of the UTF-8 coding scheme and the custom built decoder introduced the possibility of bypassing sanitisation \cite{utf8}.
