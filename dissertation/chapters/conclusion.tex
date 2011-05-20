@@ -75,13 +75,13 @@ Given the network effects involved, any system needs to be available for as many
 
 Network effects also mean that splitting the user base would be highly undesirable. Ideally the extension should not only support a modular, extensible structure, but also backwards compatibility between newer and older versions. In particular this would require a canonical JPEG-immune signature that describes what modules were used to encode an image. One possibility would be to use an n-bit scaling method with $n=1$.
 
-The Botan, CImg and Schifra library components are distributed under the FreeBSD, CeCILL and GPLv2\footnote{Provided the use is non-profit.} licenses respectively, which are all GPL compatible \cite{gpl}. We would have to make sure the terms of the GPL are adhered to.
+The Botan, CImg and Schifra library components are distributed under the FreeBSD, CeCILL and GPLv2\footnote{Provided the use is non-profit.} licenses respectively, which are all GPL compatible \cite{gpl}. The extension source code would have to be made availabe under the terms of the GPL also
 
 
 \section{Future work}
 \label{sec:future}
 
-A more advanced broadcast encryption scheme is presented in Appendix \ref{app:bcast}, partly based on Boneh et al \cite{boneh}. In brief, the scheme involves appending transmission overheads to the user's public key.\footnote{This would involve building a data structure to store the public key, most likely a linked list of Facebook notes.} Session keys can then be re-used when transmitting to the same recipient group. The key expiration period\footnote{NIST recommendations for key re-use periods range from a few months up to two years, depending on the nature of the message. \cite{nist-key}} could provide a sliding parameter that trades lower amortised storage overheads for better security. In addition, by running clean-up routines periodically on the public key, old keys can be deleted both to save space and to give content a finite lifetime.
+A more advanced broadcast encryption scheme is presented in Appendix \ref{ssec:bcast-improved}, partly based on Boneh et al \cite{boneh}. In brief, the scheme involves appending transmission overheads to the user's public key.\footnote{This would involve building a data structure to store the public key, most likely a linked list of Facebook notes.} Session keys can then be re-used when transmitting to the same recipient group. The key expiration period\footnote{NIST recommendations for key re-use periods range from a few months up to two years, depending on the nature of the message. \cite{nist-key}} then provides a sliding parameter that trades lower amortised storage overheads for better security. In addition, by running clean-up routines periodically on the public key, old keys can be deleted both to save space and to give content a finite lifetime.
 
 Finding an optimal approach to high capacity JPEG-immune image coding would be an interesting research-level problem. One promising avenue might be the use of a dirty paper coding scheme \cite{dpaper}.
 

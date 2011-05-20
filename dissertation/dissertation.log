@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  20 MAY 2011 06:23
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  20 MAY 2011 07:51
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2270,21 +2270,21 @@ PGFPlots: reading {gfx/error_rate0.data}
  (./chapters/implementation.tex
 Chapter 3.
 File: gfx/component.1 Graphic file (type mps)
-[MP to PDF] (./gfx/component.1) [23
-
-
-
-
-
-] [24]
-<screens/toolbar.png, id=956, 1046.91125pt x 146.5475pt>
+[MP to PDF] (./gfx/component.1)
+<screens/toolbar.png, id=945, 1046.91125pt x 146.5475pt>
 File: screens/toolbar.png Graphic file (type png)
 
-<use screens/toolbar.png> [25 <./screens/toolbar.png (PNG copy)>]
+<use screens/toolbar.png> [23
+
+
+
+
+
+] [24 <./screens/toolbar.png (PNG copy)>] [25]
 File: gfx/lib.1 Graphic file (type mps)
- [MP to PDF]
-(./gfx/lib.1)
-Overfull \hbox (16.40625pt too wide) in paragraph at lines 74--75
+
+[MP to PDF] (./gfx/lib.1)
+Overfull \hbox (16.40625pt too wide) in paragraph at lines 76--77
  [] 
  []
 
@@ -2322,7 +2322,7 @@ ns/content2.png (PNG copy)> <./screens/content3.png>]
 <screens/pubkey.png, id=1011, 1051.93pt x 558.085pt>
 File: screens/pubkey.png Graphic file (type png)
  <use screens/pubkey.png>
-Underfull \hbox (badness 3000) in paragraph at lines 178--179
+Underfull \hbox (badness 3000) in paragraph at lines 196--197
 []\T1/futs/m/n/12 (+20) Migration of pub-lic keys can be per-formed in-band us-
 ing the
  []
@@ -2340,7 +2340,7 @@ Package epstopdf Info: Source file: <gfx/text-seq.eps>
 (epstopdf)                    size: 27960 bytes
 (epstopdf)             Command: <epstopdf --outfile=gfx/text-seq-eps-converted-
 to.pdf gfx/text-seq.eps>
-(epstopdf)             \includegraphics on input line 207.
+(epstopdf)             \includegraphics on input line 225.
 Package epstopdf Info: Output file is already uptodate.
 
 <gfx/text-seq-eps-converted-to.pdf, id=1029, 742.775pt x 512.91624pt>
@@ -2362,10 +2362,10 @@ Package epstopdf Info: Source file: <gfx/img-seq.eps>
 (epstopdf)                    size: 17107 bytes
 (epstopdf)             Command: <epstopdf --outfile=gfx/img-seq-eps-converted-t
 o.pdf gfx/img-seq.eps>
-(epstopdf)             \includegraphics on input line 310.
+(epstopdf)             \includegraphics on input line 328.
 Package epstopdf Info: Output file is already uptodate.
 
-<gfx/img-seq-eps-converted-to.pdf, id=1055, 552.0625pt x 362.35374pt>
+<gfx/img-seq-eps-converted-to.pdf, id=1056, 552.0625pt x 362.35374pt>
 File: gfx/img-seq-eps-converted-to.pdf Graphic file (type pdf)
 
 <use gfx/img-seq-eps-converted-to.pdf>
@@ -2373,18 +2373,18 @@ File: gfx/fec.1 Graphic file (type mps)
  [MP to PDF] (./gfx/fec.1) [39 <./gfx/img-seq-eps-converted-to.pdf>]
 File: gfx/img.1 Graphic file (type mps)
  [MP to PDF] (./gfx/img.1)
-Overfull \hbox (39.4925pt too wide) in paragraph at lines 343--344
+Overfull \hbox (39.4925pt too wide) in paragraph at lines 359--360
  [] 
  []
 
 [40] [41] (./gfx/haar.tikz) [42] [43]
-<screens/haar.jpg, id=1087, 722.7pt x 722.7pt>
+<screens/haar.jpg, id=1088, 722.7pt x 722.7pt>
 File: screens/haar.jpg Graphic file (type jpg)
  <use screens/haar.jpg>
-<screens/scaled3.jpg, id=1088, 722.7pt x 722.7pt>
+<screens/scaled3.jpg, id=1089, 722.7pt x 722.7pt>
 File: screens/scaled3.jpg Graphic file (type jpg)
  <use screens/scaled3.jpg>
-<screens/scaled4.jpg, id=1089, 722.7pt x 722.7pt>
+<screens/scaled4.jpg, id=1090, 722.7pt x 722.7pt>
 File: screens/scaled4.jpg Graphic file (type jpg)
  <use screens/scaled4.jpg>
 [44 <./screens/haar.jpg> <./screens/scaled3.jpg> <./screens/scaled4.jpg>])
@@ -2434,11 +2434,11 @@ Missing character: There is no ; in font nullfont!
 PGFPlots: reading {gfx/retrieve.data}
 PGFPlots: reading {gfx/retrieve.data}
 Missing character: There is no ; in font nullfont!
- [52] [53] [54] <screens/parrots1.png, id=1167, 500.87125pt x 229.85875pt>
+ [52] [53] [54] <screens/parrots1.png, id=1168, 500.87125pt x 229.85875pt>
 File: screens/parrots1.png Graphic file (type png)
 
 <use screens/parrots1.png>
-<screens/parrots2.png, id=1168, 500.87125pt x 191.71625pt>
+<screens/parrots2.png, id=1169, 500.87125pt x 191.71625pt>
 File: screens/parrots2.png Graphic file (type png)
 
 <use screens/parrots2.png>
@@ -2448,11 +2448,11 @@ PGFPlots: reading {gfx/async_image_hist.data}
 PGFPlots: reading {gfx/async_image_hist.data}
  [55 <./screens/parrots1.png (PNG copy)> <./screens/parrots2.png (PNG copy)>] [
 56] [57] [58]
-<screens/pic-upload.png, id=1200, 774.895pt x 616.3025pt>
+<screens/pic-upload.png, id=1201, 774.895pt x 616.3025pt>
 File: screens/pic-upload.png Graphic file (type png)
 
 <use screens/pic-upload.png> [59] [60 <./screens/pic-upload.png (PNG copy)>]
-<screens/comment.png, id=1216, 764.8575pt x 668.4975pt>
+<screens/comment.png, id=1217, 764.8575pt x 668.4975pt>
 File: screens/comment.png Graphic file (type png)
 
 <use screens/comment.png>) [61] [62 <./screens/comment.png (PNG copy)>]
@@ -2591,7 +2591,7 @@ Appendix F.
 [89
 
 
-] <screens/create-warning.png, id=1525, 1047.915pt x 562.1pt>
+] <screens/create-warning.png, id=1526, 1047.915pt x 562.1pt>
 File: screens/create-warning.png Graphic file (type png)
 
 <use screens/create-warning.png> [90] [91 <./screens/create-warning.png>])
@@ -2665,10 +2665,10 @@ topia/putr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/p
 utri8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfsx
 1440.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.p
 fb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on dissertation.pdf (109 pages, 5031917 bytes).
+Output written on dissertation.pdf (109 pages, 5031760 bytes).
 PDF statistics:
- 1693 PDF objects out of 1728 (max. 8388607)
- 1526 compressed objects within 16 object streams
+ 1694 PDF objects out of 1728 (max. 8388607)
+ 1527 compressed objects within 16 object streams
  387 named destinations out of 1000 (max. 500000)
  59835 words of extra memory for PDF output out of 61914 (max. 10000000)
 

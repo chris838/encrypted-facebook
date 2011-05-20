@@ -3,7 +3,7 @@
 %*****************************************
 \label{imp}
 
-We present the key aspects of the implementation. Some of the subtleties are omitted, in particular the specifics of integrating with the Facebook web UI and the workarounds required to correctly authenticate and interface with the Graph API. We begin with a general overview of the project structure, before outlining the page interception and parsing process. We describe how public keys are created, uploaded and shared. We then step through the process of encoding a text submission, detailing the relevant parts of the library as they are used. We repeat this for the process of encoding an image. Finally, we review the testing process used throughout development.
+We present the key aspects of the implementation. Some of the subtleties are omitted, in particular the specifics of integrating with the Facebook web UI and the workarounds required to correctly authenticate and interface with the Graph API. We begin with a general overview of the project structure, before outlining the page interception and parsing process. We describe how public keys are created, uploaded and shared. We then step through the process of encoding a text submission, detailing the relevant parts of the library as they are used. We repeat this for the process of encoding an image. Finally, we review the testing methods used throughout development.
 
 
 \FloatBarrier
@@ -28,6 +28,14 @@ We describe the overall structure of the extension and the C++ library. We also 
      
     \item[Toolbar XUL] \hfill \\ The toolbar XUL defines an interface using the Mozilla XML User Interface Language (XUL). The toolbar is used for operations which can't easily be integrated into the Facebook UI itself. Toolbar controls are disabled and enabled when appropriate, to guide use (see Figure \ref{scn:toolbar}).
     
+        \begin{figure}[tbph]
+        \begin{center}
+                \includegraphics[width=12cm]{screens/toolbar.png}
+            \caption{Toolbar before login.}
+            \label{scn:toolbar}
+        \end{center}
+    \end{figure}
+    
     \item[Page interception] \hfill \\ {\tt pagecept} contains the HTML parser for extracting prospective decryption targets and inserting UI controls. Actual target processors and control event handlers are defined in {\tt efb}. Sanitisation is performed in two places --- before input is injected into the page and before input is sent to the library to be encoded.
     
     Updates due to changes in the Facebook web UI are isolated to this component. Component re-use (e.g. in an extension for another browser) is also facilitated. 
@@ -40,13 +48,7 @@ We describe the overall structure of the extension and the C++ library. We also 
     
     \end{sdesc}
     
-        \begin{figure}[tbph]
-        \begin{center}
-                \includegraphics[width=12cm]{screens/toolbar.png}
-            \caption{Toolbar before login.}
-            \label{scn:toolbar}
-        \end{center}
-    \end{figure}
+
     
 
 \subsection{C++ module structure}
@@ -81,7 +83,7 @@ We describe the overall structure of the extension and the C++ library. We also 
 \FloatBarrier    
 \subsection{Initialisation}
 
-Firefox loads the toolbar XUL as part of the chrome when the browser is started. The XUL then loads the JavaScript components which define handlers for the toolbar controls. The extension is initialised when either the {\tt [Start Encrypted Facebook]} or {\tt [Create Identity]} button is clicked. {\tt efb} harvests the Facebook ID from a browser cookie (assuming the user is logged in to Facebook) and uses it to define the working directory. This allows multiple users to be supported on the same Firefox profile. {\tt efb} then instantiates the C++ library (which loads any required state from disk) and attaches the {\tt pacecept} handler to various DOM events.
+Firefox loads the toolbar XUL as part of the chrome when the browser is started. The XUL then loads the JavaScript components which define handlers for the toolbar controls. The extension is initialised when either the {\tt [Start Encrypted Facebook]} or {\tt [Create Identity]} button is clicked. {\tt efb} harvests the Facebook ID from a browser cookie and uses it to define the working directory. This allows multiple users to be supported on the same Firefox profile. {\tt efb} then instantiates the C++ library (which loads any required state from disk) and attaches the {\tt pacecept} handler to various DOM events.
 
 
 \FloatBarrier
@@ -90,7 +92,7 @@ Firefox loads the toolbar XUL as part of the chrome when the browser is started.
 
 The {\tt pagecept} parser is triggered whenever the DOM is updated. This means several passes will be performed when a page first loads and many subsequent passes may be performed as the user interacts with the page. This also means the actions of the parser itself can trigger another parse event. The parser must therefore break after any DOM edits, allowing the next event to finish the remainder of the work. Before any modification occurs care is taken to ensure it hasn't been performed already by a previous pass. Caches are used to ensure that computationally expensive work isn't unduly repeated
 
-The parser checks if a page is within the Facebook domain, then inserts additional UI controls and identifies and processes potential decryption targets. We describe each of these processes.
+The parser checks if a page is within the Facebook domain, then inserts additional UI controls and identifies and processes potential decryption targets.
 
 \subsection{Inserting submission controls}
 \label{ssec:insert}
@@ -130,7 +132,23 @@ Regular expressions are used to locate and filter possible decryption targets. F
 \label{ssec:proc-targets}
 
 
-Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a sequence of HTTP requests are triggered though {\tt efb}. For text this involves retrieving the note containing the ciphertext. For images this requires retrieving a full resolution copy of the image.\footnote{Most often images are displayed only as thumbnails. A full resolution copy of the ciphered image is obviously required to generate a plaintext thumbnail.} Obviously only files with the JPEG extension are downloaded. A handler is attached to the request so that on completion, the cache can be updated appropriately and parsing triggered. If an entry exists then several actions may be appropriate. If a valid plaintext exists exists in the cache this is used. The entry may also be marked as in progress in which case a loading message is substituted. If a previous attempt failed then the target can be ignored.
+Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a sequence of HTTP requests are triggered though {\tt efb}.
+
+\begin{itemize}
+\item For text this involves retrieving the note containing the ciphertext.
+
+\item For images this requires retrieving a full resolution copy of the image.\footnote{Most often images are displayed only as thumbnails. A full resolution copy of the ciphered image is obviously required to generate a plaintext thumbnail.} Only files with a JPEG extension are downloaded.
+\end{itemize}
+
+A handler is attached to the request so that on completion, the cache can be updated appropriately and parsing can be triggered once again. If an entry exists on of several actions will occur:
+
+\begin{itemize}
+\item If a valid plaintext exists exists in the cache it is inserted.
+
+\item If the entry is marked as in progress a loading message is inserted.
+
+\item If a previous attempt failed the target is ignored (images) or a failure message inserted (text).
+\end{itemize}
 
 Parsing of a comment thread contained in a news feed is illustrated in figures \ref{scn:ctrl} and \ref{scn:ctrl2}. Note the CSS decoration demarcating an encrypted message.
 
@@ -163,7 +181,7 @@ A cryptographic identity\footnote{By which we mean a public-private key pair.} n
 
 \subsection{Creating and migrating identities}
 
-Creation and migration is performed through the browser toolbar (see Figure \ref{scn:pubkey}). On first install, only the {\tt [Create Identity]} button will be enabled. This action generates a local public-private key pair through the C++ module and uploads and appends the public key to the user's Bio attribute using {\tt faceapi} methods. Figure \ref{scn:bio} shows the key as it exists on a user's profile. The public key is encoded using Stego! (see Section \ref{ssec:submitnote}) and checks are made to prevent duplicate public keys existing online.
+Creation and migration is performed through the browser toolbar (see Figure \ref{scn:pubkey}). On first install only the {\tt [Create Identity]} button will be enabled. This action generates a local public-private key pair through the C++ module and uploads and appends the public key to the user's Bio attribute using {\tt faceapi} methods. Figure \ref{scn:bio} shows the key as it exists on a user's profile. The public key is encoded using Stego! (see Section \ref{ssec:submitnote}) and checks are made to prevent duplicate public keys existing online.
 
     \begin{figure}[tbph]
         \begin{center}
@@ -301,9 +319,9 @@ Two additional steps are also performed:
 \section{Image encoding}
 \label{sec:img-sub}
 
-We now describe the process by which an image, stored locally, is encrypted and encoded in a temporary image file ready to be uploaded.
+We now describe the process by which an image, stored locally, is encrypted and encoded in a temporary image file ready to be uploaded (see Figure \ref{eps:img}).
 
-The C++ library is passed the input and output file paths. Initially the image data is loaded from disk as a byte vector (leaving room for the encryption header) and encrypted exactly as described in Section \ref{ssec:encrypt}. Error correcting codes are then added. Finally, a conduit image object is created, written to, and saved to disk in a lossless format. We describe the last two stages in further detail.
+The C++ library is passed the input and output file paths. Initially the image data is loaded from disk as a byte vector (leaving room for the encryption header) and encrypted exactly as described in Section \ref{ssec:encrypt}. Error correcting codes are then added. Finally, a conduit image object is created, written to and saved to disk in a lossless format. We describe the last two stages in further detail.
 
     \begin{figure}[tb]
         \begin{center}
@@ -317,7 +335,7 @@ The C++ library is passed the input and output file paths. Initially the image d
 \FloatBarrier
 \subsection{Forward error correction}
 
-Currently the only FEC implementations are based on the Schifra library using Reed Solomon codes. The Shifra library is encapsulated in an abstract base class and two template specialisation subclasses implementing codes rates of (15,9) and (255,223) (see Figure \ref{uml:fec}).
+Currently the only FEC implementations are based on the Schifra library using Reed Solomon codes. We encapsulate the Shifra library in an abstract base class and two template specialisation subclasses implementing codes rates of (15,9) and (255,223) (see Figure \ref{uml:fec}).
 
 
     \begin{figure}[tb]
@@ -330,13 +348,11 @@ Currently the only FEC implementations are based on the Schifra library using Re
 
 The FEC algorithms have a fixed block size. In order to avoid excess padding bytes or addition length tags, we use a scheme inspired by ciphertext stealing used in cryptography \cite{stealing}. The FEC codes are appended to the data bytes so that, provided there are enough blocks, any last partial block will be padded out automatically.
 
-A length tag is also FEC encoded and appended so that padding bytes can later be removed.
-
 
 \FloatBarrier
 \subsection{Conduit image class hierarchy}
 
-Images are encoded by generating an instance of IConduitImage through the abstract factory, writing data to it by calling the {\tt implantData} method, then saving out to disk. The {\tt CImg} class (from the CImg library) is used as a base class since it supports opening and saving various image formats, manipulating pixels and colour space transforms.
+Images are encoded by generating an instance of {\tt IConduitImage} through the abstract factory, writing data to it by calling its {\tt implantData} method, then saving out to disk. The {\tt CImg} class (from the CImg library) is used as a base class since it supports opening and saving various image formats, manipulating pixels and colour space transforms.
 
     \begin{figure}[tbp]
         \begin{center}
@@ -346,16 +362,16 @@ Images are encoded by generating an instance of IConduitImage through the abstra
         \end{center}
     \end{figure}
     
-{\tt implantData} begins by resizing the image to $720 \times 720$, greyscale. It then writes the data one byte at a time using the (protected) {\tt write} method defined in {\tt BufferedConduitImage}. The remainder of the image is padded with random bytes for aesthetic effect.
+{\tt implantData} begins by resizing the image to $720 \times 720$, greyscale. It then writes the data one byte at a time using the {\tt write} method defined in {\tt BufferedConduitImage}. The remainder of the image is padded with random bytes for aesthetic effect.
 
 \FloatBarrier
 \subsection{Read/write buffering}
 
-All current conduit image implementations are derived from the abstract base class {\tt BufferedConduitImage} which supports reading and writing single bytes. Buffers are used to group read/write requests together to write to an abstract block --- the actual block implementation is left to the subclass. Each subclass defines a block as having certain dimensions and calls the parent constructor with {\tt block\_size}, the number of bytes one block can store. Examples are listing for three concrete subclasses in Table \ref{tab:blocks}.
+All current conduit image implementations are derived from the abstract base class {\tt BufferedConduitImage} which implements support for reading and writing single bytes. Buffers are used to group read/write requests together to write to an abstract block --- the actual block implementation is left to the subclass. Each subclass defines a block as having certain dimensions and calls the parent constructor with {\tt block\_size}, the number of bytes one block can store. Examples are listing for three concrete subclasses in Table \ref{tab:blocks}.
 
-The variables {\tt rhead} and {\tt whead} determine the current position of the read and write heads, or equivalently the number of bytes written or read since creation. Any subclass of {\tt BufferedConduitImage} must implement a method {\tt getBlockCoords} to map the position of the read/write heads to block coordinates within the image. Subclasses must also implement {\tt encodeInBlock} and {\tt decodeFromBlock} for writing {\tt block\_size} bytes to and from a block, given the block coordinates.
+The variables {\tt rhead} and {\tt whead} determine the current position of the read and write heads, or equivalently the number of bytes written or read since creation. Any subclass of {\tt BufferedConduitImage} must implement a method {\tt getBlockCoords} to map the position of the read/write heads to block coordinates within the image. Subclasses must also implement {\tt encodeInBlock} and {\tt decodeFromBlock} for writing {\tt block\_size} bytes to and from a block, given the block's coordinates.
 
-This class also contains Gray code translation functions, since they are used by all descendant classes and their definitions are too small to justify a class of their own. The Gray code length used varies depending on implementation (see Table \ref{tab:blocks}).
+This class also contains Gray code translation functions since they are used by all descendant classes and their definitions are too small to justify a class of their own. Each implementation uses different length Gray codes (see Table \ref{tab:blocks}).
 
 \begin{table}[tbph]
     \begin{center}
@@ -389,14 +405,14 @@ The {\tt HaarWTConduitImage} class uses blocks of 8x8 pixels (aligned with JPEG 
 \end{center}
 \end{figure}
 
-The {\tt CImg} class does contain Haar transforms but these are not suitable. We require an integer lifting scheme (described in \cite{haar}) to ensure that the transform is reversible. In the 1-dimensional case, for a pair of approximation and difference coefficients $(c_a,c_d)$, we calculate the output value pair $(x,y)$: 
+The {\tt CImg} class does contain Haar transforms but these are not suitable. We require an integer lifting scheme (described in \cite{haar}) for the inverse transform. In the 1-dimensional case, for a pair of approximation and difference coefficients $(c_a,c_d)$, we calculate the output value pair $(x,y)$: 
 
 \begin{eqnarray}
     x = & c_a + \lfloor \frac{c_d+1}{2} \rfloor \nonumber \\ 
     y = & x - c_d
 \end{eqnarray}
 
-Iteration of the above over pairs in both vertical and horizontal axes can be used to perform the full 2D HWT and its inversion losslessly.
+Iteration of the 1-dimensional case in both vertical and horizontal axes can be used to perform the full 2D-HWT and its inversion losslessly.
 
 Changing the approximation coefficients can also lead to capping of values as they are mapped back to greyscale space, outside the 0-255 range. We therefore selectively discard high frequency information (during the inverse transform) from the difference coefficient $c_d$ whenever capping occurs - leaving the approximation coefficients intact and the output within range.
 
@@ -407,9 +423,9 @@ Changing the approximation coefficients can also lead to capping of values as th
 
 The abstract base class {\tt ScaledConduitImage} contains functions to code n-bits of data to and from a single pixel using the n-bit scaling method. The value of n is set on instantiation.
 
-Two subclasses are specified for $n=3$ and $n=4$. For $n=3$ we use 3x2 blocks of pixels with a block size of 3-bytes. For $n=4$ we use blocks of 2 pixels with a block size of 1-byte.
+Two subclasses are specified for $n=3$ and $n=4$. For $n=3$ we use $3x2$ blocks of pixels with a block size of 3-bytes. For $n=4$ we use blocks of 2 pixels with a block size of 1-byte.
 
-The scaling process works so that the intervals for each data point are of equal width, except for the intervals at either end which are $\frac{1}{2}$ length. This is because extreme values (0 or 255) can only be either decreased or increased due to compression artefacts, not both. An input pixel value of 255 might result in 254 or 253 after compression, but never 0 or 1.
+N-bit scaling works on the principle that the intervals representing each data point are of equal width, except for the intervals at either end which are $\frac{1}{2}$ length. This is because extreme values (0 or 255) can only be either decreased or increased due to compression artefacts, not both. An input pixel value of 255 might result in 254 or 253 after compression, but never 0 or 1.
 
     
 \begin{figure}[htp]
@@ -429,7 +445,7 @@ The scaling process works so that the intervals for each data point are of equal
 \FloatBarrier
 \section{Testing}
 
-Many modules or processes could be unit tested individually before being aggregated and integration testing performed. Note that this section does not describe the chronology of development. In accordance with an agile developmental approach the focus was on delivering a minimally functioning prototype as early in the development life-cycle as possible, combining aspects of all the components listed below. Iterative improvement and development was then performed until a fully functioning system emerged.
+Many modules or processes could be unit tested individually before being aggregated and integration testing performed. Note that this section does not describe the chronology of development. In accordance with agile methods the focus was on delivering a minimally functioning prototype as early in the development life-cycle as possible, combining aspects of all the components listed below. Iterative improvement and development was then performed until a satisfactory system emerged.
 
 
 \subsection{Page interception module}
@@ -441,8 +457,7 @@ Initially a small subset of decryption target types and control-input pairs were
 
 \subsection{Image coding}
 
-Development of image coding algorithms, particularly the HWT method, was highly susceptible to conceptual bugs. Abnormal error rates were, in some cases, the only indicator that a bug was present, and had to be carefully monitored during development. Testing involved simulating compression using the IJG {\tt libjpeg} library --- initially for single $8 \times 8$ blocks then later for entire images. Extraneous library methods were coded for calculating the Hamming distance, edit distance and other metrics between byte sequences and/or files. A standalone test instance of the C++ library was used since starting and stopping the browser was considerably time consuming.
-
+Development on image coding algorithms, particularly the HWT method, was highly susceptible to conceptual errors. Abnormal bit error rates were, in some cases, the only indicator that a bug was present, and had to be carefully monitored during development. Testing involved simulating compression using the IJG {\tt libjpeg} library --- initially for single $8 \times 8$ blocks then later for entire images. Extraneous library methods were coded for calculating the Hamming distance, edit distance and other metrics between byte sequences and/or files. A standalone test instance of the C++ library was used since starting and stopping the browser was considerably time consuming. When required, algorithms were re-coded in Octave and results compared.
 
 \subsection{Other modules}
 

@@ -241,7 +241,7 @@ Given a group size of $n$ and public key size $p$ the transmission overhead, in 
     (n \times (4 + p)) + 16
 \end{equation}
 
-The implementation used for testing has a capacity of 165 KiB, which must include both the transmission overhead and the image itself. Thus group sizes larger than 400 are already approaching the capacity limit. Even given increased capacity, our results show that performance issues are unlikely to be the limiting factor to recipient group sizes.
+The implementation used for testing has a capacity of 165 KiB, which must include both the transmission overhead and the image itself. Group sizes larger than 400 are therefore already approaching the capacity limit. Our results show that performance issues are unlikely to be the limiting factor to recipient group sizes, even if image coding capacities improve.
 
 
 \section{Plaintext caching}
@@ -260,7 +260,7 @@ The entire process was then repeated for a news feed containing 15 image objects
 
 The start time of each test was logged, along with the subsequent load times of the encrypted objects. 
 
-    \begin{figure}[tbph]
+    \begin{figure}[tb]
         \begin{center}
                 \includegraphics[width=10cm]{screens/parrots1.png}
                 \includegraphics[width=10cm]{screens/parrots2.png}
@@ -350,9 +350,7 @@ After the first item has loaded we can also look at the subsequent waiting time 
 
 \subsection{Implications}
 
-Currently the plaintext cache is wiped on initialisation and destruction. Based on our results, most users would likely benefit from lengthening the cache expiration period, unless the extension was used mainly for text communications rather than image sharing. A full study of how the cache increases in size over time would required to make this judgement however; this was unfortunately not possible in the limited evaluation timeframe.
-
-
+Currently the plaintext cache is wiped on initialisation and destruction. Based on our results, most users would likely benefit from lengthening the cache expiration period, unless perhaps the extension was used mainly for text communications rather than image sharing. A full study of how the cache increases in size over time would required to evaluate the local storage cost incurred; this was unfortunately not possible in the limited evaluation timeframe.
 
 
 
