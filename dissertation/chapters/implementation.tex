@@ -28,9 +28,11 @@ We describe the overall structure of the extension and the C++ library. We also 
      
     \item[Toolbar XUL] \hfill \\ The toolbar XUL defines an interface using the Mozilla XML User Interface Language (XUL). The toolbar is used for operations which can't easily be integrated into the Facebook UI itself. Toolbar controls are disabled and enabled when appropriate, to guide use (see Figure \ref{scn:toolbar}).
     
-    \item[Page interception] \hfill \\ {\tt pagecept} contains the HTML parser for extracting prospective decryption targets and inserting UI controls. Actual target processors and control event handlers are defined in {\tt efb}. Updates due to changes in the Facebook web UI and DOM injection security exploits are isolated to this component. Component re-use (e.g. in an extension for another browser) is also facilitated. 
+    \item[Page interception] \hfill \\ {\tt pagecept} contains the HTML parser for extracting prospective decryption targets and inserting UI controls. Actual target processors and control event handlers are defined in {\tt efb}. Sanitisation is performed in two places --- before input is injected into the page and before input is sent to the library to be encoded.
+    
+    Updates due to changes in the Facebook web UI are isolated to this component. Component re-use (e.g. in an extension for another browser) is also facilitated. 
 
-    \item[Main extension component] \hfill \\ {\tt efb} is the central component and defines the handlers for the toolbar and integrated UI controls. {\tt efb} defines handlers for decryption events and contains the plaintext cache data structures. It also defines callback handlers for asynchronous {\tt faceapi} function calls.
+    \item[Main extension component] \hfill \\ {\tt efb} is the central component and defines the handlers for the toolbar and integrated UI controls. {\tt efb} defines handlers for decryption events and contains the plaintext cache data structures. It also defines callback handlers for asynchronous {\tt faceapi} function calls. {\tt secureEval()} is contained in {\tt efb} as a replacement for {\tt eval()}, and will only operate on HTTP response objects --- not arbitrary strings.
     
     \item[Facebook API layer] \hfill \\ {\tt faceapi} is a layer of abstraction between {\tt efb} and the Facebook platform. {\tt faceapi} contains code for Graph API read/write queries as well as for the workaround solutions detailed in Appendix \ref{app:graph}.
 
@@ -95,7 +97,7 @@ The parser checks if a page is within the Facebook domain, then inserts addition
 
 Existing submission controls are each associated with an input field. Initially the parser identifies any control-field pairs using regular expressions. There are a number of possible types of control-field pairs, and these can exist within the DOM in various places and configurations. We omit the specifics of how to deal with each possible case and instead describe the general process.
 
-    \begin{figure}[tbph]
+    \begin{figure}[tb]
         \begin{center}
                 \includegraphics[width=12cm]{screens/control1.png}
                 \includegraphics[width=12cm]{screens/control2.png}
@@ -108,7 +110,7 @@ Once a pair has been identified we generate an alternative encrypted submission 
 
 The submission handler causes a friend selector window to appear (see Figure \ref{scn:fselector}) loaded with any friends whose public keys are stored on disk (see Section \ref{ssec:mankeys}). Elements within the control are populated with the user's names and profile pictures by performing queries through {\tt faceapi}.
 
-    \begin{figure}[tbph]
+    \begin{figure}[tb]
         \begin{center}
                 \includegraphics[width=10cm]{screens/fselector.png}
             \caption{Friend selector window.}
@@ -121,14 +123,14 @@ On submission, the list of recipient's Facebook IDs and the input from the input
 \subsection{Identifying decryption targets}
 \label{ssec:ident-targets}
 
-Regular expressions are used to locate and filter possible decryption targets. For text these will be enclosed by special start and end sequences. Images can be identified by their filename as Graph API objects. In either case we take a best effort approach to filtering since a malicious user could easily create fake text tags and images are hard to filter out without first initiating decryption. The decryption process is designed to fail gracefully as early as possible if this turns out to be the case. \footnote{Currently, all ciphered images are $720 \times 720$ pixels allowing images to be filtered on their dimensions. The case for uploading variable sized images and its effect on filtering is discussed in Appendix \ref{app:imginc}.}
+Regular expressions are used to locate and filter possible decryption targets. For text these will be enclosed by special start and end sequences. Images can be identified by their filename as Graph API objects. In either case we take a best effort approach to filtering since a malicious user could easily create fake text tags and images are hard to filter out without first initiating decryption. The decryption process is designed to fail gracefully as early as possible if this turns out to be the case. \footnote{Currently, all ciphered images are $720 \times 720$ pixels allowing images to be filtered on their dimensions. The case for uploading variable sized images and its effect on filtering is discussed in Appendix \ref{app:imginc}.} Underlying library calls are enclosed in {\tt try...catch} blocks and custom exceptions are used to quickly break out of the decode process if necessary.
 
     
 \subsection{Processing decryption targets}
 \label{ssec:proc-targets}
 
 
-Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a sequence of HTTP requests are triggered though {\tt efb}. For text this involves retrieving the note containing the ciphertext. For images this requires retrieving a full resolution copy of the image.\footnote{Most often images are displayed only as thumbnails. A full resolution copy of the ciphered image is obviously required to generate a plaintext thumbnail.} A handler is attached to the request so that on completion, the cache can be updated appropriately and parsing triggered. If an entry exists then several actions may be appropriate. If a valid plaintext exists exists in the cache this is used. The entry may also be marked as in progress in which case a loading message is substituted. If a previous attempt failed then the target can be ignored.
+Once a list of target Facebook IDs has been generated and filtered, it is processed. Each ID is checked to see if it has an entry in the cache. If not, an entry is created and a sequence of HTTP requests are triggered though {\tt efb}. For text this involves retrieving the note containing the ciphertext. For images this requires retrieving a full resolution copy of the image.\footnote{Most often images are displayed only as thumbnails. A full resolution copy of the ciphered image is obviously required to generate a plaintext thumbnail.} Obviously only files with the JPEG extension are downloaded. A handler is attached to the request so that on completion, the cache can be updated appropriately and parsing triggered. If an entry exists then several actions may be appropriate. If a valid plaintext exists exists in the cache this is used. The entry may also be marked as in progress in which case a loading message is substituted. If a previous attempt failed then the target can be ignored.
 
 Parsing of a comment thread contained in a news feed is illustrated in figures \ref{scn:ctrl} and \ref{scn:ctrl2}. Note the CSS decoration demarcating an encrypted message.
 
@@ -179,7 +181,7 @@ Migration of public keys can be performed in-band using the {\tt [Download Publi
 \subsection{Managing public keys}
 \label{ssec:mankeys}
 
-Public keys are added and removed using a control on a user's profile page, inserted in a similar manner to submission controls. {\tt faceapi} is used to retrieve the Bio attribute and methods in {\tt efb} parse the result and write the public key out to a file using the Facebook ID as the filename. The local cache of public key files determines which users appear in the friend selector control.
+Public keys are added and removed using a control on a user's profile page, inserted in a similar manner to submission controls. {\tt faceapi} is used to retrieve the Bio attribute and methods in {\tt efb} parse the result and write the public key out to a file using the Facebook ID as the filename. The local cache of public key files determines which users appear in the friend selector control. Public keys are vetted to ensure they are the correct size, and only use Base64 characters.
     
         \begin{figure}[tbph]
         \begin{center}

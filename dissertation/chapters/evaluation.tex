@@ -41,7 +41,7 @@ Table \ref{tab:img-test} summarises the number of useful bits each method can st
 \subsection{Theoretical capacity calculation}
 \label{ssec:capacity}
 
-The per-image theoretical capacity $C$ is a function of the number of bits available per image $A$\footnote{Determined by the implementation.} and the bit error probability $p_e$:
+The per-image theoretical capacity $C$ is a function of the number of bits available per image $A$\footnote{Determined by the implementation. Recall that all images are $720 \times 720$ pixels.} and the bit error probability $p_e$:
 
 \begin{equation}
     C = A \cdot (1 + H(p_e))
@@ -150,7 +150,7 @@ $ & 166.0 \\
 
 The 4-bit scaling class results in error rates too large to be corrected with the Reed Solomon codes used here, indicating that a different FEC scheme would be appropriate.
 
-Using the 3-bit scaling class along with (255,223) FEC codes (highlighted in green) we would expect less than one bit error in a terabyte of encoded data. For comparison, this approaches hard disk drive read error rates \footnote{Stated by at least one hard drive vendor to be 1 uncorrectable read error in $10^{14}$ bits, or 10 terabytes \cite{hdd-errors}.}. The capacity (approximately 165 KiB) is also within 10\% of the Shannon limit for 3-bit scaling. We focus on this combination for the remainder of the evaluation.
+Using the 3-bit scaling class along with (255,223) FEC codes (highlighted in green) we would expect less than one bit error in a terabyte of encoded data. For comparison, this approaches hard disk drive read error rates \footnote{Stated by at least one hard drive vendor to be 1 uncorrectable read error in $10^{14}$ bits, or 10 terabytes \cite{hdd-errors}.}. The capacity (approximately 165 KiB) is also within 10\% of the Shannon limit. We focus on this combination for the remainder of the evaluation.
 
 
 
@@ -158,7 +158,7 @@ Using the 3-bit scaling class along with (255,223) FEC codes (highlighted in gre
 \section{Recipient group size}
 \label{sec:recsize}
 
-We investigate how recipient group size affects encoding and decoding performance. Large or highly variable decoding times would have an adverse effect on usability, in particular since decoding is triggered automatically whilst browsing. Potentially, practical recipient group sizes might be limited due to performance issues.
+We investigate how recipient group size affects encoding and decoding performance. Large or highly variable decoding times would have an adverse effect on usability, in particular since decoding is triggered automatically whilst browsing. Potentially, recipient group sizes could be limited due to performance issues.
 
 \begin{figure}[tbph]
     \begin{center}
@@ -197,7 +197,7 @@ A 50 KiB random test image was encrypted using 248-bit AES and 2048-bit RSA, enc
     
 \begin{tikzpicture}
 \begin{axis}[grid=major,
-    xlabel=Recipient group size, ylabel=Encoding Time (seconds), height=10cm,width=10cm,
+    xlabel=Recipient group size, ylabel=Encoding Time (seconds), height=8cm,width=8cm,
     ymin=0, xmin=0, xmax=400, legend style={legend pos=south west, empty legend}]
     
     \addplot[only marks, mark=x] table[x=r,y=t]
@@ -212,7 +212,7 @@ A 50 KiB random test image was encrypted using 248-bit AES and 2048-bit RSA, enc
 
 \begin{tikzpicture}
 \begin{axis}[grid=major,
-    xlabel=Recipient group size, ylabel=Decoding Time (seconds), height=10cm,width=10cm,
+    xlabel=Recipient group size, ylabel=Decoding Time (seconds), height=8cm,width=8cm,
     ymin=0, xmin=0, xmax=400, legend style={legend pos=south west, empty legend}]
     
     \addplot[only marks,mark=x] table[x=r,y=t]
@@ -254,7 +254,7 @@ We test the hypothesis that clearing the plaintext cache increases page load tim
 
 \subsection{Method}
 
-Sample news feeds were generated with 15 encrypted status update entries, as this is the number of news feed entries Facebook first loads \footnote{More are loaded dynamically when the user scrolls to the bottom of the page.}. Status update messages were random ASCII text 420 characters in length, the maximum permitted. The pages were loaded repeatedly 400 times, ensuring that both the browser cache and extension cache were cleaned after each load.
+Sample news feeds were generated with 15 encrypted status update entries, as this is the number of news feed entries Facebook first loads \footnote{More are loaded dynamically when the user scrolls to the bottom of the page.}. Status update messages were random alphanumeric text 420 characters in length, the maximum permitted. The pages were loaded repeatedly 400 times, ensuring that both the browser cache and extension cache were cleaned after each load.
 
 The entire process was then repeated for a news feed containing 15 image objects, once again random images of size 50 KiB, instead of status messages. A second set of tests were performed without cleaning the extension cache (which was preloaded with the page's content).
 
@@ -321,7 +321,7 @@ width=12cm, height=5cm, legend style={area legend}]
 
 After the first item has loaded we can also look at the subsequent waiting time between loads. The most dramatic increase is for images, as seen in Table \ref{tab:async}.
 
-\begin{table}[tbph]
+\begin{table}[tbp]
   \begin{center}
         \begin{tabular}{+l ^l ^l ^l ^l}
             \rowstyle{\bfseries}%
@@ -342,7 +342,7 @@ After the first item has loaded we can also look at the subsequent waiting time 
             14 &    57.1 &	2.4 &	715.2 &	6.4 \\
             15 &    116.5 &	2.4 &	376.0 &	6.4
         \end{tabular}
-        \caption{Page load times with (left column) and without (right column) cache cleansing beforehand.}
+        \caption{Average page load times with (left column) and without (right column) cache cleansing beforehand.}
         \label{tab:async}
     \end{center}
 \end{table}

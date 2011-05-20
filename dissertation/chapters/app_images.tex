@@ -12,10 +12,6 @@ Information is lost at several stages in the compression process:
     
 \end{enumerate}
 
-Note that chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images. This leaves quantisation as the principle step at which information loss occurs.
-
-Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the {\tt libjpeg} library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
-
 \begin{table}[tb]
 \begin{center}
     %\definecolor{lgray}{hsb}{0.1, 0, 0.9}
@@ -39,3 +35,8 @@ Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPE
 \label{tab:quants}
 
 \end{table}
+
+Note that chrominance subsampling means that colour images only provide a 50\% increase in capacity over a grayscale image of the same resolution. For simplicity we will only consider grayscale images. This leaves quantisation as the principle step at which information loss occurs.
+
+Table \ref{tab:quants} displays the quantisation matrix used for a grayscale JPEG image downloaded from Facebook. Using this and several other compression parameters our best guess is that Facebook is using the {\tt libjpeg} library for compression, with a quality factor setting of 85. \footnote{Based on the output of the JPEG Snoop application for Windows.}
+

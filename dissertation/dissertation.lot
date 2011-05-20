@@ -24,7 +24,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {table}{\numberline {4.2}{\ignorespaces Bit error probability, symbol error probability and output symbol error probability for each possible combination.\relax }}{51}{table.caption.36}
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4.3}{\ignorespaces Page load times with (left column) and without (right column) cache cleansing beforehand.\relax }}{57}{table.caption.41}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Average page load times with (left column) and without (right column) cache cleansing beforehand.\relax }}{57}{table.caption.41}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
@@ -34,7 +34,7 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {C.1}{\ignorespaces Quantisation matrix used by Facebook for luminance channel.\relax }}{82}{table.caption.48}
+\contentsline {table}{\numberline {C.1}{\ignorespaces Quantisation matrix used by Facebook for luminance channel.\relax }}{81}{table.caption.48}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 

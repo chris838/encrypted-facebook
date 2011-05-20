@@ -79,7 +79,7 @@ uProtect.it, flyByNight and FaceCloak tackle this problem in the following ways:
 
 An alternative to the solutions in Section \ref{ssec:exist} is to use a broadcast encryption\footnote{Broadcast encryption is defined in Appendix \ref{app:bcast}.} scheme. 
 
-In general, schemes can be characterised by the size of each user's private and public key and the amount of transmission overhead that must be sent with each message, given the number of recipients. The scheme we use here has a relatively large transmission overhead, however unlike other more complex schemes it doesn't require the use of key-update messages. Transmitting key-updates OOB or though a third-party would violate our stated design principles. Transmitting them in-band would be possible, but since Facebook is a best-effort service synchronisation and lost updates would likely be a problem.
+In general, schemes can be characterised by the size of each user's private and public key and the amount of transmission overhead that must be sent with each message, given the number of recipients. The scheme we use here has a relatively large transmission overhead ($O(n)$ in the number of users) however, unlike other more complex schemes, it doesn't require the use of key-update messages. Transmitting key-updates OOB or though a third-party would violate our stated design principles. Transmitting them in-band would be possible, but since Facebook is a best-effort service synchronisation and lost updates would likely be a problem.
 
 Let $U$ be the set of users with Encrypted Facebook installed and $R \subseteq U$ be a set of intended recipients. For simplicity we describe broadcast encryption as a key encapsulation mechanism:
 
@@ -293,7 +293,7 @@ Further workarounds and API subtleties are given in Appendix \ref{app:graph}.
 
 Regardless of the input format, Facebook encodes all uploaded images using lossy JPEG.\footnote{Even if a file is already in the output format the compression process is repeated and information is lost.} We therefore require some form of JPEG-immune coding for the binary output of encryption, so that after undergoing compression we can exactly recover the original bytes.
 
-Appendix \ref{app:images} describes Facebook's JPEG compression process. To motivate the need for a more complex scheme we evaluate two naive attempts at encoding data in images, before proposing a more advanced approach. Note that we only consider greyscale images.\footnote{Chrominance subsampling means RGB images provide a less than 50\% increase in capacity over greyscale. See Appendix \ref{app:images}.}
+Appendix \ref{app:images} describes Facebook's JPEG compression process. To motivate the need for a more complex scheme we evaluate two naive attempts at encoding data in images, before suggesting possible optimisations. Note that we only consider greyscale images.\footnote{Due to chrominance subsampling RGB images provide a less than 50\% increase in capacity over greyscale. See Appendix \ref{app:images}.}
 
 
 \subsection{Naive data insertion}
@@ -301,7 +301,7 @@ Appendix \ref{app:images} describes Facebook's JPEG compression process. To moti
 
 One approach would be to encode directly into greyscale pixel values with enough redundancy to overcome the information lost during compression. A second might be to similarly encode data into the DCT coefficients of an existing JPEG image, since through the process of decompression and re-compression only a small amount of information is lost. The main source of information loss for the second approach is from capping DCT coefficients which don't map back to greyscale values in the range 0-255.
 
-\begin{figure}[tbph]
+\begin{figure}[tbp]
   \begin{center}
 \begin{tikzpicture}
     \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=BER (\%), xmin=80, xmax=90,
@@ -323,7 +323,7 @@ One approach would be to encode directly into greyscale pixel values with enough
 Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IJG (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix \ref{app:images}). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (details are given in Appendix \ref{app:dct}). Modelling the compression process as a binary symmetric channel, Figure \ref{graph:capacity0} graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Section \ref{ssec:capacity}).
 
 
-\begin{figure}[tbph]
+\begin{figure}[tbp]
   \begin{center}
 \begin{tikzpicture}
     \begin{axis}[grid=major,xlabel=JPEG Quality Factor,ylabel=Capacity (KiB/image), xmin=80, xmax=90,
@@ -478,7 +478,7 @@ Based on the contents of this chapter we derive a set of concrete requirements.
 \FloatBarrier 
 \section{Development}
         
-An approximately agile development style was adopted loosely based on \cite{agile}. Uncertainties in the optimal approach or combination of approaches for encryption, image coding and error correction meant that being flexible and able to respond to changes was crucial. Delivering functional prototypes at various stage in the development life-cycle also fits with the project's modularity requirement. In addition, since the bulk of the project concerns encapsulating data in some layer of encoding the natural approach would be to build successive prototypes, each implementing a new layer.
+An agile-like development style was adopted loosely based on \cite{agile}. Uncertainties in the optimal approach or combination of approaches for encryption, image coding and error correction meant that being flexible and able to respond to changes was crucial. Delivering functional prototypes at various stage in the development life-cycle also fits with the project's modularity requirement. In addition, since the bulk of the project concerns encapsulating data in some layer of encoding the natural approach would be to build successive prototypes, each implementing a new layer.
 
 \subsection{Development environment}
 

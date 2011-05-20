@@ -84,7 +84,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.2.2}Identifying decryption targets}{28}{subsection.3.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.3}Processing decryption targets}{29}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.3}Processing decryption targets}{28}{subsection.3.2.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3.3}Key management}{32}{section.3.3}
 \defcounter {refsection}{0}\relax 
