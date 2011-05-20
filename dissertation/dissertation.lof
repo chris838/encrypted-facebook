@@ -36,7 +36,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {3.8}{\ignorespaces Key management controls located on the toolbar and within the profile itself.\relax }}{32}{figure.caption.21}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Public key encoded and stored on the users biography section of their profile.\relax }}{34}{figure.caption.22}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Public key encoded and stored in the user's biography section of their profile.\relax }}{34}{figure.caption.22}
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {3.10}{\ignorespaces UML sequence diagram of the encoding process for submitting text.\relax }}{36}{figure.caption.23}
 \defcounter {refsection}{0}\relax 
@@ -62,7 +62,7 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Bit error rate for varying quality factors.\relax }}{49}{figure.caption.34}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Bit error rate for varying quality factors.\relax }}{50}{figure.caption.34}
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Per-image channel capacity (measured in KiB/image) for varying quality factors.\relax }}{50}{figure.caption.35}
 \defcounter {refsection}{0}\relax 
@@ -74,9 +74,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Histogram of 400 page loading times for news feeds containing 15 encrypted messages (top) and 15 encrypted images (bottom).\relax }}{56}{figure.caption.40}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Input fields and controls for submitting encrypted images.\relax }}{59}{figure.caption.42}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Input fields and controls for submitting encrypted images.\relax }}{60}{figure.caption.42}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Input fields and controls for posting a comment to a news feed entry.\relax }}{61}{figure.caption.43}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Input fields and controls for posting a comment to a news feed entry.\relax }}{62}{figure.caption.43}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 

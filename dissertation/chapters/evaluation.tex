@@ -10,13 +10,13 @@ Test data was generated on a laptop running Linux Mint 10.0 using a 1.46 Ghz Int
 \section{Image coding method}
 \label{sec:imgcod}
 
-We investigate how the concrete {\tt IConduitImage} implementation affects bit error rates and theoretical image capacity. The capacity puts a maximum limit on the number of possible recipients an image can be shared with, and also limits the size of the image. In addition, error rates determine which error correction schemes are most suitable and what the final output error rate will be after application of a given scheme.
+We investigate how the concrete {\tt IConduitImage} implementation affects bit error rates and theoretical image capacity. The capacity puts a maximum limit on the number of possible recipients an image can be shared with, and also limits the size of the image being transmitted. In addition, error rates determine which error correction schemes are most suitable and what the final output error rate will be after application of a given scheme.
 
 We test the hypothesis that the HWT, 3-bit scaling and 4-bit scaling methods provide both greater capacity and lower error rates than the naive methods described in Section \ref{ssec:naive} after undergoing Facebook's image upload process.
 
 \subsection{Method}
 
-In this instance, local simulation with {\tt libjpeg} was used since uploading to Facebook on this scale would be considerably time consuming and would possibly warrant account deletion due to violation of Facebook's terms. We compress over the quality factor interval 80-90 --- though it is most likely that Facebook uses IJG quality factor 85, this is only an estimate. This also means our results are somewhat robust to minor changes in Facebook's compression process.
+In this instance, local simulation with {\tt libjpeg} was used since uploading to Facebook on this scale would be considerably time consuming and would possibly warrant account deletion due to violation of Facebook's terms. We compress over the quality factor interval 80-90; though it is most likely that Facebook uses IJG quality factor 85, this is only an estimate (see Appendix \ref{app:images}. This also means our results are somewhat robust to minor changes in Facebook's compression process.
 
 We model the compression/decompression process as a binary symmetric channel and calculate the channel capacity for arbitrarily small error probability, using an empirically measured bit error rate as an estimate for the bit error probability.
 
@@ -39,6 +39,7 @@ Random input bytes are written to a $720 \times 720$ conduit image instance unti
 Table \ref{tab:img-test} summarises the number of useful bits each method can store in a single 64 x 8 bit greyscale JPEG luminance block along with the effective sample size and population size. Due to the number of samples the standard error is negligible, even before applying finite population correction where appropriate \footnote{In particular, for the Haar wavelet transform method the number of JPEG blocks encoded exceeds the number of unique data points that can be encoded in a single block.}. 
 
 \subsection{Theoretical capacity calculation}
+\label{ssec:capacity}
 
 The per-image theoretical capacity $C$ is a function of the number of bits available per image $A$\footnote{Determined by the implementation.} and the bit error probability $p_e$:
 
@@ -107,6 +108,7 @@ The HWT method, however, had the lowest capacity of all methods tested. We attri
 \end{figure}
 
 \subsection{Implications}
+\label{sec:cap:imp}
 
 We can compare the capacity limit obtained in the previous section to the actual capacity achieved when an error correction scheme is applied (see Table \ref{tab:fec}).
 

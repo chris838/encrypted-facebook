@@ -118,7 +118,7 @@ Let $U$ be the set of users with Encrypted Facebook installed and $R \subseteq U
 \FloatBarrier
 \section{Intercepting Facebook interactions}
 
-In order to encrypt content it must be intercepted before being submitted to Facebook. We describe the possible places at which this can occur (Figure \ref{fig:approaches})) and briefly justify the approach we took with Encrypted Facebook.
+In order to encrypt content it must be intercepted before being submitted to Facebook. We describe the possible places at which this can occur (Figure \ref{fig:approaches}) and briefly justify the approach we took with Encrypted Facebook.
 
 \subsection{Possible deployment strategies}
 
@@ -154,7 +154,7 @@ Approach (a) would conflict with the design principle of third party independenc
 \section{Mozilla Firefox extension development}
 \label{sec:ffox}
 
-The project was developed as an extension for Mozilla Firefox, the world's most popular browser (as of January 2011). Manipulating the DOM (Document Object Model) is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. Porting to other browsers is discussed in Section \ref{sec:deploy}.
+The project was developed as an extension for Mozilla Firefox, the world's most popular browser (as of January 2011). Manipulating web pages through the DOM (Document Object Model) is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. Porting to other browsers is discussed in Section \ref{sec:deploy}.
 
 Firefox extensions are written in JavaScript with partial support for binding library code written in Python or C/C++. Performing cryptography in JavaScript is possible but comes with severe performance difficulties \cite{flybynight}. Table \ref{tab:lang-speeds} compares approximate performance for each language based on some provisional tests.
 
@@ -207,7 +207,7 @@ We describe the most popular forms of object submitted and discuss issues relati
 
 Encrypting all possible types of object would be prohibitively complex. Ideally we should encrypt those most frequently used. From the data available these are Comments, Messages, Images and Posts (Table \ref{tab:fb-activities}). 
 
-Without relying on a third-party server all transmission overheads must be stored on Facebook itself, in one form or another. Images and blog-style notes are obvious targets for storage utilisation due to their large capacity (see Table \ref{tab:fb-activities}). In particular, the body of a note can contain over 120 KiB of information since each character represents one 16-bit Unicode code point. Images are subject to lossy compression which is discussed in Section \ref{ssec:images}.
+Without relying on a third-party server all broadcast encryption transmission overheads must be stored on Facebook itself, in one form or another. Images and blog-style notes are obvious targets for storage utilisation due to their large capacity (Table \ref{tab:fb-activities}). In particular, the body of a note can contain over 120 KiB of information since each character represents one 16-bit Unicode code point. Images are subject to lossy compression which is discussed in Section \ref{ssec:images}.
 
 \begin{table}[tb]
   \begin{center}
@@ -235,15 +235,15 @@ Without relying on a third-party server all transmission overheads must be store
     \end{center}
 \end{table}
 
-Each user's profile has a "Bio"\footnote{Sometimes referred to as the "About me" field.} field with a character limit of 64,536. With no other capacious attribute that can be easily queried from a user ID this is the obvious place to store a user's public key.
+Each user's profile has a {\tt Bio}\footnote{Sometimes referred to as the {\tt About Me} field.} field with a character limit of 64,536. With no other capacious attribute that can be easily queried from a user ID this is the obvious place to store a user's public key.
 
     
 \subsection{Connectedness}
 \label{sec:cness}
 
-Since broadcast encryption has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user or equivalently by the degree of the user's node in the social graph. Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops off sharply at around 250 \cite{fb-factsheet} \cite{fb-connectedness}.
+Since broadcast encryption has a transmission overhead proportional to the number of intended recipients, care must be taken to ensure the system works with large enough recipient groups. The number of recipients is bounded by the number of friends a user has, or equivalently by the degree of the user's node in the social graph. Empirical estimates for the average number of Facebook friends range from 130 to 170, with some evidence suggesting the distribution drops off sharply at around 250 \cite{fb-factsheet}\cite{fb-connectedness}.
 
-The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to social networks as well as face-to-face interactions. Estimates range from around 150 to 300 \cite{dunbar} \cite{socnetsize}, suggesting that average node degree is unlikely to increase dramatically as Facebook expands further.
+The Dunbar number is a theoretical cognitive limit to the number of people a user can maintain relationships with and has been applied to both online social networks and to real-life interactions. Estimates range from around 150 to 300 \cite{dunbar} \cite{socnetsize}, suggesting that average node degree is unlikely to increase dramatically as Facebook expands further.
 
 
 \subsection{Signal-to-noise ratio}
@@ -268,7 +268,21 @@ Facebook does provide a JavaScript SDK for interfacing with the Facebook platfor
 
 Authentication is performed using the OAuth 2.0 protocol. Applications register with Facebook and present their application ID upon request. The user then confirms that the application may use the requested permissions and an access token is generated. This token is then used in future exchanges.
 
-Unfortunately some actions\footnote{Namely working with the local filesystem and modifying the "Bio" attribute.} are poorly supported by the Graph API, if at all. Appendix \ref{app:graph} describes the API in more detail, as well as the required workarounds.
+Unfortunately some actions are poorly supported by the Graph API, if at all. Some particular problem cases, and their solutions:
+
+\begin{itemize}
+
+    \item When publishing images, getting a correct handle to the image is difficult due to JavaScript's poor support for working with local files. The workaround requires creating an invisible form with a file input element and extracting the file handle from there.
+
+    \item Facebook currently uses two types of album ID, one which appears within web pages and one which can be used for publishing through the Graph API. An additional API query is required before uploading images to translate from one format to the other.
+    
+    \item Modifying the {\tt Bio} attribute is unsupported entirely. The workaround requires creating an invisible iframe on the current page and manipulating a form on the Facebook site within.
+
+\end{itemize}
+
+Further workarounds and API subtleties are given in Appendix \ref{app:graph}.
+
+
 
     
 \FloatBarrier
@@ -306,7 +320,7 @@ One approach would be to encode directly into greyscale pixel values with enough
   \end{center}
 \end{figure}
 
-Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IJG (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix \ref{app:images}). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see Appendix \ref{app:dct} for details). Modelling the compression process as a binary symmetric channel, Figure \ref{graph:capacity0} graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation Section \ref{ssec:capacity}).
+Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IJG (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix \ref{app:images}). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (details are given in Appendix \ref{app:dct}). Modelling the compression process as a binary symmetric channel, Figure \ref{graph:capacity0} graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Section \ref{ssec:capacity}).
 
 
 \begin{figure}[tbph]
@@ -328,22 +342,22 @@ Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range 
   \end{center}
 \end{figure}
 
-Given a recipient group size of 400 and a ciphered session key size of 1024-bit (see Section \label{ssec:keys}) the transmission overhead alone would be at at least 50 KiB.\footnote{50 KiB not including the list of recipient IDs, initialisation vector and any padding or size tags.} A $720 \times 720$ image encoded at low quality (IGJ quality factor 10) would still require around 25 KiB of storage space \cite{ijg}. This means neither of the naive approaches would be suitable even given an error correction scheme which performs at or near the Shannon limit. 
+Given a recipient group size of 400 and a ciphered session key size of 1024-bit (see Section \ref{ssec:keys}) the transmission overhead alone would be at at least 50 KiB.\footnote{50 KiB not including the list of recipient IDs, initialisation vector and any padding or size tags.} A $720 \times 720$ image encoded at low quality (IGJ factor 10) would still require around 25 KiB of storage space \cite{ijg}. This means neither of the naive approaches would be suitable even given an error correction scheme which performs at or near the Shannon limit. 
 
 
 \subsection{Advanced data insertion}
 
-One initial optimisation for any coding scheme would be to map binary data to appropriate length grey codes to ensure that only single bit errors occur from erroneously outputting an adjacent codeword. In addition, we present two possible schemes, henceforth referred to as the HWT (Haar Wavelet Transform) method and the n-bit scaling method.
+One initial optimisation for any coding scheme would be to map binary data to appropriate length Gray codes to ensure that only single bit errors occur from erroneously outputting an adjacent codeword. In addition, we present two possible schemes, henceforth referred to as the HWT (Haar Wavelet Transform) method and the n-bit scaling method.
 
 \begin{sdesc}
 
     \item[HWT method] \hfill \\ JPEG DCT compression selectively quantises perceptually redundant high frequency components. Wavelet transforms allow us to embed data in the low frequency sub-band of the carrier signal and can be performed reversibly by using an integer lifting scheme. Xu et al demonstrate that data encoded in low-frequency HWT approximation coefficients can survive JPEG decompression when combined with an error correction scheme \cite{haar}.
     
-    \item[N-bit scaling method] \hfill \\ This method maps the n-bit input space on to the 8-bit pixel space by scaling the input by a factor of $ \frac{2^8 - 1}{2^n - 1}$. The inverse process amounts to outputting which interval pixel value lies in. This method works on the assumption that large changes in single pixel intensity are unlikely to occur due to compression.
+    \item[N-bit scaling method] \hfill \\ This method maps the n-bit input space on to the 8-bit pixel space by scaling the input by a factor of $ \frac{2^8 - 1}{2^n - 1}$. The inverse process amounts to outputting which interval the pixel value lies in. This method works on the assumption that large changes in single pixel intensity are unlikely to occur during compression.
 
 \end{sdesc}
 
-Clearly both these schemes are sub-optimal and their exact properties (compression time and error rates) are unknown. We made it a requirement that the project should take a modular approach to conduit image implementations: firstly to ensure that both of the proposed schemes can be implemented simultaneously and their performances compared; secondly, to aid future development of a more optimal solution.
+Both these schemes are sub-optimal and their exact properties (compression time and error rates) are unknown. We made it a requirement that the project should take a modular approach to conduit image implementations: firstly to ensure that both of the proposed schemes can be implemented simultaneously and their performances compared; secondly, to aid future development of a more optimal solution.
 
 
 
@@ -357,37 +371,37 @@ To truly protect privacy we must consider proper security engineering practices.
 \subsection{Threat analysis}
 \label{ssec:threat}
 
-The threat analysis is included in its entirety in Appendix \ref{app:threat}. We take an attack-centric approach, defining risk as $Vulnerability \times Threat \times Impact$ according the methodology described by \cite{security}. Below we summerise several potential threats and possible counter measures, proportionate to the risk posed:
+The threat analysis is included in its entirety in Appendix \ref{app:threat}. We take an attack-centric approach, defining risk as $Vulnerability \times Threat \times Impact$ according the methodology described by \cite{security}. Below we summarise several potential threats and possible counter measures, proportionate to the risk posed:
 
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
     \item[Attack 1] Attacker breaks the encryption scheme by brute force methods.
-    \item[Measures] Ensure key sizes are appropriate given the type of attacker. See Section \ref{ssec:keys}.
+    \item[Measures] Ensure key lengths meet the appropriate standards. See Section \ref{ssec:keys}.
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 2] Attacker gains access to user's computer through the download and execution of a file.
+    \item[Attack 2] Attacker gains access to a user's device through the download and execution of a file.
     \item[Measures] Ensure only legitimate JPEG and public key files are downloaded. Public key files can be vetted on their character set and size, JPEG's by their extension.
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 3] Attacker gains access to user's computer by injecting code into {\tt eval()} which runs outside the browser sandbox.
+    \item[Attack 3] Attacker gains access to a user's device by injecting code into {\tt eval()}, which is then executed outside the browser sandbox.
     \item[Measures] Wrap all calls to {\tt eval()} with a {\tt secureEval()} function which attempts to prevent malicious use. 
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 4] Attacker gains access to Facebook account through browser code injection.
+    \item[Attack 4] Attacker gains access to a user's Facebook account through browser code injection.
     \item[Measures] Sanitize all user inputs and ensure sanitisation can't be bypassed e.g. through the UTF-8 decoder\cite{utf8}. Also sanitize output whenever inserting code into the DOM.
 \end{sdesc}
 
 \begin{sdesc}\addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 5] Attacker carries out middle-person attack by intercepting and switching public keys.
+    \item[Attack 5] Attacker carries out a middle-person attack by intercepting and switching public keys.
     \item[Measures] Informing the user whenever public keys are updated removes a large amount of risk. Complete protection would be impractical without use of OOB channels.
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 6] Attacker causes DoS by creating a malicious object.
-    \item[Measures] This need not be a large problem since decryption is built to fail gracefully (see Section \ref{ssec:ident-targets}). Include some simple run time checks to limit iteration and special characters (combined with proper sanitisation) to prevent tags-within-tags.
+    \item[Attack 6] Attacker causes DoS (Denial of Service) by creating a malicious object.
+    \item[Measures] This need not be a large problem since decryption should be built to fail gracefully (see Section \ref{ssec:ident-targets}). Include some simple run time checks to limit iteration and special characters (combined with proper sanitisation) to prevent tags-within-tags.
 \end{sdesc}
 
 
@@ -395,7 +409,7 @@ The threat analysis is included in its entirety in Appendix \ref{app:threat}. We
 \subsection{Underlying encryption schemes}
 \label{ssec:keys}
 
-NIST(National Institute of Standard and Technology) publish guidelines on cryptographic schemes and protocols. Since 2010 NIST have recommended using at least 128-bits of security \cite{nist-key}.
+NIST (National Institute of Standards and Technology) publish guidelines on cryptographic schemes and protocols. Since 2010 NIST have recommended using at least 112-bits of security \cite{nist-key}.
 
 The ideal scheme would be based on elliptic curve cryptography since comparable strength public keys are much smaller than for finite field or integer factorisation methods (see Table \ref{tab:keys}). This is important since the block size of the cipher depends on the public key; this in turn determines the size of the transmission overhead. Unfortunately ECC is less common in open libraries due to patent concerns.
 
@@ -439,9 +453,9 @@ Based on the contents of this chapter we derive a set of concrete requirements.
         \item Images
     \end{itemize}
     
-    \item[Requirement 2] The size limits for encrypted text objects will be no smaller than the current limits Facebook imposes, given in Section \ref{sec:content}).
+    \item[Requirement 2] The size limits for encrypted text objects will be no smaller than the current limits Facebook imposes, given in Section \ref{sec:content}.
 
-    \item[Requirement 3] The size limit for encrypted images will be no less than 50 KiB. This is roughly equivalent to a $720 \times 720$ image encoded at medium quality (IJG quality factor 25) \cite{ijg}.
+    \item[Requirement 3] The size limit for encrypted images will be no less than 50 KiB. This is roughly equivalent to a $720 \times 720$ image encoded at medium quality (IJG factor 25) \cite{ijg}.
 
     \item[Requirement 4] To ensure the goal of scalability is met, all requirements will be met given recipient groups sizes up to 400, based on the discussion in Section \ref{sec:cness}.
     
@@ -455,7 +469,7 @@ Based on the contents of this chapter we derive a set of concrete requirements.
     \item[Requirement 7] The number of news feed entries generated by encrypted submission will be no more than the number generated by normal content submission. This ensures that the effect on signal-to-noise ratio is kept to an absolute minimum - the only perceivable 'noise' is the encrypted content itself.
     
 
-    \item[Requirement 8] There are uncertainties and/or trade-offs associated with certain approaches to encryption and encoding data in images (and to a lesser extent error correction). It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, we make it a requirement to adopt a modular structure that facilitates switching between differing schemes and permits future extension.
+    \item[Requirement 8] There are uncertainties and/or trade-offs associated with certain approaches to encryption and image coding. It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, we make it a requirement to adopt a modular structure that facilitates switching between differing schemes and permits future extension.
     
 \end{desc}
 
@@ -464,7 +478,7 @@ Based on the contents of this chapter we derive a set of concrete requirements.
 \FloatBarrier 
 \section{Development}
         
-An agile development style was adopted loosely based on \cite{agile}. Uncertainties in the optimal approach or combination of approaches for encryption, image coding and error correction meant that being flexible and able to respond to changes was crucial. Delivering functional prototypes at various stage in the development life-cycle also fits with the project's modularity requirement. In addition, since the bulk of the project concerns encapsulating data in some layer of encoding the natural approach would be to build successive prototypes, each implementing a new layer.
+An approximately agile development style was adopted loosely based on \cite{agile}. Uncertainties in the optimal approach or combination of approaches for encryption, image coding and error correction meant that being flexible and able to respond to changes was crucial. Delivering functional prototypes at various stage in the development life-cycle also fits with the project's modularity requirement. In addition, since the bulk of the project concerns encapsulating data in some layer of encoding the natural approach would be to build successive prototypes, each implementing a new layer.
 
 \subsection{Development environment}
 
@@ -479,9 +493,9 @@ GNU Octave (a free MATLAB-like application) was also used for provisional evalua
 
 \subsection{Testing plan}
 
-We loosely adopt the agile testing principles of test driven development rather than a test last approach. Ensuring the feedback loop between testing and implementation is kept as short as possible allows us to maintain flexibility, which is useful given the uncertainties over the optimal image approach.
+We loosely adopt the agile testing principles of test driven development, rather than a test last approach \cite{agile-test}. Ensuring the feedback loop between testing and implementation is kept as short as possible allows us to maintain flexibility, which is useful given the uncertainties over the optimal approach.
 
 Special attention needed to be made to security relevant testing such as input sanitisation and proper functioning of the UTF-8 decoder. Boundary-value analysis was used to generate sets of test scripts (included in Appendix \ref{app:bv}).
 
-To help ensure the goal of usability was met, usability testing in the form of cognitive walkthroughs were performed. During development many passes of the walkthroughs were performed and alterations made, until a credible success story could be constructed for each task. Excerpts from final success stories are presented in Section \ref{sec:use}.
+To help ensure the goal of usability was met, usability testing in the form of cognitive walkthroughs were performed. During development many passes of the walkthroughs were performed and alterations made, until a credible success story could be constructed for each task. Excerpts from final success stories are presented in Section \ref{sec:cw}.
 

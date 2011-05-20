@@ -52,7 +52,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.6.1}Naive data insertion}{15}{subsection.2.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.6.2}Advanced data insertion}{16}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.2}Advanced data insertion}{17}{subsection.2.6.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.7}Security Policy}{18}{section.2.7}
 \defcounter {refsection}{0}\relax 
@@ -60,13 +60,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.7.2}Underlying encryption schemes}{19}{subsection.2.7.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.8}Requirements specification}{19}{section.2.8}
+\contentsline {section}{\numberline {2.8}Requirements specification}{20}{section.2.8}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.9}Development}{21}{section.2.9}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.9.1}Development environment}{21}{subsection.2.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.9.2}Testing plan}{21}{subsection.2.9.2}
+\contentsline {subsection}{\numberline {2.9.2}Testing plan}{22}{subsection.2.9.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Implementation}{23}{chapter.3}
 \defcounter {refsection}{0}\relax 
@@ -78,7 +78,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.1.3}Initialisation}{26}{subsection.3.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.2}Parsing Facebook web pages}{26}{section.3.2}
+\contentsline {section}{\numberline {3.2}Parsing Facebook web pages}{27}{section.3.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.2.1}Inserting submission controls}{27}{subsection.3.2.1}
 \defcounter {refsection}{0}\relax 
@@ -92,7 +92,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.3.2}Managing public keys}{33}{subsection.3.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.4}Text submission}{35}{section.3.4}
+\contentsline {section}{\numberline {3.4}Text encoding}{35}{section.3.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.4.1}Encryption}{35}{subsection.3.4.1}
 \defcounter {refsection}{0}\relax 
@@ -126,9 +126,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.1}Image coding method}{47}{section.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.1}Method}{47}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.1}Method}{48}{subsection.4.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.2}Theoretical capacity calculation}{48}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.2}Theoretical capacity calculation}{49}{subsection.4.1.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.1.3}Results}{49}{subsection.4.1.3}
 \defcounter {refsection}{0}\relax 
@@ -136,27 +136,27 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.2}Recipient group size}{51}{section.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.1}Method}{51}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.1}Method}{52}{subsection.4.2.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.2.2}Results}{52}{subsection.4.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.3}Implications}{52}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.3}Implications}{54}{subsection.4.2.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.3}Plaintext caching}{54}{section.4.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.3.1}Method}{54}{subsection.4.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.2}Results}{54}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.2}Results}{55}{subsection.4.3.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.3.3}Implications}{55}{subsection.4.3.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.4}Usability inspection}{57}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Method}{57}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Method}{58}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.2}Uploading an encrypted image}{58}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.3}Posting a comment}{60}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.3}Posting a comment}{59}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {5}Conclusion}{63}{chapter.5}
 \defcounter {refsection}{0}\relax 

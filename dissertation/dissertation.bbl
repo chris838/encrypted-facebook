@@ -197,6 +197,27 @@
     \keyw{Error-correction coding;}
   \endentry
 
+  \entry{agile-test}{book}{}
+    \name{labelname}{2}{}{%
+      {{}{Crispin}{C\bibinitperiod}{Lisa}{L\bibinitperiod}{}{}{}{}}%
+      {{}{Gregory}{G\bibinitperiod}{Janet}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \name{author}{2}{}{%
+      {{}{Crispin}{C\bibinitperiod}{Lisa}{L\bibinitperiod}{}{}{}{}}%
+      {{}{Gregory}{G\bibinitperiod}{Janet}{J\bibinitperiod}{}{}{}{}}%
+    }
+    \list{publisher}{1}{%
+      {Addison-Wesley Professional}%
+    }
+    \strng{namehash}{CLGJ1}
+    \strng{fullhash}{CLGJ1}
+    \field{sortinit}{C}
+    \field{edition}{1}
+    \field{isbn}{0321534468, 9780321534460}
+    \field{title}{Agile Testing: A Practical Guide for Testers and Agile Teams}
+    \field{year}{2009}
+  \endentry
+
   \entry{jpegxr}{inproceedings}{}
     \name{labelname}{5}{}{%
       {{}{De\bibnamedelima Simone}{D\bibinitperiod\bibinitdelim S\bibinitperiod}{Francesca}{F\bibinitperiod}{}{}{}{}}%

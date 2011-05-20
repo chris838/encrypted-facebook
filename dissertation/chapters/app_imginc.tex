@@ -8,3 +8,5 @@ After adapting the extension to work with the new sizes, preliminary testing sho
 The new limits call for the ability to create variable size images based on the input length. Some method of indicating any padding used would be required. One possibility would be storing a length tag in some canonical JPEG-immune format. An example might be to use the n-bit scaling method with $n=1$. This could be combined with the signature scheme described in Section \ref{sec:deploy}
 
 Another possibility would be to combine the IFec and IConduitImage components into one. This would allow a length tag to be encoded after error correction codes have been applied.
+
+One problem with variable length images that was identified during preliminary testing, was that images can no longer be filtered on their dimensions. This causes a large number of extraneous Graph API image retrieval requests. The effect of this on performance would have to be taken into account.
