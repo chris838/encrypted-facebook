@@ -1,12 +1,13 @@
 \chapter{Broadcast Encryption}
+\label{app:bcast}
 
 
 Broadcast encryption was originally conceived for applications such as satellite TV subsription services and DVD content protection. Information is broadcast to a large number of recipients, a small subset of whom are 'revoked users' and thus can't decipher the information \cite{fiat-naor}.
 
-We describe here a more recent variation where only a small subset of 'priveledged users' can decipher the message, since this is more applicable to social networks \cite{XXX}. We begin with a general definition and outline two basic schemes (one of which is a variant of that used in Encrypted Facebook). Section \ref{ssec:bcast-improved} details a more advanced scheme.
+We describe here a more recent variation where only a small subset of 'priveledged users' can decipher the message, since this is more applicable to social networks \cite{survey}. We begin with a general definition and outline two basic schemes (one of which is a variant of that used in Encrypted Facebook). Section \ref{ssec:bcast-improved} details a more advanced scheme.
 
 
-\subsection{Definition}
+\section{Definition}
 
 For simplicity we describe broadcast encryption as a key encapsulation mechanism. A broadcast encryption scheme solves the general problem of transmitting a session key $k$ to any subset $R$ of priviledged users from a universe $U$ in such a way that a coalition of non-priviledged users cannot learn the key \cite{fiat-naor}. Further communications can then performed securely between the broadcaster and priveledged set under the shared session key.
 
@@ -36,7 +37,7 @@ We use the following definition adapted from \cite{fiat-naor} and \cite{boneh}:
 \end{defn}
 
 
-\subsection{Two simple schemes} 
+\section{Two simple schemes} 
 
 We begin by describing two simple broadcast encryption schemes. We assume the existence of a secure public key infrastructure which can be used to establish shared private symmetric keys between the broadcaster and any other user.
 
@@ -68,7 +69,7 @@ Scheme \ref{scheme:1} requires each recipient to store $O(1)$ private keys and t
 Scheme \ref{scheme:2} requires each recipient to store $O(2^{\left|{R}\right|})$ keys and the broadcaster to store $O(2^{\left|{U}\right|})$ keys. Equivalently, we could use a public key infrastructure with public and private keys of length $O(2^{\left|{U}\right|})$. Each broadcast message $b$ is $O( \log{ \left|{R}\right|  } )$ in length.
 
 
-\subsection{Variants}
+\section{Variants}
 
 Broadcast encryption attempt to find a suitable middle-grounds between the \ref{scheme:1} and \ref{scheme:2} In general, schemes can be classified by the following properties:
 
@@ -82,11 +83,11 @@ Broadcast encryption attempt to find a suitable middle-grounds between the \ref{
     
 \end{itemize}
 
-Schemes also vary in their complexity of implementation and computational requirements. Some schemes require users to remain connected to receive key-update messages. Others are optimised for recipient sets which remain reasonably constant. Some schemes, known as identity based, 
+Schemes also vary in their complexity of implementation and computational requirements. Some schemes require users to remain connected to receive key-update messages. Others are optimised for recipient sets which remain reasonably constant.
 
 Encrypted Facebook uses a variation of Scheme \ref{scheme:1}. Though transmission overheads are high the scheme is still feasible given the connectedness of Facebook users. The principle advantages are that Scheme \ref{scheme:1} has been proven to be secure given a secure underlying encryption scheme \cite{survey}. The scheme is also reasonable simple to implement compared to more advanced variants, and doesn't rely on key-update messages which would be considerably complex to implement without a third party server.
 
-\subsection{A more advanced scheme}
+\section{A more advanced scheme}
 \label{ssec:bcast-improved}
 
 We propose a possible improvement to the scheme used by Encrypted Facebook, based partly on Boneh et al \cite{boneh}. Recall that the tranmission overhead is a list of pairs $(u, k_u)$ where $k_u$ is the session key $k$ encrypted under a user specific key $p_u$. Equivalently, using public key cryptography, $k_u$ is the session key $k$ encrypted under a user specific public key $k_u.pub$, which may be decrypted with $k_u.priv$. Instead of storing the $O(R)$ transmission overhead with the message the sender can publish it as part of their public key and append a fixed size index to the message. Now messages and private keys are fixed size, whereas public keys are $O(AR)$, where $R$ is the number of messages sent so far. 

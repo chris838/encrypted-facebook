@@ -1,1 +1,69 @@
-\chapter{Haar wavelet transform variant}
+\chapter{HWT variant}
+
+The HWT involves two passes, each pass being itself composed of a horizontal and vertical pass. All four need to be performed slightly differently in order to ensure that coefficients are truncated in the correct manner. Below is the code for each of the four passes:
+
+\begin{lstlisting}[label=code:pub,caption=Haar Wavelet Transform - first pass]
+    
+    // First iteration works on the entire 8x8 block
+    // For each row...
+    for (unsigned int j=0; j<8; j++) {
+        // Perform 1D Haar transfrom with integer lifting
+        for (unsigned int i=0; i<4; i++) {
+            // average
+            temp2[i][j] = divFloor( operator()(x0+(2*i), y0+j) +
+                                    operator()(x0+((2*i)+1), y0+j),
+                                    2);
+            // difference
+            temp2[4+i][j] = operator()(x0+(2*i), y0+j) -
+                            operator()(x0+((2*i)+1), y0+j);
+        }
+        truncateCoefficients(temp,temp2,i,j,0);
+    }
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=code:pub,caption=Haar Wavelet Transform - second pass]
+    // For each column...
+    for (unsigned int i=0; i<8; i++) {
+        // Perform 1D Haar transfrom with integer lifting
+        for (unsigned int j=0; j<4; j++) {
+            // average
+            temp[i][j] = divFloor( temp2[i][2*j] + temp2[i][(2*j)+1], 2);
+            // difference
+            temp[i][4+j] = temp2[i][2*j] - temp2[i][(2*j)+1];
+        }
+        truncateCoefficients(temp,temp2,i,j,1);
+    }
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=code:pub,caption=Haar Wavelet Transform - third pass]
+    // Then the next iteration on the top left 4x4 corner block
+    // For each row...
+    for (unsigned int j=0; j<4; j++) {
+        // Perform 1D Haar transfrom with integer lifting
+        for (unsigned int i=0; i<2; i++) {
+            // average
+            temp2[i][j] = divFloor(temp[2*i][j] + temp[2*i+1][j], 2);
+            // difference
+            temp2[2+i][j] = temp[2*i][j] - temp[2*i+1][j];
+        }
+        truncateCoefficients(temp,temp2,i,j,2);
+    }
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=code:pub,caption=Haar Wavelet Transform - fourth pass]
+    // For each column...
+    for (unsigned int i=0; i<4; i++) {
+        // Perform 1D Haar transfrom with integer lifting
+        for (unsigned int j=0; j<2; j++) {
+            // average
+            temp[i][j] = divFloor(temp2[i][2*j] + temp2[i][2*j+1], 2);
+            // difference
+            temp[i][2+j] = temp2[i][2*j] - temp2[i][2*j+1];
+        }
+        truncateCoefficients(temp,temp2,i,j,3);
+    }
+}
+\end{lstlisting}

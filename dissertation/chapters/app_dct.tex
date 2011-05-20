@@ -1,1 +1,37 @@
 \chapter{DCT bitmask coding}
+\label{app:dct}
+
+The DCT bitmask encoding method works by masking off both high and low order bits from DCT coefficients.
+
+\begin{itemize}
+
+    \item Low order bits are masked off according the quantisation matrix, obtained from a sample JPEG of the correct quality factor. For a quantisation coefficient $c$, $\lceil \log_2{c} \rceil$ bits are masked off.
+    
+    \item High order bits are masked off according to some global constant, in an attempt to reduce incidence of capping. 
+
+\end{itemize}
+
+The process of extracting a mask using quality factor 85 is given in the following code sample:
+
+\FloatBarrier
+    \begin{lstlisting}[label=code:auth,caption=DCT bitmask method,float=h]
+    
+# First read in a sample Facebook image
+sam1 = imread('sample.jpg');
+imwrite(sam1, 'sample2.jpg', 'Quality', 85);
+sam = jpeg_read('sample2.jpg');
+
+# Get the quant matrix for the luminance
+q = sam.quant_tables{sam.comp_info(1).quant_tbl_no};
+
+# Convert to bit mask
+m = uint16( ceil( log2(q) ) );
+m = 2.^(m+1);
+m = bitor( m, 2*m );
+m = bitor( m, 2*m );
+m = bitand(m , ones(8)*0x007f );
+\end{lstlisting}
+\FloatBarrier
+
+
+Though error rates were succesfully reduced, Section \ref{ssec:naive} attests that this method does not offer improved theoretical capacity over encoding in RGB values.

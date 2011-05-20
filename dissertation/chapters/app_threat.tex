@@ -1,93 +1,71 @@
 \chapter{Threat analysis}
+\label{app:threat}
 
-\FloatBarrier
-\section{Security testing}
+\section{Identification of threats}
 
-Loosely based on methodology here \url{http://mtc-m18.sid.inpe.br/col/sid.inpe.br/ePrint\%4080/2006/12.20.12.15/doc/v1.pdf}. Must compromise since full security audit beyond scope of project. Look only at text retrieval process and public key management. We ignore images, and general attacks (e.g. setting up a spoof Facebook site). We also ignore threats that would be present ANYWAY e.g. if you haven't got SSL on. As an extension expand threat model.
+We ignore threats that would be present anyway (e.g. if HTTPS isn't used when browsing) and only consider additional threats introduced by the application. We take an attack centric approach and identify a number of possible threats:
 
-        \begin{itemize}
-            \item Threat analysis. Threat = Agent x Mechanism x Asset.
-            \begin{itemize}
-                \item Facebook user creates a tag, which when decryption is attempted, causes denial of service (by locking up resources).
-                \item Facebook user creates a tag which when decrypted injects script in to page, gains control of users browser, can exectute arbitraty scripts within the Facebook domain (XSS) gains access to Facebook cookies.
-                \item Facebook user exploits UTF8 encoder/decoder to smuggle illegal characters past sanitization, gains control of users browser, can exectute arbitraty scripts within the Facebook domain (XSS) gains access to Facebook cookies.
-                \item Facebook user injects text which is run by JavaScripts eval() function, can execute arbitrary JavaScript outside the sandbox. Very Very bad!
-                \item Facebook user creates public key which, when parsed, creates a malicious file on the users local system.
-            \end{itemize}
-            \item Risk analysis. Risk = (Vulnrability x Threat x Impact) / Security Measures.
-            \begin{itemize}
-                \item Highest impact is running code outside the sandbox. True it maybe unlikely so long as we aren't stupid, but still. Basically we ban use of the eval function except for when we need it (retrieving JSON objects) then we replace it by a secureEval() which only allows valid Facebook object things.
-                \item Access to Facebook cookies can impact our security guarantees (since they could then change the public key). Also vulnrability is high. Thus we take time to sanitize before we inject into the browser.
-                \item Denial of service is low impact, but high vulnrability since the user need not do anyting to initate the decoding process other browsing to a site with a malicious post. So, test UTF8 decoder a lot, ensure that UTF8 decode, FEC decode, decrypt, all fail gracefully. Not image decode since out of scope, as mentioned above.
-                \item Public keys we can limit to Base64 characters of a certain length. Done.
-            \end{itemize}
-            \item Test plan elabouration. From the above we want:
-            \begin{itemize}
-                \item Testing of secureEval. Overide or otherwise ban eval().
-                \item Testing of text sanitiser.
-                \item Testing of UTF8 de/codec. Complicated given the large range of i/o.
-                \item Testing of public key downloader.
-            \end{itemize}
-        \end{itemize}
+\begin{desc}
+    \item[Attack 1] Attacker breaks the encryption scheme by brute force methods.
+
+    \item[Attack 2] Attacker gains access to user's computer through the download and execution of either a JPEG file or a public key file.
+
+    \item[Attack 3] Attacker gains access to user's computer by injecting code into {\tt eval()} which runs outside the browser sandbox.
+
+    \item[Attack 4] Attacker gains access to Facebook account through browser code injection, outside the sandbox. Typically this could involve cross-site scripting.
+
+    \item[Attack 5] Attacker carries out middle-person attack by intercepting and switching public keys.
+
+    \item[Attack 6] Attacker causes DoS by creating a malicious object. An example could be a self referential object, or an overly large object.
+\end{desc}
+
+\section{Risk analysis}
+
+We define risk as $Vulnerability \times Threat \times Impact$ based on \cite{security}.
+
+\begin{desc}
+    \item[Attack 1] Medium impact (loss of privacy) but low vulnerability provided proper key lenths are used and proper protocols observed. Low risk.
+
+    \item[Attack 2] Executing arbitrary code on the user's machine is the highest impact possible. However, vulnerability is low since getting code to be executed once downloaded would be difficult. Medium risk.
+
+    \item[Attack 3] Again, executing arbitrary code on the user's machine is the highest impact possible. Vulnerability is medium. We identify this as a high risk attack.
+
+    \item[Attack 4] This is medium impact (loss of privacy) but high vulnerability since code injection of user defined input is happening automatically, without mandate from the user. We identify this as a high risk attack.
+
+    \item[Attack 5] Impact is medium (loss of privacy) and vulnerability is low since Graph API calls use HTTPS. Low risk.
+
+    \item[Attack 6] Impact is low (loss of availability) but vulnerability is high, again due to automated decryption. Medium risk.
+\end{desc}
+
+
+
+\section{Proposed measures}
+
+We propose a set of measures that are proportionate to risk.
+
+\begin{desc}
+    \item[Attack 1] Ensure key sizes are appropriate given the type of attacker. See Section \ref{ssec:keys}.
+
+    \item[Attack 2] Ensure only legitimate JPEG and public key files are downloaded. Public key files can be vetted on their character set and size, JPEG's by their extension.
+
+    \item[Attack 3] Wrap all calls to {\tt eval()} with a {\tt secureEval()} function which attempts to prevent malicious use. 
+
+    \item[Attack 4] Sanitize all user inputs and ensure sanitisation can't be bypassed e.g. through the UTF-8 decoder\cite{utf8}. Also sanitize output whenever inserting code into the DOM.
+
+    \item[Attack 5] Informing the user whenever public keys are updated removes a large amount of risk. Complete protection would be impractical without use of OOB channels.
+
+    \item[Attack 6] This need not be a large problem since decryption is built to fail gracefully (see Section \ref{ssec:ident-targets}). Include some simple run time checks to limit iteration and special characters (combined with proper sanitisation) to prevent tags-within-tags.
+\end{desc}
+
+\section{Security testing plan}
+
+We outline a partial plan for testing some of the proposed measures during development.
+
+\begin{itemize}
+    \item Testing of secureEval should ensure that only content in the repose text from the Facebook domain is parsed, and that the contents is a JSON object only.
+    
+    \item Testing of sanitisation and UTF-8 decoder can be performed using boundary variable analysis.
+    
+    \item Attempt at creating malicious objects can be made to test decoder.
+\end{itemize}
         
-        \section{Testing}
-    \begin{itemize}
-        \item Unit
-        \item Regression
-        \item Black box
-        \item White box
-        \item Integration
-        \item Security/penetration testing?
-    \end{itemize}
-    
-    Security tests
-    
-    \begin{itemize}
-    
-    \item Use of the eval() and secureEval() functions
-    \begin{itemize}
-        \item test secureEval(). Should only decode JSON objects. Should only do so from Facbook API requests.
-    \end{itemize}
-    
-    \item Insertion of text in to page. Easy since we can use JavaScript and RegExp.
-    \begin{itemize}
-        \item We allow all uppercase lowercase letters and numerals. Also allow .,?!(). That's it, better safe than sorry. Means no linking to malicious pages. Fully test all boundary cases etc etc.
-    \end{itemize}
-    
-    \item UTF-decoder. Slightly harder since have to look at bytes not characters. Using the following rules we conformance test, test all boundaries etc etc. Put list of test inputs in appendix.
-    \begin{itemize}
-        \item We accept any valid, non-overlong, UTF8 byte sequences, max length 4-bytes, with scalar value:
-        \begin{itemize}
-            \item 0xB0 - 0xD7FF
-            \item 0xE000 - 0x100AF
-            \item 0x1B000 - 0x1BFFE (would-be surrogate pairs)
-            \item 0x10F0000 (indicates a padding byte was added, only one allowed per decode)
-        \end{itemize}
-        \item We therefore must throw an exception whenever a valid UTF8 byte sequence is presented with scalar value:
-        \begin{itemize}
-            \item 0x0 - 0xAF (out of range)
-            \item 0xD800 - 0xDFFF (surrogate pair characters)
-            \item 0x100B0 - 0x1AFFF (out of range)
-            \item 0x1BFFF - 0x10EFFFF (out of range)
-            \item 0x10F001 - 0x1FFFFF (out of range)
-        \end{itemize}
-        \item We also throw and exception for valid UTF8 sequences when:
-        \begin{itemize}
-            \item They have an overlong form i.e. the same scalar value can be represented using a shorter byte sequence.
-            \item They have scalar value 0x10F0000 (padding character) but this has already been seen during decoding.
-            \item They have scalar value 0x10F0000 (padding character) but the final decoded byte sequence (before padding removal) has length less than 2.
-            \item The final decoded byte sequence has length less than 1.
-            \item They are longer than 4-bytes.
-        \end{itemize}
-        \item Naturally we reject any (invalid) UTF8 byte sequences with:
-        \begin{itemize}
-            \item Unexpected continuation bytes when we expect a start character.
-            \item A start character which is not followed by the appropriate amount of valid continuation bytes - including start characters right at the end of a sequence.
-        \end{itemize}
-            
-    \end{itemize}
-    
-    \item Public key downloader. Simply limit size, don't use exact size since other implementation might use different key sizes.
-    
-    \end{itemize}
-    

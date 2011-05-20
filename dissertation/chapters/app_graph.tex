@@ -1,9 +1,10 @@
 \chapter{Graph API}
+\label{app:graph}
 
 Objects can be read simply by making GET requests to \url{https://graph.facebook.com/ID} and parsing the return result as a JSON object. For none public objects we will also require an access token. Facebook uses the OAuth 2.0 protocol. An access token can be obtained by handling the page redirect \footnote{To ensure authentication can only occur in client side code the access token is passed in a URI fragment.} after the following GET request:
 
 \FloatBarrier
-    \begin{lstlisting}[label=code:auth,caption=Authentication GET request,float=h]
+    \begin{lstlisting}[label=code:auth,caption=Authentication request,float=h]
         https://www.facebook.com/dialog/oauth?
             client_id=APP_ID&
             redirect_uri=REDIRECT_URL&
@@ -16,7 +17,7 @@ Objects can be read simply by making GET requests to \url{https://graph.facebook
 Content can also be published in a similar way. An example request might look like:
 
 \FloatBarrier
-    \begin{lstlisting}[label=code:pub,caption=Publishing POST request,float=h]
+    \begin{lstlisting}[label=code:pub,caption=Publishing request,float=h]
         https://graph.facebook.com/ID/feed?
             access_token=ACCESS_TOKEN&
             message=MESSAGE
@@ -31,7 +32,7 @@ There are several caveats:
 
     \item Images have to be published to an album. Facebook currently uses two types of album ID, one which appears within web pages and one which can be used for publishing through the Graph API. An additional API query is required before uploading to translate from one format to the other.
     
-    \item It certain cases, though publishing through the Graph API is possible, it is more convenient to programatically manipulate form controls. An example is when submitting a comment and triggering the click handler for the submit button.
+    \item It certain cases, though publishing through the Graph API is possible, it is more convenient to programmatically manipulate form controls. An example is when submitting a comment and triggering the click handler for the submit button.
     
     \item Modifying the "About Me" section of a users profile is unsupported entirely. The workaround requires creating an invisible iframe on the current page and manipulating a form on the Facebook site within.
 

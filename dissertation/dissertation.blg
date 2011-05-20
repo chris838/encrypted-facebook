@@ -1,19 +1,15 @@
 [1] biber:197> INFO - This is biber 0.9
 [1] biber:198> INFO - Logfile is 'dissertation.blg'
 [2] biber:205> INFO - === Biber version 0.9
-[2] biber:206> INFO - === Thu May 19, 2011, 08:32:11
+[2] biber:206> INFO - === Fri May 20, 2011, 02:06:39
 [2] Biber.pm:304> INFO - Reading dissertation.bcf
-[123] Biber.pm:580> INFO - Found 27 citekeys in bib section 0
-[149] Biber.pm:2103> INFO - Processing bib section 0
-[181] Biber.pm:2191> INFO - Processing bibtex format file 'bibliography.bib' for section 0
-[185] bibtex.pm:497> INFO - Decoding LaTeX character macros into UTF-8
-[251] Biber.pm:2198> WARN - I didn't find a database entry for 'hdd-errors' (section 0)
-[251] Biber.pm:2198> WARN - I didn't find a database entry for 'jpegxr' (section 0)
-[251] Biber.pm:2198> WARN - I didn't find a database entry for 'nist-keys' (section 0)
-[252] Biber.pm:2198> WARN - I didn't find a database entry for 'XXX' (section 0)
-[408] Biber.pm:1999> INFO - Sorting list 'MAIN' keys
-[408] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
-[528] Biber.pm:1999> INFO - Sorting list 'SHORTHANDS' keys
-[528] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
-[587] BBL.pm:388> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
-[589] BBL.pm:447> INFO - Output to dissertation.bbl
+[127] Biber.pm:580> INFO - Found 51 citekeys in bib section 0
+[156] Biber.pm:2103> INFO - Processing bib section 0
+[188] Biber.pm:2191> INFO - Processing bibtex format file 'bibliography.bib' for section 0
+[192] bibtex.pm:497> INFO - Decoding LaTeX character macros into UTF-8
+[610] Biber.pm:1999> INFO - Sorting list 'MAIN' keys
+[610] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
+[893] Biber.pm:1999> INFO - Sorting list 'SHORTHANDS' keys
+[893] Biber.pm:2003> INFO - No sort tailoring available for locale 'en_GB.UTF-8'
+[1002] BBL.pm:388> INFO - Writing 'dissertation.bbl' with encoding 'UTF-8'
+[1007] BBL.pm:447> INFO - Output to dissertation.bbl

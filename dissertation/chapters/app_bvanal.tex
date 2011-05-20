@@ -1,1 +1,37 @@
 \chapter{Boundary-value analysis}
+\label{app:bv}
+
+For the UTF-8 decoder we derived test cases using boundary value analysis. Below is a complete specification of accepted and invalid inputs.
+
+\begin{itemize}
+        \item We accept any valid, non-overlong, UTF8 byte sequences, maximum length 4-bytes, with scalar value:
+        \begin{itemize}
+            \item 0xB0 - 0xD7FF
+            \item 0xE000 - 0x100AF
+            \item 0x1B000 - 0x1BFFE (would-be surrogate pairs)
+            \item 0x10F0000 (indicates a padding byte was added, only one allowed per decode)
+        \end{itemize}
+        \item We therefore must throw an exception whenever a valid UTF8 byte sequence is presented with scalar value:
+        \begin{itemize}
+            \item 0x0 - 0xAF (out of range)
+            \item 0xD800 - 0xDFFF (surrogate pair characters)
+            \item 0x100B0 - 0x1AFFF (out of range)
+            \item 0x1BFFF - 0x10EFFFF (out of range)
+            \item 0x10F001 - 0x1FFFFF (out of range)
+        \end{itemize}
+        \item We also throw an exception for valid UTF8 sequences when:
+        \begin{itemize}
+            \item They have an overlong form i.e. the same scalar value can be represented using a shorter byte sequence.
+            \item They have scalar value 0x10F0000 (padding character) but this has already been seen during decoding.
+            \item They have scalar value 0x10F0000 (padding character) but the final decoded byte sequence (before padding removal) has length less than 2.
+            \item The final decoded byte sequence has length less than 1.
+            \item They are longer than 4-bytes.
+        \end{itemize}
+        \item Naturally we reject any (invalid) UTF8 byte sequences with:
+        \begin{itemize}
+            \item Unexpected continuation bytes when we expect a start character.
+            \item A start character which is not followed by the appropriate amount of valid continuation bytes - including start characters right at the end of a sequence.
+        \end{itemize}
+    \end{itemize}
+    
+For sanitisation, we only permit alphanumeric characters along with the a small selection of symbols {\tt ,.?!()'*\&\%\$£}. Boundary-values can be easily computed from the ASCII character set.

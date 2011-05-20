@@ -62,7 +62,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.8}Requirements specification}{19}{section.2.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.9}Development}{20}{section.2.9}
+\contentsline {section}{\numberline {2.9}Development}{21}{section.2.9}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.9.1}Development environment}{21}{subsection.2.9.1}
 \defcounter {refsection}{0}\relax 
@@ -78,7 +78,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.1.3}Initialisation}{26}{subsection.3.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.2}Parsing Facebook web pages}{27}{section.3.2}
+\contentsline {section}{\numberline {3.2}Parsing Facebook web pages}{26}{section.3.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.2.1}Inserting submission controls}{27}{subsection.3.2.1}
 \defcounter {refsection}{0}\relax 
@@ -124,84 +124,90 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {4}Evaluation}{47}{chapter.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}Conduit image performance}{47}{section.4.1}
+\contentsline {section}{\numberline {4.1}Image coding method}{47}{section.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.1.1}Method}{47}{subsection.4.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.2}Theoretical capacity}{48}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.2}Theoretical capacity calculation}{48}{subsection.4.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.3}Reed Solomon error correction}{49}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.3}Results}{49}{subsection.4.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.4}Conclusion}{51}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.4}Implications}{49}{subsection.4.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}Submission and retrieval times}{52}{section.4.2}
+\contentsline {section}{\numberline {4.2}Recipient group size}{51}{section.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.1}Method}{52}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.1}Method}{51}{subsection.4.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.2}Results}{53}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.2}Results}{52}{subsection.4.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.3}Effect of cache on loading times}{53}{section.4.3}
+\contentsline {subsection}{\numberline {4.2.3}Implications}{52}{subsection.4.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.1}Method}{55}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.3}Plaintext caching}{54}{section.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.2}Results}{56}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.1}Method}{54}{subsection.4.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.4}Usability inspection}{60}{section.4.4}
+\contentsline {subsection}{\numberline {4.3.2}Results}{54}{subsection.4.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Uploading an encrypted image}{60}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.3.3}Implications}{55}{subsection.4.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.2}Posting a comment}{61}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.4}Usability inspection}{57}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Conclusion}{65}{chapter.5}
+\contentsline {subsection}{\numberline {4.4.1}Method}{57}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}Evaluation of Requirements}{65}{section.5.1}
+\contentsline {subsection}{\numberline {4.4.2}Uploading an encrypted image}{58}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}Retrospective}{66}{section.5.2}
+\contentsline {subsection}{\numberline {4.4.3}Posting a comment}{60}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}Potential deployment}{67}{section.5.3}
+\contentsline {chapter}{\numberline {5}Conclusion}{63}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}Future work}{68}{section.5.4}
+\contentsline {section}{\numberline {5.1}Evaluation of Requirements}{63}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{69}{section.5.4}
+\contentsline {section}{\numberline {5.2}Retrospective}{65}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{Appendix}{73}{part*.47}
+\contentsline {section}{\numberline {5.3}Barriers to deployment}{65}{section.5.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.4}Future work}{66}{section.5.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Bibliography}{67}{section.5.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {part}{Appendix}{73}{part*.45}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {A}Broadcast Encryption}{75}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {A.0.1}Definition}{75}{subsection.A.0.1}
+\contentsline {section}{\numberline {A.1}Definition}{75}{section.A.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {A.0.2}Two simple schemes}{76}{subsection.A.0.2}
+\contentsline {section}{\numberline {A.2}Two simple schemes}{76}{section.A.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {A.0.3}Variants}{77}{subsection.A.0.3}
+\contentsline {section}{\numberline {A.3}Variants}{77}{section.A.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {A.0.4}A more advanced scheme}{77}{subsection.A.0.4}
+\contentsline {section}{\numberline {A.4}A more advanced scheme}{77}{section.A.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {B}Graph API}{79}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Facebook's JPEG compression process}{81}{appendix.C}
+\contentsline {chapter}{\numberline {C}Compression process}{81}{appendix.C}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {D}DCT bitmask coding}{83}{appendix.D}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {E}Threat analysis}{85}{appendix.E}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {E.1}Security testing}{85}{section.E.1}
+\contentsline {section}{\numberline {E.1}Identification of threats}{85}{section.E.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {E.2}Testing}{86}{section.E.2}
+\contentsline {section}{\numberline {E.2}Risk analysis}{85}{section.E.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {F}Haar wavelet transform variant}{89}{appendix.F}
+\contentsline {section}{\numberline {E.3}Proposed measures}{86}{section.E.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {G}Additional timing results}{91}{appendix.G}
+\contentsline {section}{\numberline {E.4}Security testing plan}{87}{section.E.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {H}Cognitive walkthough}{93}{appendix.H}
+\contentsline {chapter}{\numberline {F}Cognitive walkthough}{89}{appendix.F}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {H.1}Creating a cryptographic identity}{93}{section.H.1}
+\contentsline {section}{\numberline {F.1}Creating a cryptographic identity}{89}{section.F.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {H.2}Logging in to a cryptographic identity}{94}{section.H.2}
+\contentsline {section}{\numberline {F.2}Logging in to a cryptographic identity}{90}{section.F.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {H.3}Adding public keys}{95}{section.H.3}
+\contentsline {section}{\numberline {F.3}Adding public keys}{91}{section.F.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {H.4}Using the recipient selector control}{96}{section.H.4}
+\contentsline {section}{\numberline {F.4}Using the recipient selector control}{92}{section.F.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {I}Boundary-value analysis}{97}{appendix.I}
+\contentsline {chapter}{\numberline {G}Boundary-value analysis}{93}{appendix.G}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {J}Project Proposal}{99}{appendix.J}
+\contentsline {chapter}{\numberline {H}Image size increase}{95}{appendix.H}

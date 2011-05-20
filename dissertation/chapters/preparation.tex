@@ -2,7 +2,7 @@
 \chapter{Preparation}\label{ch:preparation}
 %*****************************************
 
-In this chapter we formulate the objectives presented in Section \ref{sec:objectives} into a set of design principles, drawing on existing work. We justify the use of broadcast encryption and define a suitable scheme. We describe possible deployment strategies and briefly review Firefox extension development and the Facebook platform. We look at the specific problems associated with encrypting images and draft a security policy. Finally, we derive a concrete set of requirements and outline an appropriate software development methodology and test plan
+In this chapter we formulate the objectives presented in Section \ref{sec:objectives} into a set of design principles, drawing on existing work. We justify the use of broadcast encryption and define a suitable scheme. We describe possible deployment strategies and briefly review Firefox extension development and the Facebook platform. We also look at the specific problems associated with encrypting images and draft a security policy. Finally, we derive a concrete set of requirements and outline an appropriate software development methodology and testing plan
 
 
 \FloatBarrier
@@ -23,17 +23,12 @@ The alternative is to encrypt shared content itself in some way or another, rest
 \FloatBarrier
 \subsection{Independence from third-party servers}
 
-%In addition to encrypting content, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external database. There are some advantages to this approach: since very little is being stored on Facebook itself measures can be taken to hide the fact that content is being encrypted at all, as with FaceCloak.\footnote{Steganography requires large amounts of redundancy to securely hide even a small amount of information \cite{facecloak}.} Better guarantees of availability can also be made in the case of account deletion.
+In addition to using encryption, flyByNight, FaceCloak and uProtect.it opt to migrate content from the Facebook platform to an external third-party database.
 
-In addition to using encryption, flyByNight, FaceCloack and uProtect.it opt to migrate content from the Facebook platform to an external third-party database.
-
-We consider the practice of outsourcing content to conflict with our stated goal of scalebility. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext. Facebook are currently able to offer a free service by serving highly targeted advertising to members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavailable to any solution hosting a database of encrypted content.
-
-%Third-party servers can also be employed for computation. uProtect.it performs all encryption and decryption server side negating the need for the user to perform any kind of kind of key management. Proxy re-encryption, used by flyByNight to permit multiple recipients \cite{flybynight}, also relies on access to server side computation, as do some of the more advanced broadcast encryption schemes (see Section XXX).
+We consider the practice of outsourcing content to conflict with our stated goal of scalability. Storing and delivering encrypted content requires at least the resources needed for storing and delivering the cleartext. Facebook are currently able to offer a free service by serving highly targeted advertising to members based on the structure of the social graph \cite{fb-ads}. This revenue stream would be largely unavailable to any solution hosting a database of encrypted content.
 
 Third-party servers can also be employed for performing encryption and/or decryption (as with uProtect.it and flyByNight) or as part of a public key infrastructure. Again, the resources required by the server would scale linearly in proportion to the amount of content exchanged.
 
-%\footnote{Another use of third-party servers is to store and distribute cryptographic keys, perhaps as part of a public key infrastructure. Arguably issues of scale here are not quite so severe. In any case Encrypted Facebook does not rely on such a service due to conflicts with other design principles, or in some cases due to a limited perceived benefit given the additional complexity of implementation.}
 
 \FloatBarrier
 \subsection{Secret key security}
@@ -44,7 +39,7 @@ It is possible to use a trusted third-party to store and distribute secret keys 
 
 Another possibility is using secret keys derived from a password. flyByNight, for example, allows users to download a password-protected private key from their server. We could also store password protected keys in-band (i.e. on Facebook itself) or generate a key simply by hashing a password. Relying on the user to memorize a password rather than manage secret keys also improves usability. Unfortunately the entropy of user chosen passwords is far less than that of randomly generated keys \cite{passwords}.
 
-By ensuring we use securely generated keys that are only ever stored on the user's device(s) we trade usability for better privacy protection. Appropriate key lengths and generation mechanisms are described in Section \ref{ssec:keys}.
+By ensuring we use randomly generated keys that are only ever stored on the user's device(s) we trade usability for better privacy protection. Appropriate key lengths are discussed in Section \ref{ssec:keys}.
 
 
 \FloatBarrier
@@ -52,18 +47,7 @@ By ensuring we use securely generated keys that are only ever stored on the user
 
 Secure OOB (out-of-band) channels\footnote{Such as encrypted email or face-to-face exchange.} can be used to transmit content, update messages, keys or other information as part of an encryption scheme. Since these channels are, by definition, external to the Facebook platform it can be hard to automate such exchanges and much is still required from the user. FaceCloak, for example, requires users to transmit messages over secure email when adding friends. The process is partly automated, however the user must set up an email client and install and configure PGP themselves \cite{facecloak}.
 
-By limiting the use of OOB transmission we mitigate usability concerns regarding manual key management. The exception is when installing a secret key across more than one device - since transporting a secret key by any other method would compromise the principle of secret key security.
-
-
-%\subsection{Remainder of communications in-band}
-
-%Any system which uses public key cryptography will require some way of distributing public keys. Although they are 'public', a so-called middle-person attack can occur if keys are intercepted \cite{ross}.
-
-%Since public keys are likely to be transmitted often (depending on the protocol, every time a friend is added or even every time content is shared) doing so OOB, although secure, will impact usability - again since OOB transition is hard to automate.
-
-%We can instead store and distribute public keys via a trusted third-party. flyByNight takes this approach.  If the content server and the key server are distinct (for example, if Facebook itself is used to store content) both would have to be compromised to perform so called middle-person attacks. Also web of trust.
-
-%For the sake of simplicity Encrypted Facebook transmits public keys in-band on Facebook itself, since immunity from middle-person attacks is not considered a design goal. Such attacks are discussed fully in section XXX.\footnote{The option of verifying public keys OOB to prevent middle-person attack is left open to the expert user but is not a design feature.}
+By limiting the use of OOB transmission we mitigate usability concerns regarding manual key management. The exception is when installing a secret key across more than one device --- since transporting a secret key by any other means would compromise the principle of secret key security.
 
 
 \FloatBarrier
@@ -76,7 +60,7 @@ Communication over social networks is typically one-to-many whereas cryptography
 \subsection{Existing solutions}
 \label{ssec:exist}
 
-Existing proposals tackle this problem in the following ways:
+uProtect.it, flyByNight and FaceCloak tackle this problem in the following ways:
 
 \begin{enumerate}
 
@@ -93,9 +77,9 @@ Existing proposals tackle this problem in the following ways:
 \FloatBarrier
 \subsection{Broadcast encryption}
 
-An alternative to the solutions in Section \ref{ssec:exist} is to use a broadcast encryption\footnote{Broadcast encryption is defined in appendix XXX.} scheme. 
+An alternative to the solutions in Section \ref{ssec:exist} is to use a broadcast encryption\footnote{Broadcast encryption is defined in Appendix \ref{app:bcast}.} scheme. 
 
-In general, schemes can be characterised by the size of each user's private and public key and the amount of transmission overhead that must be sent with each message, given the number of recipients. The scheme presented here has a large transmission overhead, however unlike other more complex schemes it doesn't require the use of key-update messages. Transmitting key-updates OOB or though a third-party would violate our design principles. Transmitting them in-band would be possible, but since Facebook is a best-effort service synchronisation and lost updates would likely be a problem.
+In general, schemes can be characterised by the size of each user's private and public key and the amount of transmission overhead that must be sent with each message, given the number of recipients. The scheme we use here has a relatively large transmission overhead, however unlike other more complex schemes it doesn't require the use of key-update messages. Transmitting key-updates OOB or though a third-party would violate our stated design principles. Transmitting them in-band would be possible, but since Facebook is a best-effort service synchronisation and lost updates would likely be a problem.
 
 Let $U$ be the set of users with Encrypted Facebook installed and $R \subseteq U$ be a set of intended recipients. For simplicity we describe broadcast encryption as a key encapsulation mechanism:
 
@@ -128,7 +112,7 @@ Let $U$ be the set of users with Encrypted Facebook installed and $R \subseteq U
     
 \end{defn}    
 
-\cite{survey} provides a proof that this scheme is at least as secure as the underlying encryption schemes $P$ and $Q$. A more advanced scheme which also doesn't require key-updates is proposed in appendix XXX and discussed in Section \ref{sec:future}.
+\cite{survey} provides a proof that this scheme is at least as secure as the underlying encryption schemes $P$ and $Q$. A more advanced scheme which also doesn't require key-updates is proposed in Appendix \ref{ssec:bcast-improved} and discussed in Section \ref{sec:future}. It was not pursued initially because it was thought that a working implementation couldn't be guaranteed.
 
 
 \FloatBarrier
@@ -168,6 +152,7 @@ Approach (a) would conflict with the design principle of third party independenc
 
 \FloatBarrier
 \section{Mozilla Firefox extension development}
+\label{sec:ffox}
 
 The project was developed as an extension for Mozilla Firefox, the world's most popular browser (as of January 2011). Manipulating the DOM (Document Object Model) is well supported by browser extensions since the browser interface chrome is often built on existing web technologies. Porting to other browsers is discussed in Section \ref{sec:deploy}.
 
@@ -208,7 +193,7 @@ Since building an entire XCPOM component would be excessive and give little adva
 \section{The Facebook platform}
 \label{sec:facebook}
 
-%Facebook represents the social graph as objects and connections between them. Objects include users, photos, messages and events. All objects are assigned a single unique Facebook ID and all objects (except users themselves) are assosciated with the ID of the user who created them (their owner). The owner's privacy settings (global and per object) will partly determine who may access an object. Objects will also have connections to other users and other objects. For example, users can create discussion threads by commenting on objects or tag other users as being present in a photograph.
+%Facebook represents the social graph as objects and connections between them. Objects include users, photos, messages and events. All objects are assigned a single unique Facebook ID and all objects (except users themselves) are associated with the ID of the user who created them (their owner). The owner's privacy settings (global and per object) will partly determine who may access an object. Objects will also have connections to other users and other objects. For example, users can create discussion threads by commenting on objects or tag other users as being present in a photograph.
 
 Facebook represents all entities (e.g. users, messages, photos, events) uniformly as nodes in the social graph. Each node has a unique Facebook ID, several attributes including an object type, and one or more connections to other nodes.\footnote{This is actually a slight simplification. For full details refer to the Facebook Graph API reference documentation.}
 
@@ -283,7 +268,7 @@ Facebook does provide a JavaScript SDK for interfacing with the Facebook platfor
 
 Authentication is performed using the OAuth 2.0 protocol. Applications register with Facebook and present their application ID upon request. The user then confirms that the application may use the requested permissions and an access token is generated. This token is then used in future exchanges.
 
-Unfortunately some actions\footnote{Namely working with the local filesystem and modifying the "Bio" attribute.} are poorly supported by the Graph API, if at all. Appendix XXX describes the API in more detail, as well as the required workarounds.
+Unfortunately some actions\footnote{Namely working with the local filesystem and modifying the "Bio" attribute.} are poorly supported by the Graph API, if at all. Appendix \ref{app:graph} describes the API in more detail, as well as the required workarounds.
 
     
 \FloatBarrier
@@ -294,7 +279,7 @@ Unfortunately some actions\footnote{Namely working with the local filesystem and
 
 Regardless of the input format, Facebook encodes all uploaded images using lossy JPEG.\footnote{Even if a file is already in the output format the compression process is repeated and information is lost.} We therefore require some form of JPEG-immune coding for the binary output of encryption, so that after undergoing compression we can exactly recover the original bytes.
 
-Appendix XXX describes Facebook's JPEG compression process. To motivate the need for a more complex scheme we evaluate two naive attempts at encoding data in images, before proposing a more advanced approach. Note that we only consider greyscale images.\footnote{Chrominance subsampling means RGB images provide a less than 50\% increase in capacity over greyscale. See appendix XXX.}
+Appendix \ref{app:images} describes Facebook's JPEG compression process. To motivate the need for a more complex scheme we evaluate two naive attempts at encoding data in images, before proposing a more advanced approach. Note that we only consider greyscale images.\footnote{Chrominance subsampling means RGB images provide a less than 50\% increase in capacity over greyscale. See Appendix \ref{app:images}.}
 
 
 \subsection{Naive data insertion}
@@ -321,7 +306,7 @@ One approach would be to encode directly into greyscale pixel values with enough
   \end{center}
 \end{figure}
 
-Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IGJ (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix XXX). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see appendix XXX for details). Modeling the compression process as a binary symmetric channel, Figure \ref{graph:capacity0} graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation Section \ref{ssec:capacity}).
+Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range of quality factors, using the IJG (Independent JPEG Group) {\tt libjpeg} library for compression. Quality factor 85 most closely matches the compression signature used by Facebook (see Appendix \ref{app:images}). For encoding in DCT coefficients a special bitmask, generated from the quantisation matrix, is used in an attempt to reduce the incidence of capping (see Appendix \ref{app:dct} for details). Modelling the compression process as a binary symmetric channel, Figure \ref{graph:capacity0} graphs the theoretical per-image capacity of each method for lossless data transmission (details for this calculation are given in Evaluation Section \ref{ssec:capacity}).
 
 
 \begin{figure}[tbph]
@@ -343,7 +328,7 @@ Figure \ref{graph:ber0} graphs the bit error rate for both methods over a range 
   \end{center}
 \end{figure}
 
-Given a recipient group size of 400 and a ciphered session key size of 1024-bit (see Section \label{ssec:keys}) the transmission overhead alone would be at at least 50 KiB.\footnote{50 KiB not including the list of recipient IDs, initialisation vector and any padding or size tags.} This means neither of the naive approaches would be suitable even given an error correction scheme which performs at or near the Shannon limit. 
+Given a recipient group size of 400 and a ciphered session key size of 1024-bit (see Section \label{ssec:keys}) the transmission overhead alone would be at at least 50 KiB.\footnote{50 KiB not including the list of recipient IDs, initialisation vector and any padding or size tags.} A $720 \times 720$ image encoded at low quality (IGJ quality factor 10) would still require around 25 KiB of storage space \cite{ijg}. This means neither of the naive approaches would be suitable even given an error correction scheme which performs at or near the Shannon limit. 
 
 
 \subsection{Advanced data insertion}
@@ -372,7 +357,7 @@ To truly protect privacy we must consider proper security engineering practices.
 \subsection{Threat analysis}
 \label{ssec:threat}
 
-Full details of the threat and risk analysis are included in appendix XXX. We take an attack-centric approach, defining risk as $Vulnerability \times Threat \times Impact$ according the methodology described by \cite{security}. We identify several potential threats and possible security measures proportionate to the risk they pose:
+The threat analysis is included in its entirety in Appendix \ref{app:threat}. We take an attack-centric approach, defining risk as $Vulnerability \times Threat \times Impact$ according the methodology described by \cite{security}. Below we summerise several potential threats and possible counter measures, proportionate to the risk posed:
 
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
@@ -386,8 +371,8 @@ Full details of the threat and risk analysis are included in appendix XXX. We ta
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
-    \item[Attack 3] Attacker gains access to user's computer by injecting code into eval() which runs outside the browser sandbox.
-    \item[Measures] Wrap all calls to eval() with a SecureEval() function which attempts to prevent malicious use. 
+    \item[Attack 3] Attacker gains access to user's computer by injecting code into {\tt eval()} which runs outside the browser sandbox.
+    \item[Measures] Wrap all calls to {\tt eval()} with a {\tt secureEval()} function which attempts to prevent malicious use. 
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
@@ -397,12 +382,12 @@ Full details of the threat and risk analysis are included in appendix XXX. We ta
 
 \begin{sdesc}\addtolength{\itemsep}{-0.5\baselineskip}
     \item[Attack 5] Attacker carries out middle-person attack by intercepting and switching public keys.
-    \item[Measures:] Informing the user whenever public keys are updated removes a large amount of risk. Complete protection would be impractical without use of OOB channels.
+    \item[Measures] Informing the user whenever public keys are updated removes a large amount of risk. Complete protection would be impractical without use of OOB channels.
 \end{sdesc}
 
 \begin{sdesc} \addtolength{\itemsep}{-0.5\baselineskip}
     \item[Attack 6] Attacker causes DoS by creating a malicious object.
-    \item[Measures] This need not be a large problem since decryption is built to fail gracefully (see Section \ref{ssec:ident-targets}). Include some simple run time checks to limit iteration.
+    \item[Measures] This need not be a large problem since decryption is built to fail gracefully (see Section \ref{ssec:ident-targets}). Include some simple run time checks to limit iteration and special characters (combined with proper sanitisation) to prevent tags-within-tags.
 \end{sdesc}
 
 
@@ -412,7 +397,7 @@ Full details of the threat and risk analysis are included in appendix XXX. We ta
 
 NIST(National Institute of Standard and Technology) publish guidelines on cryptographic schemes and protocols. Since 2010 NIST have recommended using at least 128-bits of security \cite{nist-key}.
 
-The ideal scheme would be based on elliptic curve cryptography since comparable strength public keys are much smaller than for finite field or integer factorisation methods (see Table \ref{tab:keys}). This is important since the block size of the cipher depends on the public key; this in turn determines the size of the tranmission overhead. Unfortunately ECC is less common in open libraries due to patent concerns.
+The ideal scheme would be based on elliptic curve cryptography since comparable strength public keys are much smaller than for finite field or integer factorisation methods (see Table \ref{tab:keys}). This is important since the block size of the cipher depends on the public key; this in turn determines the size of the transmission overhead. Unfortunately ECC is less common in open libraries due to patent concerns.
 
 \begin{table}[tbph]
   \begin{center}
@@ -438,6 +423,7 @@ We opted to use RSA and AES due to their wide availability in libraries like Bot
 
 \FloatBarrier
 \section{Requirements specification}
+\label{sec:req}
 
 Based on the contents of this chapter we derive a set of concrete requirements.
         
@@ -455,7 +441,7 @@ Based on the contents of this chapter we derive a set of concrete requirements.
     
     \item[Requirement 2] The size limits for encrypted text objects will be no smaller than the current limits Facebook imposes, given in Section \ref{sec:content}).
 
-    \item[Requirement 3] The size limit for encrypted images will be no less than 50 KiB. XXX JUSTIFY THIS XXX.
+    \item[Requirement 3] The size limit for encrypted images will be no less than 50 KiB. This is roughly equivalent to a $720 \times 720$ image encoded at medium quality (IJG quality factor 25) \cite{ijg}.
 
     \item[Requirement 4] To ensure the goal of scalability is met, all requirements will be met given recipient groups sizes up to 400, based on the discussion in Section \ref{sec:cness}.
     
@@ -466,7 +452,7 @@ Based on the contents of this chapter we derive a set of concrete requirements.
     \item[Requirement 6] To ensure privacy is protected, the project will adhere to the security policy described in \ref{ssec:threat}.
 
 
-    \item[Requirement 7] The number of newsfeed entries generated by encrypted submission will be no more than the number generated by normal content submission. This ensures that the effect on signal-to-noise ratio is kept to an absolute minimum - the only perceivable 'noise' is the encrypted content itself.
+    \item[Requirement 7] The number of news feed entries generated by encrypted submission will be no more than the number generated by normal content submission. This ensures that the effect on signal-to-noise ratio is kept to an absolute minimum - the only perceivable 'noise' is the encrypted content itself.
     
 
     \item[Requirement 8] There are uncertainties and/or trade-offs associated with certain approaches to encryption and encoding data in images (and to a lesser extent error correction). It is also clear that in some cases the optimal approach is well beyond the scope of this project. Therefore, we make it a requirement to adopt a modular structure that facilitates switching between differing schemes and permits future extension.
@@ -495,7 +481,7 @@ GNU Octave (a free MATLAB-like application) was also used for provisional evalua
 
 We loosely adopt the agile testing principles of test driven development rather than a test last approach. Ensuring the feedback loop between testing and implementation is kept as short as possible allows us to maintain flexibility, which is useful given the uncertainties over the optimal image approach.
 
-Special attention needed to be made to security relevant testing such as input sanitisation and proper functioning of the UTF-8 decoder. Boundary-value analysis was used to generate sets of test scripts (included in appendix XXX).
+Special attention needed to be made to security relevant testing such as input sanitisation and proper functioning of the UTF-8 decoder. Boundary-value analysis was used to generate sets of test scripts (included in Appendix \ref{app:bv}).
 
 To help ensure the goal of usability was met, usability testing in the form of cognitive walkthroughs were performed. During development many passes of the walkthroughs were performed and alterations made, until a credible success story could be constructed for each task. Excerpts from final success stories are presented in Section \ref{sec:use}.
 

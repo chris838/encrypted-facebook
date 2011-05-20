@@ -1,0 +1,10 @@
+\chapter{Image size increase}
+\label{app:imginc}
+
+Facebook recently increased their minimum size limits from $720 \times 720$ pixels to $2048 \times 2048$. 
+
+After adapting the extension to work with the new sizes, preliminary testing shows that response times increase well beyond acceptable limits described in \cite{response}. This is principally because the current implementation makes use of the entire image capacity regardless of the input size. This was justifiable practice with the old limits, as borne out by Chapters \ref{eval} and \ref{con}..
+
+The new limits call for the ability to create variable size images based on the input length. Some method of indicating any padding used would be required. One possibility would be storing a length tag in some canonical JPEG-immune format. An example might be to use the n-bit scaling method with $n=1$. This could be combined with the signature scheme described in Section \ref{sec:deploy}
+
+Another possibility would be to combine the IFec and IConduitImage components into one. This would allow a length tag to be encoded after error correction codes have been applied.

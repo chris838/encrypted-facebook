@@ -268,12 +268,82 @@
     <bcf:datasource type="file" datatype="bibtex">bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey>rsfec-decode</bcf:citekey>
-    <bcf:citekey>hdd-errors</bcf:citekey>
+    <bcf:citekey>fb-factsheet</bcf:citekey>
+    <bcf:citekey>fb-cipc</bcf:citekey>
+    <bcf:citekey>gross</bcf:citekey>
+    <bcf:citekey>fb-priv</bcf:citekey>
+    <bcf:citekey>fb-ids</bcf:citekey>
+    <bcf:citekey>snoop</bcf:citekey>
+    <bcf:citekey>fb-gov</bcf:citekey>
+    <bcf:citekey>fb-phish</bcf:citekey>
+    <bcf:citekey>rockyou</bcf:citekey>
+    <bcf:citekey>firegpg</bcf:citekey>
+    <bcf:citekey>johnny</bcf:citekey>
+    <bcf:citekey>pidder</bcf:citekey>
+    <bcf:citekey>diaspora</bcf:citekey>
+    <bcf:citekey>fb-network</bcf:citekey>
+    <bcf:citekey>metcalf</bcf:citekey>
+    <bcf:citekey>firegpg</bcf:citekey>
+    <bcf:citekey>noyb</bcf:citekey>
+    <bcf:citekey>ross</bcf:citekey>
+    <bcf:citekey>facecloak</bcf:citekey>
+    <bcf:citekey>fb-ads</bcf:citekey>
+    <bcf:citekey>uprotect</bcf:citekey>
+    <bcf:citekey>passwords</bcf:citekey>
+    <bcf:citekey>facecloak</bcf:citekey>
+    <bcf:citekey>flybynight</bcf:citekey>
+    <bcf:citekey>proxy</bcf:citekey>
+    <bcf:citekey>facecloak</bcf:citekey>
+    <bcf:citekey>survey</bcf:citekey>
+    <bcf:citekey>flash-sbox</bcf:citekey>
+    <bcf:citekey>flybynight</bcf:citekey>
+    <bcf:citekey>xpcomm</bcf:citekey>
+    <bcf:citekey>js-ctypes</bcf:citekey>
+    <bcf:citekey>fb-stats</bcf:citekey>
+    <bcf:citekey>fb-stats</bcf:citekey>
+    <bcf:citekey>fb-factsheet</bcf:citekey>
+    <bcf:citekey>fb-connectedness</bcf:citekey>
+    <bcf:citekey>dunbar</bcf:citekey>
+    <bcf:citekey>socnetsize</bcf:citekey>
+    <bcf:citekey>ijg</bcf:citekey>
+    <bcf:citekey>haar</bcf:citekey>
+    <bcf:citekey>security</bcf:citekey>
+    <bcf:citekey>utf8</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>ijg</bcf:citekey>
+    <bcf:citekey>response</bcf:citekey>
+    <bcf:citekey>agile</bcf:citekey>
+    <bcf:citekey>code-style</bcf:citekey>
+    <bcf:citekey>dpatterns</bcf:citekey>
+    <bcf:citekey>stealing</bcf:citekey>
+    <bcf:citekey>haar</bcf:citekey>
+    <bcf:citekey>haar</bcf:citekey>
+    <bcf:citekey>utf8</bcf:citekey>
     <bcf:citekey>firefox-req</bcf:citekey>
     <bcf:citekey>bband-stats</bcf:citekey>
+    <bcf:citekey>haar</bcf:citekey>
     <bcf:citekey>rsfec-decode</bcf:citekey>
     <bcf:citekey>hdd-errors</bcf:citekey>
     <bcf:citekey>cogwalk</bcf:citekey>
+    <bcf:citekey>response</bcf:citekey>
+    <bcf:citekey>response</bcf:citekey>
+    <bcf:citekey>jpegxr</bcf:citekey>
+    <bcf:citekey>gpl</bcf:citekey>
+    <bcf:citekey>boneh</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>dpaper</bcf:citekey>
+    <bcf:citekey>fiat-naor</bcf:citekey>
+    <bcf:citekey>survey</bcf:citekey>
+    <bcf:citekey>fiat-naor</bcf:citekey>
+    <bcf:citekey>fiat-naor</bcf:citekey>
+    <bcf:citekey>boneh</bcf:citekey>
+    <bcf:citekey>survey</bcf:citekey>
+    <bcf:citekey>boneh</bcf:citekey>
+    <bcf:citekey>nist-key</bcf:citekey>
+    <bcf:citekey>security</bcf:citekey>
+    <bcf:citekey>utf8</bcf:citekey>
+    <bcf:citekey>response</bcf:citekey>
   </bcf:section>
 </bcf:controlfile>

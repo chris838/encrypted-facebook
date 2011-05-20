@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  19 MAY 2011 14:10
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  20 MAY 2011 03:01
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1792,22 +1792,37 @@ Package biblatex Info: ... file 'greek.lbx' found.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/biblatex/lbx/greek.lbx
 File: greek.lbx 2011/04/12 v1.4b biblatex localization
 )
-(./dissertation.aux (./chapters/evaluation.aux
-
-LaTeX Warning: Label `graph:txt-sync' multiply defined.
-
-
-LaTeX Warning: Label `scn:parrots' multiply defined.
-
-
-LaTeX Warning: Label `graph:hist' multiply defined.
-
-)
+(./dissertation.aux (./frontbackmatter/dirtytitlepage.aux)
 LaTeX Font Info:    Try loading font information for LGR+cmr on input line 22.
- (/usr/local/texlive/2010/texmf-dist/tex/generic/babel/lgrcmr.fd
+
+(/usr/local/texlive/2010/texmf-dist/tex/generic/babel/lgrcmr.fd
 File: lgrcmr.fd 2008/06/17 v2.3 Greek Computer Modern
 )
-(./frontbackmatter/proposal.aux))
+(./frontbackmatter/titleback.aux) (./frontbackmatter/proforma.aux)
+(./frontbackmatter/declaration.aux) (./frontbackmatter/contents.aux)
+(./frontbackmatter/acknowledgments.aux) (./chapters/introduction.aux)
+(./chapters/preparation.aux
+
+LaTeX Warning: Label `ssec:keys' multiply defined.
+
+) (./chapters/implementation.aux
+
+LaTeX Warning: Label `scn:ctrl' multiply defined.
+
+
+LaTeX Warning: Label `fig:edge-b' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:edge-b' multiply defined.
+
+) (./chapters/evaluation.aux) (./chapters/conclusion.aux)
+(./chapters/app_bcast.aux) (./chapters/app_graph.aux)
+(./chapters/app_images.aux) (./chapters/app_dct.aux
+
+LaTeX Warning: Label `code:auth' multiply defined.
+
+) (./chapters/app_threat.aux) (./chapters/app_cogwalk.aux)
+(./chapters/app_bvanal.aux) (./chapters/app_imginc.aux))
 \openout1 = `dissertation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 116.
@@ -1990,46 +2005,61 @@ Package biblatex Info: ... file 'english.lbx' found.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2011/04/12 v1.4b biblatex localization
 )
-\openout2 = `chapters/evaluation.aux'.
+\openout2 = `frontbackmatter/dirtytitlepage.aux'.
 
 
-(./chapters/evaluation.tex
-Chapter 1.
-
-Class scrreprt Warning: \float@addtolists detected!
-(scrreprt)              You should use the features of package `tocbasic'
-(scrreprt)              instead of \float@addtolists.
-(scrreprt)              Support for \float@addtolists may be removed from
-(scrreprt)              `scrreprt' soon .
-
+(./frontbackmatter/dirtytitlepage.tex
 LaTeX Font Info:    Try loading font information for T1+futura_lt_bold on input
- line 2.
-(./t1futura_lt_bold.fd
+ line 21.
+ (./t1futura_lt_bold.fd
 File: t1futura_lt_bold.fd Lucida-Handwriting font
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map})
+{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map})) [1
+
+
+]
+\openout2 = `frontbackmatter/titleback.aux'.
+
+
+(./frontbackmatter/titleback.tex
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 7.
+
+(/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/ts1futs.fd
+File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
+)) [2
+
+
+]
+\openout2 = `frontbackmatter/proforma.aux'.
+
+
+(./frontbackmatter/proforma.tex
 LaTeX Font Info:    Try loading font information for T1+futura_lt_heavy on inpu
-t line 7.
+t line 14.
  (./t1futura_lt_heavy.fd
 File: t1futura_lt_heavy.fd Lucida-Handwriting font
-)
-LaTeX Font Info:    Try loading font information for T1+txtt on input line 9.
+)) [3
 
-(/usr/local/texlive/2010/texmf-dist/tex/latex/txfonts/t1txtt.fd
-File: t1txtt.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Try loading font information for FML+futmi on input line 19
+
+
+
+]
+\openout2 = `frontbackmatter/declaration.aux'.
+
+
+(./frontbackmatter/declaration.tex
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 18
 .
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/fmlfutmi.fd
 File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 19.
+(Font)              scaled to size 11.03998pt on input line 18.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 19.
+(Font)              scaled to size 8.27998pt on input line 18.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 19.
-LaTeX Font Info:    Try loading font information for U+msa on input line 19.
+(Font)              scaled to size 6.43999pt on input line 18.
+LaTeX Font Info:    Try loading font information for U+msa on input line 18.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
@@ -2037,7 +2067,7 @@ File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 (/usr/local/texlive/2010/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 19.
+LaTeX Font Info:    Try loading font information for U+msb on input line 18.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -2046,78 +2076,373 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 11.03998pt on input line 19.
+(Font)              scaled to size 11.03998pt on input line 18.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 19.
+(Font)              scaled to size 8.27998pt on input line 18.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.43999pt on input line 19.
- [1
-
-
+(Font)              scaled to size 6.43999pt on input line 18.
+) [4
 
 
 
 ]
+\openout2 = `frontbackmatter/contents.aux'.
+
+
+(./frontbackmatter/contents.tex
+Package tocbasic Info: character protrusion at toc deactivated on input line 7.
+
+ (./dissertation.toc
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 24.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 7.
+LaTeX Font Info:    Try loading font information for T1+futura_lt_medium on inp
+ut line 9.
+ (./t1futura_lt_medium.fd
+File: t1futura_lt_medium.fd Lucida-Handwriting font
+)
+[5
+
+
+
+
+
+] [6] [7]
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 173.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 35.
+(Font)              scaled to size 13.24796pt on input line 173.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 35.
+(Font)              scaled to size 9.19998pt on input line 173.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 35.
+(Font)              scaled to size 7.35999pt on input line 173.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 35.
+(Font)              scaled to size 13.24796pt on input line 173.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 35.
+(Font)              scaled to size 9.19998pt on input line 173.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 35.
+(Font)              scaled to size 7.35999pt on input line 173.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 173.
 
-[2]
-PGFPlots: reading {gfx/error_rate.data}
-PGFPlots: reading {gfx/error_rate.data}
-PGFPlots: reading {gfx/error_rate.data}
-PGFPlots: reading {gfx/error_rate0.data}
-PGFPlots: reading {gfx/error_rate0.data}
-PGFPlots: reading {gfx/encoding_time.data}
+ (/usr/local/texlive/2010/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+[8])
+\tf@toc=\write7
+\openout7 = `dissertation.toc'.
 
-! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
-n name 'a'. Only the first occurence can be accessed via column names.
-PGFPlots: reading {gfx/encoding_time.data}
-! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
-n name 'a'. Only the first occurence can be accessed via column names.
-PGFPlots: reading {gfx/encoding_time.data}
-! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
-n name 'a'. Only the first occurence can be accessed via column names.
-PGFPlots: reading {gfx/error_rate0.data}
-PGFPlots: reading {gfx/error_rate0.data}
+ [9]
+Package tocbasic Info: character protrusion at lof deactivated on input line 24
+.
+ (./dissertation.lof [10
 
-Package amsmath Warning: Foreign command \atopwithdelims;
-(amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 118.
+]
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 95.
 
-[3]
-Overfull \hbox (8.73334pt too wide) in paragraph at lines 125--140
- [] 
+(/usr/local/texlive/2010/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+))
+\tf@lof=\write8
+\openout8 = `dissertation.lof'.
+
+Package tocbasic Info: character protrusion at lot deactivated on input line 34
+.
+
+(./dissertation.lot [11])
+\tf@lot=\write9
+\openout9 = `dissertation.lot'.
+
+ [12])
+\openout2 = `frontbackmatter/acknowledgments.aux'.
+
+ (./frontbackmatter/acknowledgments.tex)
+[13
+
+
+
+
+] [14
+
+
+
+]
+\openout2 = `chapters/introduction.aux'.
+
+ (./chapters/introduction.tex
+Chapter 1.
+
+Class scrreprt Warning: \float@addtolists detected!
+(scrreprt)              You should use the features of package `tocbasic'
+(scrreprt)              instead of \float@addtolists.
+(scrreprt)              Support for \float@addtolists may be removed from
+(scrreprt)              `scrreprt' soon .
+
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 10.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 10.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 10.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 10.
+[1
+
+
+
+
+] [2]) [3] [4
+
+
+
+]
+\openout2 = `chapters/preparation.aux'.
+
+ (./chapters/preparation.tex
+Chapter 2.
+[5
+
+
+] [6] [7] [8] (./gfx/approaches_diag.tikz
+\pgf@layerbox@device=\box64
+\pgf@layerboxsaved@device=\box65
+\pgf@layerbox@browser=\box66
+\pgf@layerboxsaved@browser=\box67
+\pgf@layerbox@sandbox=\box68
+\pgf@layerboxsaved@sandbox=\box69
+\pgf@layerbox@fg=\box70
+\pgf@layerboxsaved@fg=\box71
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 12.
+
+Overfull \hbox (2.73pt too wide) in paragraph at lines 18--18
+ \T1/futs/b/n/10 page 
  []
 
 
-LaTeX Warning: Citation 'hdd-errors' on page 4 undefined on input line 147.
+Underfull \hbox (badness 1436) in paragraph at lines 31--31
+ [][][][] 
+ []
 
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 147.
-[4] [5]
+
+Underfull \hbox (badness 1867) in paragraph at lines 34--34
+ [][][][] 
+ []
+
+
+Underfull \hbox (badness 4765) in paragraph at lines 37--37
+ [][][][] 
+ []
+
+
+Underfull \hbox (badness 5696) in paragraph at lines 40--40
+ [][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--65
+ [][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--68
+ [][][][] 
+ []
+
+) [9] [10] [11] [12] [13]
+<screens/facebook.png, id=865, 1046.91125pt x 676.5275pt>
+File: screens/facebook.png Graphic file (type png)
+
+<use screens/facebook.png> [14 <./screens/facebook.png (PNG copy)>]
+PGFPlots: reading {gfx/error_rate0.data}
+PGFPlots: reading {gfx/error_rate0.data}
+
+
+LaTeX Warning: Reference `ssec:capacity' on page 15 undefined on input line 309
+.
+
+PGFPlots: reading {gfx/error_rate0.data}
+PGFPlots: reading {gfx/error_rate0.data}
+[15] [16] [17] [18] [19] [20]
+
+LaTeX Warning: Reference `sec:use' on page 21 undefined on input line 486.
+
+[21]) [22]
+\openout2 = `chapters/implementation.aux'.
+
+ (./chapters/implementation.tex
+Chapter 3.
+File: gfx/component.1 Graphic file (type mps)
+[MP to PDF] (./gfx/component.1) [23
+
+
+
+
+
+] [24]
+<screens/toolbar.png, id=951, 1046.91125pt x 146.5475pt>
+File: screens/toolbar.png Graphic file (type png)
+
+<use screens/toolbar.png>
+
+LaTeX Warning: Reference `ssec:image-conc' on page 25 undefined on input line 6
+6.
+
+File: gfx/lib.1 Graphic file (type mps)
+[MP to PDF] (./gfx/lib.1)
+Overfull \hbox (16.40625pt too wide) in paragraph at lines 72--73
+ [] 
+ []
+
+[25 <./screens/toolbar.png (PNG copy)>] [26]
+<screens/control1.png, id=964, 504.88625pt x 111.41624pt>
+File: screens/control1.png Graphic file (type png)
+
+<use screens/control1.png>
+<screens/control2.png, id=965, 499.8675pt x 108.405pt>
+File: screens/control2.png Graphic file (type png)
+
+<use screens/control2.png> [27 <./screens/control1.png (PNG copy)> <./screens/c
+ontrol2.png (PNG copy)>]
+<screens/fselector.png, id=973, 468.75125pt x 374.39874pt>
+File: screens/fselector.png Graphic file (type png)
+
+<use screens/fselector.png> [28 <./screens/fselector.png (PNG copy)>]
+<screens/content1.png, id=983, 498.86375pt x 274.02374pt>
+File: screens/content1.png Graphic file (type png)
+
+<use screens/content1.png>
+<screens/content4.png, id=984, 498.86375pt x 210.7875pt>
+File: screens/content4.png Graphic file (type png)
+
+<use screens/content4.png>
+<screens/content2.png, id=985, 498.86375pt x 227.85126pt>
+File: screens/content2.png Graphic file (type png)
+
+<use screens/content2.png>
+<screens/content3.png, id=986, 498.86375pt x 226.8475pt>
+File: screens/content3.png Graphic file (type png)
+
+<use screens/content3.png> [29] [30 <./screens/content1.png (PNG copy)> <./scre
+ens/content4.png (PNG copy)>] [31 <./screens/content2.png (PNG copy)> <./screen
+s/content3.png>] <screens/pubkey.png, id=1005, 1051.93pt x 558.085pt>
+File: screens/pubkey.png Graphic file (type png)
+
+<use screens/pubkey.png> [32 <./screens/pubkey.png>]
+<screens/bio.png, id=1011, 775.89874pt x 1066.98625pt>
+File: screens/bio.png Graphic file (type png)
+ <use screens/bio.png>
+[33] [34 <./screens/bio.png>]
+Package epstopdf Info: Source file: <gfx/text-seq.eps>
+(epstopdf)                    date: 2011-05-18 17:27:26
+(epstopdf)                    size: 141002 bytes
+(epstopdf)             Output file: <gfx/text-seq-eps-converted-to.pdf>
+(epstopdf)                    date: 2011-05-18 17:29:22
+(epstopdf)                    size: 27960 bytes
+(epstopdf)             Command: <epstopdf --outfile=gfx/text-seq-eps-converted-
+to.pdf gfx/text-seq.eps>
+(epstopdf)             \includegraphics on input line 205.
+Package epstopdf Info: Output file is already uptodate.
+
+<gfx/text-seq-eps-converted-to.pdf, id=1022, 742.775pt x 512.91624pt>
+File: gfx/text-seq-eps-converted-to.pdf Graphic file (type pdf)
+
+<use gfx/text-seq-eps-converted-to.pdf>
+File: gfx/crypto.1 Graphic file (type mps)
+ [MP to PDF] (./gfx/crypto.1) [35]
+[36 <./gfx/text-seq-eps-converted-to.pdf>] [37]
+<screens/note.png, id=1041, 499.8675pt x 305.14pt>
+File: screens/note.png Graphic file (type png)
+ <use screens/note.png>
+[38 <./screens/note.png (PNG copy)>]
+Package epstopdf Info: Source file: <gfx/img-seq.eps>
+(epstopdf)                    date: 2011-05-19 04:37:28
+(epstopdf)                    size: 83393 bytes
+(epstopdf)             Output file: <gfx/img-seq-eps-converted-to.pdf>
+(epstopdf)                    date: 2011-05-19 04:39:58
+(epstopdf)                    size: 17107 bytes
+(epstopdf)             Command: <epstopdf --outfile=gfx/img-seq-eps-converted-t
+o.pdf gfx/img-seq.eps>
+(epstopdf)             \includegraphics on input line 308.
+Package epstopdf Info: Output file is already uptodate.
+
+<gfx/img-seq-eps-converted-to.pdf, id=1048, 552.0625pt x 362.35374pt>
+File: gfx/img-seq-eps-converted-to.pdf Graphic file (type pdf)
+
+<use gfx/img-seq-eps-converted-to.pdf>
+File: gfx/fec.1 Graphic file (type mps)
+ [MP to PDF] (./gfx/fec.1) [39 <./gfx/img-seq-eps-converted-to.pdf>]
+File: gfx/img.1 Graphic file (type mps)
+ [MP to PDF] (./gfx/img.1)
+Overfull \hbox (39.4925pt too wide) in paragraph at lines 339--340
+ [] 
+ []
+
+[40] [41] (./gfx/haar.tikz) [42] [43]
+<screens/haar.jpg, id=1080, 722.7pt x 722.7pt>
+File: screens/haar.jpg Graphic file (type jpg)
+ <use screens/haar.jpg>
+<screens/scaled3.jpg, id=1081, 722.7pt x 722.7pt>
+File: screens/scaled3.jpg Graphic file (type jpg)
+ <use screens/scaled3.jpg>
+<screens/scaled4.jpg, id=1082, 722.7pt x 722.7pt>
+File: screens/scaled4.jpg Graphic file (type jpg)
+ <use screens/scaled4.jpg>
+[44 <./screens/haar.jpg> <./screens/scaled3.jpg> <./screens/scaled4.jpg>])
+[45] [46]
+\openout2 = `chapters/evaluation.aux'.
+
+ (./chapters/evaluation.tex
+Chapter 4.
+[47
+
+
+
+
+
+] [48]
+PGFPlots: reading {gfx/error_rate.data}
+PGFPlots: reading {gfx/error_rate.data}
+PGFPlots: reading {gfx/error_rate.data}
+PGFPlots: reading {gfx/error_rate0.data}
+PGFPlots: reading {gfx/error_rate0.data}
+PGFPlots: reading {gfx/encoding_time.data}
+
+! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
+n name 'a'. Only the first occurence can be accessed via column names.
+PGFPlots: reading {gfx/encoding_time.data}
+! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
+n name 'a'. Only the first occurence can be accessed via column names.
+PGFPlots: reading {gfx/encoding_time.data}
+! Package pgfplots Warning: Table 'gfx/encoding_time.data' has non-unique colum
+n name 'a'. Only the first occurence can be accessed via column names.
+PGFPlots: reading {gfx/error_rate0.data}
+PGFPlots: reading {gfx/error_rate0.data}
+[49]
+
+Package amsmath Warning: Foreign command \atopwithdelims;
+(amsmath)                \frac or \genfrac should be used instead
+(amsmath)                 on input line 122.
+
+
+Overfull \hbox (8.73334pt too wide) in paragraph at lines 129--144
+ [] 
+ []
+
+[50] [51]
 PGFPlots: reading {gfx/submit.data}
 PGFPlots: reading {gfx/submit.data}
 Missing character: There is no ; in font nullfont!
 PGFPlots: reading {gfx/retrieve.data}
 PGFPlots: reading {gfx/retrieve.data}
 Missing character: There is no ; in font nullfont!
- [6] [7] <screens/parrots1.png, id=190, 500.87125pt x 229.85875pt>
+
+
+LaTeX Warning: Float too large for page by 13.19267pt on input line 229.
+
+[52] [53] <screens/parrots1.png, id=1155, 500.87125pt x 229.85875pt>
 File: screens/parrots1.png Graphic file (type png)
 
 <use screens/parrots1.png>
-<screens/parrots2.png, id=191, 500.87125pt x 191.71625pt>
+<screens/parrots2.png, id=1156, 500.87125pt x 191.71625pt>
 File: screens/parrots2.png Graphic file (type png)
 
 <use screens/parrots2.png>
@@ -2125,65 +2450,196 @@ PGFPlots: reading {gfx/async_text_hist.data}
 PGFPlots: reading {gfx/async_text_hist.data}
 PGFPlots: reading {gfx/async_image_hist.data}
 PGFPlots: reading {gfx/async_image_hist.data}
-PGFPlots: reading {gfx/async.data}
-PGFPlots: reading {gfx/async.data}
- [8] [9 <./screens/parrots1.png (PNG copy)> <./screens/parrots2.png (PNG copy)>
-] [10] [11] [12]
-
-LaTeX Warning: Reference `ssec:naive' on page xiii undefined on input line 425.
-
-
-[13]
-
-LaTeX Warning: Citation 'hdd-errors' on page 14 undefined on input line 468.
-
-[14] [15]
-File: screens/parrots1.png Graphic file (type png)
- <use screens/parrots1.png>
-File: screens/parrots2.png Graphic file (type png)
- <use screens/parrots2.png> [16] [17]
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 580
-.
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/fourier/ts1futs.fd
-File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
-) [18]
-<screens/pic-upload.png, id=266, 774.895pt x 616.3025pt>
+ [54] [55 <./screens/parrots1.png (PNG copy)> <./screens/parrots2.png (PNG copy
+)>] [56] [57] [58]
+<screens/pic-upload.png, id=1192, 774.895pt x 616.3025pt>
 File: screens/pic-upload.png Graphic file (type png)
 
-<use screens/pic-upload.png> [19 <./screens/pic-upload.png (PNG copy)>]
-<screens/comment.png, id=273, 764.8575pt x 668.4975pt>
+<use screens/pic-upload.png> [59 <./screens/pic-upload.png (PNG copy)>]
+[60] <screens/comment.png, id=1208, 764.8575pt x 668.4975pt>
 File: screens/comment.png Graphic file (type png)
 
-<use screens/comment.png>) [20] [21 <./screens/comment.png (PNG copy)>]
-[22
+<use screens/comment.png>) [61 <./screens/comment.png (PNG copy)>] [62
 
 
 
 ]
-\openout2 = `frontbackmatter/proposal.aux'.
-
- (./frontbackmatter/proposal.tex
-Chapter 2.
-[23
+\openout2 = `chapters/conclusion.aux'.
 
 
-] [24] [25] [26] [27] [28] [29]) [30]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 172.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 172.
- (./dissertation.aux
-(./chapters/evaluation.aux) (./frontbackmatter/proposal.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 172.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 172.
+(./chapters/conclusion.tex
+Chapter 5.
+[63
 
 
-Package rerunfilecheck Warning: File `dissertation.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+] [64] [65]) [66] [67
 
-Package rerunfilecheck Info: Checksums for `dissertation.out':
-(rerunfilecheck)             Before: 87790A8288E943DB664EC82117F3A956;2085
-(rerunfilecheck)             After:  9CE55299525203AC027FB5AEF1FBFAB0;2024.
+
+
+
+]
+Underfull \hbox (badness 6284) in paragraph at lines 146--146
+[]  \T1/futs/m/n/12 (+20) Scott Golder, Den-nis Wilkin-son,   and Bernardo Hu-b
+er-man.
+ []
+
+[68]
+Underfull \hbox (badness 6927) in paragraph at lines 146--146
+[]    \T1/futs/m/it/12 (+20) How Face-book Makes Money\T1/futs/m/n/12 (+20) .  
+ 2010.   \T1/futs/m/sc/12 (+20) url\T1/futs/m/n/12 (+20) : []$\T1/txtt/m/n/12 h
+ttp : / / www .
+ []
+
+
+Underfull \hbox (badness 2057) in paragraph at lines 146--146
+\T1/txtt/m/n/12 / / www . mozilla . com / en -[] US / firefox / 4 . 0 / system 
+-[]
+ []
+
+[69]
+Underfull \hbox (badness 1997) in paragraph at lines 146--146
+[]$\T1/txtt/m/n/12 http : / / www . netindex . com / download / 2 ,[] 4 / Unite
+d -[]
+ []
+
+
+Underfull \hbox (badness 2828) in paragraph at lines 146--146
+[]  \T1/futs/m/n/12 (+20) C. Shapiro   and H. Var-ian.     \T1/futs/m/it/12 (+2
+0) In-for-ma-tion rules\T1/futs/m/n/12 (+20) .   Har-vard Busi-
+ []
+
+[70] [71] [72
+
+
+] [73
+
+] [74
+
+
+]
+\openout2 = `chapters/app_bcast.aux'.
+
+ (./chapters/app_bcast.tex
+Appendix A.
+[75
+
+
+] [76]) [77] [78]
+\openout2 = `chapters/app_graph.aux'.
+
+ (./chapters/app_graph.tex
+Appendix B.
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 7--7
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 20--20
+ [][][][][][][] 
+ []
+
+[79
+
+
+
+
+
+]) [80]
+\openout2 = `chapters/app_images.aux'.
+
+ (./chapters/app_images.tex
+Appendix C.
+) [81
+
+
+
+
+
+] [82]
+\openout2 = `chapters/app_dct.aux'.
+
+ (./chapters/app_dct.tex
+Appendix D.
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 17--17
+ [][][][][][][] 
+ []
+
+) [83
+
+
+
+
+
+] [84
+
+
+
+]
+\openout2 = `chapters/app_threat.aux'.
+
+ (./chapters/app_threat.tex
+Appendix E.
+[85
+
+
+] [86]) [87] [88
+
+
+
+]
+\openout2 = `chapters/app_cogwalk.aux'.
+
+ (./chapters/app_cogwalk.tex
+Appendix F.
+[89
+
+
+] <screens/create-warning.png, id=1514, 1047.915pt x 562.1pt>
+File: screens/create-warning.png Graphic file (type png)
+
+<use screens/create-warning.png> [90] [91 <./screens/create-warning.png>])
+[92]
+\openout2 = `chapters/app_bvanal.aux'.
+
+ (./chapters/app_bvanal.tex
+Appendix G.
+[93
+
+
+
+
+
+]) [94]
+\openout2 = `chapters/app_imginc.aux'.
+
+ (./chapters/app_imginc.tex
+Appendix H.
+) [95
+
+
+
+
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 171.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 171.
+ (./dissertation.aux (./frontbackmatter/dirtytitlepage.aux)
+(./frontbackmatter/titleback.aux) (./frontbackmatter/proforma.aux)
+(./frontbackmatter/declaration.aux) (./frontbackmatter/contents.aux)
+(./frontbackmatter/acknowledgments.aux) (./chapters/introduction.aux)
+(./chapters/preparation.aux) (./chapters/implementation.aux)
+(./chapters/evaluation.aux) (./chapters/conclusion.aux)
+(./chapters/app_bcast.aux) (./chapters/app_graph.aux)
+(./chapters/app_images.aux) (./chapters/app_dct.aux) (./chapters/app_threat.aux
+) (./chapters/app_cogwalk.aux) (./chapters/app_bvanal.aux)
+(./chapters/app_imginc.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 171.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 171.
+Package rerunfilecheck Info: File `dissertation.out' has not changed.
+(rerunfilecheck)             Checksum: 4D5DF669B8E996D1C9AA8FDC89D26840;7041.
+
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2193,53 +2649,34 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                dissertation
-(biblatex)                and rerun LaTeX afterwards.
-
 Package logreq Info: Writing requests to 'dissertation.run.xml'.
 \openout1 = `dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36585 strings out of 493763
- 726566 string characters out of 3144975
- 1257297 words of memory out of 3000000
- 38787 multiletter control sequences out of 15000+200000
- 92504 words of font info for 258 fonts, out of 3000000 for 9000
+ 38503 strings out of 493763
+ 755846 string characters out of 3144975
+ 1352367 words of memory out of 3000000
+ 40010 multiletter control sequences out of 15000+200000
+ 157266 words of font info for 471 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 74i,19n,95p,889b,1818s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{figure.caption.15} has been referenced but does n
-ot exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@cogwalk} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@bband-stats} has been referenced but does no
-t exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@firefox-req} has been referenced but does no
-t exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.0@rsfec-decode} has been referenced but does n
-ot exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.1.8.2} has been referenced but does not 
-exist, replaced by a fixed one
-
-{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/tex
-live/2010/texmf/fonts/enc/ttf2pk/base/T1-WGL4.enc}<futura_lt_heavy.ttf><futura_
-lt_bold.ttf></usr/local/texlive/2010/texmf-dist/fonts/type1/public/fourier/four
-ier-mex.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/fourier/four
-ier-ms.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putb8a.
-pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></u
-sr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb></usr/loc
-al/texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb>
-Output written on dissertation.pdf (30 pages, 494887 bytes).
+ 74i,19n,95p,1125b,2344s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2010/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
+exlive/2010/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/local/tex
+live/2010/texmf/fonts/enc/ttf2pk/base/T1-WGL4.enc}<futura_lt_medium.ttf><futura
+_lt_heavy.ttf><futura_lt_bold.ttf></usr/local/texlive/2010/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1
+/public/fourier/fourier-mex.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1
+/public/fourier/fourier-ms.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/
+adobe/utopia/putb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/u
+topia/putr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/p
+utri8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfsx
+1440.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.p
+fb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on dissertation.pdf (109 pages, 5030158 bytes).
 PDF statistics:
- 402 PDF objects out of 1000 (max. 8388607)
- 354 compressed objects within 4 object streams
- 118 named destinations out of 1000 (max. 500000)
- 27937 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 1682 PDF objects out of 1728 (max. 8388607)
+ 1515 compressed objects within 16 object streams
+ 386 named destinations out of 1000 (max. 500000)
+ 59835 words of extra memory for PDF output out of 61914 (max. 10000000)
 

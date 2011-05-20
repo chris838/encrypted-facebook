@@ -1,59 +1,89 @@
 %*****************************************
 \chapter{Conclusion}\label{ch:conclusion}
 %*****************************************
+\label{con}
 
-To conclude, we evaluate the project against the requirements in Section XXX and take a retrospective look at what would have been done differently given the benefit of hindsight. We finish with a discussion of the barriers to be overcome for potential deployment and possible future work that might be relevant.
+To conclude, we evaluate the project against the requirements in Section \ref{sec:req} and take a retrospective look at what would have been done differently given the benefit of hindsight. We finish with a discussion of the possible barriers to potential deployment and future work that might be relevant.
 
 \section{Evaluation of Requirements}
 \label{sec:eval-require}
 
-We belive that all the requirements described in Section XXX were met in full:
+We believe that all the requirements described in Section \ref{sec:req} were met in full:
 
 \begin{desc}
 
-    \item[Requirement 1] All required content types are supported. Images and Comments are demonstated in Section XXX, Messages in section XXX and Wall Posts and Status Updates in section XXX.
+    \item[Requirement 1] The extensions will be able to broadcast-encrypt, submit, retrieve and decipher the following objects:
     
-    \item[Requirement 2] Size limits for encrypted text submissions match current Facebook limits. Section XXX demonstrates sending encrypted messages to 400 recipients, 10,000 characters in length (the largest of the limits presented in Section XXX).\footnote{Technically we can provide even larger limits due to the extra capacity available in a Facebook note. We impose the current Facebook limits artifically as part of the input sanitisation process. Technically they can be bypassed by a malicious user.}
-
-    \item[Requirement 3] Size limits for encrypted images exceed 50 KiB. Based on section XXX the total error free capacity of an image is 165 KiB. Section XXX demonstated submitting and retrieving a 50 KiB image to 400 recipients.
-
-    \item[Requirement 4] Group size of up to 400 recipients are supported. Section XXX describes the effect of group sizes on capacity and timing. Even at the limit of 400 recipients all other requirements are met. 
+    \begin{itemize}
+        \item Status updates
+        \item Wall posts
+        \item Comments
+        \item Messages
+        \item Images
+    \end{itemize}
     
-    \item[Requirement 5] Response times lie within acceptable limits. Even with group sizes of 400, Section XXX demonstrates that complete loading times even in the worse case are almost always under 10 seconds --- the recommended limit for response times with no progress indicator. In the one case that times take longer (with a full page of uncached encrypted images) Section XXX shows that time between successive loads of individual images is less than one second on average. We argue that the intermittant loading of images represents an acceptable progress indicator.
+    \item[Defense] Submission and retrieval of comments and images is demonstrated in Section \ref{sec:cw}, and of status updates in Section \ref{sec:ptextc}. Section \ref{sec:parsing} describes how other encrypted items and submission controls are supported.
+    
+    \item[Requirement 2] The size limits for encrypted text objects will be no smaller than the current limits Facebook imposes, given in Section \ref{sec:content}).
+    
+    \item[Defense] Section \ref{sec:recsize} demonstrates submitting and decoding textual content 10,000 characters (the largest limit) in length. Since all content types are stored in a note, the other limits in Section \ref{sec:content} are artificially imposed during sanitisation.
 
-    \item[Requirement 6] All measures described in the security policy were implemented. All results presented in Section XXX use key lengths of 256-bit and 2048 bit for AES and RSA respectively, which exceeds the required minimum (128-bit AES and 2048-bit RSA).
+    \item[Requirement 3] The size limit for encrypted images will be no less than 50 KiB.
+    
+    \item[Defense] Section \ref{sec:recsize} and Section \ref{sec:ptextc} both demonstrate submitting and retrieving images of 50 KiB in length.
 
-    \item[Requirement 7] The only news feed entries are for encypted content itself, maximising the signal-to-noise ratio for none users. Extranous entries are deleted as described in section XXX. Subjectively speaking, steganography reduces the visual impact of encrypted entries, though a user study would be required to determine if this is even desirable.\footnote{It could be argued that Base64 coded entries would be easier to ignore and therefore represent a better choice than using the Stego! library.}
+    \item[Requirement 4] All requirements will be met given recipient groups sizes up to 400, based on the discussion in Section \ref{sec:cness}.
+    
+    \item[Defense] All the examples given in this section use recipient group sizes of 400 where applicable.
+    
+    \item[Requirement 5] All response times will lie within acceptable limits, in accordance with \cite{response}.
+    
+    \item[Defense] All response times in Section \ref{sec:ptextc} are under 10 seconds --- the recommended limit for response times with no progress indicator. The one exception is the page load time for an entire news feed of non-cached encrypted images. Section \ref{sec:ptextc} shows in this case the time between successive loads is less than one second on average. Intermittent loading of images may be considered an acceptable progress indicator \cite{response}.
 
-    \item[Requirement 8] The library has a modular structure which fascillitates extension. Section XXX describes how library sub-components for cryptography and image coding can be used polymorphically. Section XXX shows how the abstact factory pattern enables complimentary implemnetations to be gruoped together. Section XXX demonstates image coding using three different methods.
+    \item[Requirement 6] The project will adhere to the security policy described in \ref{ssec:threat}.
+    
+    \item[Defense] All results presented in Chaper \ref{eval} demonstrate the use of 256-bit and 2048 bit key lengths for AES and RSA respectively, which exceeds the required minimum (128-bit AES and 2048-bit RSA). Chapter \ref{imp} describes the implementation of remaining security measures.
 
+    \item[Requirement 7] The number of news feed entries generated by encrypted submission will be no more than the number generated by normal content submission.
+    
+    \item[Defense] Section \ref{sec:ptextc} relies on the fact that only encrypted items themselves were posted to the news feed. Section \ref{ssec:submitnote} details the delete mechanism used to ensure this is the case.
+    
+
+    \item[Requirement 8] The application will adopt a modular structure that facilitates switching between different schemes and permits future extension.
+    
+    \item[Defense] Section \ref{sec:modstruct} describes the abstract factory pattern used for libary sub-components. Sections \ref{sec:imgcod} demonstrates an example of polymorphic use of the IConduitImage sub-component.
+    
 \end{desc}
+
 
 
 \section{Retrospective}
 \label{sec:retro}
 
-The HWT method of image encoding provided too low a capacity to be really useful. Each pass of the HWT reduces the effective capacity by factor 4.\footnote{Since we only store data in the approximation coefficients}. After two passes and the application of a bitmask the theoretical capacity was lower than that of the naive methods presented in Section XXX. In retrospect is would have been better not to persue this implementation at all. One alternative might have been to explore encoding data in the low frequency coefficients of a lossless DCT-like transform such as that used in the upcoming JPEG XR format \cite{jpegxr}.
+In retrospect is would have been better not to implement the HWT coding method due to its poor capacity. One alternative might have been to explore encoding data in the low frequency coefficients of a lossless DCT-like transform such as that used in the upcoming JPEG XR format \cite{jpegxr}.
 
-During the testing carried out in Section XXX, provisional tests using multiple library intances were performed. Inspection of CPU utilisation and timing results suggests that paralelisation of the encoding/decoding process would offer considerable speed improvements. Ideally multi-threading capability should have been included as a initial requirement.
+During the testing carried out in Section \ref{sec:imgcod}, provisional tests using multiple library instances were performed. Inspection of CPU utilisation and timing results suggests that parallelisation of the encoding/decoding process would offer considerable speed improvements. Ideally multi-threading capability should have been included as a initial requirement since this might be difficult to retrofit.
 
+Facebook also recently increased their image size limits. A discussion of the modified approach required is included in Appendix \ref{app:imginc}.
 
-\section{Potential deployment}
+\section{Barriers to deployment}
 \label{sec:deploy}
 
-Given the network effects involved, ideally Encrypted Facebook should be available for as many platforms as possible. Currently the extension is only tested on Linux, though Firefox extensions are generally well suited to cross platform deployment. With regard to deployment on multiple browsers, the structure presented in Section XXX means that while both the Toolbar XUL and large parts of the {\tt efb} module would have to be re-developed, the remainder of the project could probably be used as-is.
+Several issues need to be overcome to move the extension from being a dissertation project to something ready for deployment.
 
-Network effects also mean that splitting the user base is highly undesirable. Ideally the extension should not only support a modular, extensible structure, but also backwards compatibility between newer and older versions. In particular this would require a canonical JPEG-immune signature that describes what methods were used to encode an image. Development of such a method is underway, but is currently untested.
+Given the network effects involved, any system should be available for as many platforms as possible. Currently the extension is only tested on Linux, though Firefox extensions are generally well suited to cross platform deployment. With regard to deployment on multiple browsers, the structure presented in Section \ref{ssec:over} means that while both the Toolbar XUL and large parts of the {\tt efb} module would have to be re-developed, the remainder of the project could be used largely unmodified.
 
-The Botan, CImg and Schiffra library components are distributed under the FreeBSD, CeCILL and GPLv2\footnote{Provided the use is non-profit.} licenses respectively. These are all GPL compatible meaning the project can itself be licensed under the GPL. \url{http://www.gnu.org/licenses/license-list.html#PythonOld}
+Network effects also mean that splitting the user base would be highly undesirable. Ideally the extension should not only support a modular, extensible structure, but also backwards compatibility between newer and older versions. In particular this would require a canonical JPEG-immune signature that describes what modules were used to encode an image. One possibility would be to use the n-bit scaling method, with $n=1$.
+
+The Botan, CImg and Schifra library components are distributed under the FreeBSD, CeCILL and GPLv2\footnote{Provided the use is non-profit.} licenses respectively, which are all GPL compatible \cite{gpl}. Proper care would be required to ensure distribution adhered to the terms of the GPL.
 
 
 \section{Future work}
 \label{sec:future}
 
-Appendix XXX presents a more advanced broadcast encryption variant, partly based on Boneh et al \cite{boneh}. In brief, the scheme involves appending transmission overheads to a user's public key, rather than sending them along with a message. This would involve building a data structure (e.g. a linked list of Facebook Notes) to store the public key. If the message key is changed on every message, then this scheme is identical in terms of storage overhead to the current scheme. If keys were re-used however, and recipient groups sizes remained roughly constant, then this would give a large decrease in storage requirements. This would be particularly useful for images, allowing much larger images to potentially be sent to large recipient groups. The key refresh period\footnote{NIST recommend key re-use peroids from a few months up to 2 years, depending on the nature of the message. \cite{nist-keys}} could provide a sliding parameter that trades amortised storage overheads for better security.
+A more advanced broadcast encryption scheme is presented in Appendix \ref{app:bcast}, partly based on Boneh et al \cite{boneh}. In brief, the scheme involves appending transmission overheads to the user's public key rather than to the message.\footnote{This would involve building a data structure (e.g. a linked list of Facebook Notes) to store the public key.} Session keys can then be re-used when transmitting to the same recipient group. The key expiration period\footnote{NIST recommend key re-use periods from a few months up to 2 years, depending on the nature of the message. \cite{nist-key}} could provide a sliding parameter that trades lower amortised storage overheads for better security. In addition, by running cleanup routines periodically on the public key, old keys can be deleted both to save space and to give content a finite lifetime.
 
-Finding an optimal solution to the JPEG image coding problem would likely be a research level problem. One promising avenue was the use of a so-called dirty paper coding scheme \cite{XXX}.
+Finding an optimal approach to high capacity JPEG-immune image coding would be an interesting research-level problem. One promising avenue might be the use of a dirty paper coding scheme \cite{dpaper}.
 
 
 
