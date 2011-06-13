@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  20 MAY 2011 07:51
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.4.19)  20 MAY 2011 09:50
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2333,10 +2333,10 @@ File: screens/bio.png Graphic file (type png)
  <use screens/bio.png>
 [33] [34 <./screens/bio.png>]
 Package epstopdf Info: Source file: <gfx/text-seq.eps>
-(epstopdf)                    date: 2011-05-18 17:27:26
+(epstopdf)                    date: 2011-05-20 09:47:17
 (epstopdf)                    size: 141002 bytes
 (epstopdf)             Output file: <gfx/text-seq-eps-converted-to.pdf>
-(epstopdf)                    date: 2011-05-18 17:29:22
+(epstopdf)                    date: 2011-05-20 09:47:17
 (epstopdf)                    size: 27960 bytes
 (epstopdf)             Command: <epstopdf --outfile=gfx/text-seq-eps-converted-
 to.pdf gfx/text-seq.eps>
@@ -2355,10 +2355,10 @@ File: screens/note.png Graphic file (type png)
  <use screens/note.png>
 [38 <./screens/note.png (PNG copy)>]
 Package epstopdf Info: Source file: <gfx/img-seq.eps>
-(epstopdf)                    date: 2011-05-19 04:37:28
+(epstopdf)                    date: 2011-05-20 09:47:17
 (epstopdf)                    size: 83393 bytes
 (epstopdf)             Output file: <gfx/img-seq-eps-converted-to.pdf>
-(epstopdf)                    date: 2011-05-19 04:39:58
+(epstopdf)                    date: 2011-05-20 09:47:17
 (epstopdf)                    size: 17107 bytes
 (epstopdf)             Command: <epstopdf --outfile=gfx/img-seq-eps-converted-t
 o.pdf gfx/img-seq.eps>
@@ -2420,10 +2420,10 @@ PGFPlots: reading {gfx/error_rate0.data}
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 124.
+(amsmath)                 on input line 125.
 
 [49] [50]
-Overfull \hbox (8.73334pt too wide) in paragraph at lines 131--146
+Overfull \hbox (8.73334pt too wide) in paragraph at lines 132--147
  [] 
  []
 
@@ -2452,7 +2452,7 @@ PGFPlots: reading {gfx/async_image_hist.data}
 File: screens/pic-upload.png Graphic file (type png)
 
 <use screens/pic-upload.png> [59] [60 <./screens/pic-upload.png (PNG copy)>]
-<screens/comment.png, id=1217, 764.8575pt x 668.4975pt>
+<screens/comment.png, id=1216, 764.8575pt x 668.4975pt>
 File: screens/comment.png Graphic file (type png)
 
 <use screens/comment.png>) [61] [62 <./screens/comment.png (PNG copy)>]
@@ -2467,7 +2467,11 @@ Chapter 5.
 
 
 
-] [64] [65]) [66] [67
+] [64]
+
+LaTeX Warning: Reference `cap:cap:res' on page 65 undefined on input line 63.
+
+[65]) [66] [67
 
 
 
@@ -2591,7 +2595,7 @@ Appendix F.
 [89
 
 
-] <screens/create-warning.png, id=1526, 1047.915pt x 562.1pt>
+] <screens/create-warning.png, id=1525, 1047.915pt x 562.1pt>
 File: screens/create-warning.png Graphic file (type png)
 
 <use screens/create-warning.png> [90] [91 <./screens/create-warning.png>])
@@ -2639,6 +2643,9 @@ Package rerunfilecheck Info: File `dissertation.out' has not changed.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
 Package logreq Info: Writing requests to 'dissertation.run.xml'.
@@ -2646,10 +2653,10 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 38520 strings out of 493763
- 756041 string characters out of 3144975
- 1351230 words of memory out of 3000000
- 40010 multiletter control sequences out of 15000+200000
+ 38522 strings out of 493763
+ 756067 string characters out of 3144975
+ 1351231 words of memory out of 3000000
+ 40012 multiletter control sequences out of 15000+200000
  158724 words of font info for 483 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  74i,19n,95p,1125b,2344s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2665,10 +2672,10 @@ topia/putr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/adobe/utopia/p
 utri8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/cm-super/sfsx
 1440.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/txfonts/t1xtt.p
 fb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on dissertation.pdf (109 pages, 5031760 bytes).
+Output written on dissertation.pdf (109 pages, 5032241 bytes).
 PDF statistics:
- 1694 PDF objects out of 1728 (max. 8388607)
- 1527 compressed objects within 16 object streams
+ 1693 PDF objects out of 1728 (max. 8388607)
+ 1526 compressed objects within 16 object streams
  387 named destinations out of 1000 (max. 500000)
  59835 words of extra memory for PDF output out of 61914 (max. 10000000)
 

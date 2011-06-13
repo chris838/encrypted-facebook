@@ -50,6 +50,7 @@ The per-image theoretical capacity $C$ is a function of the number of bits avail
 where $H(x)$ is the binary entropy function. This provides the capacity in units of information per symbol, or in our case KiB per image.
 
 \subsection{Results}
+\label{cap:cap:res}
 
 Both n-bit scaling methods showed marked improvements in error rates and capacity (see Figure \ref{graph:ber} and Figure \ref{graph:capacity}) in comparison to naive approaches.
 
@@ -358,16 +359,16 @@ Currently the plaintext cache is wiped on initialisation and destruction. Based 
 \section{Usability inspection}
 \label{sec:cw}
 
-We present the final outcome of the usability inspection that was used as part of the development process. For the sake of concision we evaluate only the submission process for comments and images, as these contain the longest sequences of actions required of a user. The full set of tests is included in Appendix \ref{app:cw}.
+We present the final outcome of the usability inspection that was used as part of the development process. For the sake of concision we evaluate only the submission process for comments and images, as these contain the longest sequences of actions. The full set of tests is included in Appendix \ref{app:cw}.
 
 We test the hypothesis that a typical Facebook user can successfully share an encrypted image, and that a similar user can successfully submit to that image an encrypted comment.
 
 
 \subsection{Method}
 
-We use the cognitive walkthrough (as described by Wharton et al \cite{cogwalk}) to evaluate the success of the user interface. This section consists of two of the final success stories and a defence of their validity. They refer to claims demonstrated by other walkthroughs which can be found Appendix \ref{app:cw}.
+We use the cognitive walkthrough (as described by Wharton et al \cite{cogwalk}) to evaluate the success of the user interface.\footnote{A full user study was considered unfeasible due to resource constraints.} This section consists of two of the final success stories and a defence of their validity. They refer to claims demonstrated by other walkthroughs which can be found Appendix \ref{app:cw}.
 
-We only consider one class of user - a typical Facebook user who is therefore familiar with the Facebook user interface. It is therefore assumed that actions such as "navigate to a given friend's profile" can be performed without additional aid. It is also assumed that the user will follow their usual actions when trying to perform an encrypted operation - when trying to upload an encrypted image they will, for example, simply follow the normal procedure for uploading an image rather than searching for some hidden option. Finally, we make the assumption that the extension has been installed and enabled and that the toolbar has not been hidden.
+We only consider one class of user - a typical Facebook user who is therefore familiar with the Facebook user interface. It is therefore assumed that actions such as "navigate to a given friend's profile" can be performed without additional aid. It is also assumed that the user will follow their usual actions when trying to perform an encrypted operation --- when trying to upload an encrypted image they will, for example, simply follow the normal procedure for uploading an image rather than searching for some hidden option. Finally, we make the assumption that the extension has been installed and enabled and that the toolbar has not been hidden.
 
 
 \subsection{Uploading an encrypted image}
